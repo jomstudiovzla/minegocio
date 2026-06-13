@@ -40,7 +40,7 @@ export const useStore = create<AppState>()(
     (set) => ({
       cart: [],
       user: null,
-      zone: null,
+      zone: 'San Luis El Cafetal',
       products: initialProducts,
       
       setProducts: (products) => set({ products }),

@@ -78,8 +78,8 @@ export default function Navbar() {
             </Link>
             <div className="hidden lg:flex flex-col text-sm border-l pl-4 border-gray-200">
               <span className="text-gray-400 text-xs">Estás comprando en Caracas el Este</span>
-              <span className="text-ananas-green font-bold flex items-center gap-1 cursor-pointer hover:text-ananas-dark transition" onClick={() => useStore.getState().setZone(null as any)}>
-                {mounted && zone ? zone : 'Seleccionar Zona'} <ChevronDown size={14} />
+              <span className="text-ananas-green font-bold flex items-center gap-1 cursor-default">
+                San Luis El Cafetal
               </span>
             </div>
           </div>

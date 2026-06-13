@@ -16,687 +16,1116 @@ export interface Category {
   name: string;
   icon: string;
   color: string;
+  subcategories?: string[];
 }
 
 export const categories: Category[] = [
-  { id: 'frutas-vegetales', name: 'Frutas y Vegetales', icon: '🍎', color: 'bg-red-100 text-red-600' },
-  { id: 'refrigerados-congelados', name: 'Refrigerados', icon: '❄️', color: 'bg-blue-100 text-blue-600' },
-  { id: 'viveres', name: 'Víveres', icon: '🥫', color: 'bg-orange-100 text-orange-600' },
-  { id: 'cuidado-personal-salud', name: 'Cuidado Personal', icon: '🧴', color: 'bg-teal-100 text-teal-600' },
-  { id: 'limpieza', name: 'Limpieza', icon: '🧽', color: 'bg-cyan-100 text-cyan-600' },
-  { id: 'licores', name: 'Licores', icon: '🍷', color: 'bg-purple-100 text-purple-600' },
-];
-
-export const products: Product[] = [];
-
-// Seed the products list from Python data
-const rawData = [
   {
     "id": "frutas-vegetales",
+    "name": "Frutas y Vegetales",
+    "icon": "🍎",
+    "color": "bg-red-100 text-red-600",
     "subcategories": [
-      "Enteras",
-      "Picadas",
-      "Jugos",
       "Frescos",
-      "Empacados"
-    ],
-    "products": [
-      {
-        "name": "Tomates Perita",
-        "sub": "Frescos",
-        "unit": "1 Kg",
-        "price": 3.49,
-        "img": "/Ananas/images/products/tomates_perita.png"
-      },
-      {
-        "name": "Cebolla Blanca",
-        "sub": "Frescos",
-        "unit": "1 Kg",
-        "price": 2.1,
-        "img": "/Ananas/images/products/cebolla_blanca.png"
-      },
-      {
-        "name": "Papa Lavada",
-        "sub": "Frescos",
-        "unit": "1 Kg",
-        "price": 1.8,
-        "img": "/Ananas/images/products/papa_lavada.png"
-      },
-      {
-        "name": "Zanahoria",
-        "sub": "Frescos",
-        "unit": "1 Kg",
-        "price": 1.5,
-        "img": "/Ananas/images/products/zanahoria.png"
-      },
-      {
-        "name": "Pimenton Verde",
-        "sub": "Frescos",
-        "unit": "1 Kg",
-        "price": 4.2,
-        "img": "/Ananas/images/products/pimenton_verde.png"
-      },
-      {
-        "name": "Lechuga Romana",
-        "sub": "Frescos",
-        "unit": "1 Unidad",
-        "price": 1.2,
-        "img": "/Ananas/images/products/lechuga_romana.png"
-      },
-      {
-        "name": "Platano Maduro",
-        "sub": "Enteras",
-        "unit": "1 Kg",
-        "price": 1.9,
-        "img": "/Ananas/images/products/platano_maduro.png"
-      },
-      {
-        "name": "Cambur",
-        "sub": "Enteras",
-        "unit": "1 Kg",
-        "price": 1.1,
-        "img": "/Ananas/images/products/cambur.png"
-      },
-      {
-        "name": "Manzana Gala",
-        "sub": "Enteras",
-        "unit": "1 Kg",
-        "price": 5.5,
-        "img": "/Ananas/images/products/manzana_gala.png"
-      },
-      {
-        "name": "Naranja para Jugo",
-        "sub": "Enteras",
-        "unit": "1 Kg",
-        "price": 1.6,
-        "img": "/Ananas/images/products/naranja.png"
-      },
-      {
-        "name": "Lechosa",
-        "sub": "Enteras",
-        "unit": "1 Kg",
-        "price": 1.75,
-        "img": "/Ananas/images/products/lechosa.png"
-      },
-      {
-        "name": "Limones",
-        "sub": "Frescos",
-        "unit": "1 Kg",
-        "price": 4.19,
-        "img": "/Ananas/images/products/limones.png"
-      },
-      {
-        "name": "Pina",
-        "sub": "Enteras",
-        "unit": "1 Unidad",
-        "price": 2.55,
-        "img": "/Ananas/images/products/pina.png"
-      },
-      {
-        "name": "Aguacate",
-        "sub": "Frescos",
-        "unit": "1 Kg",
-        "price": 5.2,
-        "img": "/Ananas/images/products/aguacate.png"
-      },
-      {
-        "name": "Frutas Picadas Mixtas",
-        "sub": "Picadas",
-        "unit": "500g",
-        "price": 3.0,
-        "img": "/Ananas/images/products/frutas_picadas.png"
-      }
+      "Enteras",
+      "Picadas"
     ]
   },
   {
     "id": "refrigerados-congelados",
+    "name": "Refrigerados",
+    "icon": "❄️",
+    "color": "bg-blue-100 text-blue-600",
     "subcategories": [
       "Carnes",
       "Pollos",
       "Embutidos"
-    ],
-    "products": [
-      {
-        "name": "Carne Molida SV",
-        "sub": "Carnes",
-        "unit": "1 Kg",
-        "price": 9.95,
-        "img": "/Ananas/images/products/carne_molida.png"
-      },
-      {
-        "name": "Bistec de Ganso",
-        "sub": "Carnes",
-        "unit": "1 Kg",
-        "price": 11.5,
-        "img": "/Ananas/images/products/bistec_ganso.png"
-      },
-      {
-        "name": "Costilla de Res",
-        "sub": "Carnes",
-        "unit": "1 Kg",
-        "price": 7.8,
-        "img": "/Ananas/images/products/costilla_res.png"
-      },
-      {
-        "name": "Pechuga de Pollo",
-        "sub": "Pollos",
-        "unit": "1 Kg",
-        "price": 8.45,
-        "img": "/Ananas/images/products/pechuga_pollo.png"
-      },
-      {
-        "name": "Pollo Entero",
-        "sub": "Pollos",
-        "unit": "1 Kg",
-        "price": 4.5,
-        "img": "/Ananas/images/products/pollo_entero.png"
-      },
-      {
-        "name": "Muslos de Pollo",
-        "sub": "Pollos",
-        "unit": "1 Kg",
-        "price": 5.2,
-        "img": "/Ananas/images/products/muslos_pollo.png"
-      },
-      {
-        "name": "Alitas de Pollo",
-        "sub": "Pollos",
-        "unit": "1 Kg",
-        "price": 6.0,
-        "img": "/Ananas/images/products/alitas_pollo.png"
-      },
-      {
-        "name": "Jamon Cocido Plumrose",
-        "sub": "Embutidos",
-        "unit": "500g",
-        "price": 6.5,
-        "img": "/Ananas/images/products/jamon_cocido.png"
-      },
-      {
-        "name": "Queso Amarillo Paisa",
-        "sub": "Embutidos",
-        "unit": "500g",
-        "price": 7.2,
-        "img": "/Ananas/images/products/queso_amarillo.png"
-      },
-      {
-        "name": "Queso Blanco Duro",
-        "sub": "Embutidos",
-        "unit": "1 Kg",
-        "price": 6.8,
-        "img": "/Ananas/images/products/queso_blanco.png"
-      },
-      {
-        "name": "Salchichas Plumrose",
-        "sub": "Embutidos",
-        "unit": "1 Paquete",
-        "price": 4.5,
-        "img": "/Ananas/images/products/salchichas.png"
-      },
-      {
-        "name": "Tocino Ahumado",
-        "sub": "Embutidos",
-        "unit": "250g",
-        "price": 4.8,
-        "img": "/Ananas/images/products/tocino.png"
-      },
-      {
-        "name": "Chorizo Carupanero",
-        "sub": "Embutidos",
-        "unit": "500g",
-        "price": 5.5,
-        "img": "/Ananas/images/products/chorizo.png"
-      },
-      {
-        "name": "Queso Guayanes",
-        "sub": "Embutidos",
-        "unit": "500g",
-        "price": 4.5,
-        "img": "/Ananas/images/products/queso_guayanes.png"
-      },
-      {
-        "name": "Nuggets Congelados",
-        "sub": "Pollos",
-        "unit": "1 Paquete",
-        "price": 5.99,
-        "img": "/Ananas/images/products/nuggets.png"
-      }
     ]
   },
   {
     "id": "viveres",
+    "name": "Víveres",
+    "icon": "🥫",
+    "color": "bg-orange-100 text-orange-600",
     "subcategories": [
+      "Refrescos",
       "Arroz",
       "Pasta",
-      "Enlatados",
-      "Refrescos"
-    ],
-    "products": [
-      {
-        "name": "Coca Cola Original",
-        "sub": "Refrescos",
-        "unit": "2 L",
-        "price": 2.5,
-        "img": "/Ananas/images/products/coca_cola.png"
-      },
-      {
-        "name": "Pepsi Cola",
-        "sub": "Refrescos",
-        "unit": "2 L",
-        "price": 2.2,
-        "img": "/Ananas/images/products/pepsi.png"
-      },
-      {
-        "name": "Chinotto",
-        "sub": "Refrescos",
-        "unit": "2 L",
-        "price": 2.2,
-        "img": "/Ananas/images/products/chinotto.png"
-      },
-      {
-        "name": "Frescolita",
-        "sub": "Refrescos",
-        "unit": "2 L",
-        "price": 2.2,
-        "img": "/Ananas/images/products/frescolita.png"
-      },
-      {
-        "name": "Maltin Polar",
-        "sub": "Refrescos",
-        "unit": "1.5 L",
-        "price": 2.0,
-        "img": "/Ananas/images/products/maltin.png"
-      },
-      {
-        "name": "Arroz Blanco Mary",
-        "sub": "Arroz",
-        "unit": "1 Kg",
-        "price": 1.2,
-        "img": "/Ananas/images/products/arroz_blanco.png"
-      },
-      {
-        "name": "Arroz Primor",
-        "sub": "Arroz",
-        "unit": "1 Kg",
-        "price": 1.3,
-        "img": "/Ananas/images/products/arroz_primor.png"
-      },
-      {
-        "name": "Pasta Capri Espagueti",
-        "sub": "Pasta",
-        "unit": "1 Kg",
-        "price": 1.6,
-        "img": "/Ananas/images/products/pasta_capri.png"
-      },
-      {
-        "name": "Harina PAN",
-        "sub": "Arroz",
-        "unit": "1 Kg",
-        "price": 1.15,
-        "img": "/Ananas/images/products/harina_pan.png"
-      },
-      {
-        "name": "Caraotas Negras Mary",
-        "sub": "Enlatados",
-        "unit": "500g",
-        "price": 1.8,
-        "img": "/Ananas/images/products/caraotas.png"
-      },
-      {
-        "name": "Lentejas",
-        "sub": "Enlatados",
-        "unit": "500g",
-        "price": 2.1,
-        "img": "/Ananas/images/products/lentejas.png"
-      },
-      {
-        "name": "Atun Margarita en Aceite",
-        "sub": "Enlatados",
-        "unit": "140g",
-        "price": 2.5,
-        "img": "/Ananas/images/products/atun_aceite.png"
-      },
-      {
-        "name": "Atun Margarita en Agua",
-        "sub": "Enlatados",
-        "unit": "140g",
-        "price": 2.5,
-        "img": "/Ananas/images/products/atun_agua.png"
-      },
-      {
-        "name": "Maiz Dulce en Lata",
-        "sub": "Enlatados",
-        "unit": "300g",
-        "price": 1.5,
-        "img": "/Ananas/images/products/maiz_lata.png"
-      },
-      {
-        "name": "Aceite de Maiz Mazeite",
-        "sub": "Arroz",
-        "unit": "1 Litro",
-        "price": 3.5,
-        "img": "/Ananas/images/products/aceite_maiz.png"
-      }
+      "Enlatados"
     ]
   },
   {
     "id": "cuidado-personal-salud",
+    "name": "Cuidado Personal",
+    "icon": "🧴",
+    "color": "bg-teal-100 text-teal-600",
     "subcategories": [
       "Aseo",
       "Farmacia"
-    ],
-    "products": [
-      {
-        "name": "Jabon Protex",
-        "sub": "Aseo",
-        "unit": "3 Unidades",
-        "price": 3.5,
-        "img": "/Ananas/images/products/jabon_protex.png"
-      },
-      {
-        "name": "Desodorante Dove",
-        "sub": "Aseo",
-        "unit": "50ml",
-        "price": 4.2,
-        "img": "/Ananas/images/products/desodorante.png"
-      },
-      {
-        "name": "Crema Dental Colgate",
-        "sub": "Aseo",
-        "unit": "100g",
-        "price": 2.8,
-        "img": "/Ananas/images/products/crema_dental.png"
-      },
-      {
-        "name": "Shampoo Pantene",
-        "sub": "Aseo",
-        "unit": "400ml",
-        "price": 6.5,
-        "img": "/Ananas/images/products/shampoo.png"
-      },
-      {
-        "name": "Papel Higienico Scott",
-        "sub": "Aseo",
-        "unit": "4 Rollos",
-        "price": 3.8,
-        "img": "/Ananas/images/products/papel_higienico.png"
-      },
-      {
-        "name": "Toallas Sanitarias Always",
-        "sub": "Aseo",
-        "unit": "10 Unidades",
-        "price": 2.9,
-        "img": "/Ananas/images/products/toallas_sanitarias.png"
-      },
-      {
-        "name": "Maquina de Afeitar Gillette",
-        "sub": "Aseo",
-        "unit": "2 Unidades",
-        "price": 3.0,
-        "img": "/Ananas/images/products/maquina_afeitar.png"
-      },
-      {
-        "name": "Crema Corporal Lubriderm",
-        "sub": "Aseo",
-        "unit": "400ml",
-        "price": 8.5,
-        "img": "/Ananas/images/products/crema_corporal.png"
-      },
-      {
-        "name": "Algodon en Motas",
-        "sub": "Farmacia",
-        "unit": "100g",
-        "price": 1.5,
-        "img": "/Ananas/images/products/algodon.png"
-      },
-      {
-        "name": "Hisopos Q-Tips",
-        "sub": "Farmacia",
-        "unit": "100 Unidades",
-        "price": 1.8,
-        "img": "/Ananas/images/products/hisopos.png"
-      },
-      {
-        "name": "Alcohol Isopropilico",
-        "sub": "Farmacia",
-        "unit": "250ml",
-        "price": 2.2,
-        "img": "/Ananas/images/products/alcohol.png"
-      },
-      {
-        "name": "Agua Oxigenada",
-        "sub": "Farmacia",
-        "unit": "100ml",
-        "price": 1.0,
-        "img": "/Ananas/images/products/agua_oxigenada.png"
-      },
-      {
-        "name": "Curitas Band-Aid",
-        "sub": "Farmacia",
-        "unit": "Caja",
-        "price": 3.0,
-        "img": "/Ananas/images/products/curitas.png"
-      }
     ]
   },
   {
     "id": "limpieza",
+    "name": "Limpieza",
+    "icon": "🧽",
+    "color": "bg-cyan-100 text-cyan-600",
     "subcategories": [
       "Detergentes",
       "Accesorios"
-    ],
-    "products": [
-      {
-        "name": "Detergente Liquido Ariel",
-        "sub": "Detergentes",
-        "unit": "2 L",
-        "price": 8.5,
-        "img": "/Ananas/images/products/detergente_liquido.png"
-      },
-      {
-        "name": "Detergente en Polvo ACE",
-        "sub": "Detergentes",
-        "unit": "1 Kg",
-        "price": 4.5,
-        "img": "/Ananas/images/products/detergente_polvo.png"
-      },
-      {
-        "name": "Suavizante Suavitel",
-        "sub": "Detergentes",
-        "unit": "1 L",
-        "price": 3.8,
-        "img": "/Ananas/images/products/suavizante.png"
-      },
-      {
-        "name": "Lavaplatos Liquido Las Llaves",
-        "sub": "Detergentes",
-        "unit": "500ml",
-        "price": 2.5,
-        "img": "/Ananas/images/products/lavaplatos_liquido.png"
-      },
-      {
-        "name": "Lavaplatos en Crema Axion",
-        "sub": "Detergentes",
-        "unit": "250g",
-        "price": 1.8,
-        "img": "/Ananas/images/products/lavaplatos_crema.png"
-      },
-      {
-        "name": "Cloro Nevex",
-        "sub": "Detergentes",
-        "unit": "1 L",
-        "price": 1.5,
-        "img": "/Ananas/images/products/cloro.png"
-      },
-      {
-        "name": "Desinfectante Mistolin",
-        "sub": "Detergentes",
-        "unit": "1 L",
-        "price": 2.2,
-        "img": "/Ananas/images/products/desinfectante.png"
-      },
-      {
-        "name": "Esponja Scotch-Brite",
-        "sub": "Accesorios",
-        "unit": "3 Unidades",
-        "price": 3.5,
-        "img": "/Ananas/images/products/esponja.png"
-      },
-      {
-        "name": "Mopa de Algodon",
-        "sub": "Accesorios",
-        "unit": "1 Unidad",
-        "price": 5.0,
-        "img": "/Ananas/images/products/mopa.png"
-      },
-      {
-        "name": "Escoba con Mango",
-        "sub": "Accesorios",
-        "unit": "1 Unidad",
-        "price": 4.5,
-        "img": "/Ananas/images/products/escoba.png"
-      },
-      {
-        "name": "Coleto Tradicional",
-        "sub": "Accesorios",
-        "unit": "1 Unidad",
-        "price": 2.0,
-        "img": "/Ananas/images/products/coleto.png"
-      },
-      {
-        "name": "Bolsas de Basura Grandes",
-        "sub": "Accesorios",
-        "unit": "10 Unidades",
-        "price": 3.2,
-        "img": "/Ananas/images/products/bolsas_basura.png"
-      }
     ]
   },
   {
     "id": "licores",
+    "name": "Licores",
+    "icon": "🍷",
+    "color": "bg-purple-100 text-purple-600",
     "subcategories": [
-      "Vinos",
       "Cervezas",
-      "Destilados"
-    ],
-    "products": [
-      {
-        "name": "Cerveza Polar Pilsen",
-        "sub": "Cervezas",
-        "unit": "Caja 36",
-        "price": 25.0,
-        "img": "/Ananas/images/products/cerveza_pilsen.png"
-      },
-      {
-        "name": "Cerveza Polar Light",
-        "sub": "Cervezas",
-        "unit": "Caja 36",
-        "price": 25.0,
-        "img": "/Ananas/images/products/cerveza_light.png"
-      },
-      {
-        "name": "Cerveza Solera Verde",
-        "sub": "Cervezas",
-        "unit": "6 Pack",
-        "price": 6.5,
-        "img": "/Ananas/images/products/cerveza_solera.png"
-      },
-      {
-        "name": "Cerveza Zulia",
-        "sub": "Cervezas",
-        "unit": "6 Pack",
-        "price": 6.0,
-        "img": "/Ananas/images/products/cerveza_zulia.png"
-      },
-      {
-        "name": "Ron Santa Teresa Linaje",
-        "sub": "Destilados",
-        "unit": "750ml",
-        "price": 18.0,
-        "img": "/Ananas/images/products/ron_teresa.png"
-      },
-      {
-        "name": "Ron Cacique Anejo",
-        "sub": "Destilados",
-        "unit": "750ml",
-        "price": 12.0,
-        "img": "/Ananas/images/products/ron_cacique.png"
-      },
-      {
-        "name": "Ron Pampero Aniversario",
-        "sub": "Destilados",
-        "unit": "750ml",
-        "price": 22.0,
-        "img": "/Ananas/images/products/ron_pampero.png"
-      },
-      {
-        "name": "Ron Diplomatico Reserva Exclusiva",
-        "sub": "Destilados",
-        "unit": "750ml",
-        "price": 35.0,
-        "img": "/Ananas/images/products/ron_diplomatico.png"
-      },
-      {
-        "name": "Whisky Buchanan's 12 Anos",
-        "sub": "Destilados",
-        "unit": "750ml",
-        "price": 42.0,
-        "img": "/Ananas/images/products/whisky_buchanans.png"
-      },
-      {
-        "name": "Whisky Old Parr 12 Anos",
-        "sub": "Destilados",
-        "unit": "750ml",
-        "price": 38.0,
-        "img": "/Ananas/images/products/whisky_parr.png"
-      },
-      {
-        "name": "Vodka Gordon's",
-        "sub": "Destilados",
-        "unit": "750ml",
-        "price": 10.0,
-        "img": "/Ananas/images/products/vodka.png"
-      },
-      {
-        "name": "Vino Tinto Casillero del Diablo",
-        "sub": "Vinos",
-        "unit": "750ml",
-        "price": 12.5,
-        "img": "/Ananas/images/products/vino_tinto.png"
-      },
-      {
-        "name": "Vino Blanco Santa Helena",
-        "sub": "Vinos",
-        "unit": "750ml",
-        "price": 8.5,
-        "img": "/Ananas/images/products/vino_blanco.png"
-      }
+      "Destilados",
+      "Vinos"
     ]
   }
 ];
 
-let globalId = 1;
-for (const cat of rawData) {
-  for (const p of cat.products) {
-    const r = Math.random();
-    let labels: string[] | undefined = undefined;
-    if (r > 0.9) labels = ['Nuevo'];
-    else if (r > 0.8) labels = ['Oferta'];
-
-    products.push({
-      id: 'p' + globalId,
-      name: p.name,
-      price: p.price,
-      category: cat.id,
-      subcategory: p.sub,
-      image: p.img,
-      unit: p.unit,
-      labels: labels,
-      stock: Math.floor(Math.random() * 90) + 10,
-      warehouseStock: Math.floor(Math.random() * 450) + 50
-    });
-    globalId++;
+export const products: Product[] = [
+  {
+    "id": "p1",
+    "name": "Tomates Perita",
+    "price": 3.49,
+    "category": "frutas-vegetales",
+    "subcategory": "Frescos",
+    "image": "/Ananas/images/products/tomates_perita.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 18,
+    "warehouseStock": 388
+  },
+  {
+    "id": "p2",
+    "name": "Cebolla Blanca",
+    "price": 2.1,
+    "category": "frutas-vegetales",
+    "subcategory": "Frescos",
+    "image": "/Ananas/images/products/cebolla_blanca.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 39,
+    "warehouseStock": 163
+  },
+  {
+    "id": "p3",
+    "name": "Papa Lavada",
+    "price": 1.8,
+    "category": "frutas-vegetales",
+    "subcategory": "Frescos",
+    "image": "/Ananas/images/products/papa_lavada.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 14,
+    "warehouseStock": 315
+  },
+  {
+    "id": "p4",
+    "name": "Zanahoria",
+    "price": 1.5,
+    "category": "frutas-vegetales",
+    "subcategory": "Frescos",
+    "image": "/Ananas/images/products/zanahoria.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 73,
+    "warehouseStock": 477
+  },
+  {
+    "id": "p5",
+    "name": "Pimenton Verde",
+    "price": 4.2,
+    "category": "frutas-vegetales",
+    "subcategory": "Frescos",
+    "image": "/Ananas/images/products/pimenton_verde.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 44,
+    "warehouseStock": 427
+  },
+  {
+    "id": "p6",
+    "name": "Lechuga Romana",
+    "price": 1.2,
+    "category": "frutas-vegetales",
+    "subcategory": "Frescos",
+    "image": "/Ananas/images/products/lechuga_romana.png",
+    "unit": "1 Unidad",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 18,
+    "warehouseStock": 344
+  },
+  {
+    "id": "p7",
+    "name": "Platano Maduro",
+    "price": 1.9,
+    "category": "frutas-vegetales",
+    "subcategory": "Enteras",
+    "image": "/Ananas/images/products/platano_maduro.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 13,
+    "warehouseStock": 85
+  },
+  {
+    "id": "p8",
+    "name": "Cambur",
+    "price": 1.1,
+    "category": "frutas-vegetales",
+    "subcategory": "Enteras",
+    "image": "/Ananas/images/products/cambur.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 31,
+    "warehouseStock": 321
+  },
+  {
+    "id": "p9",
+    "name": "Manzana Gala",
+    "price": 5.5,
+    "category": "frutas-vegetales",
+    "subcategory": "Enteras",
+    "image": "/Ananas/images/products/manzana_gala.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 54,
+    "warehouseStock": 310
+  },
+  {
+    "id": "p10",
+    "name": "Naranja para Jugo",
+    "price": 1.6,
+    "category": "frutas-vegetales",
+    "subcategory": "Enteras",
+    "image": "/Ananas/images/products/naranja.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 35,
+    "warehouseStock": 408
+  },
+  {
+    "id": "p11",
+    "name": "Lechosa",
+    "price": 1.75,
+    "category": "frutas-vegetales",
+    "subcategory": "Enteras",
+    "image": "/Ananas/images/products/lechosa.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 43,
+    "warehouseStock": 199
+  },
+  {
+    "id": "p12",
+    "name": "Limones",
+    "price": 4.19,
+    "category": "frutas-vegetales",
+    "subcategory": "Frescos",
+    "image": "/Ananas/images/products/limones.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 61,
+    "warehouseStock": 361
+  },
+  {
+    "id": "p13",
+    "name": "Pina",
+    "price": 2.55,
+    "category": "frutas-vegetales",
+    "subcategory": "Enteras",
+    "image": "/Ananas/images/products/pina.png",
+    "unit": "1 Unidad",
+    "labels": [],
+    "stock": 98,
+    "warehouseStock": 387
+  },
+  {
+    "id": "p14",
+    "name": "Aguacate",
+    "price": 5.2,
+    "category": "frutas-vegetales",
+    "subcategory": "Frescos",
+    "image": "/Ananas/images/products/aguacate.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 24,
+    "warehouseStock": 370
+  },
+  {
+    "id": "p15",
+    "name": "Frutas Picadas Mixtas",
+    "price": 3.0,
+    "category": "frutas-vegetales",
+    "subcategory": "Picadas",
+    "image": "/Ananas/images/products/frutas_picadas.png",
+    "unit": "500g",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 52,
+    "warehouseStock": 240
+  },
+  {
+    "id": "p16",
+    "name": "Carne Molida SV",
+    "price": 9.95,
+    "category": "refrigerados-congelados",
+    "subcategory": "Carnes",
+    "image": "/Ananas/images/products/carne_molida.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 67,
+    "warehouseStock": 256
+  },
+  {
+    "id": "p17",
+    "name": "Bistec de Ganso",
+    "price": 11.5,
+    "category": "refrigerados-congelados",
+    "subcategory": "Carnes",
+    "image": "/Ananas/images/products/bistec_ganso.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 40,
+    "warehouseStock": 366
+  },
+  {
+    "id": "p18",
+    "name": "Costilla de Res",
+    "price": 7.8,
+    "category": "refrigerados-congelados",
+    "subcategory": "Carnes",
+    "image": "/Ananas/images/products/costilla_res.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 37,
+    "warehouseStock": 493
+  },
+  {
+    "id": "p19",
+    "name": "Pechuga de Pollo",
+    "price": 8.45,
+    "category": "refrigerados-congelados",
+    "subcategory": "Pollos",
+    "image": "/Ananas/images/products/pechuga_pollo.png",
+    "unit": "1 Kg",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 91,
+    "warehouseStock": 74
+  },
+  {
+    "id": "p20",
+    "name": "Pollo Entero",
+    "price": 4.5,
+    "category": "refrigerados-congelados",
+    "subcategory": "Pollos",
+    "image": "/Ananas/images/products/pollo_entero.png",
+    "unit": "1 Kg",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 48,
+    "warehouseStock": 274
+  },
+  {
+    "id": "p21",
+    "name": "Muslos de Pollo",
+    "price": 5.2,
+    "category": "refrigerados-congelados",
+    "subcategory": "Pollos",
+    "image": "/Ananas/images/products/muslos_pollo.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 50,
+    "warehouseStock": 292
+  },
+  {
+    "id": "p22",
+    "name": "Alitas de Pollo",
+    "price": 6.0,
+    "category": "refrigerados-congelados",
+    "subcategory": "Pollos",
+    "image": "/Ananas/images/products/alitas_pollo.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 95,
+    "warehouseStock": 102
+  },
+  {
+    "id": "p23",
+    "name": "Jamon Cocido Plumrose",
+    "price": 6.5,
+    "category": "refrigerados-congelados",
+    "subcategory": "Embutidos",
+    "image": "/Ananas/images/products/jamon_cocido.png",
+    "unit": "500g",
+    "labels": [],
+    "stock": 67,
+    "warehouseStock": 469
+  },
+  {
+    "id": "p24",
+    "name": "Queso Amarillo Paisa",
+    "price": 7.2,
+    "category": "refrigerados-congelados",
+    "subcategory": "Embutidos",
+    "image": "/Ananas/images/products/queso_amarillo.png",
+    "unit": "500g",
+    "labels": [],
+    "stock": 63,
+    "warehouseStock": 289
+  },
+  {
+    "id": "p25",
+    "name": "Queso Blanco Duro",
+    "price": 6.8,
+    "category": "refrigerados-congelados",
+    "subcategory": "Embutidos",
+    "image": "/Ananas/images/products/queso_blanco.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 67,
+    "warehouseStock": 499
+  },
+  {
+    "id": "p26",
+    "name": "Salchichas Plumrose",
+    "price": 4.5,
+    "category": "refrigerados-congelados",
+    "subcategory": "Embutidos",
+    "image": "/Ananas/images/products/salchichas.png",
+    "unit": "1 Paquete",
+    "labels": [],
+    "stock": 89,
+    "warehouseStock": 351
+  },
+  {
+    "id": "p27",
+    "name": "Tocino Ahumado",
+    "price": 4.8,
+    "category": "refrigerados-congelados",
+    "subcategory": "Embutidos",
+    "image": "/Ananas/images/products/tocino.png",
+    "unit": "250g",
+    "labels": [],
+    "stock": 20,
+    "warehouseStock": 253
+  },
+  {
+    "id": "p28",
+    "name": "Chorizo Carupanero",
+    "price": 5.5,
+    "category": "refrigerados-congelados",
+    "subcategory": "Embutidos",
+    "image": "/Ananas/images/products/chorizo.png",
+    "unit": "500g",
+    "labels": [],
+    "stock": 88,
+    "warehouseStock": 313
+  },
+  {
+    "id": "p29",
+    "name": "Queso Guayanes",
+    "price": 4.5,
+    "category": "refrigerados-congelados",
+    "subcategory": "Embutidos",
+    "image": "/Ananas/images/products/queso_guayanes.png",
+    "unit": "500g",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 77,
+    "warehouseStock": 315
+  },
+  {
+    "id": "p30",
+    "name": "Nuggets Congelados",
+    "price": 5.99,
+    "category": "refrigerados-congelados",
+    "subcategory": "Pollos",
+    "image": "/Ananas/images/products/nuggets.png",
+    "unit": "1 Paquete",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 75,
+    "warehouseStock": 161
+  },
+  {
+    "id": "p31",
+    "name": "Coca Cola Original",
+    "price": 2.5,
+    "category": "viveres",
+    "subcategory": "Refrescos",
+    "image": "/Ananas/images/products/coca_cola.png",
+    "unit": "2 L",
+    "labels": [],
+    "stock": 71,
+    "warehouseStock": 60
+  },
+  {
+    "id": "p32",
+    "name": "Pepsi Cola",
+    "price": 2.2,
+    "category": "viveres",
+    "subcategory": "Refrescos",
+    "image": "/Ananas/images/products/pepsi.png",
+    "unit": "2 L",
+    "labels": [],
+    "stock": 52,
+    "warehouseStock": 441
+  },
+  {
+    "id": "p33",
+    "name": "Chinotto",
+    "price": 2.2,
+    "category": "viveres",
+    "subcategory": "Refrescos",
+    "image": "/Ananas/images/products/chinotto.png",
+    "unit": "2 L",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 77,
+    "warehouseStock": 208
+  },
+  {
+    "id": "p34",
+    "name": "Frescolita",
+    "price": 2.2,
+    "category": "viveres",
+    "subcategory": "Refrescos",
+    "image": "/Ananas/images/products/frescolita.png",
+    "unit": "2 L",
+    "labels": [],
+    "stock": 48,
+    "warehouseStock": 487
+  },
+  {
+    "id": "p35",
+    "name": "Maltin Polar",
+    "price": 2.0,
+    "category": "viveres",
+    "subcategory": "Refrescos",
+    "image": "/Ananas/images/products/maltin.png",
+    "unit": "1.5 L",
+    "labels": [],
+    "stock": 92,
+    "warehouseStock": 182
+  },
+  {
+    "id": "p36",
+    "name": "Arroz Blanco Mary",
+    "price": 1.2,
+    "category": "viveres",
+    "subcategory": "Arroz",
+    "image": "/Ananas/images/products/arroz_blanco.png",
+    "unit": "1 Kg",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 57,
+    "warehouseStock": 354
+  },
+  {
+    "id": "p37",
+    "name": "Arroz Primor",
+    "price": 1.3,
+    "category": "viveres",
+    "subcategory": "Arroz",
+    "image": "/Ananas/images/products/arroz_primor.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 57,
+    "warehouseStock": 203
+  },
+  {
+    "id": "p38",
+    "name": "Pasta Capri Espagueti",
+    "price": 1.6,
+    "category": "viveres",
+    "subcategory": "Pasta",
+    "image": "/Ananas/images/products/pasta_capri.png",
+    "unit": "1 Kg",
+    "labels": [],
+    "stock": 16,
+    "warehouseStock": 52
+  },
+  {
+    "id": "p39",
+    "name": "Harina PAN",
+    "price": 1.15,
+    "category": "viveres",
+    "subcategory": "Arroz",
+    "image": "/Ananas/images/products/harina_pan.png",
+    "unit": "1 Kg",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 23,
+    "warehouseStock": 338
+  },
+  {
+    "id": "p40",
+    "name": "Caraotas Negras Mary",
+    "price": 1.8,
+    "category": "viveres",
+    "subcategory": "Enlatados",
+    "image": "/Ananas/images/products/caraotas.png",
+    "unit": "500g",
+    "labels": [],
+    "stock": 98,
+    "warehouseStock": 168
+  },
+  {
+    "id": "p41",
+    "name": "Lentejas",
+    "price": 2.1,
+    "category": "viveres",
+    "subcategory": "Enlatados",
+    "image": "/Ananas/images/products/lentejas.png",
+    "unit": "500g",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 70,
+    "warehouseStock": 349
+  },
+  {
+    "id": "p42",
+    "name": "Atun Margarita en Aceite",
+    "price": 2.5,
+    "category": "viveres",
+    "subcategory": "Enlatados",
+    "image": "/Ananas/images/products/atun_aceite.png",
+    "unit": "140g",
+    "labels": [],
+    "stock": 44,
+    "warehouseStock": 355
+  },
+  {
+    "id": "p43",
+    "name": "Atun Margarita en Agua",
+    "price": 2.5,
+    "category": "viveres",
+    "subcategory": "Enlatados",
+    "image": "/Ananas/images/products/atun_agua.png",
+    "unit": "140g",
+    "labels": [],
+    "stock": 77,
+    "warehouseStock": 294
+  },
+  {
+    "id": "p44",
+    "name": "Maiz Dulce en Lata",
+    "price": 1.5,
+    "category": "viveres",
+    "subcategory": "Enlatados",
+    "image": "/Ananas/images/products/maiz_lata.png",
+    "unit": "300g",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 96,
+    "warehouseStock": 82
+  },
+  {
+    "id": "p45",
+    "name": "Aceite de Maiz Mazeite",
+    "price": 3.5,
+    "category": "viveres",
+    "subcategory": "Arroz",
+    "image": "/Ananas/images/products/aceite_maiz.png",
+    "unit": "1 Litro",
+    "labels": [],
+    "stock": 98,
+    "warehouseStock": 252
+  },
+  {
+    "id": "p46",
+    "name": "Jabon Protex",
+    "price": 3.5,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Aseo",
+    "image": "/Ananas/images/products/jabon_protex.png",
+    "unit": "3 Unidades",
+    "labels": [],
+    "stock": 50,
+    "warehouseStock": 176
+  },
+  {
+    "id": "p47",
+    "name": "Desodorante Dove",
+    "price": 4.2,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Aseo",
+    "image": "/Ananas/images/products/desodorante.png",
+    "unit": "50ml",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 65,
+    "warehouseStock": 129
+  },
+  {
+    "id": "p48",
+    "name": "Crema Dental Colgate",
+    "price": 2.8,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Aseo",
+    "image": "/Ananas/images/products/crema_dental.png",
+    "unit": "100g",
+    "labels": [],
+    "stock": 21,
+    "warehouseStock": 143
+  },
+  {
+    "id": "p49",
+    "name": "Shampoo Pantene",
+    "price": 6.5,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Aseo",
+    "image": "/Ananas/images/products/shampoo.png",
+    "unit": "400ml",
+    "labels": [],
+    "stock": 92,
+    "warehouseStock": 204
+  },
+  {
+    "id": "p50",
+    "name": "Papel Higienico Scott",
+    "price": 3.8,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Aseo",
+    "image": "/Ananas/images/products/papel_higienico.png",
+    "unit": "4 Rollos",
+    "labels": [],
+    "stock": 51,
+    "warehouseStock": 138
+  },
+  {
+    "id": "p51",
+    "name": "Toallas Sanitarias Always",
+    "price": 2.9,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Aseo",
+    "image": "/Ananas/images/products/toallas_sanitarias.png",
+    "unit": "10 Unidades",
+    "labels": [],
+    "stock": 82,
+    "warehouseStock": 312
+  },
+  {
+    "id": "p52",
+    "name": "Maquina de Afeitar Gillette",
+    "price": 3.0,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Aseo",
+    "image": "/Ananas/images/products/maquina_afeitar.png",
+    "unit": "2 Unidades",
+    "labels": [],
+    "stock": 70,
+    "warehouseStock": 380
+  },
+  {
+    "id": "p53",
+    "name": "Crema Corporal Lubriderm",
+    "price": 8.5,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Aseo",
+    "image": "/Ananas/images/products/crema_corporal.png",
+    "unit": "400ml",
+    "labels": [],
+    "stock": 34,
+    "warehouseStock": 268
+  },
+  {
+    "id": "p54",
+    "name": "Algodon en Motas",
+    "price": 1.5,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Farmacia",
+    "image": "/Ananas/images/products/algodon.png",
+    "unit": "100g",
+    "labels": [],
+    "stock": 100,
+    "warehouseStock": 411
+  },
+  {
+    "id": "p55",
+    "name": "Hisopos Q-Tips",
+    "price": 1.8,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Farmacia",
+    "image": "/Ananas/images/products/hisopos.png",
+    "unit": "100 Unidades",
+    "labels": [],
+    "stock": 19,
+    "warehouseStock": 374
+  },
+  {
+    "id": "p56",
+    "name": "Alcohol Isopropilico",
+    "price": 2.2,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Farmacia",
+    "image": "/Ananas/images/products/alcohol.png",
+    "unit": "250ml",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 92,
+    "warehouseStock": 107
+  },
+  {
+    "id": "p57",
+    "name": "Agua Oxigenada",
+    "price": 1.0,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Farmacia",
+    "image": "/Ananas/images/products/agua_oxigenada.png",
+    "unit": "100ml",
+    "labels": [],
+    "stock": 94,
+    "warehouseStock": 422
+  },
+  {
+    "id": "p58",
+    "name": "Curitas Band-Aid",
+    "price": 3.0,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Farmacia",
+    "image": "/Ananas/images/products/curitas.png",
+    "unit": "Caja",
+    "labels": [],
+    "stock": 70,
+    "warehouseStock": 102
+  },
+  {
+    "id": "p59",
+    "name": "Detergente Liquido Ariel",
+    "price": 8.5,
+    "category": "limpieza",
+    "subcategory": "Detergentes",
+    "image": "/Ananas/images/products/detergente_liquido.png",
+    "unit": "2 L",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 76,
+    "warehouseStock": 100
+  },
+  {
+    "id": "p60",
+    "name": "Detergente en Polvo ACE",
+    "price": 4.5,
+    "category": "limpieza",
+    "subcategory": "Detergentes",
+    "image": "/Ananas/images/products/detergente_polvo.png",
+    "unit": "1 Kg",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 75,
+    "warehouseStock": 459
+  },
+  {
+    "id": "p61",
+    "name": "Suavizante Suavitel",
+    "price": 3.8,
+    "category": "limpieza",
+    "subcategory": "Detergentes",
+    "image": "/Ananas/images/products/suavizante.png",
+    "unit": "1 L",
+    "labels": [],
+    "stock": 60,
+    "warehouseStock": 93
+  },
+  {
+    "id": "p62",
+    "name": "Lavaplatos Liquido Las Llaves",
+    "price": 2.5,
+    "category": "limpieza",
+    "subcategory": "Detergentes",
+    "image": "/Ananas/images/products/lavaplatos_liquido.png",
+    "unit": "500ml",
+    "labels": [],
+    "stock": 96,
+    "warehouseStock": 369
+  },
+  {
+    "id": "p63",
+    "name": "Lavaplatos en Crema Axion",
+    "price": 1.8,
+    "category": "limpieza",
+    "subcategory": "Detergentes",
+    "image": "/Ananas/images/products/lavaplatos_crema.png",
+    "unit": "250g",
+    "labels": [],
+    "stock": 98,
+    "warehouseStock": 364
+  },
+  {
+    "id": "p64",
+    "name": "Cloro Nevex",
+    "price": 1.5,
+    "category": "limpieza",
+    "subcategory": "Detergentes",
+    "image": "/Ananas/images/products/cloro.png",
+    "unit": "1 L",
+    "labels": [],
+    "stock": 55,
+    "warehouseStock": 206
+  },
+  {
+    "id": "p65",
+    "name": "Desinfectante Mistolin",
+    "price": 2.2,
+    "category": "limpieza",
+    "subcategory": "Detergentes",
+    "image": "/Ananas/images/products/desinfectante.png",
+    "unit": "1 L",
+    "labels": [],
+    "stock": 24,
+    "warehouseStock": 321
+  },
+  {
+    "id": "p66",
+    "name": "Esponja Scotch-Brite",
+    "price": 3.5,
+    "category": "limpieza",
+    "subcategory": "Accesorios",
+    "image": "/Ananas/images/products/esponja.png",
+    "unit": "3 Unidades",
+    "labels": [],
+    "stock": 21,
+    "warehouseStock": 65
+  },
+  {
+    "id": "p67",
+    "name": "Mopa de Algodon",
+    "price": 5.0,
+    "category": "limpieza",
+    "subcategory": "Accesorios",
+    "image": "/Ananas/images/products/mopa.png",
+    "unit": "1 Unidad",
+    "labels": [],
+    "stock": 78,
+    "warehouseStock": 276
+  },
+  {
+    "id": "p68",
+    "name": "Escoba con Mango",
+    "price": 4.5,
+    "category": "limpieza",
+    "subcategory": "Accesorios",
+    "image": "/Ananas/images/products/escoba.png",
+    "unit": "1 Unidad",
+    "labels": [],
+    "stock": 47,
+    "warehouseStock": 323
+  },
+  {
+    "id": "p69",
+    "name": "Coleto Tradicional",
+    "price": 2.0,
+    "category": "limpieza",
+    "subcategory": "Accesorios",
+    "image": "/Ananas/images/products/coleto.png",
+    "unit": "1 Unidad",
+    "labels": [],
+    "stock": 92,
+    "warehouseStock": 161
+  },
+  {
+    "id": "p70",
+    "name": "Bolsas de Basura Grandes",
+    "price": 3.2,
+    "category": "limpieza",
+    "subcategory": "Accesorios",
+    "image": "/Ananas/images/products/bolsas_basura.png",
+    "unit": "10 Unidades",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 100,
+    "warehouseStock": 421
+  },
+  {
+    "id": "p71",
+    "name": "Cerveza Polar Pilsen",
+    "price": 25.0,
+    "category": "licores",
+    "subcategory": "Cervezas",
+    "image": "/Ananas/images/products/cerveza_pilsen.png",
+    "unit": "Caja 36",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 96,
+    "warehouseStock": 235
+  },
+  {
+    "id": "p72",
+    "name": "Cerveza Polar Light",
+    "price": 25.0,
+    "category": "licores",
+    "subcategory": "Cervezas",
+    "image": "/Ananas/images/products/cerveza_light.png",
+    "unit": "Caja 36",
+    "labels": [],
+    "stock": 79,
+    "warehouseStock": 144
+  },
+  {
+    "id": "p73",
+    "name": "Cerveza Solera Verde",
+    "price": 6.5,
+    "category": "licores",
+    "subcategory": "Cervezas",
+    "image": "/Ananas/images/products/cerveza_solera.png",
+    "unit": "6 Pack",
+    "labels": [],
+    "stock": 15,
+    "warehouseStock": 238
+  },
+  {
+    "id": "p74",
+    "name": "Cerveza Zulia",
+    "price": 6.0,
+    "category": "licores",
+    "subcategory": "Cervezas",
+    "image": "/Ananas/images/products/cerveza_zulia.png",
+    "unit": "6 Pack",
+    "labels": [],
+    "stock": 33,
+    "warehouseStock": 314
+  },
+  {
+    "id": "p75",
+    "name": "Ron Santa Teresa Linaje",
+    "price": 18.0,
+    "category": "licores",
+    "subcategory": "Destilados",
+    "image": "/Ananas/images/products/ron_teresa.png",
+    "unit": "750ml",
+    "labels": [],
+    "stock": 14,
+    "warehouseStock": 241
+  },
+  {
+    "id": "p76",
+    "name": "Ron Cacique Anejo",
+    "price": 12.0,
+    "category": "licores",
+    "subcategory": "Destilados",
+    "image": "/Ananas/images/products/ron_cacique.png",
+    "unit": "750ml",
+    "labels": [
+      "Nuevo"
+    ],
+    "stock": 24,
+    "warehouseStock": 415
+  },
+  {
+    "id": "p77",
+    "name": "Ron Pampero Aniversario",
+    "price": 22.0,
+    "category": "licores",
+    "subcategory": "Destilados",
+    "image": "/Ananas/images/products/ron_pampero.png",
+    "unit": "750ml",
+    "labels": [],
+    "stock": 29,
+    "warehouseStock": 160
+  },
+  {
+    "id": "p78",
+    "name": "Ron Diplomatico Reserva Exclusiva",
+    "price": 35.0,
+    "category": "licores",
+    "subcategory": "Destilados",
+    "image": "/Ananas/images/products/ron_diplomatico.png",
+    "unit": "750ml",
+    "labels": [],
+    "stock": 34,
+    "warehouseStock": 338
+  },
+  {
+    "id": "p79",
+    "name": "Whisky Buchanan's 12 Anos",
+    "price": 42.0,
+    "category": "licores",
+    "subcategory": "Destilados",
+    "image": "/Ananas/images/products/whisky_buchanans.png",
+    "unit": "750ml",
+    "labels": [],
+    "stock": 57,
+    "warehouseStock": 54
+  },
+  {
+    "id": "p80",
+    "name": "Whisky Old Parr 12 Anos",
+    "price": 38.0,
+    "category": "licores",
+    "subcategory": "Destilados",
+    "image": "/Ananas/images/products/whisky_parr.png",
+    "unit": "750ml",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 83,
+    "warehouseStock": 313
+  },
+  {
+    "id": "p81",
+    "name": "Vodka Gordon's",
+    "price": 10.0,
+    "category": "licores",
+    "subcategory": "Destilados",
+    "image": "/Ananas/images/products/vodka.png",
+    "unit": "750ml",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 58,
+    "warehouseStock": 260
+  },
+  {
+    "id": "p82",
+    "name": "Vino Tinto Casillero del Diablo",
+    "price": 12.5,
+    "category": "licores",
+    "subcategory": "Vinos",
+    "image": "/Ananas/images/products/vino_tinto.png",
+    "unit": "750ml",
+    "labels": [
+      "Oferta"
+    ],
+    "stock": 36,
+    "warehouseStock": 81
+  },
+  {
+    "id": "p83",
+    "name": "Vino Blanco Santa Helena",
+    "price": 8.5,
+    "category": "licores",
+    "subcategory": "Vinos",
+    "image": "/Ananas/images/products/vino_blanco.png",
+    "unit": "750ml",
+    "labels": [],
+    "stock": 82,
+    "warehouseStock": 108
   }
-}
+];
 
 export const zones = ['San Luis El Cafetal'];

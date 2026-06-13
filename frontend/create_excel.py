@@ -143,7 +143,7 @@ def create_excel():
     ws = wb.active
     ws.title = "Productos"
 
-    headers = ['ID', 'Nombre', 'Precio', 'Categoría', 'Subcategoría', 'Imagen (Preview)', 'Unidad', 'Etiquetas', 'Stock', 'Stock Almacén']
+    headers = ['ID', 'Nombre', 'Precio', 'Categoría', 'Subcategoría', 'Imagen (Preview)', 'Imagen (Archivo)', 'Unidad', 'Etiquetas', 'Stock', 'Stock Almacén']
     ws.append(headers)
 
     header_font = Font(bold=True)
@@ -159,13 +159,18 @@ def create_excel():
     ws.column_dimensions['D'].width = 25
     ws.column_dimensions['E'].width = 15
     ws.column_dimensions['F'].width = 20 # Image column
-    ws.column_dimensions['G'].width = 15
+    ws.column_dimensions['G'].width = 25 # Image filename column
     ws.column_dimensions['H'].width = 15
-    ws.column_dimensions['I'].width = 10
-    ws.column_dimensions['J'].width = 15
+    ws.column_dimensions['I'].width = 15
+    ws.column_dimensions['J'].width = 10
+    ws.column_dimensions['K'].width = 15
 
     id_counter = 1
     current_row = 2
+
+    # Create temporary thumbs dir inside workspace
+    temp_thumbs_dir = "public/data/temp_thumbs"
+    os.makedirs(temp_thumbs_dir, exist_ok=True)
 
     for cat in categories:
         for prod in cat['products']:
@@ -188,10 +193,11 @@ def create_excel():
             ws.cell(row=current_row, column=3, value=f"${prod['price']:.2f}")
             ws.cell(row=current_row, column=4, value=cat['id'])
             ws.cell(row=current_row, column=5, value=prod['sub'])
-            ws.cell(row=current_row, column=7, value=prod['unit'])
-            ws.cell(row=current_row, column=8, value=label)
-            ws.cell(row=current_row, column=9, value=stock)
-            ws.cell(row=current_row, column=10, value=warehouse_stock)
+            ws.cell(row=current_row, column=7, value=f"{prod['img']}.png")
+            ws.cell(row=current_row, column=8, value=prod['unit'])
+            ws.cell(row=current_row, column=9, value=label)
+            ws.cell(row=current_row, column=10, value=stock)
+            ws.cell(row=current_row, column=11, value=warehouse_stock)
 
             # Insert Image
             img_path = get_img_path(prod['img'])
@@ -200,7 +206,7 @@ def create_excel():
                     # Open and resize image to fit in cell
                     with PILImage.open(img_path) as pil_img:
                         pil_img.thumbnail((70, 70))
-                        temp_path = f"/tmp/thumb_{prod['img']}.png"
+                        temp_path = f"{temp_thumbs_dir}/thumb_{prod['img']}.png"
                         pil_img.save(temp_path)
                         
                         xl_img = ExcelImage(temp_path)
@@ -214,7 +220,7 @@ def create_excel():
             else:
                 ws.cell(row=current_row, column=6, value="(Sin img)")
 
-            for col in range(1, 11):
+            for col in range(1, 12):
                 ws.cell(row=current_row, column=col).alignment = Alignment(vertical='center')
 
             id_counter += 1
@@ -223,6 +229,14 @@ def create_excel():
     file_path = "public/data/productos_inventario.xlsx"
     wb.save(file_path)
     print(f"Excel guardado en: {file_path}")
+
+    # Clean up local temporary thumbnails folder
+    try:
+        import shutil
+        if os.path.exists(temp_thumbs_dir):
+            shutil.rmtree(temp_thumbs_dir)
+    except Exception as e:
+        print(f"Error cleaning up temp thumbs: {e}")
 
 if __name__ == "__main__":
     create_excel()
