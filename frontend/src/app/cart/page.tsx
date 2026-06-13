@@ -84,8 +84,8 @@ export default function CartPage() {
             <button 
               onClick={() => {
                 const isLogged = useStore.getState().user;
-                if (!isLogged) router.push('/login');
-                else router.push('/checkout'); // placeholder for future checkout
+                if (!isLogged) router.push('/login?redirect=/checkout');
+                else router.push('/checkout');
               }}
               className="w-full bg-ananas-green text-white py-4 rounded-xl font-bold text-lg hover:bg-ananas-dark hover:shadow-lg hover:shadow-ananas-green/30 transition-all flex items-center justify-center gap-2"
             >

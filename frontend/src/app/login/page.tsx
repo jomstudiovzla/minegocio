@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useStore } from '@/store/useStore';
 import { useRouter } from 'next/navigation';
 
@@ -9,6 +9,17 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
+  const [redirectPath, setRedirectPath] = useState('/account');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const red = params.get('redirect');
+      if (red) {
+        setRedirectPath(red);
+      }
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +32,7 @@ export default function LoginPage() {
         clubPoints: 350, // Puntos simulados
         clubLevel: 'Bronce'
       });
-      router.push('/account');
+      router.push(redirectPath);
     }
   };
 
