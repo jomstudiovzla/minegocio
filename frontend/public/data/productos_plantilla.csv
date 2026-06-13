@@ -1,84 +1,84 @@
 id,name,price,category,subcategory,image,unit,labels,stock,warehouseStock
-p1,Tomates Perita,3.49,frutas-vegetales,Frescos,https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400,1 Kg,,95,490
-p2,Cebolla Blanca,2.10,frutas-vegetales,Frescos,https://images.unsplash.com/photo-1618512496248-a07ce83e8cbd?w=400,1 Kg,,52,356
-p3,Papa Lavada,1.80,frutas-vegetales,Frescos,https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400,1 Kg,,40,387
-p4,Zanahoria,1.50,frutas-vegetales,Frescos,https://images.unsplash.com/photo-1598170845058-285627237936?w=400,1 Kg,,99,366
-p5,Pimenton Verde,4.20,frutas-vegetales,Frescos,https://images.unsplash.com/photo-1604544521364-7fae89ab20ab?w=400,1 Kg,Nuevo,43,56
-p6,Lechuga Romana,1.20,frutas-vegetales,Frescos,https://images.unsplash.com/photo-1622206151226-18ca2c9ea90c?w=400,1 Unidad,,39,237
-p7,Platano Maduro,1.90,frutas-vegetales,Enteras,https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400,1 Kg,Oferta,82,229
-p8,Cambur,1.10,frutas-vegetales,Enteras,https://images.unsplash.com/photo-1528825871115-3581a5387919?w=400,1 Kg,,98,209
-p9,Manzana Gala,5.50,frutas-vegetales,Enteras,https://images.unsplash.com/photo-1568702846914-96c3028d88b1?w=400,1 Kg,,36,392
-p10,Naranja para Jugo,1.60,frutas-vegetales,Enteras,https://images.unsplash.com/photo-1549888834-3ec93abbf089?w=400,1 Kg,,12,427
-p11,Lechosa,1.75,frutas-vegetales,Enteras,https://images.unsplash.com/photo-1615486171448-4fd1ab2c88f3?w=400,1 Kg,,18,72
-p12,Limones,4.19,frutas-vegetales,Frescos,https://images.unsplash.com/photo-1590502593747-42a996111401?w=400,1 Kg,,69,229
-p13,Pina,2.55,frutas-vegetales,Enteras,https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=400,1 Unidad,,65,119
-p14,Aguacate,5.20,frutas-vegetales,Frescos,https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400,1 Kg,Oferta,77,292
-p15,Frutas Picadas Mixtas,3.00,frutas-vegetales,Picadas,https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400,500g,,92,298
-p16,Carne Molida SV,9.95,refrigerados-congelados,Carnes,https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400,1 Kg,,29,222
-p17,Bistec de Ganso,11.50,refrigerados-congelados,Carnes,https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400,1 Kg,Oferta,40,368
-p18,Costilla de Res,7.80,refrigerados-congelados,Carnes,https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400,1 Kg,,91,333
-p19,Pechuga de Pollo,8.45,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Kg,,33,471
-p20,Pollo Entero,4.50,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Kg,,74,500
-p21,Muslos de Pollo,5.20,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Kg,,99,192
-p22,Alitas de Pollo,6.00,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Kg,,61,417
-p23,Jamon Cocido Plumrose,6.50,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400,500g,,83,236
-p24,Queso Amarillo Paisa,7.20,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400,500g,,96,446
-p25,Queso Blanco Duro,6.80,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400,1 Kg,,55,402
-p26,Salchichas Plumrose,4.50,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400,1 Paquete,,30,236
-p27,Tocino Ahumado,4.80,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400,250g,,87,274
-p28,Chorizo Carupanero,5.50,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400,500g,,92,203
-p29,Queso Guayanes,4.50,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400,500g,,78,218
-p30,Nuggets Congelados,5.99,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Paquete,Nuevo,33,63
-p31,Coca Cola Original,2.50,viveres,Refrescos,https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400,2 L,,28,299
-p32,Pepsi Cola,2.20,viveres,Refrescos,https://images.unsplash.com/photo-1629203851288-7ece11431c8e?w=400,2 L,,76,218
-p33,Chinotto,2.20,viveres,Refrescos,https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400,2 L,,85,398
-p34,Frescolita,2.20,viveres,Refrescos,https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400,2 L,,94,97
-p35,Maltin Polar,2.00,viveres,Refrescos,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,1.5 L,Nuevo,86,454
-p36,Arroz Blanco Mary,1.20,viveres,Arroz,https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400,1 Kg,,96,271
-p37,Arroz Primor,1.30,viveres,Arroz,https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400,1 Kg,,47,443
-p38,Pasta Capri Espagueti,1.60,viveres,Pasta,https://images.unsplash.com/photo-1612965607446-25e1332775ae?w=400,1 Kg,Oferta,36,216
-p39,Harina PAN,1.15,viveres,Arroz,https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400,1 Kg,,56,372
-p40,Caraotas Negras Mary,1.80,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,500g,,61,87
-p41,Lentejas,2.10,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,500g,,64,330
-p42,Atun Margarita en Aceite,2.50,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,140g,,11,410
-p43,Atun Margarita en Agua,2.50,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,140g,,15,151
-p44,Maiz Dulce en Lata,1.50,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,300g,,61,234
-p45,Aceite de Maiz Mazeite,3.50,viveres,Arroz,https://images.unsplash.com/photo-1474979266404-7eaacba8a6ed?w=400,1 Litro,,35,262
-p46,Jabon Protex,3.50,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400,3 Unidades,,53,80
-p47,Desodorante Dove,4.20,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400,50ml,,100,91
-p48,Crema Dental Colgate,2.80,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400,100g,,49,391
-p49,Shampoo Pantene,6.50,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400,400ml,,31,469
-p50,Papel Higienico Scott,3.80,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,4 Rollos,,58,157
-p51,Toallas Sanitarias Always,2.90,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,10 Unidades,,88,387
-p52,Maquina de Afeitar Gillette,3.00,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,2 Unidades,,59,379
-p53,Crema Corporal Lubriderm,8.50,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400,400ml,,38,387
-p54,Algodon en Motas,1.50,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,100g,,63,164
-p55,Hisopos Q-Tips,1.80,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,100 Unidades,Oferta,41,269
-p56,Alcohol Isopropilico,2.20,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,250ml,Oferta,47,152
-p57,Agua Oxigenada,1.00,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,100ml,,78,137
-p58,Curitas Band-Aid,3.00,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,Caja,,44,192
-p59,Detergente Liquido Ariel,8.50,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,2 L,,57,383
-p60,Detergente en Polvo ACE,4.50,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,1 Kg,Oferta,56,156
-p61,Suavizante Suavitel,3.80,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,1 L,Nuevo,57,71
-p62,Lavaplatos Liquido Las Llaves,2.50,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,500ml,,75,345
-p63,Lavaplatos en Crema Axion,1.80,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,250g,Nuevo,83,419
-p64,Cloro Nevex,1.50,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,1 L,,74,341
-p65,Desinfectante Mistolin,2.20,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,1 L,,73,266
-p66,Esponja Scotch-Brite,3.50,limpieza,Accesorios,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,3 Unidades,,81,201
-p67,Mopa de Algodon,5.00,limpieza,Accesorios,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,1 Unidad,,39,83
-p68,Escoba con Mango,4.50,limpieza,Accesorios,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,1 Unidad,,95,148
-p69,Coleto Tradicional,2.00,limpieza,Accesorios,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,1 Unidad,,58,114
-p70,Bolsas de Basura Grandes,3.20,limpieza,Accesorios,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,10 Unidades,,27,436
-p71,Cerveza Polar Pilsen,25.00,licores,Cervezas,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,Caja 36,,94,306
-p72,Cerveza Polar Light,25.00,licores,Cervezas,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,Caja 36,,71,108
-p73,Cerveza Solera Verde,6.50,licores,Cervezas,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,6 Pack,,70,179
-p74,Cerveza Zulia,6.00,licores,Cervezas,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,6 Pack,,84,72
-p75,Ron Santa Teresa Linaje,18.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,Oferta,33,234
-p76,Ron Cacique Anejo,12.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,79,235
-p77,Ron Pampero Aniversario,22.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,Nuevo,66,432
-p78,Ron Diplomatico Reserva Exclusiva,35.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,38,165
-p79,Whisky Buchanan's 12 Anos,42.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,87,276
-p80,Whisky Old Parr 12 Anos,38.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,87,157
-p81,Vodka Gordon's,10.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,85,111
-p82,Vino Tinto Casillero del Diablo,12.50,licores,Vinos,https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=400,750ml,,69,438
-p83,Vino Blanco Santa Helena,8.50,licores,Vinos,https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=400,750ml,,73,499
+p1,Tomates Perita,3.49,frutas-vegetales,Frescos,/images/products/tomates_perita.png,1 Kg,,70,197
+p2,Cebolla Blanca,2.10,frutas-vegetales,Frescos,/images/products/cebolla_blanca.png,1 Kg,Oferta,41,248
+p3,Papa Lavada,1.80,frutas-vegetales,Frescos,/images/products/papa_lavada.png,1 Kg,,31,493
+p4,Zanahoria,1.50,frutas-vegetales,Frescos,/images/products/zanahoria.png,1 Kg,,84,220
+p5,Pimenton Verde,4.20,frutas-vegetales,Frescos,/images/products/pimenton_verde.png,1 Kg,,42,338
+p6,Lechuga Romana,1.20,frutas-vegetales,Frescos,/images/products/lechuga_romana.png,1 Unidad,Oferta,74,253
+p7,Platano Maduro,1.90,frutas-vegetales,Enteras,/images/products/platano_maduro.png,1 Kg,,14,409
+p8,Cambur,1.10,frutas-vegetales,Enteras,/images/products/cambur.png,1 Kg,,36,489
+p9,Manzana Gala,5.50,frutas-vegetales,Enteras,/images/products/manzana_gala.png,1 Kg,,40,367
+p10,Naranja para Jugo,1.60,frutas-vegetales,Enteras,/images/products/naranja.png,1 Kg,,85,306
+p11,Lechosa,1.75,frutas-vegetales,Enteras,/images/products/lechosa.png,1 Kg,,90,148
+p12,Limones,4.19,frutas-vegetales,Frescos,/images/products/limones.png,1 Kg,,95,211
+p13,Pina,2.55,frutas-vegetales,Enteras,/images/products/pina.png,1 Unidad,,24,438
+p14,Aguacate,5.20,frutas-vegetales,Frescos,/images/products/aguacate.png,1 Kg,Nuevo,37,300
+p15,Frutas Picadas Mixtas,3.00,frutas-vegetales,Picadas,/images/products/frutas_picadas.png,500g,,34,263
+p16,Carne Molida SV,9.95,refrigerados-congelados,Carnes,https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400,1 Kg,Oferta,23,375
+p17,Bistec de Ganso,11.50,refrigerados-congelados,Carnes,https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400,1 Kg,,81,439
+p18,Costilla de Res,7.80,refrigerados-congelados,Carnes,https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400,1 Kg,,77,172
+p19,Pechuga de Pollo,8.45,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Kg,Oferta,23,282
+p20,Pollo Entero,4.50,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Kg,Nuevo,14,476
+p21,Muslos de Pollo,5.20,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Kg,Nuevo,32,357
+p22,Alitas de Pollo,6.00,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Kg,,48,226
+p23,Jamon Cocido Plumrose,6.50,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400,500g,,83,355
+p24,Queso Amarillo Paisa,7.20,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400,500g,,15,235
+p25,Queso Blanco Duro,6.80,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400,1 Kg,,46,183
+p26,Salchichas Plumrose,4.50,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400,1 Paquete,,30,128
+p27,Tocino Ahumado,4.80,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400,250g,,43,83
+p28,Chorizo Carupanero,5.50,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400,500g,,39,349
+p29,Queso Guayanes,4.50,refrigerados-congelados,Embutidos,https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400,500g,Oferta,32,474
+p30,Nuggets Congelados,5.99,refrigerados-congelados,Pollos,https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400,1 Paquete,,88,246
+p31,Coca Cola Original,2.50,viveres,Refrescos,https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400,2 L,Nuevo,24,236
+p32,Pepsi Cola,2.20,viveres,Refrescos,https://images.unsplash.com/photo-1629203851288-7ece11431c8e?w=400,2 L,Nuevo,80,276
+p33,Chinotto,2.20,viveres,Refrescos,https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400,2 L,,88,211
+p34,Frescolita,2.20,viveres,Refrescos,https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400,2 L,Oferta,49,101
+p35,Maltin Polar,2.00,viveres,Refrescos,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,1.5 L,,86,128
+p36,Arroz Blanco Mary,1.20,viveres,Arroz,https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400,1 Kg,,85,223
+p37,Arroz Primor,1.30,viveres,Arroz,https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400,1 Kg,Nuevo,60,172
+p38,Pasta Capri Espagueti,1.60,viveres,Pasta,https://images.unsplash.com/photo-1612965607446-25e1332775ae?w=400,1 Kg,,69,302
+p39,Harina PAN,1.15,viveres,Arroz,https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400,1 Kg,,24,173
+p40,Caraotas Negras Mary,1.80,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,500g,,47,398
+p41,Lentejas,2.10,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,500g,,97,111
+p42,Atun Margarita en Aceite,2.50,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,140g,,47,260
+p43,Atun Margarita en Agua,2.50,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,140g,,90,282
+p44,Maiz Dulce en Lata,1.50,viveres,Enlatados,https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400,300g,,77,437
+p45,Aceite de Maiz Mazeite,3.50,viveres,Arroz,https://images.unsplash.com/photo-1474979266404-7eaacba8a6ed?w=400,1 Litro,Nuevo,73,374
+p46,Jabon Protex,3.50,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400,3 Unidades,Oferta,80,124
+p47,Desodorante Dove,4.20,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400,50ml,,47,337
+p48,Crema Dental Colgate,2.80,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400,100g,,39,418
+p49,Shampoo Pantene,6.50,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400,400ml,,60,135
+p50,Papel Higienico Scott,3.80,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,4 Rollos,,99,176
+p51,Toallas Sanitarias Always,2.90,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,10 Unidades,,30,483
+p52,Maquina de Afeitar Gillette,3.00,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,2 Unidades,,44,224
+p53,Crema Corporal Lubriderm,8.50,cuidado-personal-salud,Aseo,https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400,400ml,,46,161
+p54,Algodon en Motas,1.50,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,100g,Nuevo,76,349
+p55,Hisopos Q-Tips,1.80,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,100 Unidades,,55,309
+p56,Alcohol Isopropilico,2.20,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,250ml,,99,496
+p57,Agua Oxigenada,1.00,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,100ml,,39,250
+p58,Curitas Band-Aid,3.00,cuidado-personal-salud,Farmacia,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,Caja,Nuevo,59,177
+p59,Detergente Liquido Ariel,8.50,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,2 L,Nuevo,96,210
+p60,Detergente en Polvo ACE,4.50,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,1 Kg,,58,125
+p61,Suavizante Suavitel,3.80,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,1 L,,57,67
+p62,Lavaplatos Liquido Las Llaves,2.50,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,500ml,,82,281
+p63,Lavaplatos en Crema Axion,1.80,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,250g,Oferta,21,116
+p64,Cloro Nevex,1.50,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,1 L,,26,467
+p65,Desinfectante Mistolin,2.20,limpieza,Detergentes,https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400,1 L,Nuevo,74,435
+p66,Esponja Scotch-Brite,3.50,limpieza,Accesorios,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,3 Unidades,,81,150
+p67,Mopa de Algodon,5.00,limpieza,Accesorios,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,1 Unidad,Oferta,26,312
+p68,Escoba con Mango,4.50,limpieza,Accesorios,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,1 Unidad,Oferta,28,332
+p69,Coleto Tradicional,2.00,limpieza,Accesorios,https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400,1 Unidad,,63,476
+p70,Bolsas de Basura Grandes,3.20,limpieza,Accesorios,https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400,10 Unidades,,99,222
+p71,Cerveza Polar Pilsen,25.00,licores,Cervezas,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,Caja 36,,73,204
+p72,Cerveza Polar Light,25.00,licores,Cervezas,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,Caja 36,,25,351
+p73,Cerveza Solera Verde,6.50,licores,Cervezas,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,6 Pack,,73,119
+p74,Cerveza Zulia,6.00,licores,Cervezas,https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400,6 Pack,,84,233
+p75,Ron Santa Teresa Linaje,18.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,41,142
+p76,Ron Cacique Anejo,12.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,14,319
+p77,Ron Pampero Aniversario,22.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,42,363
+p78,Ron Diplomatico Reserva Exclusiva,35.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,45,260
+p79,Whisky Buchanan's 12 Anos,42.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,23,79
+p80,Whisky Old Parr 12 Anos,38.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,37,131
+p81,Vodka Gordon's,10.00,licores,Destilados,https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400,750ml,,35,249
+p82,Vino Tinto Casillero del Diablo,12.50,licores,Vinos,https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=400,750ml,,45,83
+p83,Vino Blanco Santa Helena,8.50,licores,Vinos,https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=400,750ml,,37,409
