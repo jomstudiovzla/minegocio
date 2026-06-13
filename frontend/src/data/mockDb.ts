@@ -161,105 +161,105 @@ const rawData = [
         "sub": "Carnes",
         "unit": "1 Kg",
         "price": 9.95,
-        "img": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400"
+        "img": "/images/products/carne_molida.png"
       },
       {
         "name": "Bistec de Ganso",
         "sub": "Carnes",
         "unit": "1 Kg",
         "price": 11.5,
-        "img": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400"
+        "img": "/images/products/bistec_ganso.png"
       },
       {
         "name": "Costilla de Res",
         "sub": "Carnes",
         "unit": "1 Kg",
         "price": 7.8,
-        "img": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400"
+        "img": "/images/products/costilla_res.png"
       },
       {
         "name": "Pechuga de Pollo",
         "sub": "Pollos",
         "unit": "1 Kg",
         "price": 8.45,
-        "img": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400"
+        "img": "/images/products/pechuga_pollo.png"
       },
       {
         "name": "Pollo Entero",
         "sub": "Pollos",
         "unit": "1 Kg",
         "price": 4.5,
-        "img": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400"
+        "img": "/images/products/pollo_entero.png"
       },
       {
         "name": "Muslos de Pollo",
         "sub": "Pollos",
         "unit": "1 Kg",
         "price": 5.2,
-        "img": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400"
+        "img": "/images/products/muslos_pollo.png"
       },
       {
         "name": "Alitas de Pollo",
         "sub": "Pollos",
         "unit": "1 Kg",
         "price": 6.0,
-        "img": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400"
+        "img": "/images/products/alitas_pollo.png"
       },
       {
         "name": "Jamon Cocido Plumrose",
         "sub": "Embutidos",
         "unit": "500g",
         "price": 6.5,
-        "img": "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400"
+        "img": "/images/products/jamon_cocido.png"
       },
       {
         "name": "Queso Amarillo Paisa",
         "sub": "Embutidos",
         "unit": "500g",
         "price": 7.2,
-        "img": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400"
+        "img": "/images/products/queso_amarillo.png"
       },
       {
         "name": "Queso Blanco Duro",
         "sub": "Embutidos",
         "unit": "1 Kg",
         "price": 6.8,
-        "img": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400"
+        "img": "/images/products/queso_blanco.png"
       },
       {
         "name": "Salchichas Plumrose",
         "sub": "Embutidos",
         "unit": "1 Paquete",
         "price": 4.5,
-        "img": "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400"
+        "img": "/images/products/salchichas.png"
       },
       {
         "name": "Tocino Ahumado",
         "sub": "Embutidos",
         "unit": "250g",
         "price": 4.8,
-        "img": "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400"
+        "img": "/images/products/tocino.png"
       },
       {
         "name": "Chorizo Carupanero",
         "sub": "Embutidos",
         "unit": "500g",
         "price": 5.5,
-        "img": "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400"
+        "img": "/images/products/chorizo.png"
       },
       {
         "name": "Queso Guayanes",
         "sub": "Embutidos",
         "unit": "500g",
         "price": 4.5,
-        "img": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400"
+        "img": "/images/products/queso_guayanes.png"
       },
       {
         "name": "Nuggets Congelados",
         "sub": "Pollos",
         "unit": "1 Paquete",
         "price": 5.99,
-        "img": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400"
+        "img": "/images/products/nuggets.png"
       }
     ]
   },
@@ -277,105 +277,105 @@ const rawData = [
         "sub": "Refrescos",
         "unit": "2 L",
         "price": 2.5,
-        "img": "https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400"
+        "img": "/images/products/coca_cola.png"
       },
       {
         "name": "Pepsi Cola",
         "sub": "Refrescos",
         "unit": "2 L",
         "price": 2.2,
-        "img": "https://images.unsplash.com/photo-1629203851288-7ece11431c8e?w=400"
+        "img": "/images/products/pepsi.png"
       },
       {
         "name": "Chinotto",
         "sub": "Refrescos",
         "unit": "2 L",
         "price": 2.2,
-        "img": "https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400"
+        "img": "/images/products/chinotto.png"
       },
       {
         "name": "Frescolita",
         "sub": "Refrescos",
         "unit": "2 L",
         "price": 2.2,
-        "img": "https://images.unsplash.com/photo-1622483767028-fd16712341cb?w=400"
+        "img": "/images/products/frescolita.png"
       },
       {
         "name": "Maltin Polar",
         "sub": "Refrescos",
         "unit": "1.5 L",
         "price": 2.0,
-        "img": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400"
+        "img": "/images/products/maltin.png"
       },
       {
         "name": "Arroz Blanco Mary",
         "sub": "Arroz",
         "unit": "1 Kg",
         "price": 1.2,
-        "img": "https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400"
+        "img": "/images/products/arroz_blanco.png"
       },
       {
         "name": "Arroz Primor",
         "sub": "Arroz",
         "unit": "1 Kg",
         "price": 1.3,
-        "img": "https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400"
+        "img": "/images/products/arroz_primor.png"
       },
       {
         "name": "Pasta Capri Espagueti",
         "sub": "Pasta",
         "unit": "1 Kg",
         "price": 1.6,
-        "img": "https://images.unsplash.com/photo-1612965607446-25e1332775ae?w=400"
+        "img": "/images/products/pasta_capri.png"
       },
       {
         "name": "Harina PAN",
         "sub": "Arroz",
         "unit": "1 Kg",
         "price": 1.15,
-        "img": "https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=400"
+        "img": "/images/products/harina_pan.png"
       },
       {
         "name": "Caraotas Negras Mary",
         "sub": "Enlatados",
         "unit": "500g",
         "price": 1.8,
-        "img": "https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400"
+        "img": "/images/products/caraotas.png"
       },
       {
         "name": "Lentejas",
         "sub": "Enlatados",
         "unit": "500g",
         "price": 2.1,
-        "img": "https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400"
+        "img": "/images/products/lentejas.png"
       },
       {
         "name": "Atun Margarita en Aceite",
         "sub": "Enlatados",
         "unit": "140g",
         "price": 2.5,
-        "img": "https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400"
+        "img": "/images/products/atun_aceite.png"
       },
       {
         "name": "Atun Margarita en Agua",
         "sub": "Enlatados",
         "unit": "140g",
         "price": 2.5,
-        "img": "https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400"
+        "img": "/images/products/atun_agua.png"
       },
       {
         "name": "Maiz Dulce en Lata",
         "sub": "Enlatados",
         "unit": "300g",
         "price": 1.5,
-        "img": "https://images.unsplash.com/photo-1599813188597-900f6b3dbf15?w=400"
+        "img": "/images/products/maiz_lata.png"
       },
       {
         "name": "Aceite de Maiz Mazeite",
         "sub": "Arroz",
         "unit": "1 Litro",
         "price": 3.5,
-        "img": "https://images.unsplash.com/photo-1474979266404-7eaacba8a6ed?w=400"
+        "img": "/images/products/aceite_maiz.png"
       }
     ]
   },
@@ -391,91 +391,91 @@ const rawData = [
         "sub": "Aseo",
         "unit": "3 Unidades",
         "price": 3.5,
-        "img": "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400"
+        "img": "/images/products/jabon_protex.png"
       },
       {
         "name": "Desodorante Dove",
         "sub": "Aseo",
         "unit": "50ml",
         "price": 4.2,
-        "img": "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400"
+        "img": "/images/products/desodorante.png"
       },
       {
         "name": "Crema Dental Colgate",
         "sub": "Aseo",
         "unit": "100g",
         "price": 2.8,
-        "img": "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400"
+        "img": "/images/products/crema_dental.png"
       },
       {
         "name": "Shampoo Pantene",
         "sub": "Aseo",
         "unit": "400ml",
         "price": 6.5,
-        "img": "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400"
+        "img": "/images/products/shampoo.png"
       },
       {
         "name": "Papel Higienico Scott",
         "sub": "Aseo",
         "unit": "4 Rollos",
         "price": 3.8,
-        "img": "https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400"
+        "img": "/images/products/papel_higienico.png"
       },
       {
         "name": "Toallas Sanitarias Always",
         "sub": "Aseo",
         "unit": "10 Unidades",
         "price": 2.9,
-        "img": "https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400"
+        "img": "/images/products/toallas_sanitarias.png"
       },
       {
         "name": "Maquina de Afeitar Gillette",
         "sub": "Aseo",
         "unit": "2 Unidades",
         "price": 3.0,
-        "img": "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400"
+        "img": "/images/products/maquina_afeitar.png"
       },
       {
         "name": "Crema Corporal Lubriderm",
         "sub": "Aseo",
         "unit": "400ml",
         "price": 8.5,
-        "img": "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400"
+        "img": "/images/products/crema_corporal.png"
       },
       {
         "name": "Algodon en Motas",
         "sub": "Farmacia",
         "unit": "100g",
         "price": 1.5,
-        "img": "https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400"
+        "img": "/images/products/algodon.png"
       },
       {
         "name": "Hisopos Q-Tips",
         "sub": "Farmacia",
         "unit": "100 Unidades",
         "price": 1.8,
-        "img": "https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400"
+        "img": "/images/products/hisopos.png"
       },
       {
         "name": "Alcohol Isopropilico",
         "sub": "Farmacia",
         "unit": "250ml",
         "price": 2.2,
-        "img": "https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400"
+        "img": "/images/products/alcohol.png"
       },
       {
         "name": "Agua Oxigenada",
         "sub": "Farmacia",
         "unit": "100ml",
         "price": 1.0,
-        "img": "https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400"
+        "img": "/images/products/agua_oxigenada.png"
       },
       {
         "name": "Curitas Band-Aid",
         "sub": "Farmacia",
         "unit": "Caja",
         "price": 3.0,
-        "img": "https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400"
+        "img": "/images/products/curitas.png"
       }
     ]
   },
@@ -491,84 +491,84 @@ const rawData = [
         "sub": "Detergentes",
         "unit": "2 L",
         "price": 8.5,
-        "img": "https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400"
+        "img": "/images/products/detergente_liquido.png"
       },
       {
         "name": "Detergente en Polvo ACE",
         "sub": "Detergentes",
         "unit": "1 Kg",
         "price": 4.5,
-        "img": "https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400"
+        "img": "/images/products/detergente_polvo.png"
       },
       {
         "name": "Suavizante Suavitel",
         "sub": "Detergentes",
         "unit": "1 L",
         "price": 3.8,
-        "img": "https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400"
+        "img": "/images/products/suavizante.png"
       },
       {
         "name": "Lavaplatos Liquido Las Llaves",
         "sub": "Detergentes",
         "unit": "500ml",
         "price": 2.5,
-        "img": "https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400"
+        "img": "/images/products/lavaplatos_liquido.png"
       },
       {
         "name": "Lavaplatos en Crema Axion",
         "sub": "Detergentes",
         "unit": "250g",
         "price": 1.8,
-        "img": "https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400"
+        "img": "/images/products/lavaplatos_crema.png"
       },
       {
         "name": "Cloro Nevex",
         "sub": "Detergentes",
         "unit": "1 L",
         "price": 1.5,
-        "img": "https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400"
+        "img": "/images/products/cloro.png"
       },
       {
         "name": "Desinfectante Mistolin",
         "sub": "Detergentes",
         "unit": "1 L",
         "price": 2.2,
-        "img": "https://images.unsplash.com/photo-1585834057864-15f5cc1145ea?w=400"
+        "img": "/images/products/desinfectante.png"
       },
       {
         "name": "Esponja Scotch-Brite",
         "sub": "Accesorios",
         "unit": "3 Unidades",
         "price": 3.5,
-        "img": "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400"
+        "img": "/images/products/esponja.png"
       },
       {
         "name": "Mopa de Algodon",
         "sub": "Accesorios",
         "unit": "1 Unidad",
         "price": 5.0,
-        "img": "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400"
+        "img": "/images/products/mopa.png"
       },
       {
         "name": "Escoba con Mango",
         "sub": "Accesorios",
         "unit": "1 Unidad",
         "price": 4.5,
-        "img": "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400"
+        "img": "/images/products/escoba.png"
       },
       {
         "name": "Coleto Tradicional",
         "sub": "Accesorios",
         "unit": "1 Unidad",
         "price": 2.0,
-        "img": "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?w=400"
+        "img": "/images/products/coleto.png"
       },
       {
         "name": "Bolsas de Basura Grandes",
         "sub": "Accesorios",
         "unit": "10 Unidades",
         "price": 3.2,
-        "img": "https://images.unsplash.com/photo-1584308666744-24d5e4a77918?w=400"
+        "img": "/images/products/bolsas_basura.png"
       }
     ]
   },
@@ -585,91 +585,91 @@ const rawData = [
         "sub": "Cervezas",
         "unit": "Caja 36",
         "price": 25.0,
-        "img": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400"
+        "img": "/images/products/cerveza_pilsen.png"
       },
       {
         "name": "Cerveza Polar Light",
         "sub": "Cervezas",
         "unit": "Caja 36",
         "price": 25.0,
-        "img": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400"
+        "img": "/images/products/cerveza_light.png"
       },
       {
         "name": "Cerveza Solera Verde",
         "sub": "Cervezas",
         "unit": "6 Pack",
         "price": 6.5,
-        "img": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400"
+        "img": "/images/products/cerveza_solera.png"
       },
       {
         "name": "Cerveza Zulia",
         "sub": "Cervezas",
         "unit": "6 Pack",
         "price": 6.0,
-        "img": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400"
+        "img": "/images/products/cerveza_zulia.png"
       },
       {
         "name": "Ron Santa Teresa Linaje",
         "sub": "Destilados",
         "unit": "750ml",
         "price": 18.0,
-        "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400"
+        "img": "/images/products/ron_teresa.png"
       },
       {
         "name": "Ron Cacique Anejo",
         "sub": "Destilados",
         "unit": "750ml",
         "price": 12.0,
-        "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400"
+        "img": "/images/products/ron_cacique.png"
       },
       {
         "name": "Ron Pampero Aniversario",
         "sub": "Destilados",
         "unit": "750ml",
         "price": 22.0,
-        "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400"
+        "img": "/images/products/ron_pampero.png"
       },
       {
         "name": "Ron Diplomatico Reserva Exclusiva",
         "sub": "Destilados",
         "unit": "750ml",
         "price": 35.0,
-        "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400"
+        "img": "/images/products/ron_diplomatico.png"
       },
       {
         "name": "Whisky Buchanan's 12 Anos",
         "sub": "Destilados",
         "unit": "750ml",
         "price": 42.0,
-        "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400"
+        "img": "/images/products/whisky_buchanans.png"
       },
       {
         "name": "Whisky Old Parr 12 Anos",
         "sub": "Destilados",
         "unit": "750ml",
         "price": 38.0,
-        "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400"
+        "img": "/images/products/whisky_parr.png"
       },
       {
         "name": "Vodka Gordon's",
         "sub": "Destilados",
         "unit": "750ml",
         "price": 10.0,
-        "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400"
+        "img": "/images/products/vodka.png"
       },
       {
         "name": "Vino Tinto Casillero del Diablo",
         "sub": "Vinos",
         "unit": "750ml",
         "price": 12.5,
-        "img": "https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=400"
+        "img": "/images/products/vino_tinto.png"
       },
       {
         "name": "Vino Blanco Santa Helena",
         "sub": "Vinos",
         "unit": "750ml",
         "price": 8.5,
-        "img": "https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=400"
+        "img": "/images/products/vino_blanco.png"
       }
     ]
   }
@@ -678,7 +678,6 @@ const rawData = [
 let globalId = 1;
 for (const cat of rawData) {
   for (const p of cat.products) {
-    // Random labels
     const r = Math.random();
     let labels: string[] | undefined = undefined;
     if (r > 0.9) labels = ['Nuevo'];
