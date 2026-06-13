@@ -2,8 +2,8 @@ import csv
 import random
 
 def get_img(key):
-    # Now all images are local!
-    return f"/images/products/{key}.png"
+    # Now all images are local, but they need the Next.js basePath prefix
+    return f"/Ananas/images/products/{key}.png"
 
 categories = [
   {
@@ -159,7 +159,7 @@ export const categories: Category[] = [
   {{ id: 'licores', name: 'Licores', icon: '🍷', color: 'bg-purple-100 text-purple-600' }},
 ];
 
-export const allProducts: Product[] = [];
+export const products: Product[] = [];
 
 // Seed the products list from Python data
 const rawData = {json_data};
@@ -172,7 +172,7 @@ for (const cat of rawData) {{
     if (r > 0.9) labels = ['Nuevo'];
     else if (r > 0.8) labels = ['Oferta'];
 
-    allProducts.push({{
+    products.push({{
       id: 'p' + globalId,
       name: p.name,
       price: p.price,
@@ -187,6 +187,8 @@ for (const cat of rawData) {{
     globalId++;
   }}
 }}
+
+export const zones = ['San Luis El Cafetal'];
 """
 
 with open('src/data/mockDb.ts', 'w', encoding='utf-8') as f:
