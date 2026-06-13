@@ -1,5 +1,4 @@
 "use client";
-import { products } from '@/data/mockDb';
 import { useStore } from '@/store/useStore';
 import { notFound } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -7,6 +6,7 @@ import { useState } from 'react';
 import { ShoppingCart, Heart, Share2, Truck } from 'lucide-react';
 
 export default function ProductClient({ id }: { id: string }) {
+  const products = useStore(state => state.products);
   const product = products.find(p => p.id === id);
   const addToCart = useStore(state => state.addToCart);
   const updateQuantity = useStore(state => state.updateQuantity);

@@ -1,12 +1,13 @@
 "use client";
 import { useSearchParams } from 'next/navigation';
-import { products } from '@/data/mockDb';
+import { useStore } from '@/store/useStore';
 import ProductGrid from '@/components/ProductGrid';
 import { Suspense } from 'react';
 
 function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q')?.toLowerCase() || '';
+  const products = useStore(state => state.products);
 
   const results = products.filter(p => 
     p.name.toLowerCase().includes(query) || 

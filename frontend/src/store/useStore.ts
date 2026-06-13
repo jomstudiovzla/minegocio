@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { products as initialProducts, Product } from '@/data/mockDb';
 
 export interface CartItem {
   id: string;
@@ -23,6 +24,8 @@ interface AppState {
   cart: CartItem[];
   user: User | null;
   zone: string | null;
+  products: Product[];
+  setProducts: (products: Product[]) => void;
   addToCart: (item: Omit<CartItem, 'quantity'>) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
@@ -38,6 +41,9 @@ export const useStore = create<AppState>()(
       cart: [],
       user: null,
       zone: null,
+      products: initialProducts,
+      
+      setProducts: (products) => set({ products }),
       
       addToCart: (item) => set((state) => {
         const existing = state.cart.find((c) => c.id === item.id);
