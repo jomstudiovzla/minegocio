@@ -1,84 +1,84 @@
 id,name,price,category,subcategory,image,unit,labels,stock,warehouseStock
-p1,Tomates Perita,3.49,frutas-vegetales,Frescos,/Ananas/images/products/tomates_perita.png,1 Kg,,49,206
-p2,Cebolla Blanca,2.10,frutas-vegetales,Frescos,/Ananas/images/products/cebolla_blanca.png,1 Kg,Oferta,22,454
-p3,Papa Lavada,1.80,frutas-vegetales,Frescos,/Ananas/images/products/papa_lavada.png,1 Kg,Nuevo,26,350
-p4,Zanahoria,1.50,frutas-vegetales,Frescos,/Ananas/images/products/zanahoria.png,1 Kg,Oferta,56,458
-p5,Pimenton Verde,4.20,frutas-vegetales,Frescos,/Ananas/images/products/pimenton_verde.png,1 Kg,,78,357
-p6,Lechuga Romana,1.20,frutas-vegetales,Frescos,/Ananas/images/products/lechuga_romana.png,1 Unidad,,16,306
-p7,Platano Maduro,1.90,frutas-vegetales,Enteras,/Ananas/images/products/platano_maduro.png,1 Kg,,87,189
-p8,Cambur,1.10,frutas-vegetales,Enteras,/Ananas/images/products/cambur.png,1 Kg,,98,498
-p9,Manzana Gala,5.50,frutas-vegetales,Enteras,/Ananas/images/products/manzana_gala.png,1 Kg,,23,284
-p10,Naranja para Jugo,1.60,frutas-vegetales,Enteras,/Ananas/images/products/naranja.png,1 Kg,,45,73
-p11,Lechosa,1.75,frutas-vegetales,Enteras,/Ananas/images/products/lechosa.png,1 Kg,,31,352
-p12,Limones,4.19,frutas-vegetales,Frescos,/Ananas/images/products/limones.png,1 Kg,,45,72
-p13,Pina,2.55,frutas-vegetales,Enteras,/Ananas/images/products/pina.png,1 Unidad,,67,128
-p14,Aguacate,5.20,frutas-vegetales,Frescos,/Ananas/images/products/aguacate.png,1 Kg,,36,410
-p15,Frutas Picadas Mixtas,3.00,frutas-vegetales,Picadas,/Ananas/images/products/frutas_picadas.png,500g,,62,490
-p16,Carne Molida SV,9.95,refrigerados-congelados,Carnes,/Ananas/images/products/carne_molida.png,1 Kg,,85,403
-p17,Bistec de Ganso,11.50,refrigerados-congelados,Carnes,/Ananas/images/products/bistec_ganso.png,1 Kg,,34,120
-p18,Costilla de Res,7.80,refrigerados-congelados,Carnes,/Ananas/images/products/costilla_res.png,1 Kg,,86,136
-p19,Pechuga de Pollo,8.45,refrigerados-congelados,Pollos,/Ananas/images/products/pechuga_pollo.png,1 Kg,,67,71
-p20,Pollo Entero,4.50,refrigerados-congelados,Pollos,/Ananas/images/products/pollo_entero.png,1 Kg,,29,496
-p21,Muslos de Pollo,5.20,refrigerados-congelados,Pollos,/Ananas/images/products/muslos_pollo.png,1 Kg,,41,465
-p22,Alitas de Pollo,6.00,refrigerados-congelados,Pollos,/Ananas/images/products/alitas_pollo.png,1 Kg,,71,287
-p23,Jamon Cocido Plumrose,6.50,refrigerados-congelados,Embutidos,/Ananas/images/products/jamon_cocido.png,500g,,71,265
-p24,Queso Amarillo Paisa,7.20,refrigerados-congelados,Embutidos,/Ananas/images/products/queso_amarillo.png,500g,Oferta,98,442
-p25,Queso Blanco Duro,6.80,refrigerados-congelados,Embutidos,/Ananas/images/products/queso_blanco.png,1 Kg,,15,401
-p26,Salchichas Plumrose,4.50,refrigerados-congelados,Embutidos,/Ananas/images/products/salchichas.png,1 Paquete,,27,82
-p27,Tocino Ahumado,4.80,refrigerados-congelados,Embutidos,/Ananas/images/products/tocino.png,250g,Oferta,15,387
-p28,Chorizo Carupanero,5.50,refrigerados-congelados,Embutidos,/Ananas/images/products/chorizo.png,500g,,31,434
-p29,Queso Guayanes,4.50,refrigerados-congelados,Embutidos,/Ananas/images/products/queso_guayanes.png,500g,,63,355
-p30,Nuggets Congelados,5.99,refrigerados-congelados,Pollos,/Ananas/images/products/nuggets.png,1 Paquete,,55,215
-p31,Coca Cola Original,2.50,viveres,Refrescos,/Ananas/images/products/coca_cola.png,2 L,,16,200
-p32,Pepsi Cola,2.20,viveres,Refrescos,/Ananas/images/products/pepsi.png,2 L,,33,411
-p33,Chinotto,2.20,viveres,Refrescos,/Ananas/images/products/chinotto.png,2 L,,46,429
-p34,Frescolita,2.20,viveres,Refrescos,/Ananas/images/products/frescolita.png,2 L,,84,185
-p35,Maltin Polar,2.00,viveres,Refrescos,/Ananas/images/products/maltin.png,1.5 L,,27,59
-p36,Arroz Blanco Mary,1.20,viveres,Arroz,/Ananas/images/products/arroz_blanco.png,1 Kg,,14,158
-p37,Arroz Primor,1.30,viveres,Arroz,/Ananas/images/products/arroz_primor.png,1 Kg,,83,430
-p38,Pasta Capri Espagueti,1.60,viveres,Pasta,/Ananas/images/products/pasta_capri.png,1 Kg,,78,102
-p39,Harina PAN,1.15,viveres,Arroz,/Ananas/images/products/harina_pan.png,1 Kg,,81,379
-p40,Caraotas Negras Mary,1.80,viveres,Enlatados,/Ananas/images/products/caraotas.png,500g,,33,203
-p41,Lentejas,2.10,viveres,Enlatados,/Ananas/images/products/lentejas.png,500g,,34,416
-p42,Atun Margarita en Aceite,2.50,viveres,Enlatados,/Ananas/images/products/atun_aceite.png,140g,,69,225
-p43,Atun Margarita en Agua,2.50,viveres,Enlatados,/Ananas/images/products/atun_agua.png,140g,,34,351
-p44,Maiz Dulce en Lata,1.50,viveres,Enlatados,/Ananas/images/products/maiz_lata.png,300g,Nuevo,73,204
-p45,Aceite de Maiz Mazeite,3.50,viveres,Arroz,/Ananas/images/products/aceite_maiz.png,1 Litro,,42,307
-p46,Jabon Protex,3.50,cuidado-personal-salud,Aseo,/Ananas/images/products/jabon_protex.png,3 Unidades,,16,269
-p47,Desodorante Dove,4.20,cuidado-personal-salud,Aseo,/Ananas/images/products/desodorante.png,50ml,,56,242
-p48,Crema Dental Colgate,2.80,cuidado-personal-salud,Aseo,/Ananas/images/products/crema_dental.png,100g,Oferta,24,133
-p49,Shampoo Pantene,6.50,cuidado-personal-salud,Aseo,/Ananas/images/products/shampoo.png,400ml,,56,437
-p50,Papel Higienico Scott,3.80,cuidado-personal-salud,Aseo,/Ananas/images/products/papel_higienico.png,4 Rollos,,17,450
-p51,Toallas Sanitarias Always,2.90,cuidado-personal-salud,Aseo,/Ananas/images/products/toallas_sanitarias.png,10 Unidades,,70,196
-p52,Maquina de Afeitar Gillette,3.00,cuidado-personal-salud,Aseo,/Ananas/images/products/maquina_afeitar.png,2 Unidades,,89,97
-p53,Crema Corporal Lubriderm,8.50,cuidado-personal-salud,Aseo,/Ananas/images/products/crema_corporal.png,400ml,,22,351
-p54,Algodon en Motas,1.50,cuidado-personal-salud,Farmacia,/Ananas/images/products/algodon.png,100g,,48,192
-p55,Hisopos Q-Tips,1.80,cuidado-personal-salud,Farmacia,/Ananas/images/products/hisopos.png,100 Unidades,,34,377
-p56,Alcohol Isopropilico,2.20,cuidado-personal-salud,Farmacia,/Ananas/images/products/alcohol.png,250ml,,70,357
-p57,Agua Oxigenada,1.00,cuidado-personal-salud,Farmacia,/Ananas/images/products/agua_oxigenada.png,100ml,Oferta,75,380
-p58,Curitas Band-Aid,3.00,cuidado-personal-salud,Farmacia,/Ananas/images/products/curitas.png,Caja,,75,387
-p59,Detergente Liquido Ariel,8.50,limpieza,Detergentes,/Ananas/images/products/detergente_liquido.png,2 L,,89,135
-p60,Detergente en Polvo ACE,4.50,limpieza,Detergentes,/Ananas/images/products/detergente_polvo.png,1 Kg,,85,83
-p61,Suavizante Suavitel,3.80,limpieza,Detergentes,/Ananas/images/products/suavizante.png,1 L,Nuevo,77,176
-p62,Lavaplatos Liquido Las Llaves,2.50,limpieza,Detergentes,/Ananas/images/products/lavaplatos_liquido.png,500ml,,29,423
-p63,Lavaplatos en Crema Axion,1.80,limpieza,Detergentes,/Ananas/images/products/lavaplatos_crema.png,250g,,98,327
-p64,Cloro Nevex,1.50,limpieza,Detergentes,/Ananas/images/products/cloro.png,1 L,,74,277
-p65,Desinfectante Mistolin,2.20,limpieza,Detergentes,/Ananas/images/products/desinfectante.png,1 L,,20,401
-p66,Esponja Scotch-Brite,3.50,limpieza,Accesorios,/Ananas/images/products/esponja.png,3 Unidades,,91,300
-p67,Mopa de Algodon,5.00,limpieza,Accesorios,/Ananas/images/products/mopa.png,1 Unidad,,17,422
-p68,Escoba con Mango,4.50,limpieza,Accesorios,/Ananas/images/products/escoba.png,1 Unidad,,49,237
-p69,Coleto Tradicional,2.00,limpieza,Accesorios,/Ananas/images/products/coleto.png,1 Unidad,Oferta,70,255
-p70,Bolsas de Basura Grandes,3.20,limpieza,Accesorios,/Ananas/images/products/bolsas_basura.png,10 Unidades,,54,402
-p71,Cerveza Polar Pilsen,25.00,licores,Cervezas,/Ananas/images/products/cerveza_pilsen.png,Caja 36,,60,386
-p72,Cerveza Polar Light,25.00,licores,Cervezas,/Ananas/images/products/cerveza_light.png,Caja 36,Oferta,13,495
-p73,Cerveza Solera Verde,6.50,licores,Cervezas,/Ananas/images/products/cerveza_solera.png,6 Pack,,39,497
-p74,Cerveza Zulia,6.00,licores,Cervezas,/Ananas/images/products/cerveza_zulia.png,6 Pack,,52,168
-p75,Ron Santa Teresa Linaje,18.00,licores,Destilados,/Ananas/images/products/ron_teresa.png,750ml,Nuevo,89,477
-p76,Ron Cacique Anejo,12.00,licores,Destilados,/Ananas/images/products/ron_cacique.png,750ml,,23,153
-p77,Ron Pampero Aniversario,22.00,licores,Destilados,/Ananas/images/products/ron_pampero.png,750ml,Oferta,77,471
-p78,Ron Diplomatico Reserva Exclusiva,35.00,licores,Destilados,/Ananas/images/products/ron_diplomatico.png,750ml,,16,72
-p79,Whisky Buchanan's 12 Anos,42.00,licores,Destilados,/Ananas/images/products/whisky_buchanans.png,750ml,,37,169
-p80,Whisky Old Parr 12 Anos,38.00,licores,Destilados,/Ananas/images/products/whisky_parr.png,750ml,,31,229
-p81,Vodka Gordon's,10.00,licores,Destilados,/Ananas/images/products/vodka.png,750ml,,53,194
-p82,Vino Tinto Casillero del Diablo,12.50,licores,Vinos,/Ananas/images/products/vino_tinto.png,750ml,,88,431
-p83,Vino Blanco Santa Helena,8.50,licores,Vinos,/Ananas/images/products/vino_blanco.png,750ml,Nuevo,33,149
+p1,Tomates Perita,3.49,frutas-vegetales,Frescos,/Ananas/images/products/tomates_perita.png,1 Kg,Nuevo,69,229
+p2,Cebolla Blanca,2.10,frutas-vegetales,Frescos,/Ananas/images/products/cebolla_blanca.png,1 Kg,,26,198
+p3,Papa Lavada,1.80,frutas-vegetales,Frescos,/Ananas/images/products/papa_lavada.png,1 Kg,Nuevo,74,130
+p4,Zanahoria,1.50,frutas-vegetales,Frescos,/Ananas/images/products/zanahoria.png,1 Kg,,42,360
+p5,Pimenton Verde,4.20,frutas-vegetales,Frescos,/Ananas/images/products/pimenton_verde.png,1 Kg,,95,404
+p6,Lechuga Romana,1.20,frutas-vegetales,Frescos,/Ananas/images/products/lechuga_romana.png,1 Unidad,,19,348
+p7,Platano Maduro,1.90,frutas-vegetales,Enteras,/Ananas/images/products/platano_maduro.png,1 Kg,,49,189
+p8,Cambur,1.10,frutas-vegetales,Enteras,/Ananas/images/products/cambur.png,1 Kg,,16,181
+p9,Manzana Gala,5.50,frutas-vegetales,Enteras,/Ananas/images/products/manzana_gala.png,1 Kg,,92,306
+p10,Naranja para Jugo,1.60,frutas-vegetales,Enteras,/Ananas/images/products/naranja.png,1 Kg,Oferta,68,241
+p11,Lechosa,1.75,frutas-vegetales,Enteras,/Ananas/images/products/lechosa.png,1 Kg,Nuevo,94,324
+p12,Limones,4.19,frutas-vegetales,Frescos,/Ananas/images/products/limones.png,1 Kg,Nuevo,92,250
+p13,Pina,2.55,frutas-vegetales,Enteras,/Ananas/images/products/pina.png,1 Unidad,,96,124
+p14,Aguacate,5.20,frutas-vegetales,Frescos,/Ananas/images/products/aguacate.png,1 Kg,,84,173
+p15,Frutas Picadas Mixtas,3.00,frutas-vegetales,Picadas,/Ananas/images/products/frutas_picadas.png,500g,,96,359
+p16,Carne Molida SV,9.95,refrigerados-congelados,Carnes,/Ananas/images/products/carne_molida.png,1 Kg,,33,64
+p17,Bistec de Ganso,11.50,refrigerados-congelados,Carnes,/Ananas/images/products/bistec_ganso.png,1 Kg,Nuevo,20,148
+p18,Costilla de Res,7.80,refrigerados-congelados,Carnes,/Ananas/images/products/costilla_res.png,1 Kg,,89,145
+p19,Pechuga de Pollo,8.45,refrigerados-congelados,Pollos,/Ananas/images/products/pechuga_pollo.png,1 Kg,,82,71
+p20,Pollo Entero,4.50,refrigerados-congelados,Pollos,/Ananas/images/products/pollo_entero.png,1 Kg,Nuevo,42,55
+p21,Muslos de Pollo,5.20,refrigerados-congelados,Pollos,/Ananas/images/products/muslos_pollo.png,1 Kg,,50,77
+p22,Alitas de Pollo,6.00,refrigerados-congelados,Pollos,/Ananas/images/products/alitas_pollo.png,1 Kg,,32,298
+p23,Jamon Cocido Plumrose,6.50,refrigerados-congelados,Embutidos,/Ananas/images/products/jamon_cocido.png,500g,,93,323
+p24,Queso Amarillo Paisa,7.20,refrigerados-congelados,Embutidos,/Ananas/images/products/queso_amarillo.png,500g,,98,460
+p25,Queso Blanco Duro,6.80,refrigerados-congelados,Embutidos,/Ananas/images/products/queso_blanco.png,1 Kg,,84,282
+p26,Salchichas Plumrose,4.50,refrigerados-congelados,Embutidos,/Ananas/images/products/salchichas.png,1 Paquete,,59,430
+p27,Tocino Ahumado,4.80,refrigerados-congelados,Embutidos,/Ananas/images/products/tocino.png,250g,,39,155
+p28,Chorizo Carupanero,5.50,refrigerados-congelados,Embutidos,/Ananas/images/products/chorizo.png,500g,,55,170
+p29,Queso Guayanes,4.50,refrigerados-congelados,Embutidos,/Ananas/images/products/queso_guayanes.png,500g,,89,496
+p30,Nuggets Congelados,5.99,refrigerados-congelados,Pollos,/Ananas/images/products/nuggets.png,1 Paquete,,37,322
+p31,Coca Cola Original,2.50,viveres,Refrescos,/Ananas/images/products/coca_cola.png,2 L,,78,225
+p32,Pepsi Cola,2.20,viveres,Refrescos,/Ananas/images/products/pepsi.png,2 L,,40,182
+p33,Chinotto,2.20,viveres,Refrescos,/Ananas/images/products/chinotto.png,2 L,,11,173
+p34,Frescolita,2.20,viveres,Refrescos,/Ananas/images/products/frescolita.png,2 L,,35,279
+p35,Maltin Polar,2.00,viveres,Refrescos,/Ananas/images/products/maltin.png,1.5 L,Oferta,53,482
+p36,Arroz Blanco Mary,1.20,viveres,Arroz,/Ananas/images/products/arroz_blanco.png,1 Kg,,94,443
+p37,Arroz Primor,1.30,viveres,Arroz,/Ananas/images/products/arroz_primor.png,1 Kg,,82,429
+p38,Pasta Capri Espagueti,1.60,viveres,Pasta,/Ananas/images/products/pasta_capri.png,1 Kg,,19,327
+p39,Harina PAN,1.15,viveres,Arroz,/Ananas/images/products/harina_pan.png,1 Kg,Nuevo,28,331
+p40,Caraotas Negras Mary,1.80,viveres,Enlatados,/Ananas/images/products/caraotas.png,500g,,82,461
+p41,Lentejas,2.10,viveres,Enlatados,/Ananas/images/products/lentejas.png,500g,,37,174
+p42,Atun Margarita en Aceite,2.50,viveres,Enlatados,/Ananas/images/products/atun_aceite.png,140g,,100,220
+p43,Atun Margarita en Agua,2.50,viveres,Enlatados,/Ananas/images/products/atun_agua.png,140g,,46,218
+p44,Maiz Dulce en Lata,1.50,viveres,Enlatados,/Ananas/images/products/maiz_lata.png,300g,,37,249
+p45,Aceite de Maiz Mazeite,3.50,viveres,Arroz,/Ananas/images/products/aceite_maiz.png,1 Litro,,90,193
+p46,Jabon Protex,3.50,cuidado-personal-salud,Aseo,/Ananas/images/products/jabon_protex.png,3 Unidades,,59,82
+p47,Desodorante Dove,4.20,cuidado-personal-salud,Aseo,/Ananas/images/products/desodorante.png,50ml,,29,236
+p48,Crema Dental Colgate,2.80,cuidado-personal-salud,Aseo,/Ananas/images/products/crema_dental.png,100g,,14,284
+p49,Shampoo Pantene,6.50,cuidado-personal-salud,Aseo,/Ananas/images/products/shampoo.png,400ml,Oferta,56,492
+p50,Papel Higienico Scott,3.80,cuidado-personal-salud,Aseo,/Ananas/images/products/papel_higienico.png,4 Rollos,,77,192
+p51,Toallas Sanitarias Always,2.90,cuidado-personal-salud,Aseo,/Ananas/images/products/toallas_sanitarias.png,10 Unidades,,41,361
+p52,Maquina de Afeitar Gillette,3.00,cuidado-personal-salud,Aseo,/Ananas/images/products/maquina_afeitar.png,2 Unidades,,24,401
+p53,Crema Corporal Lubriderm,8.50,cuidado-personal-salud,Aseo,/Ananas/images/products/crema_corporal.png,400ml,,77,72
+p54,Algodon en Motas,1.50,cuidado-personal-salud,Farmacia,/Ananas/images/products/algodon.png,100g,,94,349
+p55,Hisopos Q-Tips,1.80,cuidado-personal-salud,Farmacia,/Ananas/images/products/hisopos.png,100 Unidades,,35,500
+p56,Alcohol Isopropilico,2.20,cuidado-personal-salud,Farmacia,/Ananas/images/products/alcohol.png,250ml,,36,346
+p57,Agua Oxigenada,1.00,cuidado-personal-salud,Farmacia,/Ananas/images/products/agua_oxigenada.png,100ml,,83,257
+p58,Curitas Band-Aid,3.00,cuidado-personal-salud,Farmacia,/Ananas/images/products/curitas.png,Caja,,71,319
+p59,Detergente Liquido Ariel,8.50,limpieza,Detergentes,/Ananas/images/products/detergente_liquido.png,2 L,,84,446
+p60,Detergente en Polvo ACE,4.50,limpieza,Detergentes,/Ananas/images/products/detergente_polvo.png,1 Kg,Oferta,27,155
+p61,Suavizante Suavitel,3.80,limpieza,Detergentes,/Ananas/images/products/suavizante.png,1 L,,65,460
+p62,Lavaplatos Liquido Las Llaves,2.50,limpieza,Detergentes,/Ananas/images/products/lavaplatos_liquido.png,500ml,,68,284
+p63,Lavaplatos en Crema Axion,1.80,limpieza,Detergentes,/Ananas/images/products/lavaplatos_crema.png,250g,,89,499
+p64,Cloro Nevex,1.50,limpieza,Detergentes,/Ananas/images/products/cloro.png,1 L,Nuevo,42,50
+p65,Desinfectante Mistolin,2.20,limpieza,Detergentes,/Ananas/images/products/desinfectante.png,1 L,,55,271
+p66,Esponja Scotch-Brite,3.50,limpieza,Accesorios,/Ananas/images/products/esponja.png,3 Unidades,Oferta,92,148
+p67,Mopa de Algodon,5.00,limpieza,Accesorios,/Ananas/images/products/mopa.png,1 Unidad,,70,472
+p68,Escoba con Mango,4.50,limpieza,Accesorios,/Ananas/images/products/escoba.png,1 Unidad,,37,455
+p69,Coleto Tradicional,2.00,limpieza,Accesorios,/Ananas/images/products/coleto.png,1 Unidad,,93,297
+p70,Bolsas de Basura Grandes,3.20,limpieza,Accesorios,/Ananas/images/products/bolsas_basura.png,10 Unidades,,67,125
+p71,Cerveza Polar Pilsen,25.00,licores,Cervezas,/Ananas/images/products/cerveza_pilsen.png,Caja 36,,56,256
+p72,Cerveza Polar Light,25.00,licores,Cervezas,/Ananas/images/products/cerveza_light.png,Caja 36,,26,495
+p73,Cerveza Solera Verde,6.50,licores,Cervezas,/Ananas/images/products/cerveza_solera.png,6 Pack,,43,298
+p74,Cerveza Zulia,6.00,licores,Cervezas,/Ananas/images/products/cerveza_zulia.png,6 Pack,,100,78
+p75,Ron Santa Teresa Linaje,18.00,licores,Destilados,/Ananas/images/products/ron_teresa.png,750ml,,86,304
+p76,Ron Cacique Anejo,12.00,licores,Destilados,/Ananas/images/products/ron_cacique.png,750ml,Nuevo,89,128
+p77,Ron Pampero Aniversario,22.00,licores,Destilados,/Ananas/images/products/ron_pampero.png,750ml,Nuevo,100,338
+p78,Ron Diplomatico Reserva Exclusiva,35.00,licores,Destilados,/Ananas/images/products/ron_diplomatico.png,750ml,,33,444
+p79,Whisky Buchanan's 12 Anos,42.00,licores,Destilados,/Ananas/images/products/whisky_buchanans.png,750ml,,61,370
+p80,Whisky Old Parr 12 Anos,38.00,licores,Destilados,/Ananas/images/products/whisky_parr.png,750ml,Nuevo,16,393
+p81,Vodka Gordon's,10.00,licores,Destilados,/Ananas/images/products/vodka.png,750ml,Nuevo,35,484
+p82,Vino Tinto Casillero del Diablo,12.50,licores,Vinos,/Ananas/images/products/vino_tinto.png,750ml,,26,253
+p83,Vino Blanco Santa Helena,8.50,licores,Vinos,/Ananas/images/products/vino_blanco.png,750ml,,13,106
