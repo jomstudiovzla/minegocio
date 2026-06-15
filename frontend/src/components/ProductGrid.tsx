@@ -63,17 +63,7 @@ export default function ProductGrid({ products }: { products: Product[] }) {
                 </div>
               );
             }
-            return (
-              <button 
-                onClick={(e) => {
-                  e.preventDefault();
-                  addToCart({ id: p.id, name: p.name, price: p.price, category: p.category, image: p.image, unit: p.unit || '1 Unidad' });
-                }}
-                className="absolute top-5 right-5 w-10 h-10 bg-white border border-gray-100 rounded-full shadow-md flex items-center justify-center text-ananas-green hover:bg-ananas-green hover:text-white transition-colors z-20"
-              >
-                <Plus size={20} strokeWidth={2.5} />
-              </button>
-            );
+            return null;
           })()}
           
           <div onClick={() => setSelectedProduct(p as Product)} className="block flex-1 flex flex-col cursor-pointer">
@@ -95,10 +85,28 @@ export default function ProductGrid({ products }: { products: Product[] }) {
             
             <div className="mt-auto">
               <h3 className="text-sm font-bold text-gray-500 mb-2 uppercase leading-snug line-clamp-2 min-h-[40px] group-hover:text-ananas-dark transition">{p.name}</h3>
-              <div className="flex items-center justify-between mt-auto">
+              <div className="flex items-center justify-between mb-3">
                 <p className="text-2xl font-black text-gray-800">{convertAndFormatPrice(p.price, currency, rates)}</p>
-                <span className="text-xs font-bold text-ananas-dark bg-ananas-green/10 px-3 py-1.5 rounded-lg border border-ananas-green/20">{p.unit || '1 Kg'}</span>
+                <span className="text-xs font-bold text-ananas-dark bg-ananas-green/10 px-2 py-1 rounded-lg border border-ananas-green/20">{p.unit || '1 Kg'}</span>
               </div>
+
+              <div className="text-[10px] font-medium text-gray-400 border-b border-gray-100 pb-3 mb-3 text-center">
+                {p.category === 'refrigerados-congelados' ? '❄️ Cadena de frío garantizada' :
+                 p.category === 'frutas-vegetales' ? '🌱 Seleccionado el mismo día' : 
+                 '📦 Stock actualizado diario'}
+              </div>
+
+              {!cart.find(item => item.id === p.id) && (
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart({ id: p.id, name: p.name, price: p.price, category: p.category, image: p.image, unit: p.unit || '1 Unidad' });
+                  }}
+                  className="w-full bg-ananas-green text-white font-bold py-2.5 rounded-xl hover:bg-ananas-dark transition shadow-md shadow-ananas-green/20 flex items-center justify-center gap-2"
+                >
+                  <Plus size={16} strokeWidth={2.5} /> Agregar
+                </button>
+              )}
             </div>
           </div>
         </motion.div>

@@ -17,6 +17,8 @@ export default function AdminPage() {
   const isAutoRates = useStore(state => state.isAutoRates);
   const setIsAutoRates = useStore(state => state.setIsAutoRates);
   const setRates = useStore(state => state.setRates);
+  const adminLogs = useStore(state => state.adminLogs);
+  const clearAdminLogs = useStore(state => state.clearAdminLogs);
   
   const [status, setStatus] = useState<{type: 'idle' | 'success' | 'error', msg: string}>({type: 'idle', msg: ''});
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -30,7 +32,7 @@ export default function AdminPage() {
   const [loginError, setLoginError] = useState('');
 
   // Dashboard layout state
-  const [activeTab, setActiveTab] = useState<'orders' | 'inventory' | 'csv' | 'rates'>('orders');
+  const [activeTab, setActiveTab] = useState<'orders' | 'inventory' | 'csv' | 'rates' | 'notifications'>('orders');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   
@@ -454,6 +456,24 @@ export default function AdminPage() {
         >
           <TrendingUp size={20} /> Configuración de Tasas
         </button>
+        <button
+          onClick={() => setActiveTab('notifications')}
+          className={`flex items-center gap-2 pb-3 px-2 font-bold text-lg transition-all border-b-2 ${
+            activeTab === 'notifications' 
+              ? 'border-ananas-green text-ananas-green' 
+              : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          <div className="relative">
+            <Layers size={20} />
+            {adminLogs.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+                {adminLogs.length}
+              </span>
+            )}
+          </div>
+          Notificaciones
+        </button>
       </div>
 
       {/* ------------------ TAB 1: ORDERS MANAGEMENT ------------------ */}
@@ -825,6 +845,60 @@ export default function AdminPage() {
               Última actualización registrada: {rates.lastUpdated || 'No registrada'}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ------------------ TAB 5: NOTIFICATIONS & RESTOCK ------------------ */}
+      {activeTab === 'notifications' && (
+        <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm space-y-6 animate-in fade-in duration-300">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-2xl font-black text-gray-800 flex items-center gap-2">
+                <Layers className="text-ananas-green" /> Actividad y Reposición
+              </h2>
+              <p className="text-gray-500 font-medium text-sm mt-1">
+                Registro automático de ventas y reposición de inventario desde el almacén.
+              </p>
+            </div>
+            {adminLogs.length > 0 && (
+              <button 
+                onClick={() => {
+                  if (window.confirm('¿Limpiar todas las notificaciones?')) {
+                    clearAdminLogs();
+                  }
+                }}
+                className="text-xs font-bold text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-lg transition"
+              >
+                Limpiar Historial
+              </button>
+            )}
+          </div>
+
+          {adminLogs.length === 0 ? (
+            <div className="text-center py-12 text-gray-400 border-2 border-dashed border-gray-100 rounded-2xl">
+              <ShieldAlert size={48} className="mx-auto mb-4 opacity-30" />
+              <p className="text-lg font-bold">No hay notificaciones recientes</p>
+              <p className="text-sm">Las compras realizadas en la tienda aparecerán aquí automáticamente.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {adminLogs.map((log) => (
+                <div key={log.id} className="bg-gray-50 border border-gray-100 p-4 rounded-xl flex gap-4 animate-in slide-in-from-top-2 duration-300">
+                  <div className="mt-1">
+                    {log.message.includes('Reposición') ? (
+                      <div className="bg-blue-100 text-blue-600 p-2 rounded-full"><Package size={16} /></div>
+                    ) : (
+                      <div className="bg-green-100 text-green-600 p-2 rounded-full"><CheckCircle size={16} /></div>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-400 font-bold mb-1">{new Date(log.date).toLocaleString('es-VE')}</p>
+                    <p className="text-sm text-gray-800 font-medium leading-relaxed">{log.message}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

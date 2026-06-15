@@ -79,7 +79,9 @@ export default function CheckoutPage() {
   const deliveryFee = shippingMethod === 'delivery' ? 2.50 : 0.00;
   const maxPointsToUse = Math.min(user ? user.clubPoints : 0, 350);
   const discount = usePoints ? Math.min(maxPointsToUse * 0.01, subtotal) : 0;
-  const total = subtotal + deliveryFee - discount;
+  const baseTotal = subtotal + deliveryFee - discount;
+  const paypalFee = paymentMethod === 'paypal' ? ((baseTotal + 0.30) / 0.946) - baseTotal : 0;
+  const total = baseTotal + paypalFee;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -110,8 +112,10 @@ export default function CheckoutPage() {
 
     const maxPointsToUse = Math.min(user ? user.clubPoints : 0, 350);
     const calculatedDiscount = usePoints ? Math.min(maxPointsToUse * 0.01, subtotal) : 0;
-    const calculatedTotal = subtotal + deliveryFee - calculatedDiscount;
-    const calculatedPointsEarned = Math.round(calculatedTotal);
+    const baseCalculatedTotal = subtotal + deliveryFee - calculatedDiscount;
+    const calculatedPaypalFee = paymentMethod === 'paypal' ? ((baseCalculatedTotal + 0.30) / 0.946) - baseCalculatedTotal : 0;
+    const calculatedTotal = baseCalculatedTotal + calculatedPaypalFee;
+    const calculatedPointsEarned = Math.round(baseCalculatedTotal);
 
     let orderStatus: 'Facturado' | 'En revisión' | 'Procesando' = 'Procesando';
     if (['creditcard', 'paypal', 'binance'].includes(paymentMethod)) {
@@ -546,6 +550,10 @@ export default function CheckoutPage() {
               {paymentMethod === 'creditcard' && (
                 <div className="space-y-4">
                   <p className="font-bold text-gray-800 text-sm">Pago con Tarjeta de Crédito (Adaptador Stripe):</p>
+                  <p className="text-xs text-ananas-green bg-green-50 p-3 rounded-lg font-medium border border-green-100 flex gap-2 items-start mt-2">
+                    <ShieldCheck size={16} className="shrink-0 mt-0.5" />
+                    Tus pagos están encriptados bajo estrictos protocolos de seguridad internacionales (PCI Compliance). Ananas Frutería no almacena los datos de tu tarjeta.
+                  </p>
                   <div className="grid grid-cols-1 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-gray-500 mb-1">Número de Tarjeta</label>
@@ -726,6 +734,12 @@ export default function CheckoutPage() {
                 <div className="flex justify-between text-red-500 font-semibold">
                   <span>Descuento Club Ananas</span>
                   <span>-{convertAndFormatPrice(discount, currency, rates)}</span>
+                </div>
+              )}
+              {paymentMethod === 'paypal' && (
+                <div className="flex justify-between text-yellow-600 font-semibold">
+                  <span>Comisión PayPal (5.4% + $0.30)</span>
+                  <span>{convertAndFormatPrice(paypalFee, currency, rates)}</span>
                 </div>
               )}
             </div>

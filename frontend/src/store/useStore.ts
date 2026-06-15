@@ -43,12 +43,19 @@ export interface ExchangeRates {
   lastUpdated: string;
 }
 
+export interface AdminLog {
+  id: string;
+  date: string;
+  message: string;
+}
+
 interface AppState {
   cart: CartItem[];
   user: User | null;
   zone: string | null;
   products: Product[];
   orders: Order[];
+  adminLogs: AdminLog[];
   rates: ExchangeRates;
   currency: 'USD' | 'EUR' | 'VES';
   isAutoRates: boolean;
@@ -68,6 +75,7 @@ interface AppState {
   setCurrency: (currency: 'USD' | 'EUR' | 'VES') => void;
   setIsAutoRates: (val: boolean) => void;
   setRates: (usd: number, eur: number) => void;
+  clearAdminLogs: () => void;
 }
 
 export function convertPrice(priceInUSD: number, currency: 'USD' | 'EUR' | 'VES', rates: ExchangeRates): number {
@@ -102,12 +110,13 @@ export const useStore = create<AppState>()(
     (set) => ({
       cart: [],
       user: null,
-      zone: 'San Luis El Cafetal',
+      zone: null,
       products: initialProducts,
       orders: [],
+      adminLogs: [],
       rates: {
-        usd: 587.41,
-        eur: 683.03,
+        usd: 62.50,
+        eur: 65.30,
         lastUpdated: new Date().toLocaleString()
       },
       currency: 'USD',
@@ -150,9 +159,57 @@ export const useStore = create<AppState>()(
       
       logout: () => set({ user: null }),
       
-      placeOrder: (order) => set((state) => ({
-        orders: [order, ...state.orders]
-      })),
+      placeOrder: (order) => set((state) => {
+        const newLogs: AdminLog[] = [];
+        const newProducts = [...state.products];
+        
+        order.items.forEach(item => {
+          const productIndex = newProducts.findIndex(p => p.id === item.id);
+          if (productIndex !== -1) {
+            const product = { ...newProducts[productIndex] };
+            let currentStock = product.stock || 0;
+            let currentWarehouse = product.warehouseStock || 0;
+            
+            const oldStock = currentStock;
+            currentStock -= item.quantity;
+            
+            let transfer = 0;
+            if (currentStock < 5) {
+              const needed = 15 - currentStock;
+              if (needed > 0 && currentWarehouse > 0) {
+                transfer = Math.min(needed, currentWarehouse);
+                currentStock += transfer;
+                currentWarehouse -= transfer;
+              }
+            }
+            
+            product.stock = currentStock;
+            product.warehouseStock = currentWarehouse;
+            newProducts[productIndex] = product;
+            
+            let logMsg = `🛍️ Venta: ${item.quantity}x ${product.name}. Stock anterior: ${oldStock}.`;
+            if (transfer > 0) {
+              logMsg += ` 🔄 Reposición automática: +${transfer} desde almacén. Nuevo Stock Tienda: ${currentStock}. Almacén restante: ${currentWarehouse}.`;
+            } else {
+              logMsg += ` Nuevo Stock Tienda: ${currentStock}.`;
+            }
+            
+            newLogs.push({
+              id: Date.now().toString() + Math.random().toString(36).substring(7),
+              date: new Date().toISOString(),
+              message: logMsg
+            });
+          }
+        });
+
+        return {
+          orders: [order, ...state.orders],
+          products: newProducts,
+          adminLogs: [...newLogs, ...state.adminLogs]
+        };
+      }),
+      
+      clearAdminLogs: () => set({ adminLogs: [] }),
       
       updateOrderStatus: (id, status) => set((state) => ({
         orders: state.orders.map((o) => o.id === id ? { ...o, status } : o)

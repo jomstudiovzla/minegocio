@@ -2,6 +2,7 @@
 import Hero from "@/components/Hero";
 import Categories from "@/components/Categories";
 import ProductSection from "@/components/ProductSection";
+import AboutUs from "@/components/AboutUs";
 import HowItWorks from "@/components/HowItWorks";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { useStore } from "@/store/useStore";
@@ -37,6 +38,7 @@ export default function Home() {
           </>
         )}
       </div>
+      <AboutUs />
       <HowItWorks />
       <TestimonialCarousel />
     </>

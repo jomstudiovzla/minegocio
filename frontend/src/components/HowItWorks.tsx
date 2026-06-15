@@ -36,7 +36,7 @@ export default function HowItWorks() {
               <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-black text-sm border-4 border-white">2</div>
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-3">2. Paga Seguro</h3>
-            <p className="text-gray-500 font-medium">Elige tu método preferido: Zelle, Pago Móvil o paga en Efectivo al momento de recibir tu pedido.</p>
+            <p className="text-gray-500 font-medium">Elige tu método preferido: Zelle, Pago Móvil, PayPal o Efectivo al momento de recibir tu pedido.</p>
           </div>
 
           {/* Step 3 */}

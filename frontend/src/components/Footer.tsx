@@ -70,6 +70,7 @@ export default function Footer() {
             <p><strong>RIF:</strong> J-12345678-9</p>
             <p><strong>Sede:</strong> Caracas, Distrito Capital</p>
             <p><strong>Teléfono:</strong> +58 412-0000000</p>
+            <p className="mt-2 text-ananas-green/80">Protegemos tus datos y cumplimos con buenas prácticas de comercio electrónico.</p>
           </div>
           <div className="flex gap-4">
             <a 
@@ -165,19 +166,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left text-sm font-medium text-gray-400">
         <div className="space-y-1">
           <p>&copy; {new Date().getFullYear()} Ananas Frutería. Todos los derechos reservados.</p>
-          <p className="text-xs text-gray-400 italic">Precios sujetos a cambios según la tasa oficial del día del BCV.</p>
-        </div>
-        
-        {/* Cintillo Visual de Métodos de Pago */}
-        <div className="flex flex-col items-center md:items-end gap-2">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Pagos 100% Seguros</span>
-          <div className="flex gap-2 items-center opacity-70 hover:opacity-100 transition-opacity">
-            <div className="bg-gray-100 px-3 py-1.5 rounded text-xs font-black text-blue-800">Zelle</div>
-            <div className="bg-gray-100 px-3 py-1.5 rounded text-xs font-black text-[#006E51]">Pago Móvil</div>
-            <div className="bg-gray-100 px-3 py-1.5 rounded text-xs font-black text-green-700">$ Efectivo</div>
-            <div className="bg-gray-100 px-3 py-1.5 rounded text-xs font-black text-[#003087]">PayPal</div>
+          <p className="text-xs text-gray-400 italic">Todos los precios ya están calculados con la tasa BCV del día.</p>
+          <div className="pt-2 text-xs text-gray-400/80 max-w-2xl">
+            <strong>Aviso de Seguridad:</strong> Solo te contactaremos desde nuestro número oficial (+58 412-0000000). Desconfía de otros números. Verifica siempre que nuestro Instagram oficial es @ananasfruteria antes de hacer cualquier pago.
           </div>
         </div>
+        
+        {/* Payment Methods are now displayed in the Hero section */}
       </div>
 
       {/* Testimonial Form Modal */}

@@ -2,6 +2,8 @@
 import { motion } from 'framer-motion';
 import { useStore } from '@/store/useStore';
 import { useRouter } from 'next/navigation';
+import { ShieldCheck, CreditCard, Banknote, Smartphone } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Hero() {
   const user = useStore(state => state.user);
@@ -41,15 +43,19 @@ export default function Hero() {
           className="max-w-2xl text-white"
         >
           <span className="inline-block px-5 py-2 rounded-full bg-white/20 backdrop-blur-md text-sm font-bold tracking-widest mb-6 border border-white/30 shadow-sm">
-            🍍 TU SUPERMERCADO ONLINE
+            🍍 DESDE 2026 SIRVIENDO A CARACAS ESTE
           </span>
           <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tighter" style={{ textShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
             ¡Te llevamos <br/><span className="text-yellow-400">TU MERCADO!</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-100 mb-10 max-w-lg font-medium leading-relaxed" style={{ textShadow: '0 2px 5px rgba(0,0,0,0.3)' }}>
-            Frescura y calidad garantizada directo a la puerta de tu casa. Pide hoy y recibe en minutos, sin complicaciones.
+          <p className="text-lg md:text-2xl text-gray-100 mb-2 max-w-xl font-medium leading-relaxed" style={{ textShadow: '0 2px 5px rgba(0,0,0,0.3)' }}>
+            Frutas, vegetales y mercado completo a domicilio en Caracas Este.
           </p>
-          <div className="flex gap-4">
+          <p className="text-md text-yellow-300 mb-8 max-w-lg font-bold" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+            Entrega el mismo día en San Luis, El Cafetal y zonas cercanas.
+          </p>
+          
+          <div className="flex gap-4 mb-10">
             <button 
               onClick={handleComprarAhora}
               className="bg-white text-ananas-dark px-8 py-4 rounded-full font-bold text-lg shadow-xl shadow-black/20 hover:bg-gray-50 hover:scale-105 transition-all cursor-pointer"
@@ -62,6 +68,23 @@ export default function Hero() {
             >
               Ver Ofertas
             </button>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-white/20">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="flex items-center gap-2 text-yellow-400 font-bold bg-black/20 px-3 py-1.5 rounded-lg">
+                <ShieldCheck size={20} />
+                <span>PAGOS 100% SEGUROS</span>
+              </div>
+              <div className="flex gap-3 text-white/90">
+                <div className="flex items-center gap-1"><Smartphone size={16} /> Zelle / Pago Móvil</div>
+                <div className="flex items-center gap-1"><Banknote size={16} /> Efectivo</div>
+                <div className="flex items-center gap-1"><CreditCard size={16} /> PayPal / Tarjetas</div>
+              </div>
+            </div>
+            <p className="text-xs text-white/70 mt-3 max-w-xl">
+              No guardamos datos de tarjeta. Confirmación segura por WhatsApp o correo. <Link href="/delivery" className="underline hover:text-white">Entregamos en Caracas Este, de 9 a 7 pm. Ver zonas.</Link>
+            </p>
           </div>
         </motion.div>
       </div>

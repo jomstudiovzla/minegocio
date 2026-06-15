@@ -31,7 +31,8 @@ export default function Navbar() {
       <div className="bg-ananas-green text-white text-xs py-2 px-4 md:px-8 relative flex items-center justify-center min-h-[36px] z-50">
         <div className="flex items-center gap-1.5 text-center font-medium">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse mr-1"></span>
-          Tasa del Día USD $ {mounted ? rates.usd.toFixed(2) : '587.41'} / € EUR {mounted ? rates.eur.toFixed(2) : '683.03'}
+          <span>Tasa del Día USD $ {mounted ? rates.usd.toFixed(2) : '587.41'} / € EUR {mounted ? rates.eur.toFixed(2) : '683.03'}</span>
+          <span className="hidden md:inline ml-2 text-white/80 border-l border-white/30 pl-3">Todos los precios ya están calculados con la tasa BCV del día.</span>
         </div>
         
         <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2">
@@ -132,7 +133,7 @@ export default function Navbar() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleSearch}
-              placeholder="¿Qué podemos ayudarte a encontrar hoy?" 
+              placeholder="¿Qué quieres encontrar hoy?" 
               className="w-full bg-gray-50 border border-gray-200 rounded-full py-3 px-6 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-light focus:border-transparent transition shadow-inner"
             />
             <Search className="absolute right-5 top-3 text-gray-400 group-hover:text-ananas-green cursor-pointer transition" size={20} onClick={() => searchQuery.trim() && router.push(`/search?q=${encodeURIComponent(searchQuery)}`)} />

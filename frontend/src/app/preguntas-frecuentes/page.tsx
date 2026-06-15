@@ -35,6 +35,14 @@ export default function PreguntasFrecuentesPage() {
     {
       question: "¿Cómo puedo enviar mi comprobante de pago?",
       answer: "Si seleccionas un método de pago manual (Pago Móvil, Zelle o Transferencia), la plataforma te permitirá subir una imagen (capture de pantalla) de tu recibo bancario directamente en el checkout. Nuestro equipo administrativo revisará y aprobará tu pago a la brevedad."
+    },
+    {
+      question: "¿Aceptan devoluciones si un producto no llega en óptimas condiciones?",
+      answer: "Sí. Aceptamos devoluciones en menos de 24h si el producto no está fresco o no cumple con nuestros estándares de calidad. Queremos que siempre recibas lo mejor."
+    },
+    {
+      question: "¿Puedo ver mi pedido antes de que sea despachado?",
+      answer: "¡Claro que sí! Enviamos foto por WhatsApp de tu compra ya empacada antes de despachar, para que verifiques que todo está perfecto."
     }
   ];
 

@@ -28,9 +28,10 @@ export const categories: Category[] = [
     "icon": "🍎",
     "color": "bg-red-100 text-red-600",
     "subcategories": [
-      "Frescos",
-      "Enteras",
-      "Picadas"
+      "Frutas",
+      "Verduras y hortalizas",
+      "Tubérculos",
+      "Verdes y hojas"
     ]
   },
   {
@@ -40,8 +41,10 @@ export const categories: Category[] = [
     "color": "bg-blue-100 text-blue-600",
     "subcategories": [
       "Carnes",
-      "Pollos",
-      "Embutidos"
+      "Pollo",
+      "Charcutería",
+      "Quesos",
+      "Congelados listos"
     ]
   },
   {
@@ -50,13 +53,11 @@ export const categories: Category[] = [
     "icon": "🥫",
     "color": "bg-orange-100 text-orange-600",
     "subcategories": [
-      "Refrescos",
-      "Arroz",
-      "Pasta",
-      "Harinas",
       "Granos",
+      "Arroz y pasta",
       "Enlatados",
-      "Aceites"
+      "Aceites y salsas",
+      "Bebidas"
     ]
   },
   {
@@ -65,8 +66,9 @@ export const categories: Category[] = [
     "icon": "🧴",
     "color": "bg-teal-100 text-teal-600",
     "subcategories": [
-      "Aseo",
-      "Farmacia"
+      "Higiene personal",
+      "Cuidado corporal",
+      "Farmacia básica"
     ]
   },
   {
@@ -75,8 +77,11 @@ export const categories: Category[] = [
     "icon": "🧽",
     "color": "bg-cyan-100 text-cyan-600",
     "subcategories": [
-      "Detergentes",
-      "Accesorios"
+      "Ropa",
+      "Cocina",
+      "Baño",
+      "Desinfección",
+      "Accesorios de limpieza"
     ]
   },
   {
@@ -86,8 +91,10 @@ export const categories: Category[] = [
     "color": "bg-purple-100 text-purple-600",
     "subcategories": [
       "Cervezas",
-      "Destilados",
-      "Vinos"
+      "Rones",
+      "Whisky",
+      "Vinos",
+      "Otros destilados"
     ]
   }
 ];

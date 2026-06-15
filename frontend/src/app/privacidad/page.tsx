@@ -18,6 +18,11 @@ export default function PrivacidadPage() {
             </section>
 
             <section>
+              <h2 className="text-xl font-bold text-gray-800 mb-3">3. Métodos de Pago (PCI Compliance)</h2>
+              <p>NO almacenamos datos de medios de pago ni información de tarjetas de crédito. Todos los pagos con tarjeta son procesados a través de pasarelas externas certificadas bajo estrictos protocolos de seguridad internacionales (PCI Compliance).</p>
+            </section>
+
+            <section>
               <h2 className="text-xl font-bold text-gray-800 mb-3">3. Uso de Cookies</h2>
               <p>Nuestro sitio web utiliza "cookies" para mejorar su experiencia de usuario, recordar los artículos en su carrito de compras y guardar sus preferencias para futuras visitas. Puede desactivar las cookies a través de la configuración de su navegador, pero esto podría afectar el funcionamiento del sitio.</p>
             </section>

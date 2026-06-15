@@ -5,34 +5,53 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const testimonials = [
   {
-    id: 1,
-    name: "María Fernanda G.",
-    date: "12 Junio 2026",
-    text: "Excelente servicio. Las frutas llegaron súper frescas, el aguacate en su punto exacto como lo pedí. El delivery fue muy puntual a Valle Arriba. ¡Totalmente recomendados!",
-    rating: 5,
-  },
-  {
     id: 2,
-    name: "Carlos Mendoza",
+    name: "Carlos M.",
     date: "05 Junio 2026",
     text: "Primera vez que pido por la página web y me encantó. La interfaz es rapidísima y pagar por Pago Móvil fue un proceso sin complicaciones. Seguiré comprando.",
     rating: 5,
+    zone: "Valle Arriba",
+    purchaseType: "Mercado completo"
+  },
+  {
+    id: 1,
+    name: "María Fernanda G.",
+    date: "12 Junio 2026",
+    text: "Excelente servicio. Las frutas llegaron súper frescas, el aguacate en su punto exacto como lo pedí. El delivery fue muy puntual. ¡Totalmente recomendados!",
+    rating: 5,
+    zone: "El Cafetal",
+    purchaseType: "Solo frutas"
+  },
+  {
+    id: 5,
+    name: "Luis C.",
+    date: "20 Junio 2026",
+    text: "Increíble cómo empacan todo. Los congelados llegaron perfectos y la atención al cliente por WhatsApp me dio mucha confianza. 100% recomendado.",
+    rating: 5,
+    zone: "Caurimare",
+    purchaseType: "Víveres y Carnes"
   },
   {
     id: 3,
     name: "Andrea V.",
     date: "28 Mayo 2026",
-    text: "Me resolvieron la cena del domingo. Pedí por pickup y en 20 minutos ya tenían todo empacado y listo. Muy amables en la tienda de San Luis.",
+    text: "Me resolvieron la cena del domingo. Pedí por pickup y en 20 minutos ya tenían todo empacado y listo. Muy amables en la tienda.",
     rating: 4,
+    zone: "San Luis",
+    purchaseType: "Pickup rápido"
   },
   {
-    id: 4,
-    name: "Roberto P.",
-    date: "15 Mayo 2026",
-    text: "Tienen productos de calidad premium. El precio de las fresas me pareció excelente y el empaque protege todo muy bien durante el traslado.",
+    id: 6,
+    name: "Valentina R.",
+    date: "25 Junio 2026",
+    text: "Los productos de limpieza y víveres están a muy buen precio. Hice el mercado del mes entero y todo llegó excelente. La plataforma es muy fácil de usar.",
     rating: 5,
+    zone: "Los Naranjos",
+    purchaseType: "Mercado del mes"
   }
 ];
+
+import Link from 'next/link';
 
 export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -101,7 +120,9 @@ export default function TestimonialCarousel() {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-800">{testimonials[currentIndex].name}</h4>
-                    <p className="text-sm text-gray-500">{testimonials[currentIndex].date}</p>
+                    <p className="text-sm text-gray-500">
+                      {testimonials[currentIndex].zone} • <span className="text-ananas-green">{testimonials[currentIndex].purchaseType}</span>
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -119,6 +140,15 @@ export default function TestimonialCarousel() {
                 }`}
               />
             ))}
+          </div>
+
+          <div className="flex justify-center mt-12">
+            <Link 
+              href="/comentarios" 
+              className="bg-white border-2 border-ananas-green text-ananas-green px-8 py-3 rounded-full font-bold hover:bg-ananas-green hover:text-white transition-colors"
+            >
+              Ver más opiniones
+            </Link>
           </div>
 
         </div>

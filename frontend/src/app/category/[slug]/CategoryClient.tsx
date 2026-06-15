@@ -82,7 +82,9 @@ export default function CategoryClient({ slug }: { slug: string }) {
         <p className={`font-medium opacity-90 ${theme.desc}`}>Explora lo mejor de nuestra selección</p>
         
         {category.subcategories && category.subcategories.length > 0 && (
-          <div className="flex gap-3 mt-6 overflow-x-auto pb-2">
+          <div className="mt-6">
+            <p className={`text-xs font-bold uppercase tracking-wider mb-3 ${theme.desc}`}>Compra rápido: filtra por tipo de producto</p>
+            <div className="flex gap-3 overflow-x-auto pb-2">
             <span 
               onClick={() => setActiveSubcategory(null)}
               className={`px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap cursor-pointer transition ${
@@ -106,6 +108,7 @@ export default function CategoryClient({ slug }: { slug: string }) {
                 {sub}
               </span>
             ))}
+          </div>
           </div>
         )}
       </div>
