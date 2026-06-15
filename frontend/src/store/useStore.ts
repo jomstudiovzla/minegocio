@@ -37,12 +37,19 @@ export interface Order {
   paymentCapture?: string;
 }
 
+export interface ExchangeRates {
+  usd: number;
+  eur: number;
+  lastUpdated: string;
+}
+
 interface AppState {
   cart: CartItem[];
   user: User | null;
   zone: string | null;
   products: Product[];
   orders: Order[];
+  rates: ExchangeRates;
   setProducts: (products: Product[]) => void;
   addToCart: (item: Omit<CartItem, 'quantity'>) => void;
   removeFromCart: (id: string) => void;
@@ -55,6 +62,7 @@ interface AppState {
   deductPoints: (points: number) => void;
   addPoints: (points: number) => void;
   updateOrderStatus: (id: string, status: Order['status']) => void;
+  fetchRates: () => Promise<void>;
 }
 
 export const useStore = create<AppState>()(
@@ -65,6 +73,11 @@ export const useStore = create<AppState>()(
       zone: 'San Luis El Cafetal',
       products: initialProducts,
       orders: [],
+      rates: {
+        usd: 582.69,
+        eur: 669.76,
+        lastUpdated: new Date().toLocaleString()
+      },
       
       setProducts: (products) => set({ products }),
       
@@ -124,7 +137,31 @@ export const useStore = create<AppState>()(
         return {
           user: { ...state.user, clubPoints: newPoints, clubLevel }
         };
-      })
+      }),
+
+      fetchRates: async () => {
+        try {
+          const [usdRes, eurRes] = await Promise.all([
+            fetch('https://ve.dolarapi.com/v1/dolares/oficial'),
+            fetch('https://ve.dolarapi.com/v1/euros/oficial')
+          ]);
+          if (usdRes.ok && eurRes.ok) {
+            const usdData = await usdRes.json();
+            const eurData = await eurRes.json();
+            const usdRate = usdData.promedio || usdData.venta || 587.41;
+            const eurRate = eurData.promedio || eurData.venta || 680.08;
+            set({
+              rates: {
+                usd: Number(usdRate),
+                eur: Number(eurRate),
+                lastUpdated: new Date().toLocaleString()
+              }
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching exchange rates:", error);
+        }
+      }
     }),
     {
       name: 'ananas-storage',

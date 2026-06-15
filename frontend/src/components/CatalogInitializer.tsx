@@ -4,9 +4,12 @@ import { useStore } from '@/store/useStore';
 import { products as initialProducts } from '@/data/mockDb';
 
 export default function CatalogInitializer() {
-  const { products, setProducts } = useStore();
+  const { products, setProducts, fetchRates } = useStore();
 
   useEffect(() => {
+    // Fetch live currency exchange rates from BCV API
+    fetchRates();
+
     const currentProducts = [...products];
     let hasChanges = false;
 

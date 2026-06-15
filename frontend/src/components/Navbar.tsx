@@ -13,7 +13,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
-  const { cart, user } = useStore();
+  const { cart, user, rates } = useStore();
   
   // To avoid hydration mismatch, only render state after mount
   const [mounted, setMounted] = useState(false);
@@ -32,7 +32,10 @@ export default function Navbar() {
           <span className="cursor-pointer hover:text-gray-200 transition">Instagram</span>
           <span className="cursor-pointer hover:text-gray-200 transition">Facebook</span>
         </div>
-        <div className="hidden md:block">Tasa del Día USD $ 582.69 / € EUR 669.76</div>
+        <div className="hidden md:block flex items-center gap-1.5">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse mr-1"></span>
+          Tasa Oficial BCV: USD $ {mounted ? rates.usd.toFixed(2) : '582.69'} / € EUR {mounted ? rates.eur.toFixed(2) : '669.76'}
+        </div>
         <div className="flex items-center gap-1 cursor-pointer">
           USD - dólar estadounidense <ChevronDown size={14} />
         </div>

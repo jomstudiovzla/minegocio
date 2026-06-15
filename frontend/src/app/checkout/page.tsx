@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function CheckoutPage() {
-  const { cart, clearCart, user, placeOrder, deductPoints, addPoints } = useStore();
+  const { cart, clearCart, user, placeOrder, deductPoints, addPoints, rates } = useStore();
   const [mounted, setMounted] = useState(false);
   const [shippingMethod, setShippingMethod] = useState<'delivery' | 'pickup'>('delivery');
   const [paymentMethod, setPaymentMethod] = useState<'pagomovil' | 'zelle' | 'cash' | 'creditcard' | 'paypal' | 'binance' | 'transferencia'>('pagomovil');
@@ -466,11 +466,16 @@ export default function CheckoutPage() {
             <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100 space-y-4">
               {paymentMethod === 'pagomovil' && (
                 <div className="space-y-4">
-                  <div className="text-sm text-gray-600 font-medium">
-                    <p className="font-bold text-gray-800 mb-2">Instrucciones de Pago Móvil:</p>
+                  <div className="text-sm text-gray-600 font-medium bg-white p-5 rounded-2xl border border-gray-100 space-y-2">
+                    <p className="font-bold text-gray-800 mb-2 border-b pb-2">Instrucciones de Pago Móvil:</p>
                     <p>Banco: <strong className="text-gray-800">Banesco (0134)</strong></p>
                     <p>Teléfono: <strong className="text-gray-800">0412-5551234</strong></p>
                     <p>RIF: <strong className="text-gray-800">J-12345678-9</strong></p>
+                    <div className="mt-4 bg-green-50 p-3.5 rounded-xl border border-green-100 flex justify-between items-center text-green-800 text-sm font-bold">
+                      <span>Monto exacto a pagar:</span>
+                      <span className="text-base font-black">Bs. {(total * rates.usd).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    </div>
+                    <div className="text-[10px] text-gray-400 mt-1">Calculado a la tasa oficial del BCV del día (Bs. {rates.usd.toFixed(2)} / USD).</div>
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 mb-2">Referencia Bancaria (Últimos 4 dígitos)</label>
@@ -511,12 +516,17 @@ export default function CheckoutPage() {
 
               {paymentMethod === 'transferencia' && (
                 <div className="space-y-4">
-                  <div className="text-sm text-gray-600 font-medium">
-                    <p className="font-bold text-gray-800 mb-2">Instrucciones de Transferencia Bancaria:</p>
+                  <div className="text-sm text-gray-600 font-medium bg-white p-5 rounded-2xl border border-gray-100 space-y-2">
+                    <p className="font-bold text-gray-800 mb-2 border-b pb-2">Instrucciones de Transferencia Bancaria:</p>
                     <p>Banco: <strong className="text-gray-800">Banco Mercantil (0105)</strong></p>
                     <p>Cuenta: <strong className="text-gray-800">0105-0012-34-5678901234</strong></p>
                     <p>Beneficiario: <strong className="text-gray-800">Ananas Frutería C.A.</strong></p>
                     <p>RIF: <strong className="text-gray-800">J-12345678-9</strong></p>
+                    <div className="mt-4 bg-green-50 p-3.5 rounded-xl border border-green-100 flex justify-between items-center text-green-800 text-sm font-bold">
+                      <span>Monto exacto a pagar:</span>
+                      <span className="text-base font-black">Bs. {(total * rates.usd).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    </div>
+                    <div className="text-[10px] text-gray-400 mt-1">Calculado a la tasa oficial del BCV del día (Bs. {rates.usd.toFixed(2)} / USD).</div>
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 mb-2">Número de Referencia de Transferencia</label>
@@ -605,13 +615,18 @@ export default function CheckoutPage() {
               )}
 
               {paymentMethod === 'cash' && (
-                <div className="text-sm text-gray-600 font-medium space-y-2">
-                  <p className="font-bold text-gray-800">Instrucciones de Efectivo:</p>
+                <div className="text-sm text-gray-600 font-medium space-y-3 bg-white p-5 rounded-2xl border border-gray-100">
+                  <p className="font-bold text-gray-800 border-b pb-2">Instrucciones de Efectivo:</p>
                   <p>
                     {shippingMethod === 'delivery' 
                       ? 'Paga en divisas en efectivo directamente al motorizado al recibir tu pedido. Por favor ten el monto exacto.' 
                       : 'Realiza tu pago en caja (divisas o bolívares en efectivo) al retirar tu pedido por la tienda de San Luis.'}
                   </p>
+                  <div className="bg-yellow-50 p-3.5 rounded-xl border border-yellow-100 text-yellow-800 text-xs font-bold space-y-1">
+                    <p>Si pagas en Bolívares en efectivo, el monto a entregar es:</p>
+                    <p className="text-sm font-black text-gray-800">Bs. {(total * rates.usd).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    <p className="text-[10px] text-gray-400 font-normal">Calculado a la tasa oficial del BCV (Bs. {rates.usd.toFixed(2)} / USD).</p>
+                  </div>
                 </div>
               )}
 
