@@ -1,0 +1,53 @@
+
+> frontend@0.1.0 lint
+> eslint
+
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/app/account/page.tsx
+  181:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/app/admin/page.tsx
+    5:121  warning  'Phone' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+    5:152  warning  'Calendar' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+    5:162  warning  'Clock' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   95:23   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  412:25   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  539:27   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  606:25   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  670:11   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/app/cart/page.tsx
+  44:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/app/category/[slug]/page.tsx
+  1:22  warning  'products' is defined but never used  @typescript-eslint/no-unused-vars
+  2:10  warning  'notFound' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/app/checkout/page.tsx
+    4:18   warning  'AnimatePresence' is defined but never used                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+    5:124  warning  'DollarSign' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  626:23   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/app/product/[id]/ProductClient.tsx
+  12:9  warning  'updateQuantity' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  13:9  warning  'cart' is assigned a value but never used            @typescript-eslint/no-unused-vars
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/components/CartSidebar.tsx
+  54:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/components/Navbar.tsx
+  16:11  warning  'zone' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/components/ProductGrid.tsx
+  6:8  warning  'Link' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/macbook/Documents/Antigravity/Ananas/frontend/src/components/ZoneSelector.tsx
+   4:10  warning  'zones' is defined but never used             @typescript-eslint/no-unused-vars
+   5:10  warning  'MapPin' is defined but never used            @typescript-eslint/no-unused-vars
+   5:18  warning  'Check' is defined but never used             @typescript-eslint/no-unused-vars
+   6:10  warning  'motion' is defined but never used            @typescript-eslint/no-unused-vars
+   6:18  warning  'AnimatePresence' is defined but never used   @typescript-eslint/no-unused-vars
+  10:10  warning  'mounted' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 26 problems (1 error, 25 warnings)
+

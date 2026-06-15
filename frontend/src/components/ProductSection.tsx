@@ -1,21 +1,12 @@
 "use client";
+import { useRef, useState } from 'react';
 import { Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useStore } from '@/store/useStore';
-import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { Product } from '@/data/mockDb';
 import ProductModal from './ProductModal';
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-  unit?: string;
-}
-
-export default function ProductSection({ title, categoryId, products }: { title: string, categoryId: string, products: Product[] }) {
+export default function ProductSection({ title, products }: { title: string, categoryId: string, products: Product[] }) {
   const addToCart = useStore(state => state.addToCart);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -82,7 +73,7 @@ export default function ProductSection({ title, categoryId, products }: { title:
           </motion.div>
         ))}
       </div>
-      <ProductModal product={selectedProduct as any} onClose={() => setSelectedProduct(null)} />
+      <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
     </section>
   );
 }

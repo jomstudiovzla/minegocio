@@ -9,6 +9,8 @@ export interface Product {
   unit?: string;     // e.g. "1 Kg", "500g"
   stock?: number;
   warehouseStock?: number;
+  description?: string;
+  providerPrice?: number;
 }
 
 export interface Category {
@@ -103,7 +105,9 @@ export const products: Product[] = [
       "Nuevo"
     ],
     "stock": 69,
-    "warehouseStock": 229
+    "warehouseStock": 229,
+    "providerPrice": 2.10,
+    "description": "Tomates Perita de calidad seleccionada, perfectos para ensaladas y guisos."
   },
   {
     "id": "p2",
@@ -115,7 +119,9 @@ export const products: Product[] = [
     "unit": "1 Kg",
     "labels": [],
     "stock": 26,
-    "warehouseStock": 198
+    "warehouseStock": 198,
+    "providerPrice": 1.25,
+    "description": "Cebolla blanca fresca y crujiente, ideal para sazonar tus comidas cotidianas."
   },
   {
     "id": "p3",

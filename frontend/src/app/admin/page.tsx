@@ -2,8 +2,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Papa from 'papaparse';
 import { useStore, Order } from '@/store/useStore';
-import { Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Phone, Mail, User as UserIcon, Calendar, Clock, MapPin, DollarSign } from 'lucide-react';
-import { Product } from '@/data/mockDb';
+import { Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Mail, User as UserIcon, MapPin, DollarSign, TrendingUp, Search, Layers, Edit } from 'lucide-react';
+import { Product, products as initialProducts } from '@/data/mockDb';
 import { useRouter } from 'next/navigation';
 
 export default function AdminPage() {
@@ -11,6 +11,7 @@ export default function AdminPage() {
   const products = useStore(state => state.products);
   const orders = useStore(state => state.orders);
   const updateOrderStatus = useStore(state => state.updateOrderStatus);
+  const user = useStore(state => state.user);
   
   const [status, setStatus] = useState<{type: 'idle' | 'success' | 'error', msg: string}>({type: 'idle', msg: ''});
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -24,20 +25,87 @@ export default function AdminPage() {
   const [loginError, setLoginError] = useState('');
 
   // Dashboard layout state
-  const [activeTab, setActiveTab] = useState<'orders' | 'csv'>('orders');
+  const [activeTab, setActiveTab] = useState<'orders' | 'inventory' | 'csv'>('orders');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  
+  // Search state for inventory
+  const [inventorySearch, setInventorySearch] = useState('');
+
+  // Edit product state
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [editForm, setEditForm] = useState({
+    name: '',
+    price: 0,
+    providerPrice: 0,
+    stock: 0,
+    warehouseStock: 0,
+    description: '',
+    unit: '',
+  });
+
+  const startEdit = (p: Product) => {
+    setEditingProduct(p);
+    setEditForm({
+      name: p.name,
+      price: p.price,
+      providerPrice: p.providerPrice || 0,
+      stock: p.stock || 0,
+      warehouseStock: p.warehouseStock || 0,
+      description: p.description || '',
+      unit: p.unit || '1 Unidad',
+    });
+  };
+
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingProduct) return;
+
+    const updatedProducts = products.map((p) => {
+      if (p.id === editingProduct.id) {
+        return {
+          ...p,
+          name: editForm.name,
+          price: Number(editForm.price),
+          providerPrice: editForm.providerPrice ? Number(editForm.providerPrice) : undefined,
+          stock: Number(editForm.stock),
+          warehouseStock: Number(editForm.warehouseStock),
+          description: editForm.description,
+          unit: editForm.unit,
+        };
+      }
+      return p;
+    });
+
+    setProducts(updatedProducts);
+    setEditingProduct(null);
+    setStatus({type: 'success', msg: `Producto "${editForm.name}" actualizado con éxito.`});
+  };
+
+  const handleResetCatalog = () => {
+    if (window.confirm("¿Estás seguro de que deseas restaurar el catálogo a los valores iniciales de fábrica? Esto sobrescribirá todos tus cambios, precios y descripciones personalizados.")) {
+      setProducts(initialProducts);
+      setStatus({type: 'success', msg: 'Catálogo restaurado a los valores por defecto.'});
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
-    // Check if already authenticated in this session
-    if (typeof window !== 'undefined') {
-      const logged = sessionStorage.getItem('isAdminLoggedIn');
-      if (logged === 'true') {
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      if (user && user.email === 'admin@admin.com') {
         setIsAdminLoggedIn(true);
+        sessionStorage.setItem('isAdminLoggedIn', 'true');
+      } else {
+        const logged = sessionStorage.getItem('isAdminLoggedIn');
+        if (logged === 'true') {
+          setIsAdminLoggedIn(true);
+        }
       }
     }
-  }, []);
+  }, [mounted, user]);
 
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,31 +135,89 @@ export default function AdminPage() {
       dynamicTyping: true,
       complete: (results) => {
         try {
-          const newProducts: Product[] = results.data.map((row: any) => ({
-            id: String(row.id),
-            name: row.name,
-            price: Number(row.price),
-            category: row.category,
-            subcategory: row.subcategory,
-            image: row.image,
-            unit: row.unit || '1 Unidad',
-            labels: row.labels ? String(row.labels).split('|') : undefined
-          }));
-          
-          setProducts(newProducts);
-          setStatus({type: 'success', msg: `Se cargaron ${newProducts.length} productos exitosamente.`});
-        } catch (err: any) {
-          setStatus({type: 'error', msg: 'Error procesando archivo: ' + err.message});
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const newProducts = results.data.map((row: any) => {
+            const getField = (keys: string[]) => {
+              const matchedKey = Object.keys(row).find(k => keys.includes(k.toLowerCase().trim()));
+              return matchedKey ? row[matchedKey] : undefined;
+            };
+
+            const id = getField(['id', 'id_producto', 'sku']);
+            const name = getField(['name', 'nombre', 'title', 'titulo', 'título']);
+            const price = getField(['price', 'precio', 'venta', 'precio_venta']);
+            const category = getField(['category', 'categoria', 'categoría']);
+            const subcategory = getField(['subcategory', 'subcategoria', 'subcategoría']);
+            const image = getField(['image', 'imagen', 'foto', 'img']);
+            const unit = getField(['unit', 'unidad', 'medida']);
+            const labels = getField(['labels', 'etiquetas']);
+            const description = getField(['description', 'descripcion', 'descripción', 'desc']);
+            const providerPrice = getField(['providerprice', 'provider_price', 'cost', 'costo', 'precio_proveedor', 'precioproveedor']);
+            const stock = getField(['stock', 'cantidad', 'cantidad_tienda', 'tienda']);
+            const warehouseStock = getField(['warehousestock', 'warehouse_stock', 'deposito', 'depósito', 'cantidad_deposito', 'deposito_stock']);
+
+            return {
+              id: id ? String(id).trim() : '',
+              name: name ? String(name).trim() : '',
+              price: price !== undefined && price !== '' ? Number(price) : 0,
+              category: category ? String(category).trim() : '',
+              subcategory: subcategory ? String(subcategory).trim() : '',
+              image: image ? String(image).trim() : '',
+              unit: unit ? String(unit).trim() : '1 Unidad',
+              labels: labels ? String(labels).split('|').map(l => l.trim()).filter(Boolean) : undefined,
+              description: description ? String(description).trim() : undefined,
+              providerPrice: providerPrice !== undefined && providerPrice !== '' ? Number(providerPrice) : undefined,
+              stock: stock !== undefined && stock !== '' ? Number(stock) : undefined,
+              warehouseStock: warehouseStock !== undefined && warehouseStock !== '' ? Number(warehouseStock) : undefined,
+            };
+          }).filter((p: any) => p.id);
+
+          const updatedProducts = [...products];
+          let updatedCount = 0;
+          let addedCount = 0;
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          newProducts.forEach((newP: any) => {
+            const idx = updatedProducts.findIndex((p) => p.id === newP.id);
+            if (idx > -1) {
+              updatedProducts[idx] = {
+                ...updatedProducts[idx],
+                name: newP.name || updatedProducts[idx].name,
+                price: newP.price || updatedProducts[idx].price,
+                category: newP.category || updatedProducts[idx].category,
+                subcategory: newP.subcategory || updatedProducts[idx].subcategory,
+                image: newP.image || updatedProducts[idx].image,
+                unit: newP.unit || updatedProducts[idx].unit,
+                labels: newP.labels !== undefined ? newP.labels : updatedProducts[idx].labels,
+                description: newP.description !== undefined ? newP.description : updatedProducts[idx].description,
+                providerPrice: newP.providerPrice !== undefined ? newP.providerPrice : updatedProducts[idx].providerPrice,
+                stock: newP.stock !== undefined ? newP.stock : updatedProducts[idx].stock,
+                warehouseStock: newP.warehouseStock !== undefined ? newP.warehouseStock : updatedProducts[idx].warehouseStock,
+              };
+              updatedCount++;
+            } else {
+              updatedProducts.push(newP);
+              addedCount++;
+            }
+          });
+
+          setProducts(updatedProducts);
+          setStatus({
+            type: 'success', 
+            msg: `Fusión exitosa: ${updatedCount} productos actualizados y ${addedCount} nuevos añadidos.`
+          });
+        } catch (err) {
+          setStatus({type: 'error', msg: 'Error procesando archivo: ' + (err as Error).message});
         }
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       error: (error: any) => {
-        setStatus({type: 'error', msg: 'Error parseando CSV: ' + error.message});
+        setStatus({type: 'error', msg: 'Error parseando CSV: ' + (error as Error).message});
       }
     });
   };
 
   const handleDownloadTemplate = () => {
-    const template = "id,name,price,category,subcategory,image,unit,labels\np1,Tomates Perita,3.49,frutas-vegetales,Frescos,/Ananas/images/products/tomates_perita.png,1 Kg,Oferta|Fresco\np2,Lechosa,1.75,frutas-vegetales,Enteras,/Ananas/images/products/lechosa.png,1 Kg,";
+    const template = "id,name,price,category,subcategory,image,unit,labels,description,providerPrice,stock,warehouseStock\np1,Tomates Perita,3.49,frutas-vegetales,Frescos,/Ananas/images/products/tomates_perita.png,1 Kg,Oferta|Fresco,Tomates frescos de calidad Premium,2.10,69,229\np2,Lechosa,1.75,frutas-vegetales,Enteras,/Ananas/images/products/lechosa.png,1 Kg,,Lechosa dulce y jugosa,1.10,94,324";
     const blob = new Blob([template], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -109,6 +235,20 @@ export default function AdminPage() {
   };
 
   if (!mounted) return null;
+
+  // Calculate stats
+  const completedOrders = orders.filter(o => ['Facturado', 'Procesando'].includes(o.status));
+  const totalRevenue = completedOrders.reduce((acc, o) => acc + o.total, 0);
+  const profitMarginPercent = 35; // 35% gain margin
+  const dailyProfit = totalRevenue * (profitMarginPercent / 100);
+  const pendingOrdersCount = orders.filter(o => o.status === 'En revisión').length;
+
+  // Filter products for inventory search
+  const filteredProducts = products.filter(p => 
+    p.name.toLowerCase().includes(inventorySearch.toLowerCase()) || 
+    p.category.toLowerCase().includes(inventorySearch.toLowerCase()) ||
+    p.id.toLowerCase().includes(inventorySearch.toLowerCase())
+  );
 
   // ------------------ LOGIN SCREEN ------------------
   if (!isAdminLoggedIn) {
@@ -167,12 +307,12 @@ export default function AdminPage() {
 
   // ------------------ ADMIN PANEL DASHBOARD ------------------
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 min-h-[80vh] space-y-8">
+    <div className="max-w-7xl mx-auto py-12 px-4 min-h-[80vh] space-y-8 animate-in fade-in duration-300">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-gray-100 pb-6">
         <div>
           <h1 className="text-4xl font-black text-gray-800 tracking-tight">Panel de Control</h1>
-          <p className="text-gray-500 font-medium mt-1">Hola Administrador, gestiona los pedidos y el catálogo de productos.</p>
+          <p className="text-gray-500 font-medium mt-1">Hola Administrador, gestiona los pedidos, estadísticas e inventario.</p>
         </div>
         <button 
           onClick={handleLogout}
@@ -180,6 +320,49 @@ export default function AdminPage() {
         >
           <LogOut size={18} /> Salir del Panel
         </button>
+      </div>
+
+      {/* Statistics Dashboard Summary */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+          <div className="p-4 rounded-2xl bg-green-50 text-green-600">
+            <DollarSign size={24} />
+          </div>
+          <div>
+            <span className="text-xs text-gray-400 block font-bold uppercase">Ingresos Totales</span>
+            <span className="text-2xl font-black text-gray-800">${totalRevenue.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+          <div className="p-4 rounded-2xl bg-yellow-50 text-yellow-600">
+            <TrendingUp size={24} />
+          </div>
+          <div>
+            <span className="text-xs text-gray-400 block font-bold uppercase">Ganancias ({profitMarginPercent}%)</span>
+            <span className="text-2xl font-black text-gray-800">${dailyProfit.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+          <div className="p-4 rounded-2xl bg-blue-50 text-blue-600">
+            <Package size={24} />
+          </div>
+          <div>
+            <span className="text-xs text-gray-400 block font-bold uppercase">Pedidos en Espera</span>
+            <span className="text-2xl font-black text-gray-800">{pendingOrdersCount}</span>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+          <div className="p-4 rounded-2xl bg-purple-50 text-purple-600">
+            <Layers size={24} />
+          </div>
+          <div>
+            <span className="text-xs text-gray-400 block font-bold uppercase">Catálogo Activo</span>
+            <span className="text-2xl font-black text-gray-800">{products.length} ítems</span>
+          </div>
+        </div>
       </div>
 
       {/* Tabs Selector */}
@@ -192,7 +375,17 @@ export default function AdminPage() {
               : 'border-transparent text-gray-400 hover:text-gray-600'
           }`}
         >
-          <ClipboardList size={20} /> Pedidos en Espera ({orders.filter(o => o.status === 'En revisión').length})
+          <ClipboardList size={20} /> Pedidos en Espera ({pendingOrdersCount})
+        </button>
+        <button
+          onClick={() => setActiveTab('inventory')}
+          className={`flex items-center gap-2 pb-3 px-2 font-bold text-lg transition-all border-b-2 ${
+            activeTab === 'inventory' 
+              ? 'border-ananas-green text-ananas-green' 
+              : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          <Package size={20} /> Ver Inventario ({products.length})
         </button>
         <button
           onClick={() => setActiveTab('csv')}
@@ -208,7 +401,7 @@ export default function AdminPage() {
 
       {/* ------------------ TAB 1: ORDERS MANAGEMENT ------------------ */}
       {activeTab === 'orders' && (
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6">
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6 animate-in fade-in duration-300">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-black text-gray-800 flex items-center gap-2">
               <Package className="text-ananas-green" /> Listado de Pedidos Recientes
@@ -290,9 +483,123 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* ------------------ TAB 2: CSV CATALOG UPLOAD ------------------ */}
+      {/* ------------------ TAB 2: INVENTORY VIEWER ------------------ */}
+      {activeTab === 'inventory' && (
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6 animate-in fade-in duration-300">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-black text-gray-800">Inventario de Productos</h2>
+              <p className="text-gray-400 text-xs font-medium">Stock disponible y estado de productos en almacén.</p>
+            </div>
+            
+            <div className="flex flex-wrap items-center gap-3">
+              {/* Reset button */}
+              <button 
+                onClick={handleResetCatalog}
+                className="bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs px-4 py-2.5 rounded-full transition flex items-center gap-1.5 cursor-pointer border border-red-100"
+              >
+                Restaurar Defectos
+              </button>
+
+              {/* Search Input */}
+              <div className="relative w-full sm:max-w-xs">
+                <input
+                  type="text"
+                  placeholder="Buscar por nombre o ID..."
+                  value={inventorySearch}
+                  onChange={e => setInventorySearch(e.target.value)}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-full py-2.5 pl-10 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-light focus:border-transparent transition"
+                />
+                <Search className="absolute left-3.5 top-3 text-gray-400" size={16} />
+              </div>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-gray-100 text-gray-400 text-xs uppercase font-black tracking-wider pb-4">
+                  <th className="py-4 px-4">Producto</th>
+                  <th className="py-4 px-4">ID</th>
+                  <th className="py-4 px-4">Categoría</th>
+                  <th className="py-4 px-4">Costo (USD)</th>
+                  <th className="py-4 px-4">Venta (USD)</th>
+                  <th className="py-4 px-4">Margen</th>
+                  <th className="py-4 px-4">Stock Tienda</th>
+                  <th className="py-4 px-4">Stock Depósito</th>
+                  <th className="py-4 px-4 text-center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50 text-sm font-medium text-gray-700">
+                {filteredProducts.map(p => {
+                  const hasMargin = p.providerPrice && p.price > 0;
+                  const marginPercent = hasMargin 
+                    ? (((p.price - p.providerPrice!) / p.price) * 100).toFixed(0) 
+                    : null;
+
+                  return (
+                    <tr key={p.id} className="hover:bg-gray-50/30 transition">
+                      <td className="py-3 px-4 flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center p-1 border border-gray-100">
+                          <img src={p.image} alt={p.name} className="max-h-full object-contain mix-blend-multiply" />
+                        </div>
+                        <span className="font-bold text-gray-800 truncate max-w-[180px] block" title={p.name}>{p.name}</span>
+                      </td>
+                      <td className="py-3 px-4 font-mono text-xs text-gray-400 font-bold">{p.id}</td>
+                      <td className="py-3 px-4 capitalize text-xs text-gray-500 font-semibold">{p.category.replace('-', ' ')}</td>
+                      
+                      {/* Cost Price */}
+                      <td className="py-3 px-4 text-gray-600 font-bold">
+                        {p.providerPrice !== undefined ? `$${p.providerPrice.toFixed(2)}` : '—'}
+                      </td>
+                      
+                      {/* Sale Price */}
+                      <td className="py-3 px-4 font-black text-gray-800">${p.price.toFixed(2)} <span className="text-[10px] text-gray-400 font-bold">/ {p.unit}</span></td>
+                      
+                      {/* Margin */}
+                      <td className="py-3 px-4">
+                        {marginPercent !== null ? (
+                          <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                            Number(marginPercent) < 15 ? 'bg-orange-50 text-orange-600' : 'bg-green-50 text-green-700'
+                          }`}>
+                            {marginPercent}%
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">—</span>
+                        )}
+                      </td>
+                      
+                      <td className="py-3 px-4">
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                          (p.stock || 0) < 10 ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-700'
+                        }`}>
+                          {p.stock || 0} unds
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="text-gray-500">{p.warehouseStock || 0} unds</span>
+                      </td>
+                      <td className="py-3 px-4 text-center">
+                        <button 
+                          onClick={() => startEdit(p)}
+                          className="bg-ananas-green/10 hover:bg-ananas-green hover:text-white text-ananas-green p-2 rounded-xl transition flex items-center justify-center gap-1 mx-auto cursor-pointer"
+                          title="Editar producto"
+                        >
+                          <Edit size={14} />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* ------------------ TAB 3: CSV CATALOG UPLOAD ------------------ */}
       {activeTab === 'csv' && (
-        <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm text-center space-y-6">
+        <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm text-center space-y-6 animate-in fade-in duration-300">
           <div className="text-left max-w-lg mx-auto">
             <h2 className="text-2xl font-black text-gray-800">Cargar Catálogo por CSV</h2>
             <p className="text-gray-500 font-medium text-sm mt-1">Puedes actualizar todos los productos, precios y fotos subiendo un archivo CSV.</p>
@@ -528,6 +835,130 @@ export default function AdminPage() {
             alt="Capture full size" 
             className="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl animate-in zoom-in-95 duration-200" 
           />
+        </div>
+      )}
+
+      {/* ------------------ PRODUCT EDITING MODAL ------------------ */}
+      {editingProduct && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full border border-gray-100 shadow-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95 duration-200">
+            <button 
+              type="button"
+              onClick={() => setEditingProduct(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full transition cursor-pointer font-bold"
+            >
+              ✕
+            </button>
+            <h3 className="text-2xl font-black text-gray-800 mb-1">Editar Producto</h3>
+            <p className="text-xs font-bold text-ananas-green mb-6 uppercase tracking-wider">ID: {editingProduct.id}</p>
+
+            <form onSubmit={handleSaveEdit} className="space-y-5">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1.5">Nombre del Producto</label>
+                <input 
+                  type="text" 
+                  required
+                  value={editForm.name}
+                  onChange={e => setEditForm(prev => ({ ...prev, name: e.target.value }))}
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1.5">Precio de Venta ($)</label>
+                  <input 
+                    type="number" 
+                    step="0.01"
+                    required
+                    min="0"
+                    value={editForm.price}
+                    onChange={e => setEditForm(prev => ({ ...prev, price: parseFloat(e.target.value) || 0 }))}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1.5">Costo Proveedor ($)</label>
+                  <input 
+                    type="number" 
+                    step="0.01"
+                    min="0"
+                    value={editForm.providerPrice}
+                    onChange={e => setEditForm(prev => ({ ...prev, providerPrice: parseFloat(e.target.value) || 0 }))}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1.5">Unidad (ej. 1 Kg)</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={editForm.unit}
+                    onChange={e => setEditForm(prev => ({ ...prev, unit: e.target.value }))}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                  />
+                </div>
+                <div>
+                  {/* Empty spot to balance layout */}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1.5">Stock Tienda</label>
+                  <input 
+                    type="number" 
+                    required
+                    min="0"
+                    value={editForm.stock}
+                    onChange={e => setEditForm(prev => ({ ...prev, stock: parseInt(e.target.value, 10) || 0 }))}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1.5">Stock Depósito</label>
+                  <input 
+                    type="number" 
+                    required
+                    min="0"
+                    value={editForm.warehouseStock}
+                    onChange={e => setEditForm(prev => ({ ...prev, warehouseStock: parseInt(e.target.value, 10) || 0 }))}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1.5">Descripción del Producto</label>
+                <textarea 
+                  rows={4}
+                  value={editForm.description}
+                  onChange={e => setEditForm(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Escribe una descripción atractiva para este producto..."
+                  className="w-full border border-gray-200 rounded-xl p-4 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm resize-none"
+                />
+              </div>
+
+              <div className="flex gap-4 pt-3 border-t border-gray-100">
+                <button 
+                  type="button"
+                  onClick={() => setEditingProduct(null)}
+                  className="w-1/2 bg-gray-100 text-gray-500 font-bold py-3 rounded-xl hover:bg-gray-200 transition text-sm cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  type="submit"
+                  className="w-1/2 bg-ananas-green text-white font-bold py-3 rounded-xl hover:bg-ananas-dark transition shadow-lg shadow-ananas-green/20 text-sm cursor-pointer"
+                >
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>

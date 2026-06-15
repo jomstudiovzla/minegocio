@@ -9,8 +9,6 @@ export default function ProductClient({ id }: { id: string }) {
   const products = useStore(state => state.products);
   const product = products.find(p => p.id === id);
   const addToCart = useStore(state => state.addToCart);
-  const updateQuantity = useStore(state => state.updateQuantity);
-  const cart = useStore(state => state.cart);
   const [qty, setQty] = useState(1);
 
   if (!product) return notFound();
@@ -39,7 +37,9 @@ export default function ProductClient({ id }: { id: string }) {
             <div className="mb-8">
               <p className="text-ananas-green font-bold text-sm uppercase tracking-wider mb-2">{product.subcategory}</p>
               <h1 className="text-4xl md:text-5xl font-black text-gray-800 mb-4">{product.name}</h1>
-              <p className="text-gray-500 font-medium">Delicioso y fresco, seleccionado especialmente para ti bajo los estándares más altos de calidad de Ananas.</p>
+              <p className="text-gray-500 font-medium">
+                {product.description || "Delicioso y fresco, seleccionado especialmente para ti bajo los estándares más altos de calidad de Ananas."}
+              </p>
             </div>
 
             <div className="flex items-end gap-4 mb-8">

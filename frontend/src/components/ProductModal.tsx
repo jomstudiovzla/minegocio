@@ -13,6 +13,7 @@ interface Product {
   subcategory?: string;
   unit?: string;
   labels?: string[];
+  description?: string;
 }
 
 export default function ProductModal({ product, onClose }: { product: Product | null, onClose: () => void }) {
@@ -75,7 +76,9 @@ export default function ProductModal({ product, onClose }: { product: Product | 
           <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col overflow-y-auto">
             <p className="text-ananas-green font-bold text-xs uppercase tracking-wider mb-2">{product.subcategory || product.category}</p>
             <h2 className="text-3xl font-black text-gray-800 mb-4">{product.name}</h2>
-            <p className="text-sm text-gray-500 mb-6 font-medium">Delicioso y fresco, seleccionado especialmente para ti bajo los estándares más altos de calidad de Ananas.</p>
+            <p className="text-sm text-gray-500 mb-6 font-medium">
+              {product.description || "Delicioso y fresco, seleccionado especialmente para ti bajo los estándares más altos de calidad de Ananas."}
+            </p>
             
             <div className="flex items-end gap-3 mb-8">
               <span className="text-4xl font-black text-ananas-green">${product.price.toFixed(2)}</span>

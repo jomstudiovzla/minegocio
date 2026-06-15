@@ -8,6 +8,8 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const [redirectPath, setRedirectPath] = useState('/account');
 
@@ -23,6 +25,25 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
+    if (email === 'admin@admin.com') {
+      if (password === '1234') {
+        login({
+          id: 'admin',
+          name: 'Administrador',
+          email: 'admin@admin.com',
+          clubPoints: 0,
+          clubLevel: 'Oro'
+        });
+        sessionStorage.setItem('isAdminLoggedIn', 'true');
+        router.push('/admin');
+      } else {
+        setError('Contraseña incorrecta para el usuario administrador.');
+      }
+      return;
+    }
+
     if (email) {
       // Simulamos auth y nivel en el club Ananas
       login({
@@ -78,10 +99,18 @@ export default function LoginPage() {
             <input 
               required 
               type="password" 
+              value={password}
+              onChange={e => setPassword(e.target.value)}
               className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ananas-green transition"
               placeholder="••••••••"
             />
           </div>
+
+          {error && (
+            <div className="text-red-500 text-sm font-bold bg-red-50 p-3 rounded-lg text-center">
+              {error}
+            </div>
+          )}
 
           <button type="submit" className="w-full bg-ananas-green text-white font-bold text-lg py-4 rounded-xl hover:bg-ananas-dark transition shadow-lg shadow-ananas-green/20">
             {isRegistering ? 'Crear Cuenta' : 'Entrar'}

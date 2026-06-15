@@ -1,5 +1,4 @@
-import { categories, products } from '@/data/mockDb';
-import { notFound } from 'next/navigation';
+import { categories } from '@/data/mockDb';
 import CategoryClient from './CategoryClient';
 
 export function generateStaticParams() {

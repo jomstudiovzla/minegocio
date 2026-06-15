@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@/store/useStore';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Truck, Store, CreditCard, CheckCircle2, ArrowLeft, ArrowRight, ShieldCheck, MapPin, Calendar, Clock, DollarSign } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ShoppingBag, Truck, Store, CreditCard, CheckCircle2, ArrowLeft, ArrowRight, ShieldCheck, MapPin, Calendar, Clock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 

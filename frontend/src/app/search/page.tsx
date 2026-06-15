@@ -20,7 +20,7 @@ function SearchResults() {
       <h1 className="text-3xl font-black text-gray-800 mb-2">
         Resultados de búsqueda
       </h1>
-      <p className="text-gray-500 mb-8 font-medium">Mostrando resultados para "{query}"</p>
+      <p className="text-gray-500 mb-8 font-medium">Mostrando resultados para &quot;{query}&quot;</p>
       
       <ProductGrid products={results} />
     </div>

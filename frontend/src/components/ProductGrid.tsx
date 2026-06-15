@@ -3,7 +3,6 @@ import { Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useStore } from '@/store/useStore';
 import { Product } from '@/data/mockDb';
-import Link from 'next/link';
 import { useState } from 'react';
 import ProductModal from './ProductModal';
 
