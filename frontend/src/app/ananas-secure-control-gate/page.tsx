@@ -399,7 +399,7 @@ export default function AdminPage() {
 
   // ------------------ ADMIN PANEL DASHBOARD ------------------
 return (
-    <div className="max-w-7xl mx-auto py-12 px-4 min-h-[80vh] space-y-8 animate-in fade-in duration-300">
+    <div className="max-w-[1600px] w-[96%] mx-auto py-12 px-4 min-h-[80vh] space-y-8 animate-in fade-in duration-300">
       {/* Top Header */}
       <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-3xl p-8 text-white shadow-xl shadow-yellow-500/20 relative overflow-hidden flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div className="absolute top-0 right-0 p-8 opacity-20 pointer-events-none">

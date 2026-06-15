@@ -67,7 +67,7 @@ export default function Categories() {
   const getCount = (id: string) => products.filter(p => p.category === id).length;
 
   return (
-    <section id="categories" className="max-w-7xl mx-auto py-20 px-4">
+    <section id="categories" className="max-w-[1600px] w-[96%] mx-auto py-20 px-4">
       {/* Header */}
       <div className="flex flex-col items-center mb-14">
         <span className="inline-block text-xs font-black tracking-widest text-ananas-green uppercase mb-3 bg-ananas-green/8 px-4 py-1.5 rounded-full border border-ananas-green/20">

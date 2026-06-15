@@ -261,7 +261,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4">
+    <div className="max-w-[1600px] w-[96%] mx-auto py-12 px-4">
       <div className="flex items-center gap-4 mb-8">
         <Link href="/cart" className="text-gray-500 hover:text-ananas-green transition p-2 bg-white rounded-full border border-gray-200 shadow-sm">
           <ArrowLeft size={20} />

@@ -42,7 +42,7 @@ export default function PromocionesPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 animate-in fade-in duration-300">
+    <div className="max-w-[1600px] w-[96%] mx-auto py-12 px-4 animate-in fade-in duration-300">
       
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-3xl p-8 md:p-12 text-white mb-12 shadow-xl shadow-red-500/10 relative overflow-hidden">

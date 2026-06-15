@@ -57,7 +57,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-white border-t border-gray-200 pt-20 pb-8 mt-16 relative">
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+      <div className="max-w-[1600px] w-[96%] mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
         <div className="col-span-1 md:col-span-2 lg:col-span-3">
           <div className="text-2xl font-black text-ananas-green flex items-center gap-2 mb-4">
             <ShoppingBasket size={32} /> ANANAS
@@ -163,7 +163,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left text-sm font-medium text-gray-400">
+      <div className="max-w-[1600px] w-[96%] mx-auto px-4 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left text-sm font-medium text-gray-400">
         <div className="space-y-1">
           <p>&copy; {new Date().getFullYear()} Ananas Frutería. Todos los derechos reservados.</p>
           <p className="text-xs text-gray-400 italic">Todos los precios ya están calculados con la tasa BCV del día.</p>

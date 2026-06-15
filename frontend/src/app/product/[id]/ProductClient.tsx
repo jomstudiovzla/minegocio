@@ -22,7 +22,7 @@ export default function ProductClient({ id }: { id: string }) {
   if (!product) return notFound();
 
   return (
-    <div className="max-w-7xl mx-auto py-8 px-4">
+    <div className="max-w-[1600px] w-[96%] mx-auto py-8 px-4">
       <nav className="flex items-center gap-2 text-sm font-medium text-gray-500 mb-6 px-2">
         <Link href="/" className="hover:text-ananas-green flex items-center gap-1 transition"><Home size={16} /> Inicio</Link>
         <ChevronRight size={14} className="text-gray-300" />

@@ -18,7 +18,7 @@ export default function CartPage() {
   if (!mounted) return null;
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 min-h-[70vh]">
+    <div className="max-w-[1600px] w-[96%] mx-auto py-12 px-4 min-h-[70vh]">
       <h1 className="text-4xl font-black text-gray-800 mb-8">Mi Carrito</h1>
 
       {cart.length === 0 ? (

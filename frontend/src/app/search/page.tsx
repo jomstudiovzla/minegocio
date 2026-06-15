@@ -26,7 +26,7 @@ function SearchResults() {
     : allResults;
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4">
+    <div className="max-w-[1600px] w-[96%] mx-auto py-12 px-4">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">

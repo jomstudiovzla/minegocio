@@ -51,7 +51,7 @@ export default function Navbar() {
         </div>
 
         <header className="bg-white/90 backdrop-blur-md z-40 border-b border-gray-100 shadow-sm transition-all duration-300">
-          <div className="max-w-7xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
+          <div className="max-w-[1600px] w-[96%] mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 md:gap-6 relative">
             <div className="cursor-pointer hover:text-ananas-green transition relative" onMouseEnter={() => setIsMenuOpen(true)} onMouseLeave={() => setIsMenuOpen(false)}>
               <Menu className="text-gray-600 hover:text-ananas-green transition" />

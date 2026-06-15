@@ -89,7 +89,7 @@ export default function CategoryClient({ slug }: { slug: string }) {
   if (!mounted) return null;
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4">
+    <div className="max-w-[1600px] w-[96%] mx-auto py-12 px-4">
       <div className={`p-8 rounded-3xl mb-12 ${category.color} shadow-lg shadow-gray-100`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
           <div className="flex items-center gap-3">

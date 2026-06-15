@@ -37,7 +37,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-ananas-dark/95 to-ananas-green/60 mix-blend-multiply"></div>
       </div>
       
-      <div className="max-w-7xl mx-auto px-4 py-24 md:py-36 relative z-10 flex flex-col justify-center min-h-[500px]">
+      <div className="max-w-[1600px] w-[96%] mx-auto px-4 py-24 md:py-36 relative z-10 flex flex-col justify-center min-h-[500px]">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

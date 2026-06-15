@@ -27,7 +27,7 @@ export default function ProductSection({ title, products }: { title: string, cat
   };
   
   return (
-    <section className="max-w-7xl mx-auto py-12 px-0 sm:px-4">
+    <section className="max-w-[1600px] w-[96%] mx-auto py-12 px-0 sm:px-4">
       <div className="flex items-center justify-between mb-8 border-b border-gray-100 pb-4 px-4 sm:px-0">
         <h2 className="text-2xl font-black text-gray-800 tracking-tight flex items-center gap-4 group">
           {title}

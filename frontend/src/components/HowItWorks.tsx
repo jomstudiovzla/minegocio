@@ -9,7 +9,7 @@ export default function HowItWorks() {
       <div className="absolute top-0 left-0 w-64 h-64 bg-ananas-green/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-80 h-80 bg-yellow-400/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="max-w-[1600px] w-[96%] mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <p className="text-ananas-green font-bold text-sm tracking-widest uppercase mb-2">Tan fácil como pelar una mandarina</p>
           <h2 className="text-3xl md:text-4xl font-black text-gray-800">¿Cómo comprar en Ananas?</h2>

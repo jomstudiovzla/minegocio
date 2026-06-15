@@ -23,7 +23,7 @@ export default function AccountPage() {
   const clubProgress = (user.clubPoints / 500) * 100;
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div className="max-w-[1600px] w-[96%] mx-auto py-12 px-4 grid grid-cols-1 lg:grid-cols-4 gap-8">
       
       <div className="lg:col-span-1 space-y-6">
         <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm text-center">
