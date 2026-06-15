@@ -2,11 +2,13 @@
 import { motion } from 'framer-motion';
 import { useStore } from '@/store/useStore';
 import { useRouter } from 'next/navigation';
-import { ShieldCheck, CreditCard, Banknote, Smartphone } from 'lucide-react';
+import { ShieldCheck, CreditCard, Banknote, Smartphone, Clock, Star, Package } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Hero() {
   const user = useStore(state => state.user);
+  const products = useStore(state => state.products);
+  const orders = useStore(state => state.orders);
   const router = useRouter();
 
   const handleComprarAhora = () => {
@@ -86,6 +88,29 @@ export default function Hero() {
               No guardamos datos de tarjeta. Confirmación segura por WhatsApp o correo. <Link href="/delivery" className="underline hover:text-white">Entregamos en Caracas Este, de 9 a 7 pm. Ver zonas.</Link>
             </p>
           </div>
+        </motion.div>
+
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10"
+        >
+          {[
+            { icon: Package, label: 'Productos', value: `${products.length}+`, color: 'text-yellow-400' },
+            { icon: Clock, label: 'Entrega', value: 'Mismo día', color: 'text-green-400' },
+            { icon: Star, label: 'Satisfacción', value: '4.9 / 5', color: 'text-orange-400' },
+            { icon: ShieldCheck, label: 'Pedidos', value: orders.length > 0 ? `${orders.length} hoy` : 'Seguro 100%', color: 'text-blue-300' },
+          ].map(({ icon: Icon, label, value, color }) => (
+            <div key={label} className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-4 py-3 flex items-center gap-3">
+              <Icon size={20} className={color} />
+              <div>
+                <p className={`text-sm font-black ${color}`}>{value}</p>
+                <p className="text-white/60 text-[11px] font-medium">{label}</p>
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
