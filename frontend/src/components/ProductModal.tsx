@@ -18,6 +18,7 @@ interface Product {
 
 export default function ProductModal({ product, onClose }: { product: Product | null, onClose: () => void }) {
   const addToCart = useStore(state => state.addToCart);
+  const incrementProductView = useStore(state => state.incrementProductView);
   const { currency, rates } = useStore();
   const [qty, setQty] = useState(1);
 
@@ -25,6 +26,7 @@ export default function ProductModal({ product, onClose }: { product: Product | 
     if (product) {
       setQty(1);
       document.body.style.overflow = 'hidden';
+      incrementProductView(product.id);
     } else {
       document.body.style.overflow = 'unset';
     }

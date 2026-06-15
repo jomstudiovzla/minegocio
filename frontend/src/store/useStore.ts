@@ -57,6 +57,14 @@ export interface AdminLog {
   message: string;
 }
 
+export interface UserNotification {
+  id: string;
+  date: string;
+  title: string;
+  message: string;
+  read: boolean;
+}
+
 interface AppState {
   cart: CartItem[];
   user: User | null;
@@ -64,6 +72,7 @@ interface AppState {
   products: Product[];
   orders: Order[];
   adminLogs: AdminLog[];
+  userNotifications: UserNotification[];
   rates: ExchangeRates;
   currency: 'USD' | 'EUR' | 'VES';
   isAutoRates: boolean;
@@ -84,6 +93,9 @@ interface AppState {
   setIsAutoRates: (val: boolean) => void;
   setRates: (usd: number, eur: number) => void;
   clearAdminLogs: () => void;
+  markUserNotificationAsRead: (id: string) => void;
+  clearUserNotifications: () => void;
+  incrementProductView: (productId: string) => void;
 }
 
 export function convertPrice(priceInUSD: number, currency: 'USD' | 'EUR' | 'VES', rates: ExchangeRates): number {
@@ -122,6 +134,7 @@ export const useStore = create<AppState>()(
       products: initialProducts,
       orders: [],
       adminLogs: [],
+      userNotifications: [],
       rates: {
         usd: 62.50,
         eur: 65.30,
@@ -201,6 +214,8 @@ export const useStore = create<AppState>()(
             } else {
               logMsg += ` Nuevo Stock Tienda: ${currentStock}.`;
             }
+
+            product.sales = (product.sales || 0) + item.quantity;
             
             newLogs.push({
               id: Date.now().toString() + Math.random().toString(36).substring(7),
@@ -219,9 +234,32 @@ export const useStore = create<AppState>()(
       
       clearAdminLogs: () => set({ adminLogs: [] }),
       
+      markUserNotificationAsRead: (id) => set((state) => ({
+        userNotifications: state.userNotifications.map(n => n.id === id ? { ...n, read: true } : n)
+      })),
+
+      clearUserNotifications: () => set({ userNotifications: [] }),
+
+      incrementProductView: (productId) => set((state) => ({
+        products: state.products.map(p => p.id === productId ? { ...p, views: (p.views || 0) + 1 } : p)
+      })),
+
       updateOrderStatus: (id, status) => set((state) => {
         const order = state.orders.find(o => o.id === id);
         if (!order) return state;
+
+        let newUserNotifications = [...state.userNotifications];
+        
+        // Notify the user if status changed
+        if (order.status !== status) {
+          newUserNotifications.unshift({
+            id: Date.now().toString() + Math.random().toString(36).substring(7),
+            date: new Date().toISOString(),
+            title: `Pedido ${id}`,
+            message: `El estado de tu pedido ha cambiado a: ${status}.`,
+            read: false
+          });
+        }
 
         // If it's canceled, and it wasn't already canceled, return stock
         if (status === 'Cancelado' && order.status !== 'Cancelado') {
@@ -246,12 +284,14 @@ export const useStore = create<AppState>()(
           return {
             orders: state.orders.map(o => o.id === id ? { ...o, status } : o),
             products: newProducts,
-            adminLogs: [...newLogs, ...state.adminLogs]
+            adminLogs: [...newLogs, ...state.adminLogs],
+            userNotifications: newUserNotifications
           };
         }
 
         return {
-          orders: state.orders.map(o => o.id === id ? { ...o, status } : o)
+          orders: state.orders.map(o => o.id === id ? { ...o, status } : o),
+          userNotifications: newUserNotifications
         };
       }),
       

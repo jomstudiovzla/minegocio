@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Papa from 'papaparse';
 import { useStore, Order } from '@/store/useStore';
-import { Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Mail, User as UserIcon, MapPin, DollarSign, TrendingUp, Search, Layers, Edit } from 'lucide-react';
+import { Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Mail, User as UserIcon, MapPin, DollarSign, TrendingUp, Search, Layers, Edit, BarChart2 } from 'lucide-react';
 import { Product, products as initialProducts } from '@/data/mockDb';
 import { useRouter } from 'next/navigation';
 
@@ -473,6 +473,16 @@ export default function AdminPage() {
             )}
           </div>
           Notificaciones
+        </button>
+        <button
+          onClick={() => setActiveTab('stats')}
+          className={`flex items-center gap-2 pb-3 px-2 font-bold text-lg transition-all border-b-2 ${
+            activeTab === 'stats' 
+              ? 'border-ananas-green text-ananas-green' 
+              : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          <BarChart2 size={20} /> Estadísticas
         </button>
       </div>
 
@@ -1203,6 +1213,57 @@ export default function AdminPage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ------------------ TAB 5: STATS ------------------ */}
+      {activeTab === 'stats' && (
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6 animate-in fade-in duration-300">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-black text-gray-800 flex items-center gap-2">
+              <BarChart2 className="text-ananas-green" /> Estadísticas de Productos
+            </h2>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-gray-100 text-gray-400 text-xs uppercase font-black tracking-wider pb-4">
+                  <th className="py-4 px-4">Producto</th>
+                  <th className="py-4 px-4 text-center">Vistas</th>
+                  <th className="py-4 px-4 text-center">Ventas</th>
+                  <th className="py-4 px-4 text-center">Estado</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50 text-sm font-medium">
+                {[...products].sort((a,b) => ((b.views || 0) + (b.sales || 0)) - ((a.views || 0) + (a.sales || 0))).map((product) => {
+                  const views = product.views || 0;
+                  const sales = product.sales || 0;
+                  const isStagnant = views === 0 && sales === 0;
+
+                  return (
+                    <tr key={product.id} className="hover:bg-gray-50/50 transition">
+                      <td className="py-4 px-4">
+                        <span className="font-bold text-gray-800 block">{product.name}</span>
+                        <span className="text-xs text-gray-400">{product.id}</span>
+                      </td>
+                      <td className="py-4 px-4 text-center font-bold text-gray-600">{views}</td>
+                      <td className="py-4 px-4 text-center font-bold text-gray-600">{sales}</td>
+                      <td className="py-4 px-4 text-center">
+                        {isStagnant ? (
+                          <span className="px-2 py-1 bg-red-100 text-red-600 rounded-full text-[10px] uppercase font-black">Estancado</span>
+                        ) : sales > 0 ? (
+                          <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-[10px] uppercase font-black">Vendido</span>
+                        ) : (
+                          <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-[10px] uppercase font-black">Solo Visto</span>
+                        )}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       )}

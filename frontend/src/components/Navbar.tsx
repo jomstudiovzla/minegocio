@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Menu, ShoppingBasket, Search, User, ShoppingCart, ChevronDown, Download, ChevronRight, Check } from 'lucide-react';
+import { Menu, ShoppingBasket, Search, User, ShoppingCart, ChevronDown, Download, ChevronRight, Check, Bell } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/store/useStore';
@@ -12,9 +12,10 @@ export default function Navbar() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCurrencyMenuOpen, setIsCurrencyMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
-  const { cart, user, rates, currency, setCurrency } = useStore();
+  const { cart, user, rates, currency, setCurrency, userNotifications, markUserNotificationAsRead } = useStore();
   
   // To avoid hydration mismatch, only render state after mount
   const [mounted, setMounted] = useState(false);
@@ -138,6 +139,61 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
             </div>
+
+            {mounted && user && (
+              <div className="relative cursor-pointer group">
+                <button 
+                  onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+                  className="relative flex items-center justify-center p-2 rounded-full hover:bg-gray-50 transition text-gray-600 hover:text-ananas-green"
+                >
+                  <Bell size={22} />
+                  {userNotifications.filter(n => !n.read).length > 0 && (
+                    <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center border-2 border-white">
+                      {userNotifications.filter(n => !n.read).length}
+                    </span>
+                  )}
+                </button>
+
+                <AnimatePresence>
+                  {isNotificationsOpen && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 5 }}
+                      className="absolute right-0 top-full mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                      onMouseLeave={() => setIsNotificationsOpen(false)}
+                    >
+                      <div className="bg-gray-50 px-4 py-3 border-b border-gray-100 flex justify-between items-center">
+                        <h4 className="font-bold text-gray-800 text-sm">Notificaciones</h4>
+                        <span className="text-xs text-gray-500">{userNotifications.length} nuevas</span>
+                      </div>
+                      <div className="max-h-80 overflow-y-auto">
+                        {userNotifications.length === 0 ? (
+                          <div className="px-4 py-8 text-center text-gray-500 text-sm">
+                            No tienes notificaciones
+                          </div>
+                        ) : (
+                          userNotifications.map((notif) => (
+                            <div 
+                              key={notif.id} 
+                              onClick={() => markUserNotificationAsRead(notif.id)}
+                              className={`px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition cursor-pointer ${!notif.read ? 'bg-green-50/30' : ''}`}
+                            >
+                              <div className="flex justify-between items-start mb-1">
+                                <h5 className={`text-sm ${!notif.read ? 'font-bold text-gray-800' : 'font-medium text-gray-600'}`}>{notif.title}</h5>
+                                {!notif.read && <span className="w-2 h-2 bg-ananas-green rounded-full"></span>}
+                              </div>
+                              <p className="text-xs text-gray-500">{notif.message}</p>
+                              <p className="text-[10px] text-gray-400 mt-1">{new Date(notif.date).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' })}</p>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
 
             <div className="flex items-center gap-2 cursor-pointer hover:text-ananas-green transition" onClick={() => router.push('/account')}>
               <User size={24} className={mounted && user ? "text-ananas-green" : "text-gray-600"} />

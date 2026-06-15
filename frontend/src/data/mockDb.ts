@@ -11,6 +11,8 @@ export interface Product {
   warehouseStock?: number;
   description?: string;
   providerPrice?: number;
+  views?: number;
+  sales?: number;
 }
 
 export interface Category {
