@@ -112,7 +112,7 @@ export default function ProductGrid({ products }: { products: Product[] }) {
                       setToast({ visible: true, name: 'Inicia sesión para guardar favoritos', image: p.image });
                     }
                   }}
-                  className="absolute top-3 right-3 z-20 w-8 h-8 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-white transition shadow-sm"
+                  className={`absolute right-3 z-20 w-8 h-8 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-white transition-all shadow-sm ${cart.some(item => item.id === p.id) ? 'top-16' : 'top-3'}`}
                 >
                   <Heart 
                     size={16} 
