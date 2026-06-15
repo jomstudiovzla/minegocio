@@ -3,15 +3,21 @@ import { useStore, convertAndFormatPrice } from '@/store/useStore';
 import { notFound } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { ShoppingCart, Heart, Share2, Truck, Home, ChevronRight } from 'lucide-react';
+import { ShoppingCart, Heart, Share2, Truck, Home, ChevronRight, Plus, Minus, Check } from 'lucide-react';
 import Link from 'next/link';
+import CartToast from '@/components/CartToast';
 
 export default function ProductClient({ id }: { id: string }) {
   const products = useStore(state => state.products);
   const product = products.find(p => p.id === id);
   const addToCart = useStore(state => state.addToCart);
-  const { currency, rates } = useStore();
+  const updateQuantity = useStore(state => state.updateQuantity);
+  const removeFromCart = useStore(state => state.removeFromCart);
+  const { currency, rates, cart } = useStore();
   const [qty, setQty] = useState(1);
+  const [toast, setToast] = useState<{ visible: boolean; name: string; image: string }>({ visible: false, name: '', image: '' });
+  
+  const cartItem = product ? cart.find(c => c.id === product.id) : null;
 
   if (!product) return notFound();
 
@@ -55,6 +61,16 @@ export default function ProductClient({ id }: { id: string }) {
             <div className="flex items-end gap-4 mb-8">
               <span className="text-5xl font-black text-ananas-green">{convertAndFormatPrice(product.price, currency, rates)}</span>
               <span className="text-xl font-bold text-gray-400 mb-1">/ {product.unit}</span>
+              {product.stock !== undefined && product.stock <= 5 && product.stock > 0 && (
+                <span className="ml-2 bg-orange-100 text-orange-600 text-xs font-black px-3 py-1.5 rounded-full uppercase">
+                  ¡Solo {product.stock} disponibles!
+                </span>
+              )}
+              {product.stock === 0 && (
+                <span className="ml-2 bg-red-100 text-red-600 text-xs font-black px-3 py-1.5 rounded-full uppercase">
+                  Agotado
+                </span>
+              )}
             </div>
 
             <div className="flex items-center gap-6 mb-8 border-y border-gray-100 py-6">
@@ -63,21 +79,38 @@ export default function ProductClient({ id }: { id: string }) {
                 <span className="w-12 text-center font-black text-xl">{qty}</span>
                 <button onClick={() => setQty(qty + 1)} className="w-12 h-12 flex items-center justify-center font-bold text-xl text-ananas-green hover:bg-white hover:shadow-sm rounded-lg transition">+</button>
               </div>
-              <button 
-                onClick={() => {
-                  addToCart({ id: product.id, name: product.name, price: product.price, category: product.category, image: product.image, unit: product.unit || '1 Unidad' });
-                  if (qty > 1) {
-                    // Update to match qty immediately since addToCart only adds 1
-                    setTimeout(() => {
+              {cartItem ? (
+                <div className="flex-1 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-between px-4 h-14">
+                  <button onClick={() => cartItem.quantity > 1 ? updateQuantity(product.id, cartItem.quantity - 1) : removeFromCart(product.id)} className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-200 transition font-bold text-xl">
+                    <Minus size={18} />
+                  </button>
+                  <div className="flex items-center gap-2">
+                    <Check size={16} className="text-ananas-green" />
+                    <span className="font-black text-xl text-ananas-green">{cartItem.quantity}</span>
+                    <span className="text-sm text-gray-500">en carrito</span>
+                  </div>
+                  <button onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, category: product.category, image: product.image, unit: product.unit || '1 Unidad' })} className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-200 transition font-bold text-xl">
+                    <Plus size={18} className="text-ananas-green" />
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  disabled={product.stock === 0}
+                  onClick={() => {
+                    addToCart({ id: product.id, name: product.name, price: product.price, category: product.category, image: product.image, unit: product.unit || '1 Unidad' });
+                    if (qty > 1) {
+                      setTimeout(() => {
                         const existingQty = useStore.getState().cart.find(c => c.id === product.id)?.quantity || 1;
                         useStore.getState().updateQuantity(product.id, existingQty + qty - 1);
-                    }, 50);
-                  }
-                }}
-                className="flex-1 bg-ananas-green hover:bg-ananas-dark text-white font-bold text-lg h-14 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-ananas-green/30"
-              >
-                <ShoppingCart size={20} /> Añadir al Carrito
-              </button>
+                      }, 50);
+                    }
+                    setToast({ visible: true, name: product.name, image: product.image });
+                  }}
+                  className="flex-1 bg-ananas-green disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed hover:bg-ananas-dark text-white font-bold text-lg h-14 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-ananas-green/30"
+                >
+                  <ShoppingCart size={20} /> {product.stock === 0 ? 'Sin stock' : 'Añadir al Carrito'}
+                </button>
+              )}
             </div>
 
             <div className="flex items-center gap-4 text-sm font-bold text-gray-500">
@@ -98,6 +131,12 @@ export default function ProductClient({ id }: { id: string }) {
           </div>
         </div>
       </div>
+      <CartToast 
+        visible={toast.visible} 
+        message={toast.name} 
+        image={toast.image}
+        onDismiss={() => setToast(t => ({ ...t, visible: false }))} 
+      />
     </div>
   );
 }
