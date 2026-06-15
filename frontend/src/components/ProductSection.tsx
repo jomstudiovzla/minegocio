@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from 'react';
-import { Plus, Minus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, Minus, ChevronLeft, ChevronRight, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useStore, convertAndFormatPrice } from '@/store/useStore';
 import { Product } from '@/data/mockDb';
@@ -8,7 +8,7 @@ import ProductModal from './ProductModal';
 import CartToast from './CartToast';
 
 export default function ProductSection({ title, products }: { title: string, categoryId: string, products: Product[] }) {
-  const { addToCart, removeFromCart, updateQuantity, cart, currency, rates } = useStore();
+  const { addToCart, removeFromCart, updateQuantity, cart, currency, rates, user, toggleFavorite } = useStore();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [toast, setToast] = useState<{ visible: boolean; name: string; image: string }>({ visible: false, name: '', image: '' });
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -106,6 +106,23 @@ export default function ProductSection({ title, products }: { title: string, cat
                   alt={p.name} 
                   className="max-h-full object-contain mix-blend-multiply drop-shadow-sm z-10" 
                 />
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (user) {
+                      toggleFavorite(p.id);
+                    } else {
+                      setToast({ visible: true, name: 'Inicia sesión para guardar favoritos', image: p.image });
+                    }
+                  }}
+                  className="absolute top-3 right-3 z-20 w-8 h-8 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-white transition shadow-sm"
+                >
+                  <Heart 
+                    size={16} 
+                    className={user?.favorites?.includes(p.id) ? 'text-red-500 fill-red-500' : ''} 
+                  />
+                </button>
               </div>
               
               <div className="mt-auto">

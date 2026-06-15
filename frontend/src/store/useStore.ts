@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware';
 import { products as initialProducts } from '@/data/mockDb';
 import { ProductEntity as Product } from '@/core/domain/entities/Product';
 import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
+import { db } from '@/lib/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
 export interface CartItem {
   id: string;
@@ -22,6 +24,7 @@ export interface User {
   phone?: string;
   clubPoints: number;
   clubLevel: 'Bronce' | 'Plata' | 'Oro';
+  favorites?: string[];
 }
 
 export interface Order {
@@ -103,6 +106,7 @@ interface AppState {
   incrementProductView: (productId: string) => void;
   setOrders: (orders: Order[]) => void;
   setAdminLogs: (logs: AdminLog[]) => void;
+  toggleFavorite: (productId: string) => void;
 }
 
 export function convertPrice(priceInUSD: number, currency: 'USD' | 'EUR' | 'VES', rates: ExchangeRates): number {
@@ -134,7 +138,7 @@ export function convertAndFormatPrice(priceInUSD: number, currency: 'USD' | 'EUR
 
 export const useStore = create<AppState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       cart: [],
       user: null,
       zone: null,
@@ -293,6 +297,29 @@ export const useStore = create<AppState>()(
         }));
         // Actualizar Firebase en segundo plano
         ProductRepository.incrementView(productId);
+      },
+
+      toggleFavorite: async (productId) => {
+        const { user } = get();
+        if (!user) return; // Solo usuarios registrados
+
+        const currentFavorites = user.favorites || [];
+        const isFavorite = currentFavorites.includes(productId);
+        const newFavorites = isFavorite
+          ? currentFavorites.filter(id => id !== productId)
+          : [...currentFavorites, productId];
+
+        // Optimistic update
+        set({ user: { ...user, favorites: newFavorites } });
+
+        // Guardar en Firestore en segundo plano
+        try {
+          await updateDoc(doc(db, 'users', user.id), { favorites: newFavorites });
+        } catch (error) {
+          console.error('Error al actualizar favoritos:', error);
+          // Revertir en caso de error
+          set({ user: { ...user, favorites: currentFavorites } });
+        }
       },
 
 

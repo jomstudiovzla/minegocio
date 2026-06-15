@@ -11,6 +11,7 @@ import { categories } from "@/data/mockDb";
 
 export default function Home() {
   const products = useStore(state => state.products);
+  const user = useStore(state => state.user);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -27,6 +28,15 @@ export default function Home() {
             {categories.map((cat, index) => {
               const catProducts = products.filter(p => p.category === cat.id);
               if (catProducts.length === 0) return null;
+
+              if (user?.favorites) {
+                const favs = user.favorites;
+                catProducts.sort((a, b) => {
+                  const aFav = favs.includes(a.id) ? 1 : 0;
+                  const bFav = favs.includes(b.id) ? 1 : 0;
+                  return bFav - aFav;
+                });
+              }
               
               return (
                 <div key={cat.id}>
