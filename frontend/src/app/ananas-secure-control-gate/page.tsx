@@ -417,7 +417,7 @@ return (
       </div>
 
       {/* Tabs Selector */}
-      <div className="flex gap-1 md:gap-2 border-b border-gray-200 pb-0 overflow-x-auto scrollbar-hide whitespace-nowrap px-1">
+      <div className="flex gap-1 md:gap-2 border-b border-gray-200 pb-0 pt-3 mt-2 overflow-x-auto scrollbar-hide whitespace-nowrap px-1">
         <button
           onClick={() => setActiveTab('orders')}
           className={`flex items-center gap-1.5 pb-2 px-1 md:px-2 font-bold text-xs md:text-sm transition-all border-b-2 ${

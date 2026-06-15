@@ -1,5 +1,5 @@
 import { db } from '@/lib/firebase';
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc, writeBatch, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc, writeBatch, query, where, onSnapshot, increment } from 'firebase/firestore';
 import { ProductSchema, ProductEntity } from '@/core/domain/entities/Product';
 
 export class ProductRepository {
@@ -91,5 +91,19 @@ export class ProductRepository {
 
     await batch.commit();
     return { validCount, errorCount };
+  }
+
+  /**
+   * Incrementar las vistas de un producto en tiempo real
+   */
+  static async incrementView(id: string) {
+    const docRef = doc(db, this.collectionName, id);
+    try {
+      await updateDoc(docRef, {
+        views: increment(1)
+      });
+    } catch (e) {
+      console.warn('No se pudieron actualizar las vistas en Firebase', e);
+    }
   }
 }

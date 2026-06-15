@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { products as initialProducts } from '@/data/mockDb';
 import { ProductEntity as Product } from '@/core/domain/entities/Product';
+import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
 
 export interface CartItem {
   id: string;
@@ -285,9 +286,14 @@ export const useStore = create<AppState>()(
         }, ...state.userNotifications]
       })),
 
-      incrementProductView: (productId) => set((state) => ({
-        products: state.products.map(p => p.id === productId ? { ...p, views: (p.views || 0) + 1 } : p)
-      })),
+      incrementProductView: (productId) => {
+        // Actualización optimista local
+        set((state) => ({
+          products: state.products.map(p => p.id === productId ? { ...p, views: (p.views || 0) + 1 } : p)
+        }));
+        // Actualizar Firebase en segundo plano
+        ProductRepository.incrementView(productId);
+      },
 
 
       updateOrderStatus: async (id, status) => {

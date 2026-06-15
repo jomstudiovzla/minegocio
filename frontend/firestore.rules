@@ -11,7 +11,13 @@ service cloud.firestore {
     // Reglas para Productos (Catálogo)
     match /products/{productId} {
       allow read: if true; // Cualquiera puede ver el catálogo
-      allow write, update, delete: if isAdmin(); // Solo el Admin puede modificar el inventario
+      
+      // Permitir a usuarios normales actualizar compras y vistas
+      allow update: if isAdmin() || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views', 'sales', 'stock', 'warehouseStock']);
+      
+      // Solo admin puede crear o borrar productos o editar precios
+      allow create, delete: if isAdmin();
+      allow write: if isAdmin();
     }
 
     // Reglas temporales para el resto (usuarios y órdenes) para no romper el flujo
