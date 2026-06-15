@@ -78,7 +78,7 @@ export default function CheckoutPage() {
   }
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const deliveryFee = shippingMethod === 'delivery' ? 2.50 : 0.00;
+  const deliveryFee = shippingMethod === 'pickup' ? 0 : (subtotal >= 15 ? 0 : 2.50);
   const maxPointsToUse = Math.min(user ? user.clubPoints : 0, 350);
   const discount = usePoints ? Math.min(maxPointsToUse * 0.01, subtotal) : 0;
   const baseTotal = subtotal + deliveryFee - discount;
@@ -292,7 +292,7 @@ export default function CheckoutPage() {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-800">Delivery a domicilio</h4>
-                  <p className="text-xs text-gray-500 mt-1">Recibe en tu dirección por $2.50</p>
+                  <p className="text-xs text-gray-500 mt-1">{subtotal >= 15 ? '🎉 ¡Envío gratis por tu pedido!' : 'Recibe en tu dirección por $2.50 (gratis desde $15)'}</p>
                 </div>
               </button>
 
