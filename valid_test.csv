@@ -1,0 +1,3 @@
+id,name,price,category,subcategory,image,unit,labels,description,providerPrice,stock,warehouseStock
+p_valid1,Mango Hilacha,2.15,frutas-vegetales,Frescos,/Ananas/images/products/mango.png,1 Kg,Oferta,Mango Hilacha jugoso,1.20,80,200
+p_valid2,Queso Blanco Duro,7.50,refrigerados,Lacteos,/Ananas/images/products/queso_duro.png,1 Kg,,Queso blanco llanero duro,4.90,40,120

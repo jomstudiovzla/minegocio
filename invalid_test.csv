@@ -1,0 +1,3 @@
+id,name,price,category,subcategory,image,unit,labels,description,providerPrice,stock,warehouseStock
+p_invalid1,,2.50,frutas-vegetales,Frescos,/Ananas/images/products/tomates_perita.png,1 Kg,Oferta,Tomates sin nombre,1.50,50,100
+p_invalid2,Manzana Roja,-1.20,frutas-vegetales,Fresco,/Ananas/images/products/manzana.png,1 Kg,,Manzana con precio negativo,0.80,30,60

@@ -123,6 +123,11 @@ export default function AdminPage() {
     sessionStorage.removeItem('isAdminLoggedIn');
     setAdminEmail('');
     setAdminPassword('');
+    // Clear global session if it was admin
+    const globalUser = useStore.getState().user;
+    if (globalUser && globalUser.email === 'admin@admin.com') {
+      useStore.getState().logout();
+    }
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,6 +175,21 @@ export default function AdminPage() {
               warehouseStock: warehouseStock !== undefined && warehouseStock !== '' ? Number(warehouseStock) : undefined,
             };
           }).filter((p: any) => p.id);
+
+          // QA Safeguard: Validate CSV rows before updating store
+          const invalidRows: string[] = [];
+          newProducts.forEach((newP: any, i) => {
+            if (!newP.name) {
+              invalidRows.push(`Fila ${i + 1}: Nombre del producto vacío`);
+            }
+            if (isNaN(newP.price) || newP.price <= 0) {
+              invalidRows.push(`Fila ${i + 1}: Precio inválido o menor/igual a 0 (${newP.price})`);
+            }
+          });
+
+          if (invalidRows.length > 0) {
+            throw new Error(`Datos CSV inválidos:\n${invalidRows.slice(0, 5).join('\n')}${invalidRows.length > 5 ? '\n... y más' : ''}`);
+          }
 
           const updatedProducts = [...products];
           let updatedCount = 0;
