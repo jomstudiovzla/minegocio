@@ -1099,7 +1099,12 @@ return (
                         <span className="font-bold text-gray-800 truncate max-w-[180px] block" title={p.name}>{p.name}</span>
                       </td>
                       <td className="py-3 px-4 font-mono text-xs text-gray-400 font-bold">{p.id}</td>
-                      <td className="py-3 px-4 capitalize text-xs text-gray-500 font-semibold">{p.category.replace('-', ' ')}</td>
+                      <td className="py-3 px-4 capitalize text-xs font-semibold">
+                        <div className="text-gray-600">{p.category.replace('-', ' ')}</div>
+                        {p.subcategory && (
+                          <div className="text-[10px] text-gray-400 mt-0.5 font-medium">Sub: {p.subcategory}</div>
+                        )}
+                      </td>
                       
                       {/* Cost Price */}
                       <td className="py-3 px-4 text-gray-600 font-bold">
