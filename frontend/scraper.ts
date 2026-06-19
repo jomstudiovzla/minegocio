@@ -33,8 +33,8 @@ async function downloadImage(url: string, filename: string) {
 
   response.data.pipe(writer);
 
-  return new Promise((resolve, reject) => {
-    writer.on('finish', resolve);
+  return new Promise<void>((resolve, reject) => {
+    writer.on('finish', () => resolve());
     writer.on('error', reject);
   });
 }
@@ -65,7 +65,7 @@ async function scrape() {
           let priceText = $(el).find('.price').first().text().trim();
           let price = parseFloat(priceText.replace(/[^0-9,]/g, '').replace(',', '.'));
           
-          if (isNaN(price)) price = (Math.random() * 10 + 1).toFixed(2); // Fallback price
+          if (isNaN(price)) price = parseFloat((Math.random() * 10 + 1).toFixed(2)); // Fallback price
           
           const imgUrl = $(el).find('.product-image-photo').attr('src');
           
@@ -86,13 +86,13 @@ async function scrape() {
               console.log(`Scraped: ${name}`);
               idCounter++;
             } catch (err) {
-              console.error(`Failed to download image for ${name}: ${err.message}`);
+              console.error(`Failed to download image for ${name}: ${(err as Error).message}`);
             }
           }
         }
       }
     } catch (e) {
-      console.error(`Failed to scrape ${cat.url}: ${e.message}`);
+      console.error(`Failed to scrape ${cat.url}: ${(e as Error).message}`);
     }
   }
 

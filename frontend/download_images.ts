@@ -51,8 +51,8 @@ async function downloadImages() {
       const writer = fs.createWriteStream(destPath);
       response.data.pipe(writer);
 
-      await new Promise((resolve, reject) => {
-        writer.on('finish', resolve);
+      await new Promise<void>((resolve, reject) => {
+        writer.on('finish', () => resolve());
         writer.on('error', reject);
       });
 

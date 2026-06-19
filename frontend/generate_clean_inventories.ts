@@ -94,6 +94,15 @@ function run() {
     }
   });
 
+  const validSubcategories: Record<string, string[]> = {
+    "frutas-vegetales": [ "Frutas", "Verduras y hortalizas", "Tubérculos", "Verdes y hojas" ],
+    "refrigerados-congelados": [ "Carnes", "Pollo", "Charcutería", "Quesos", "Congelados listos" ],
+    "viveres": [ "Granos", "Arroz y pasta", "Enlatados", "Aceites y salsas", "Bebidas" ],
+    "cuidado-personal-salud": [ "Higiene personal", "Cuidado corporal", "Farmacia básica" ],
+    "limpieza": [ "Ropa", "Cocina", "Baño", "Desinfección", "Accesorios de limpieza" ],
+    "licores": [ "Cervezas", "Rones", "Whisky", "Vinos", "Otros destilados" ]
+  };
+
   const reducidoRows: any[] = [];
   const extensoRows: any[] = [];
 
@@ -106,6 +115,23 @@ function run() {
       seen.add(i.id);
       return true;
     });
+
+    const subs = validSubcategories[cat] || [cat];
+    
+    // Asignar subcategoría uniformemente (o inferir por nombre si es obvio)
+    items.forEach((item, index) => {
+        let assigned = subs[index % subs.length];
+        const nameUpper = item.nombre.toUpperCase();
+        if (cat === 'licores') {
+            if (nameUpper.includes('CERVEZA')) assigned = 'Cervezas';
+            else if (nameUpper.includes('RON')) assigned = 'Rones';
+            else if (nameUpper.includes('WHISKY') || nameUpper.includes('CAROREÑA')) assigned = 'Whisky';
+        }
+        item.subcategoria = assigned;
+    });
+
+    // Sort so subcategories are somewhat grouped
+    items.sort((a, b) => a.subcategoria.localeCompare(b.subcategoria));
 
     reducidoRows.push(...items.slice(0, 15));
     extensoRows.push(...items.slice(0, 35));
