@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { Menu, Search, User, ShoppingCart, ChevronRight, Check, Bell, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter, usePathname } from 'next/navigation';
-import { useStore } from '@/store/useStore';
+import { useStore } from '@/core/infrastructure/store/useStore';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getAssetPath } from '@/lib/assetHelper';
 import { categories } from '@/data/mockDb';
 import CartSidebar from './CartSidebar';
 
@@ -94,17 +95,15 @@ export default function Navbar() {
               {/* Logo Mi Negocio — logo real */}
               <Link href="/" className="flex items-center gap-2 cursor-pointer group">
                 <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-md shadow-mi-blue/30 group-hover:shadow-mi-blue/50 transition-shadow flex-shrink-0">
-                  <Image
-                    src="/logo.jpg"
+                  <img
+                    src={getAssetPath('/logo.jpg')}
                     alt="Mi Negocio"
-                    fill
-                    className="object-cover"
-                    priority
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="flex flex-col leading-none">
-                  <span className="text-xl font-black text-mi-blue tracking-tight">MI NEGOCIO</span>
-                  <span className="text-[10px] font-semibold text-mi-yellow tracking-widest uppercase">Supermercado</span>
+                <div className="hidden sm:block">
+                  <span className="text-2xl font-black text-mi-blue tracking-tight leading-none block">MI NEGOCIO</span>
+                  <span className="text-[10px] font-bold text-mi-yellow tracking-widest uppercase leading-none block mt-0.5">SUPERMERCADO</span>
                 </div>
               </Link>
 

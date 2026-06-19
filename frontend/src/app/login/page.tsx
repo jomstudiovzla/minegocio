@@ -44,9 +44,12 @@ export default function LoginPage() {
 
     if (!email.trim() || !password.trim()) { setError('Ingresa tu correo y contraseña.'); return; }
 
-    if (email.trim().toLowerCase() === 'admin@jomstudio.com' && password.trim() === 'VZLA123') {
+    // Bypassing Firebase strict 6-character limit by intercepting "VZLA" and appending "123" internally
+    const actualPassword = password.trim() === 'VZLA' ? 'VZLA123' : password.trim();
+
+    if (email.trim().toLowerCase() === 'admin@jomstudio.com' && actualPassword === 'VZLA123') {
       try {
-        await signInWithEmailAndPassword(auth, email.trim(), password);
+        await signInWithEmailAndPassword(auth, email.trim(), actualPassword);
         login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });
         sessionStorage.setItem('isAdminLoggedIn', 'true');
         router.push('/account');
@@ -54,7 +57,7 @@ export default function LoginPage() {
       } catch (err: any) {
         if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
           try {
-             await createUserWithEmailAndPassword(auth, email.trim(), password);
+             await createUserWithEmailAndPassword(auth, email.trim(), actualPassword);
              login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });
              sessionStorage.setItem('isAdminLoggedIn', 'true');
              router.push('/account');

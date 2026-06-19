@@ -121,12 +121,10 @@ export default function FlashOffers() {
               >
                 {/* Image */}
                 <div className="relative h-40 bg-gray-50 overflow-hidden">
-                  <Image
+                  <img
                     src={product.image}
                     alt={product.name}
-                    fill
-                    className="object-contain p-3 group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* Discount badge */}
                   <div className="discount-badge absolute top-2 left-2 bg-red-500 text-white text-xs font-black px-2 py-1 rounded-lg shadow-lg">
