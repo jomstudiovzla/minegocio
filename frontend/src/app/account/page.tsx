@@ -27,7 +27,7 @@ export default function AccountPage() {
       
       <div className="lg:col-span-1 space-y-6">
         <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm text-center">
-          <div className="w-20 h-20 bg-ananas-green/10 text-ananas-green rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-black">
+          <div className="w-20 h-20 bg-mi-blue/10 text-mi-blue rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-black">
             {user.name.charAt(0).toUpperCase()}
           </div>
           <h2 className="text-xl font-bold text-gray-800">{user.name}</h2>
@@ -45,13 +45,13 @@ export default function AccountPage() {
 
         <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-sm space-y-2">
           {user.id === 'admin' && (
-            <Link href="/ananas-secure-control-gate" className="flex items-center justify-between p-3 rounded-xl bg-yellow-50 text-yellow-600 font-bold border border-yellow-100 shadow-sm mb-2">
+            <Link href="/mi-negocio-admin" className="flex items-center justify-between p-3 rounded-xl bg-yellow-50 text-yellow-600 font-bold border border-yellow-100 shadow-sm mb-2">
               <div className="flex items-center gap-3"><Crown size={20} /> Panel Administrativo</div>
               <ChevronRight size={18} />
             </Link>
           )}
-          <Link href="/account" className="flex items-center justify-between p-3 rounded-xl bg-gray-50 text-ananas-green font-bold">
-            <div className="flex items-center gap-3"><Star size={20} /> Ananas Club</div>
+          <Link href="/account" className="flex items-center justify-between p-3 rounded-xl bg-gray-50 text-mi-blue font-bold">
+            <div className="flex items-center gap-3"><Star size={20} /> Club Mi Negocio</div>
             <ChevronRight size={18} />
           </Link>
           <Link href="#pedidos" className="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 text-gray-600 font-bold transition">
@@ -67,7 +67,7 @@ export default function AccountPage() {
 
       <div className="lg:col-span-3 space-y-8">
         
-        {/* Ananas Club Widget */}
+        {/* Mi Negocio Club Widget */}
         {user.id === 'admin' ? (
           <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-3xl p-8 text-white shadow-xl shadow-yellow-500/20 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-20">
@@ -86,22 +86,22 @@ export default function AccountPage() {
                    Tienes acceso total al panel de control, inventario, configuración de tasas de cambio y notificaciones de tienda en vivo. Haz clic en el botón de abajo para gestionar la frutería.
                  </p>
               </div>
-              <Link href="/ananas-secure-control-gate" className="inline-block bg-white text-yellow-600 font-bold px-6 py-3 rounded-xl hover:bg-yellow-50 transition shadow-lg text-sm">
-                Ir al Panel de Control de Ananas
+              <Link href="/mi-negocio-admin" className="inline-block bg-white text-yellow-600 font-bold px-6 py-3 rounded-xl hover:bg-yellow-50 transition shadow-lg text-sm">
+                Ir al Panel de Control de Mi Negocio
               </Link>
             </div>
           </div>
         ) : (
-          <div className="bg-gradient-to-br from-ananas-green to-ananas-dark rounded-3xl p-8 text-white shadow-xl shadow-ananas-green/20 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-mi-blue to-mi-blue-mid rounded-3xl p-8 text-white shadow-xl shadow-mi-blue/20 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-10">
               <Crown size={120} />
             </div>
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-2">
                 <Star className="text-yellow-300" fill="currentColor" size={28} />
-                <h2 className="text-3xl font-black tracking-tight">Ananas Club</h2>
+                <h2 className="text-3xl font-black tracking-tight">Club Mi Negocio</h2>
               </div>
-              <p className="text-ananas-light/80 font-medium mb-8">Nivel actual: <span className="text-white font-bold">{user.clubLevel}</span></p>
+              <p className="text-white/80 font-medium mb-8">Nivel actual: <span className="text-white font-bold">{user.clubLevel}</span></p>
 
               <div className="bg-white/10 rounded-2xl p-6 backdrop-blur-md border border-white/20">
                 <div className="flex justify-between items-end mb-4">
@@ -146,14 +146,14 @@ export default function AccountPage() {
           {orders.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <p className="font-medium text-gray-500 mb-2">Aún no has realizado ningún pedido.</p>
-              <Link href="/" className="text-ananas-green font-bold hover:underline mt-2 inline-block">
+              <Link href="/" className="text-mi-blue font-bold hover:underline mt-2 inline-block">
                 Comenzar a comprar
               </Link>
             </div>
           ) : (
             <div className="space-y-4">
               {orders.map(order => (
-                <div key={order.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-5 border border-gray-100 rounded-2xl hover:border-ananas-green transition group">
+                <div key={order.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-5 border border-gray-100 rounded-2xl hover:border-mi-blue transition group">
                   <div>
                     <p className="text-sm font-bold text-gray-400 mb-1">Pedido #{order.id}</p>
                     <p className="font-bold text-gray-800 mb-1">{order.date}</p>
@@ -163,7 +163,7 @@ export default function AccountPage() {
                     <span className="font-black text-xl text-gray-800">{convertAndFormatPrice(order.total, currency, rates)}</span>
                     <button 
                       onClick={() => setSelectedOrder(order)}
-                      className="text-ananas-green font-bold bg-ananas-green/10 px-4 py-2 rounded-lg group-hover:bg-ananas-green group-hover:text-white transition"
+                      className="text-mi-blue font-bold bg-mi-blue/10 px-4 py-2 rounded-lg group-hover:bg-mi-blue group-hover:text-white transition"
                     >
                       Ver detalle
                     </button>
@@ -187,7 +187,7 @@ export default function AccountPage() {
               ✕
             </button>
             <h3 className="text-2xl font-black text-gray-800 mb-2">Detalle del Pedido</h3>
-            <p className="text-sm font-bold text-ananas-green mb-6">#{selectedOrder.id}</p>
+            <p className="text-sm font-bold text-mi-blue mb-6">#{selectedOrder.id}</p>
 
             <div className="space-y-6">
               {/* Order Status */}
@@ -214,7 +214,7 @@ export default function AccountPage() {
                           alt={item.name} 
                           className="w-10 h-10 object-contain rounded-lg bg-gray-50 border border-gray-100" 
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/Ananas/images/products/placeholder.png';
+                            (e.target as HTMLImageElement).src = '/images/products/placeholder.png';
                           }}
                         />
                         <div>
@@ -305,19 +305,19 @@ export default function AccountPage() {
                 </div>
                 {selectedOrder.discount > 0 && (
                   <div className="flex justify-between text-red-500 font-semibold">
-                    <span>Descuento Club Ananas</span>
+                    <span>Descuento Club Mi Negocio</span>
                     <span className="font-bold">-{convertAndFormatPrice(selectedOrder.discount, currency, rates)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-lg font-black text-gray-800 pt-2 border-t border-gray-200">
                   <span>Total</span>
-                  <span className="text-ananas-green text-xl">{convertAndFormatPrice(selectedOrder.total, currency, rates)}</span>
+                  <span className="text-mi-blue text-xl">{convertAndFormatPrice(selectedOrder.total, currency, rates)}</span>
                 </div>
               </div>
 
               <button 
                 onClick={() => setSelectedOrder(null)}
-                className="w-full bg-ananas-green text-white py-3.5 rounded-xl font-bold hover:bg-ananas-dark transition"
+                className="w-full bg-mi-blue text-white py-3.5 rounded-xl font-bold hover:bg-mi-blue-mid transition"
               >
                 Cerrar Detalle
               </button>

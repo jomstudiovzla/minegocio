@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,23 +6,31 @@ import ZoneSelector from "@/components/ZoneSelector";
 import CatalogInitializer from "@/components/CatalogInitializer";
 import FirebaseSync from "@/components/FirebaseSync";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "Ananas Frutería | Supermercado Online",
-  description: "Frutas, verduras y víveres frescos directo a tu puerta. Delivery en Caracas con calidad garantizada. Pago seguro vía Zelle, Pago Móvil o Efectivo.",
-  keywords: ["supermercado online", "frutería caracas", "delivery de frutas", "viveres delivery", "compras online venezuela", "ananas"],
+  title: "Mi Negocio | Supermercado Online en Caracas",
+  description:
+    "Frutas, verduras, víveres y más directo a tu puerta. Delivery en Caracas con calidad garantizada. Pago seguro vía Zelle, Pago Móvil o Efectivo.",
+  keywords: [
+    "supermercado online",
+    "mi negocio caracas",
+    "delivery de frutas",
+    "viveres delivery",
+    "compras online venezuela",
+    "supermercado caracas",
+    "delivery caracas este",
+  ],
   openGraph: {
-    title: "Ananas Frutería | Frescura hasta tu puerta",
-    description: "Tu supermercado online de confianza en Caracas. Frutas, vegetales, víveres y más. ¡Haz tu pedido fácil y rápido!",
-    url: "https://jomstudiovzla.github.io/Ananas/",
-    siteName: "Ananas Frutería",
+    title: "Mi Negocio | Frescura hasta tu puerta",
+    description:
+      "Tu supermercado online de confianza en Caracas. Frutas, vegetales, víveres y más. ¡Haz tu pedido fácil y rápido!",
+    url: "https://mi-negocio.ve/",
+    siteName: "Mi Negocio",
     images: [
       {
-        url: "https://raw.githubusercontent.com/jomstudiovzla/Ananas/main/frontend/public/og-image.jpg",
+        url: "https://raw.githubusercontent.com/jomstudiovzla/mi-negocio/main/frontend/public/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Ananas Frutería Caracas",
+        alt: "Mi Negocio – Supermercado Online Caracas",
       },
     ],
     locale: "es_VE",
@@ -31,8 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ananas Frutería",
-    description: "Frescura garantizada hasta la puerta de tu casa. Delivery rápido y seguro en Caracas.",
+    title: "Mi Negocio",
+    description:
+      "Frescura garantizada hasta la puerta de tu casa. Delivery rápido y seguro en Caracas.",
   },
   robots: "index, follow",
   manifest: "/manifest.json",
@@ -45,7 +53,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.className} antialiased`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+      </head>
+      <body className="antialiased">
         <FirebaseSync />
         <CatalogInitializer />
         <ZoneSelector />

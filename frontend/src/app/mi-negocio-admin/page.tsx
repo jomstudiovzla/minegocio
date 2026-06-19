@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Papa from 'papaparse';
 import { useStore, Order } from '@/store/useStore';
-import { Crown, Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Mail, User as UserIcon, MapPin, DollarSign, TrendingUp, Search, Layers, Edit, BarChart2, Plus } from 'lucide-react';
+import { Crown, Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Mail, User as UserIcon, MapPin, DollarSign, TrendingUp, Search, Layers, Edit, BarChart2, Plus, Users, Shield, Star } from 'lucide-react';
 import { Product, products as initialProducts } from '@/data/mockDb';
 import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
 import { useRouter } from 'next/navigation';
@@ -33,7 +33,7 @@ export default function AdminPage() {
   const [loginError, setLoginError] = useState('');
 
   // Dashboard layout state
-  const [activeTab, setActiveTab] = useState<'orders' | 'inventory' | 'csv' | 'rates' | 'notifications' | 'stats'>('orders');
+  const [activeTab, setActiveTab] = useState<'orders' | 'inventory' | 'csv' | 'rates' | 'notifications' | 'stats' | 'crm' | 'security'>('orders');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   
@@ -309,12 +309,12 @@ export default function AdminPage() {
   };
 
   const handleDownloadTemplate = () => {
-    const template = "id,name,price,category,subcategory,image,unit,labels,description,providerPrice,stock,warehouseStock\np1,Tomates Perita,3.49,frutas-vegetales,Frescos,/Ananas/images/products/tomates_perita.png,1 Kg,Oferta|Fresco,Tomates frescos de calidad Premium,2.10,69,229\np2,Lechosa,1.75,frutas-vegetales,Enteras,/Ananas/images/products/lechosa.png,1 Kg,,Lechosa dulce y jugosa,1.10,94,324";
+    const template = "id,name,price,category,subcategory,image,unit,labels,description,providerPrice,stock,warehouseStock\np1,Tomates Perita,3.49,frutas-vegetales,Frescos,/images/products/tomates_perita.png,1 Kg,Oferta|Fresco,Tomates frescos de calidad Premium,2.10,69,229\np2,Lechosa,1.75,frutas-vegetales,Enteras,/images/products/lechosa.png,1 Kg,,Lechosa dulce y jugosa,1.10,94,324";
     const blob = new Blob([template], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'ananas-catalogo-template.csv';
+    a.download = 'mi-negocio-catalogo-template.csv';
     a.click();
   };
 
@@ -347,7 +347,7 @@ export default function AdminPage() {
     return (
       <div className="max-w-md mx-auto py-20 px-4">
         <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
-          <div className="w-16 h-16 bg-ananas-green/10 text-ananas-green rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="w-16 h-16 bg-mi-blue/10 text-mi-blue rounded-2xl flex items-center justify-center mx-auto mb-6">
             <ShieldAlert size={36} />
           </div>
           <h1 className="text-3xl font-black text-gray-800 mb-2 text-center">
@@ -365,7 +365,7 @@ export default function AdminPage() {
                 type="email" 
                 value={adminEmail} 
                 onChange={e => setAdminEmail(e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ananas-green transition"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-mi-blue transition"
                 placeholder="admin@jomstudio.com"
               />
             </div>
@@ -377,7 +377,7 @@ export default function AdminPage() {
                 type="password" 
                 value={adminPassword} 
                 onChange={e => setAdminPassword(e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ananas-green transition"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-mi-blue transition"
                 placeholder="••••"
               />
             </div>
@@ -485,7 +485,27 @@ return (
               : 'border-transparent text-gray-400 hover:text-gray-600'
           }`}
         >
-          <Package size={16} /> Ver Inventario ({products.length})
+          <Package size={16} /> Inventario ({products.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('crm')}
+          className={`flex items-center gap-1.5 pb-2 px-1 md:px-2 font-bold text-xs md:text-sm transition-all border-b-2 ${
+            activeTab === 'crm'
+              ? 'border-yellow-500 text-yellow-600'
+              : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          <Users size={16} /> CRM Premium
+        </button>
+        <button
+          onClick={() => setActiveTab('security')}
+          className={`flex items-center gap-1.5 pb-2 px-1 md:px-2 font-bold text-xs md:text-sm transition-all border-b-2 ${
+            activeTab === 'security'
+              ? 'border-yellow-500 text-yellow-600'
+              : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          <Shield size={16} /> Trazabilidad
         </button>
         <button
           onClick={() => setActiveTab('csv')}
@@ -536,6 +556,116 @@ return (
           <BarChart2 size={16} /> Estadísticas
         </button>
       </div>
+
+      {/* ------------------ TAB CRM PREMIUM ------------------ */}
+      {activeTab === 'crm' && (
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6 animate-in fade-in duration-300">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="bg-mi-yellow/10 p-2.5 rounded-xl"><Crown size={22} className="text-mi-yellow" /></div>
+            <div>
+              <h2 className="text-2xl font-black text-gray-800">CRM Premium — Club Dorado</h2>
+              <p className="text-gray-400 text-xs font-medium">Monitoreo de clientes VIP, segmentos y EcoPuntos.</p>
+            </div>
+          </div>
+
+          {/* Segment Summary */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { label: 'Total Clientes', value: '—', icon: Users, color: 'bg-blue-50 text-blue-600' },
+              { label: 'Clientes VIP', value: '—', icon: Crown, color: 'bg-yellow-50 text-yellow-600' },
+              { label: 'En Riesgo', value: '—', icon: AlertTriangle, color: 'bg-orange-50 text-orange-600' },
+              { label: 'Nuevos (7d)', value: '—', icon: UserIcon, color: 'bg-green-50 text-green-600' },
+            ].map(({ label, value, icon: Icon, color }) => (
+              <div key={label} className="bg-gray-50 border border-gray-100 rounded-2xl p-4 flex items-center gap-3">
+                <div className={`p-2.5 rounded-xl ${color}`}><Icon size={20} /></div>
+                <div>
+                  <p className="text-xs text-gray-400 font-bold uppercase">{label}</p>
+                  <p className="text-xl font-black text-gray-800">{value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Club Levels */}
+          <div className="bg-gradient-to-br from-mi-blue to-mi-blue-mid rounded-2xl p-6 text-white">
+            <h3 className="font-black text-lg mb-4 flex items-center gap-2"><Star size={18} className="text-mi-yellow" /> Distribución Club Dorado</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { name: 'Bronze', badge: '🥉', pts: '0–999 pts', color: 'bg-orange-900/30' },
+                { name: 'Silver', badge: '🥈', pts: '1,000–4,999 pts', color: 'bg-gray-600/30' },
+                { name: 'Gold',   badge: '🥇', pts: '5,000–14,999 pts', color: 'bg-mi-yellow/20' },
+                { name: 'VIP',    badge: '👑', pts: '15,000+ pts', color: 'bg-white/10' },
+              ].map(level => (
+                <div key={level.name} className={`${level.color} rounded-xl p-4 text-center`}>
+                  <div className="text-3xl mb-1">{level.badge}</div>
+                  <p className="font-black text-white">{level.name}</p>
+                  <p className="text-xs text-white/60">{level.pts}</p>
+                  <p className="text-lg font-black text-mi-yellow mt-1">—</p>
+                  <p className="text-[10px] text-white/50">clientes</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CRM Table placeholder */}
+          <div className="bg-gray-50 rounded-2xl p-6 text-center text-gray-400">
+            <Users size={48} className="mx-auto mb-3 opacity-30" />
+            <p className="font-bold">Integración CRM lista</p>
+            <p className="text-sm mt-1">Los datos de clientes se cargarán desde Firestore colección <code className="bg-gray-200 px-1 rounded text-xs">customers</code> usando <code className="bg-gray-200 px-1 rounded text-xs">clientsDb.ts</code></p>
+          </div>
+        </div>
+      )}
+
+      {/* ------------------ TAB SECURITY LOG (TRAZABILIDAD) ------------------ */}
+      {activeTab === 'security' && (
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6 animate-in fade-in duration-300">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="bg-mi-blue/10 p-2.5 rounded-xl"><Shield size={22} className="text-mi-blue" /></div>
+            <div>
+              <h2 className="text-2xl font-black text-gray-800">Log de Seguridad — Trazabilidad</h2>
+              <p className="text-gray-400 text-xs font-medium">Registro en tiempo real: logins, cambios de precio y backups del sistema.</p>
+            </div>
+          </div>
+
+          {adminLogs.length === 0 ? (
+            <div className="text-center py-12 text-gray-400">
+              <Shield size={56} className="mx-auto mb-4 opacity-20" />
+              <p className="font-bold">No hay eventos registrados aún.</p>
+              <p className="text-sm mt-1">Los eventos de seguridad aparecerán aquí en tiempo real.</p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {adminLogs.map((log, i) => (
+                <div
+                  key={log.id ?? i}
+                  className={`flex items-start gap-3 p-4 rounded-2xl border ${
+                    !log.read ? 'bg-mi-blue-ice border-mi-blue-low' : 'bg-gray-50 border-gray-100'
+                  }`}
+                >
+                  <div className="bg-mi-blue/10 p-2 rounded-xl flex-shrink-0">
+                    <Shield size={16} className="text-mi-blue" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-sm ${!log.read ? 'font-bold text-gray-800' : 'font-medium text-gray-600'}`}>
+                      {log.message}
+                    </p>
+                    <p className="text-[11px] text-gray-400 mt-0.5">
+                      {new Date(log.date).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' })}
+                    </p>
+                  </div>
+                  {!log.read && <span className="w-2 h-2 bg-mi-yellow rounded-full flex-shrink-0 mt-1.5" />}
+                </div>
+              ))}
+              <button
+                onClick={clearAdminLogs}
+                className="text-xs text-red-400 hover:text-red-600 font-bold mt-2 transition cursor-pointer"
+              >
+                Limpiar todos los registros
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* ------------------ TAB 1: ORDERS MANAGEMENT ------------------ */}
       {activeTab === 'orders' && (
@@ -803,9 +933,9 @@ return (
           
           <div 
             onClick={() => fileInputRef.current?.click()}
-            className="w-full max-w-md mx-auto aspect-video border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 hover:border-ananas-green transition group mb-8"
+            className="w-full max-w-md mx-auto aspect-video border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 hover:border-mi-blue transition group mb-8"
           >
-            <Upload size={48} className="text-gray-300 group-hover:text-ananas-green transition mb-4" />
+            <Upload size={48} className="text-gray-300 group-hover:text-mi-blue transition mb-4" />
             <p className="text-gray-600 font-bold">Haz clic o arrastra un archivo CSV aquí</p>
             <p className="text-sm text-gray-400 mt-2">Formatos aceptados: .csv</p>
           </div>
@@ -833,7 +963,7 @@ return (
             {status.type === 'success' && (
               <button 
                 onClick={() => router.push('/')}
-                className="text-white font-bold bg-ananas-green px-6 py-3 rounded-xl hover:bg-ananas-dark transition w-full sm:w-auto shadow-lg shadow-ananas-green/20 cursor-pointer"
+                className="text-white font-bold bg-mi-blue px-6 py-3 rounded-xl hover:bg-mi-blue-mid transition w-full sm:w-auto shadow-lg shadow-mi-blue/20 cursor-pointer"
               >
                 Ver Tienda Actualizada
               </button>
@@ -853,7 +983,7 @@ return (
           <div className="max-w-xl mx-auto space-y-6">
             <div>
               <h2 className="text-2xl font-black text-gray-800 flex items-center gap-2">
-                <TrendingUp className="text-ananas-green" /> Configuración de Tasas de Cambio
+                <TrendingUp className="text-mi-blue" /> Configuración de Tasas de Cambio
               </h2>
               <p className="text-gray-500 font-medium text-sm mt-1">
                 Administra cómo se actualizan y calculan los precios de la tienda en tiempo real.
@@ -869,7 +999,7 @@ return (
                     setIsAutoRates(e.target.checked);
                     setStatus({type: 'idle', msg: ''});
                   }}
-                  className="w-5 h-5 rounded border-gray-300 text-ananas-green focus:ring-ananas-green accent-ananas-green mt-0.5"
+                  className="w-5 h-5 rounded border-gray-300 text-mi-blue focus:ring-mi-blue accent-mi-blue mt-0.5"
                 />
                 <div>
                   <span className="font-bold text-gray-800 text-sm block">Actualizar tasas automáticamente</span>
@@ -893,7 +1023,7 @@ return (
                       value={usdRateInput}
                       onChange={(e) => setUsdRateInput(e.target.value)}
                       placeholder="Ej. 587.41"
-                      className="w-full bg-white disabled:bg-gray-100 border border-gray-200 rounded-xl pl-12 pr-4 py-3 font-bold text-gray-800 focus:outline-none focus:border-ananas-green transition"
+                      className="w-full bg-white disabled:bg-gray-100 border border-gray-200 rounded-xl pl-12 pr-4 py-3 font-bold text-gray-800 focus:outline-none focus:border-mi-blue transition"
                     />
                   </div>
                 </div>
@@ -909,14 +1039,14 @@ return (
                       value={eurRateInput}
                       onChange={(e) => setEurRateInput(e.target.value)}
                       placeholder="Ej. 683.03"
-                      className="w-full bg-white disabled:bg-gray-100 border border-gray-200 rounded-xl pl-12 pr-4 py-3 font-bold text-gray-800 focus:outline-none focus:border-ananas-green transition"
+                      className="w-full bg-white disabled:bg-gray-100 border border-gray-200 rounded-xl pl-12 pr-4 py-3 font-bold text-gray-800 focus:outline-none focus:border-mi-blue transition"
                     />
                   </div>
                 </div>
               </div>
 
               {isAutoRates && (
-                <p className="text-xs text-ananas-green font-bold bg-green-50 p-3.5 rounded-xl border border-green-100">
+                <p className="text-xs text-mi-blue font-bold bg-blue-50 p-3.5 rounded-xl border border-blue-100">
                   💡 Las tasas están controladas automáticamente por la API del BCV (Dólar: Bs. {rates.usd.toFixed(2)} / Euro: Bs. {rates.eur.toFixed(2)}). Para configurarlas manualmente, desmarca la casilla de actualización automática.
                 </p>
               )}
@@ -933,7 +1063,7 @@ return (
                     setRates(usdVal, eurVal);
                     setStatus({type: 'success', msg: 'Tasas de cambio actualizadas con éxito.'});
                   }}
-                  className="w-full bg-ananas-green text-white font-bold py-3.5 rounded-xl hover:bg-ananas-dark transition shadow-lg shadow-ananas-green/20 cursor-pointer animate-in fade-in duration-200"
+                  className="w-full bg-mi-blue text-white font-bold py-3.5 rounded-xl hover:bg-mi-blue-mid transition shadow-lg shadow-mi-blue/20 cursor-pointer animate-in fade-in duration-200"
                 >
                   Guardar Tasas Manuales
                 </button>
@@ -965,7 +1095,7 @@ return (
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl font-black text-gray-800 flex items-center gap-2">
-                <Layers className="text-ananas-green" /> Actividad y Reposición
+                <Layers className="text-mi-blue" /> Actividad y Reposición
               </h2>
               <p className="text-gray-500 font-medium text-sm mt-1">
                 Registro automático de ventas y reposición de inventario desde el almacén.
@@ -1024,7 +1154,7 @@ return (
               ✕
             </button>
             <h3 className="text-2xl font-black text-gray-800 mb-2">Detalles y Verificación de Pedido</h3>
-            <p className="text-sm font-bold text-ananas-green mb-6">#{selectedOrder.id}</p>
+            <p className="text-sm font-bold text-mi-blue mb-6">#{selectedOrder.id}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               
@@ -1033,7 +1163,7 @@ return (
                 
                 {/* Contact details */}
                 <div className="bg-gray-50 rounded-2xl p-5 space-y-3 border border-gray-100">
-                  <h4 className="font-bold text-gray-700 text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5"><UserIcon size={14} className="text-ananas-green" /> Datos de Contacto</h4>
+                  <h4 className="font-bold text-gray-700 text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5"><UserIcon size={14} className="text-mi-blue" /> Datos de Contacto</h4>
                   <div className="space-y-2 text-sm text-gray-600 mb-6">
                     <p className="flex items-center gap-2"><strong className="text-gray-700 font-bold">Cliente:</strong> {selectedOrder.customerDetails?.name || 'Invitado'} ({selectedOrder.address ? '📦 Delivery' : '🏪 Pickup'})</p>
                     {selectedOrder.customerDetails?.cedula && <p className="flex items-center gap-2"><strong>Cédula/RIF:</strong> {selectedOrder.customerDetails.cedula}</p>}
@@ -1060,7 +1190,7 @@ return (
                             alt={item.name} 
                             className="w-10 h-10 object-contain rounded-lg bg-gray-50 border border-gray-100" 
                             onError={(e) => {
-                              (e.target as HTMLImageElement).src = '/Ananas/images/products/placeholder.png';
+                              (e.target as HTMLImageElement).src = '/images/products/placeholder.png';
                             }}
                           />
                           <div>
@@ -1092,13 +1222,13 @@ return (
                   </div>
                   {selectedOrder.discount > 0 && (
                     <div className="flex justify-between text-red-500 font-semibold">
-                      <span>Descuento Club Ananas</span>
+                      <span>Descuento Club Mi Negocio</span>
                       <span className="font-bold">-${selectedOrder.discount.toFixed(2)}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-lg font-black text-gray-800 pt-2 border-t border-gray-200">
                     <span>Total Pedido</span>
-                    <span className="text-ananas-green text-xl">${selectedOrder.total.toFixed(2)}</span>
+                    <span className="text-mi-blue text-xl">${selectedOrder.total.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -1206,7 +1336,7 @@ return (
               ✕
             </button>
             <h3 className="text-2xl font-black text-gray-800 mb-1">Editar Producto</h3>
-            <p className="text-xs font-bold text-ananas-green mb-6 uppercase tracking-wider">ID: {editingProduct.id}</p>
+            <p className="text-xs font-bold text-mi-blue mb-6 uppercase tracking-wider">ID: {editingProduct.id}</p>
 
             <form onSubmit={handleSaveEdit} className="space-y-5">
               <div>
@@ -1216,7 +1346,7 @@ return (
                   required
                   value={editForm.name}
                   onChange={e => setEditForm(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue transition text-sm"
                 />
               </div>
 
@@ -1230,7 +1360,7 @@ return (
                     min="0"
                     value={editForm.price}
                     onChange={e => setEditForm(prev => ({ ...prev, price: parseFloat(e.target.value) || 0 }))}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue transition text-sm"
                   />
                 </div>
                 <div>
@@ -1241,7 +1371,7 @@ return (
                     min="0"
                     value={editForm.providerPrice}
                     onChange={e => setEditForm(prev => ({ ...prev, providerPrice: parseFloat(e.target.value) || 0 }))}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue transition text-sm"
                   />
                 </div>
               </div>
@@ -1254,7 +1384,7 @@ return (
                     required
                     value={editForm.unit}
                     onChange={e => setEditForm(prev => ({ ...prev, unit: e.target.value }))}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue transition text-sm"
                   />
                 </div>
                 <div>
@@ -1271,7 +1401,7 @@ return (
                     min="0"
                     value={editForm.stock}
                     onChange={e => setEditForm(prev => ({ ...prev, stock: parseInt(e.target.value, 10) || 0 }))}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue transition text-sm"
                   />
                 </div>
                 <div>
@@ -1282,7 +1412,7 @@ return (
                     min="0"
                     value={editForm.warehouseStock}
                     onChange={e => setEditForm(prev => ({ ...prev, warehouseStock: parseInt(e.target.value, 10) || 0 }))}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue transition text-sm"
                   />
                 </div>
               </div>
@@ -1294,7 +1424,7 @@ return (
                   value={editForm.description}
                   onChange={e => setEditForm(prev => ({ ...prev, description: e.target.value }))}
                   placeholder="Escribe una descripción atractiva para este producto..."
-                  className="w-full border border-gray-200 rounded-xl p-4 font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green transition text-sm resize-none"
+                  className="w-full border border-gray-200 rounded-xl p-4 font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue transition text-sm resize-none"
                 />
               </div>
 
@@ -1308,7 +1438,7 @@ return (
                 </button>
                 <button 
                   type="submit"
-                  className="w-1/2 bg-ananas-green text-white font-bold py-3 rounded-xl hover:bg-ananas-dark transition shadow-lg shadow-ananas-green/20 text-sm cursor-pointer"
+                  className="w-1/2 bg-mi-blue text-white font-bold py-3 rounded-xl hover:bg-mi-blue-mid transition shadow-lg shadow-mi-blue/20 text-sm cursor-pointer"
                 >
                   Guardar Cambios
                 </button>
@@ -1323,7 +1453,7 @@ return (
         <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6 animate-in fade-in duration-300">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-black text-gray-800 flex items-center gap-2">
-              <BarChart2 className="text-ananas-green" /> Estadísticas de Productos
+              <BarChart2 className="text-mi-blue" /> Estadísticas de Productos
             </h2>
           </div>
           

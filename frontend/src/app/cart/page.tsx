@@ -25,7 +25,7 @@ export default function CartPage() {
         <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-3xl border border-gray-100">
           <ShoppingCart size={64} className="text-gray-300 mb-6" />
           <h2 className="text-2xl font-bold text-gray-500 mb-4">Tu carrito está vacío</h2>
-          <Link href="/" className="bg-ananas-green text-white px-8 py-3 rounded-full font-bold hover:bg-ananas-dark transition">
+          <Link href="/" className="bg-mi-blue text-white px-8 py-3 rounded-full font-bold hover:bg-mi-blue-mid transition">
             Volver a comprar
           </Link>
         </div>
@@ -49,12 +49,12 @@ export default function CartPage() {
                   <p className="text-gray-500 font-medium">{convertAndFormatPrice(item.price, currency, rates)} {item.unit}</p>
                 </div>
                 <div className="flex flex-col sm:items-end gap-4 w-full sm:w-auto">
-                  <p className="text-2xl font-black text-ananas-green">{convertAndFormatPrice(item.price * item.quantity, currency, rates)}</p>
+                  <p className="text-2xl font-black text-mi-blue">{convertAndFormatPrice(item.price * item.quantity, currency, rates)}</p>
                   <div className="flex items-center justify-between sm:justify-end gap-6 w-full">
                     <div className="flex items-center bg-gray-50 rounded-xl border border-gray-200">
                       <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-10 h-10 flex items-center justify-center font-bold text-gray-600 hover:bg-white rounded-l-xl transition">-</button>
                       <span className="w-10 text-center font-bold">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="w-10 h-10 flex items-center justify-center font-bold text-ananas-green hover:bg-white rounded-r-xl transition">+</button>
+                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="w-10 h-10 flex items-center justify-center font-bold text-mi-blue hover:bg-white rounded-r-xl transition">+</button>
                     </div>
                     <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition p-2 bg-red-50 rounded-full hover:bg-red-100">
                       <Trash2 size={20} />
@@ -79,7 +79,7 @@ export default function CartPage() {
             </div>
             <div className="flex justify-between items-center mb-8">
               <span className="text-xl font-bold text-gray-800">Total</span>
-              <span className="text-4xl font-black text-ananas-green">{convertAndFormatPrice(total, currency, rates)}</span>
+              <span className="text-4xl font-black text-mi-blue">{convertAndFormatPrice(total, currency, rates)}</span>
             </div>
             <button 
               onClick={() => {
@@ -87,7 +87,7 @@ export default function CartPage() {
                 if (!isLogged) router.push('/login?redirect=/checkout');
                 else router.push('/checkout');
               }}
-              className="w-full bg-ananas-green text-white py-4 rounded-xl font-bold text-lg hover:bg-ananas-dark hover:shadow-lg hover:shadow-ananas-green/30 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-mi-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-mi-blue-mid hover:shadow-lg hover:shadow-mi-blue/30 transition-all flex items-center justify-center gap-2"
             >
               Finalizar Compra <ArrowRight size={20} />
             </button>

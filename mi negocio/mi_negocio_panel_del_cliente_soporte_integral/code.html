@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mi Negocio - Panel del Cliente</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#c0c7ce",
+                    "tertiary-fixed": "#dce3ea",
+                    "surface-container-low": "#f0f3ff",
+                    "tertiary-container": "#32393e",
+                    "inverse-surface": "#263143",
+                    "surface-tint": "#3f58b0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#9ba2a9",
+                    "surface-container": "#e7eeff",
+                    "on-primary-container": "#859dfa",
+                    "on-surface": "#111c2d",
+                    "success-green": "#16a34a",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#103088",
+                    "secondary": "#7a5900",
+                    "outline": "#757683",
+                    "surface-bright": "#f9f9ff",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b6c4ff",
+                    "outline-variant": "#c5c5d4",
+                    "glass-border": "rgba(226, 232, 240, 0.8)",
+                    "primary": "#001b62",
+                    "on-tertiary-fixed-variant": "#41484d",
+                    "on-primary-fixed-variant": "#244097",
+                    "on-tertiary-fixed": "#151c21",
+                    "on-background": "#111c2d",
+                    "secondary-fixed-dim": "#fcbc11",
+                    "primary-fixed": "#dce1ff",
+                    "surface-container-highest": "#d8e3fb",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#6b4d00",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#d8e3fb",
+                    "on-primary-fixed": "#001551",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "inverse-on-surface": "#ecf1ff",
+                    "secondary-container": "#fcbc11",
+                    "error-red": "#ba1a1a",
+                    "background": "#f9f9ff",
+                    "surface-container-high": "#dee8ff",
+                    "surface-ice": "#f9f9ff",
+                    "secondary-fixed": "#ffdea2",
+                    "tertiary": "#1d2429",
+                    "on-secondary-fixed-variant": "#5c4200",
+                    "on-surface-variant": "#444652",
+                    "surface": "#f9f9ff",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#cfdaf2",
+                    "on-secondary-fixed": "#261900"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "sm": "8px",
+                    "xxl": "64px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-item-active {
+            background-color: #103088;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md">
+<!-- TopNavBar -->
+<nav class="w-full sticky top-0 z-50 bg-surface/80 backdrop-blur-md shadow-[0px_4px_20px_rgba(16,48,136,0.05)]">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-lg py-4">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary">Mi Negocio</span>
+<div class="hidden md:flex gap-md ml-xl">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md" href="#">Offers</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md" href="#">Fresh</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md" href="#">Bakery</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md" href="#">Dairy</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="hidden lg:block text-primary font-label-sm px-md py-sm bg-surface-container-low rounded-full">Exchange: $1.00 = 850 CLP</span>
+<div class="flex gap-sm">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">verified_user</span>
+</button>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-xl font-label-md active:scale-95 transition-transform">Checkout</button>
+</div>
+</div>
+</nav>
+<div class="flex max-w-7xl mx-auto min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col w-64 bg-surface p-md gap-base border-r border-outline-variant">
+<div class="flex items-center gap-sm mb-xl p-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<div>
+<h3 class="font-label-md text-primary">Admin Panel</h3>
+<p class="text-label-sm text-on-surface-variant">Operational Mode</p>
+</div>
+</div>
+<nav class="flex flex-col gap-sm flex-grow">
+<a class="flex items-center gap-md p-md rounded-lg font-label-md transition-transform hover:translate-x-1 hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-md p-md sidebar-item-active rounded-lg font-label-md transition-transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                    Inventory
+                </a>
+<a class="flex items-center gap-md p-md rounded-lg font-label-md transition-transform hover:translate-x-1 hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+                    Orders
+                </a>
+<a class="flex items-center gap-md p-md rounded-lg font-label-md transition-transform hover:translate-x-1 hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">group</span>
+                    Customers
+                </a>
+<a class="flex items-center gap-md p-md rounded-lg font-label-md transition-transform hover:translate-x-1 hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+                    Security
+                </a>
+<a class="flex items-center gap-md p-md rounded-lg font-label-md transition-transform hover:translate-x-1 hover:bg-surface-container-high text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+</nav>
+<div class="mt-auto flex flex-col gap-sm pt-xl">
+<button class="bg-secondary-container text-on-secondary-container w-full py-md rounded-xl font-label-md mb-md active:opacity-80">New Report</button>
+<a class="flex items-center gap-md p-md rounded-lg font-label-md text-on-surface-variant hover:bg-surface-container-high transition-transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+                    Support
+                </a>
+<a class="flex items-center gap-md p-md rounded-lg font-label-md text-error hover:bg-error-container/20 transition-transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">logout</span>
+                    Logout
+                </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-lg md:p-xl overflow-y-auto">
+<header class="mb-xl flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-xs">Panel del Cliente</h1>
+<p class="text-body-md text-on-surface-variant">Bienvenido de nuevo. Gestiona tus pedidos y recompensas.</p>
+</div>
+<div class="flex items-center gap-sm bg-success-green/10 text-success-green px-md py-sm rounded-full border border-success-green/20">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1">verified</span>
+<span class="font-label-md">Perfil Verificado</span>
+</div>
+</header>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- EcoPuntos & Rewards (Large Bento Card) -->
+<section class="md:col-span-8 glass-card p-xl rounded-xxl flex flex-col justify-between min-h-[320px] relative overflow-hidden group">
+<div class="relative z-10">
+<div class="flex items-center gap-sm mb-md text-secondary">
+<span class="material-symbols-outlined">eco</span>
+<span class="font-label-md uppercase tracking-wider">Mis EcoPuntos</span>
+</div>
+<h2 class="text-[64px] font-extrabold text-primary leading-tight">12,850</h2>
+<p class="text-body-lg text-on-surface-variant max-w-md">Has ahorrado el equivalente a 15kg de CO2 este mes. ¡Sigue así!</p>
+</div>
+<div class="relative z-10 flex gap-md mt-xl">
+<button class="bg-secondary-container text-on-secondary-container px-lg py-md rounded-xl font-label-md flex items-center gap-sm hover:shadow-md transition-all">
+                            Canjear Recompensas
+                            <span class="material-symbols-outlined">redeem</span>
+</button>
+<button class="bg-white/50 backdrop-blur-sm border border-outline-variant px-lg py-md rounded-xl font-label-md hover:bg-white transition-all">
+                            Ver historial
+                        </button>
+</div>
+<!-- Decorative Graphic -->
+<div class="absolute right-[-40px] bottom-[-40px] opacity-10 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[320px] text-primary">nature</span>
+</div>
+</section>
+<!-- Help Center (Small Bento Card) -->
+<section class="md:col-span-4 glass-card p-xl rounded-xxl flex flex-col justify-center text-center gap-md border-secondary-container/50">
+<div class="w-16 h-16 bg-secondary-container/20 text-secondary-container rounded-full flex items-center justify-center mx-auto mb-sm">
+<span class="material-symbols-outlined text-[32px]">support_agent</span>
+</div>
+<h3 class="font-headline-md text-primary">¿Necesitas ayuda?</h3>
+<p class="text-body-md text-on-surface-variant">Soporte directo 24/7 para todos tus pedidos y consultas.</p>
+<button class="w-full bg-primary text-white py-md rounded-xl font-label-md mt-sm active:scale-95 transition-transform">Chatear ahora</button>
+</section>
+<!-- Real-time Tracking (Full Width Map/Section) -->
+<section class="md:col-span-12 glass-card p-xl rounded-xxl overflow-hidden">
+<div class="flex items-center justify-between mb-lg">
+<div>
+<h3 class="font-headline-md text-primary">Rastreo en Tiempo Real</h3>
+<p class="text-label-md text-on-surface-variant flex items-center gap-sm">
+<span class="w-2 h-2 bg-success-green rounded-full animate-pulse"></span>
+                                Pedido #99281 - En camino
+                            </p>
+</div>
+<div class="text-right">
+<span class="text-label-sm text-on-surface-variant block mb-1">Llegada estimada</span>
+<span class="font-headline-md text-primary">14:45 PM</span>
+</div>
+</div>
+<div class="w-full h-80 rounded-xl relative overflow-hidden group">
+<img alt="Mapa de seguimiento" class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-500" data-alt="A sophisticated digital map visualization showing a delivery route through a modern urban neighborhood. The map features clean, minimalist lines with primary blue route highlights and a small animated delivery icon. The lighting is soft, matching a professional light-mode UI, with subtle labels for street names and key landmarks in a clean sans-serif font." data-location="Santiago, Chile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDZzjGlm978UOzLKVVocTfQjqhaKR_lvlNh53B09WSJ9RiEXRdlBEeS-eKfuviCSRfXMtcwB_el5LHlfuByizuwti-qj5X0YOZkIczif6EfJM1sfh502mIb-6trt5ZUdJZvIlATDUMs2ya8-JHNgOpb4gJb_9C-vMHeac_xf1nO3UjwBIlwcHBJcn9kSDQG6xRC5iDuq3HEJcl_LvEpbsR0wVzVSfsr3VXsFMY3l45W0tAUGwfOjcR3xaU0b_DxrF1PD9XyC11LGcm"/>
+<!-- Floating Tracking Card -->
+<div class="absolute bottom-md left-md glass-card p-md rounded-xl flex items-center gap-md shadow-lg border-white/40">
+<img alt="Repartidor" class="w-12 h-12 rounded-full object-cover" data-alt="A friendly, professional headshot of a delivery person wearing a corporate uniform in navy blue. The background is a clean, out-of-focus urban environment with soft daylight. The image conveys trust, efficiency, and approachable service, perfectly integrated into a high-end delivery application interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqng7I3btCLYy8PEfvMHrdzgTU-poIWj3aPI6RfmYjjR8MQrNHl1fcxR1QNdR6QtOlmYagCtNU-asVndoj6r4LzMVMFLYf7STKFVRri5tdqEUHbiz78dZIk_vJeTTqrl0PC2Ed412cOyujDOdayJqbGZBTKWaiZ1Sg0dtPI2ZdvZMgyEcXxLs945qz17ZoZRS699zfA0L5Tn_F8nNLbPqIg0QpSIVStmBrgHDPr0DqNJ4GtrEoje0EMuBSIkZx_Nad9mqUszl_lD6N"/>
+<div>
+<h4 class="font-label-md text-primary">Andrés G.</h4>
+<p class="text-label-sm text-on-surface-variant">Repartidor Premium</p>
+</div>
+<div class="ml-xl flex gap-sm">
+<button class="w-10 h-10 bg-surface-container rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="w-10 h-10 bg-surface-container rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Purchase History (List/Table) -->
+<section class="md:col-span-12 glass-card rounded-xxl overflow-hidden">
+<div class="p-xl border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-headline-md text-primary">Historial de Compras</h3>
+<button class="text-primary font-label-md flex items-center gap-xs hover:underline">
+                            Ver todo
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-md uppercase tracking-wider">
+<tr>
+<th class="px-xl py-md">Pedido</th>
+<th class="px-md py-md">Fecha</th>
+<th class="px-md py-md">Estado</th>
+<th class="px-md py-md">Artículos</th>
+<th class="px-xl py-md text-right">Total</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container transition-colors cursor-pointer group">
+<td class="px-xl py-lg">
+<span class="font-label-md text-primary">#99281</span>
+</td>
+<td class="px-md py-lg text-on-surface-variant">Hoy, 14:12</td>
+<td class="px-md py-lg">
+<span class="bg-primary-container text-on-primary-container px-md py-1 rounded-full text-label-sm">En camino</span>
+</td>
+<td class="px-md py-lg text-on-surface-variant">12 productos</td>
+<td class="px-xl py-lg text-right font-label-md text-primary">$42.850</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors cursor-pointer">
+<td class="px-xl py-lg">
+<span class="font-label-md text-primary">#99104</span>
+</td>
+<td class="px-md py-lg text-on-surface-variant">Oct 24, 2024</td>
+<td class="px-md py-lg">
+<span class="bg-success-green/10 text-success-green px-md py-1 rounded-full text-label-sm">Completado</span>
+</td>
+<td class="px-md py-lg text-on-surface-variant">8 productos</td>
+<td class="px-xl py-lg text-right font-label-md text-primary">$28.400</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors cursor-pointer">
+<td class="px-xl py-lg">
+<span class="font-label-md text-primary">#98892</span>
+</td>
+<td class="px-md py-lg text-on-surface-variant">Oct 18, 2024</td>
+<td class="px-md py-lg">
+<span class="bg-success-green/10 text-success-green px-md py-1 rounded-full text-label-sm">Completado</span>
+</td>
+<td class="px-md py-lg text-on-surface-variant">24 productos</td>
+<td class="px-xl py-lg text-right font-label-md text-primary">$104.200</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-xl mt-auto bg-inverse-surface">
+<div class="max-w-7xl mx-auto px-lg flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="flex flex-col items-center md:items-start">
+<span class="font-headline-sm text-headline-sm font-bold text-secondary-container">Mi Negocio</span>
+<p class="text-surface-variant/70 text-label-sm mt-2">© 2024 Mi Negocio Supermarket. All rights reserved.</p>
+</div>
+<div class="flex gap-xl">
+<a class="text-surface-variant/70 hover:text-white transition-all text-label-sm" href="#">Privacy Policy</a>
+<a class="text-surface-variant/70 hover:text-white transition-all text-label-sm" href="#">Terms of Service</a>
+<a class="text-surface-variant/70 hover:text-white transition-all text-label-sm" href="#">Compliance</a>
+<a class="text-surface-variant/70 hover:text-white transition-all text-label-sm" href="#">Investor Relations</a>
+</div>
+</div>
+</footer>
+<!-- Mobile Bottom Navigation Shell -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant px-lg py-sm z-50 flex justify-between items-center shadow-lg">
+<button class="flex flex-col items-center gap-xs text-primary font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">dashboard</span>
+<span class="text-[10px]">Panel</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-[10px]">Pedidos</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">eco</span>
+<span class="text-[10px]">Puntos</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Perfil</span>
+</button>
+</div>
+<script>
+        // Micro-interactions and effects
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'scale(0.96)';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = '';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = '';
+            });
+        });
+    </script>
+</body></html>

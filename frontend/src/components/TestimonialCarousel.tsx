@@ -1,158 +1,248 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star, Quote, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 
 const testimonials = [
   {
-    id: 2,
-    name: "Carlos M.",
-    date: "05 Junio 2026",
-    text: "Primera vez que pido por la página web y me encantó. La interfaz es rapidísima y pagar por Pago Móvil fue un proceso sin complicaciones. Seguiré comprando.",
-    rating: 5,
-    zone: "Valle Arriba",
-    purchaseType: "Mercado completo"
-  },
-  {
     id: 1,
     name: "María Fernanda G.",
-    date: "12 Junio 2026",
-    text: "Excelente servicio. Las frutas llegaron súper frescas, el aguacate en su punto exacto como lo pedí. El delivery fue muy puntual. ¡Totalmente recomendados!",
+    date: "12 Jun 2026",
+    text: "Excelente servicio. Las frutas llegaron súper frescas, el aguacate en su punto exacto como lo pedí. El delivery fue muy puntual.",
     rating: 5,
     zone: "El Cafetal",
-    purchaseType: "Solo frutas"
+    purchaseType: "Solo frutas",
+    initial: "M",
+  },
+  {
+    id: 2,
+    name: "Carlos M.",
+    date: "05 Jun 2026",
+    text: "Primera vez que pido por la página web y me encantó. La interfaz es rapidísima y pagar por Pago Móvil fue un proceso sin complicaciones.",
+    rating: 5,
+    zone: "Valle Arriba",
+    purchaseType: "Mercado completo",
+    initial: "C",
   },
   {
     id: 5,
     name: "Luis C.",
-    date: "20 Junio 2026",
-    text: "Increíble cómo empacan todo. Los congelados llegaron perfectos y la atención al cliente por WhatsApp me dio mucha confianza. 100% recomendado.",
+    date: "20 Jun 2026",
+    text: "Increíble cómo empacan todo. Los congelados llegaron perfectos y la atención al cliente por WhatsApp me dio mucha confianza.",
     rating: 5,
     zone: "Caurimare",
-    purchaseType: "Víveres y Carnes"
+    purchaseType: "Víveres y Carnes",
+    initial: "L",
   },
   {
     id: 3,
     name: "Andrea V.",
-    date: "28 Mayo 2026",
+    date: "28 May 2026",
     text: "Me resolvieron la cena del domingo. Pedí por pickup y en 20 minutos ya tenían todo empacado y listo. Muy amables en la tienda.",
     rating: 4,
     zone: "San Luis",
-    purchaseType: "Pickup rápido"
+    purchaseType: "Pickup rápido",
+    initial: "A",
   },
   {
     id: 6,
     name: "Valentina R.",
-    date: "25 Junio 2026",
-    text: "Los productos de limpieza y víveres están a muy buen precio. Hice el mercado del mes entero y todo llegó excelente. La plataforma es muy fácil de usar.",
+    date: "25 Jun 2026",
+    text: "Los productos de limpieza y víveres están a muy buen precio. Hice el mercado del mes entero y todo llegó excelente.",
     rating: 5,
     zone: "Los Naranjos",
-    purchaseType: "Mercado del mes"
-  }
+    purchaseType: "Mercado del mes",
+    initial: "V",
+  },
 ];
 
-import Link from 'next/link';
+// Colores de avatar por índice
+const AVATAR_COLORS = [
+  'from-mi-blue to-mi-blue-mid',
+  'from-mi-blue-mid to-mi-blue-light',
+  'from-purple-700 to-mi-blue',
+  'from-mi-blue-light to-cyan-600',
+  'from-indigo-700 to-mi-blue-mid',
+];
+
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex gap-0.5">
+      {[1, 2, 3, 4, 5].map(i => (
+        <Star
+          key={i}
+          size={14}
+          className={i <= rating ? 'text-mi-yellow fill-mi-yellow' : 'text-gray-200 fill-gray-200'}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function TestimonialCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [featured, setFeatured] = useState(0);
+  const featuredItem = testimonials[featured];
+  const sidebar = testimonials.filter((_, i) => i !== featured);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const next = () => setFeatured(prev => (prev + 1) % testimonials.length);
+  const prev = () => setFeatured(prev => (prev - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <div className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        
-        <div className="text-center mb-12">
-          <p className="text-ananas-green font-bold text-sm tracking-widest uppercase mb-2">Lo que dicen de nosotros</p>
-          <h2 className="text-3xl md:text-4xl font-black text-gray-800">Clientes Felices</h2>
-        </div>
+    <section className="py-24 bg-white relative overflow-hidden">
+      {/* Decoración fondo */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-mi-blue/3 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="relative max-w-4xl mx-auto">
-          {/* Navigation Buttons */}
-          <button 
-            onClick={prev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 md:-ml-12 z-10 w-12 h-12 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-gray-500 hover:text-ananas-green transition"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          
-          <button 
-            onClick={next}
-            className="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 md:-mr-12 z-10 w-12 h-12 bg-white rounded-full shadow-md border border-gray-100 flex items-center justify-center text-gray-500 hover:text-ananas-green transition"
-          >
-            <ChevronRight size={24} />
-          </button>
+      <div className="max-w-[1600px] w-[96%] mx-auto px-4">
 
-          {/* Carousel Content */}
-          <div className="overflow-hidden px-4 md:px-12 py-4">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12"
+        >
+          <div>
+            <span className="inline-block text-mi-blue font-black text-xs tracking-[0.25em] uppercase px-4 py-1.5 bg-mi-blue/8 rounded-full border border-mi-blue/15 mb-3">
+              Lo que dicen de nosotros
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-mi-blue tracking-tight">
+              Clientes{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #F8B808 0%, #d4a000 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Felices
+              </span>
+            </h2>
+          </div>
+          {/* Nav controls */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={prev}
+              aria-label="Anterior testimonio"
+              className="w-11 h-11 bg-mi-blue-ice border border-mi-blue-fixed rounded-xl flex items-center justify-center text-mi-blue hover:bg-mi-blue hover:text-white transition-colors"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={next}
+              aria-label="Siguiente testimonio"
+              className="w-11 h-11 bg-mi-blue text-white rounded-xl flex items-center justify-center hover:bg-mi-blue-mid transition-colors"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Layout principal */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          {/* Testimonio destacado (grande) */}
+          <div className="lg:col-span-7">
             <AnimatePresence mode="wait">
               <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.3 }}
-                className="bg-green-50/50 rounded-3xl p-8 md:p-12 border border-green-100 relative"
+                key={featured}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="bg-gradient-to-br from-mi-blue to-mi-blue-mid rounded-3xl p-8 md:p-10 text-white relative overflow-hidden h-full"
               >
-                <Quote className="absolute top-6 right-8 text-green-200/50 w-16 h-16 md:w-24 md:h-24" />
-                
-                <div className="flex gap-1 mb-6 text-yellow-400 relative z-10">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={20} fill={i < testimonials[currentIndex].rating ? "currentColor" : "none"} className={i >= testimonials[currentIndex].rating ? "text-gray-300" : ""} />
+                {/* Decoración */}
+                <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+                <Quote className="absolute bottom-8 right-8 w-24 h-24 text-white/6" />
+
+                {/* Stars */}
+                <div className="flex gap-1 mb-6">
+                  {[1, 2, 3, 4, 5].map(i => (
+                    <Star
+                      key={i}
+                      size={20}
+                      className={i <= featuredItem.rating ? 'text-mi-yellow fill-mi-yellow' : 'text-white/20 fill-white/20'}
+                    />
                   ))}
                 </div>
-                
-                <p className="text-lg md:text-2xl font-medium text-gray-700 italic mb-8 relative z-10">
-                  "{testimonials[currentIndex].text}"
+
+                {/* Texto */}
+                <p className="text-xl md:text-2xl font-medium text-white/90 leading-relaxed mb-8 relative z-10">
+                  "{featuredItem.text}"
                 </p>
-                
+
+                {/* Autor */}
                 <div className="flex items-center gap-4 relative z-10">
-                  <div className="w-12 h-12 bg-ananas-green rounded-full flex items-center justify-center text-white font-bold text-lg">
-                    {testimonials[currentIndex].name.charAt(0)}
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${AVATAR_COLORS[featured % AVATAR_COLORS.length]} flex items-center justify-center text-white font-black text-xl border-2 border-white/20`}>
+                    {featuredItem.initial}
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-800">{testimonials[currentIndex].name}</h4>
-                    <p className="text-sm text-gray-500">
-                      {testimonials[currentIndex].zone} • <span className="text-ananas-green">{testimonials[currentIndex].purchaseType}</span>
+                    <p className="font-black text-white text-lg">{featuredItem.name}</p>
+                    <p className="text-white/60 text-sm">
+                      {featuredItem.zone} · <span className="text-mi-yellow">{featuredItem.purchaseType}</span>
                     </p>
                   </div>
+                  <div className="ml-auto text-right">
+                    <span className="text-white/40 text-xs">{featuredItem.date}</span>
+                  </div>
+                </div>
+
+                {/* Progress dots */}
+                <div className="flex gap-2 mt-8">
+                  {testimonials.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setFeatured(i)}
+                      className={`h-1.5 rounded-full transition-all ${i === featured ? 'bg-mi-yellow w-8' : 'bg-white/20 w-2 hover:bg-white/40'}`}
+                    />
+                  ))}
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
-          
-          {/* Dots */}
-          <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentIndex(idx)}
-                className={`w-2.5 h-2.5 rounded-full transition-all ${
-                  idx === currentIndex ? 'bg-ananas-green w-6' : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-              />
-            ))}
-          </div>
 
-          <div className="flex justify-center mt-12">
-            <Link 
-              href="/comentarios" 
-              className="bg-white border-2 border-ananas-green text-ananas-green px-8 py-3 rounded-full font-bold hover:bg-ananas-green hover:text-white transition-colors"
+          {/* Grid de mini-tarjetas (sidebar) */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
+            {sidebar.slice(0, 3).map((t, i) => {
+              const origIdx = testimonials.indexOf(t);
+              return (
+                <motion.button
+                  key={t.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  onClick={() => setFeatured(origIdx)}
+                  className={`text-left bg-mi-blue-ice border rounded-2xl p-5 hover:border-mi-blue/30 hover:shadow-md transition-all group cursor-pointer ${origIdx === featured ? 'border-mi-blue/40 ring-2 ring-mi-blue/10' : 'border-mi-blue-fixed'}`}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${AVATAR_COLORS[origIdx % AVATAR_COLORS.length]} flex items-center justify-center text-white font-black text-sm`}>
+                      {t.initial}
+                    </div>
+                    <div>
+                      <p className="font-bold text-mi-blue text-sm">{t.name}</p>
+                      <StarRating rating={t.rating} />
+                    </div>
+                    <span className="ml-auto text-[11px] text-gray-400">{t.date}</span>
+                  </div>
+                  <p className="text-gray-500 text-xs leading-relaxed line-clamp-2">"{t.text}"</p>
+                  <span className="inline-block mt-2 text-[10px] text-mi-blue/60 font-semibold bg-mi-blue/8 px-2 py-0.5 rounded-full">{t.zone} · {t.purchaseType}</span>
+                </motion.button>
+              );
+            })}
+
+            {/* CTA ver más */}
+            <Link
+              href="/comentarios"
+              className="mt-auto flex items-center justify-between bg-white border-2 border-mi-blue/15 hover:border-mi-blue text-mi-blue px-5 py-4 rounded-2xl font-bold transition-colors group"
             >
-              Ver más opiniones
+              <span>Ver todas las opiniones</span>
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-
         </div>
       </div>
-    </div>
+    </section>
   );
 }

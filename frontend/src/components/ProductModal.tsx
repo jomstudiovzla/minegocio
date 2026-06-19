@@ -77,14 +77,14 @@ export default function ProductModal({ product, onClose }: { product: Product | 
           </div>
 
           <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col overflow-y-auto">
-            <p className="text-ananas-green font-bold text-xs uppercase tracking-wider mb-2">{product.subcategory || product.category}</p>
+            <p className="text-mi-blue font-bold text-xs uppercase tracking-wider mb-2">{product.subcategory || product.category}</p>
             <h2 className="text-3xl font-black text-gray-800 mb-4">{product.name}</h2>
             <p className="text-sm text-gray-500 mb-6 font-medium">
-              {product.description || "Delicioso y fresco, seleccionado especialmente para ti bajo los estándares más altos de calidad de Ananas."}
+              {product.description || "Delicioso y fresco, seleccionado especialmente para ti bajo los estándares más altos de calidad de Mi Negocio."}
             </p>
             
             <div className="flex items-end gap-3 mb-8">
-              <span className="text-4xl font-black text-ananas-green">{convertAndFormatPrice(product.price, currency, rates)}</span>
+              <span className="text-4xl font-black text-mi-blue">{convertAndFormatPrice(product.price, currency, rates)}</span>
               <span className="text-lg font-bold text-gray-400 mb-1">/ {product.unit || '1 Unidad'}</span>
             </div>
 
@@ -92,7 +92,7 @@ export default function ProductModal({ product, onClose }: { product: Product | 
               <div className="flex items-center bg-gray-50 rounded-xl p-1 border border-gray-200 w-full sm:w-auto">
                 <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-12 h-12 flex items-center justify-center font-bold text-xl text-gray-600 hover:bg-white hover:shadow-sm rounded-lg transition">-</button>
                 <span className="w-12 text-center font-black text-xl">{qty}</span>
-                <button onClick={() => setQty(qty + 1)} className="w-12 h-12 flex items-center justify-center font-bold text-xl text-ananas-green hover:bg-white hover:shadow-sm rounded-lg transition">+</button>
+                <button onClick={() => setQty(qty + 1)} className="w-12 h-12 flex items-center justify-center font-bold text-xl text-mi-blue hover:bg-white hover:shadow-sm rounded-lg transition">+</button>
               </div>
               <button 
                 onClick={() => {
@@ -105,19 +105,19 @@ export default function ProductModal({ product, onClose }: { product: Product | 
                   }
                   onClose();
                 }}
-                className="w-full bg-ananas-green hover:bg-ananas-dark text-white font-bold text-lg h-14 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-ananas-green/30"
+                className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-bold text-lg h-14 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-mi-blue/30"
               >
                 <ShoppingCart size={20} /> Añadir
               </button>
             </div>
 
             <div className="flex items-center gap-6 text-sm font-bold text-gray-500 mb-6">
-              <button className="flex items-center gap-2 hover:text-ananas-green transition"><Heart size={18} /> Guardar</button>
-              <button className="flex items-center gap-2 hover:text-ananas-green transition"><Share2 size={18} /> Compartir</button>
+              <button className="flex items-center gap-2 hover:text-mi-blue transition"><Heart size={18} /> Guardar</button>
+              <button className="flex items-center gap-2 hover:text-mi-blue transition"><Share2 size={18} /> Compartir</button>
             </div>
             
-            <div className="mt-auto bg-ananas-green/5 border border-ananas-green/20 rounded-xl p-4 flex items-start gap-4">
-              <div className="bg-white p-2 rounded-lg shadow-sm text-ananas-green shrink-0">
+            <div className="mt-auto bg-mi-blue/5 border border-mi-blue/20 rounded-xl p-4 flex items-start gap-4">
+              <div className="bg-white p-2 rounded-lg shadow-sm text-mi-blue shrink-0">
                 <Truck size={20} />
               </div>
               <div>

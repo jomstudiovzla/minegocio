@@ -83,7 +83,7 @@ export default function CategoryClient({ slug }: { slug: string }) {
     title: 'text-gray-900',
     desc: 'text-gray-700',
     border: 'border-gray-200/60',
-    bgActive: 'bg-ananas-green text-white shadow-md'
+    bgActive: 'bg-mi-blue text-white shadow-md'
   };
 
   if (!mounted) return null;

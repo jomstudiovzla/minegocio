@@ -3,11 +3,11 @@ import { getFirestore, initializeFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  projectId: "ananas-market-ve-ddb93",
+  projectId: "mi-negocio-38233",
   appId: "1:760091165460:web:4a9c75b5140d31939bf801",
-  storageBucket: "ananas-market-ve-ddb93.firebasestorage.app",
+  storageBucket: "mi-negocio-38233.firebasestorage.app",
   apiKey: "AIzaSyB2yrUnwoAMA55ov-k0GeojC6mEEpUlYhI",
-  authDomain: "ananas-market-ve-ddb93.firebaseapp.com",
+  authDomain: "mi-negocio-38233.firebaseapp.com",
   messagingSenderId: "760091165460",
 };
 

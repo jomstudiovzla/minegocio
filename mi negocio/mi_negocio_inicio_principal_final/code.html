@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mi Negocio - Frescura Garantizada</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#c0c7ce",
+                    "tertiary-fixed": "#dce3ea",
+                    "surface-container-low": "#f0f3ff",
+                    "tertiary-container": "#32393e",
+                    "inverse-surface": "#263143",
+                    "surface-tint": "#3f58b0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#9ba2a9",
+                    "surface-container": "#e7eeff",
+                    "on-primary-container": "#859dfa",
+                    "on-surface": "#111c2d",
+                    "success-green": "#16a34a",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#103088",
+                    "secondary": "#7a5900",
+                    "outline": "#757683",
+                    "surface-bright": "#f9f9ff",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#b6c4ff",
+                    "outline-variant": "#c5c5d4",
+                    "glass-border": "rgba(226, 232, 240, 0.8)",
+                    "primary": "#001b62",
+                    "on-tertiary-fixed-variant": "#41484d",
+                    "on-primary-fixed-variant": "#244097",
+                    "on-tertiary-fixed": "#151c21",
+                    "on-background": "#111c2d",
+                    "secondary-fixed-dim": "#fcbc11",
+                    "primary-fixed": "#dce1ff",
+                    "surface-container-highest": "#d8e3fb",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#6b4d00",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#d8e3fb",
+                    "on-primary-fixed": "#001551",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "inverse-on-surface": "#ecf1ff",
+                    "secondary-container": "#fcbc11",
+                    "error-red": "#ba1a1a",
+                    "background": "#f9f9ff",
+                    "surface-container-high": "#dee8ff",
+                    "surface-ice": "#f9f9ff",
+                    "secondary-fixed": "#ffdea2",
+                    "tertiary": "#1d2429",
+                    "on-secondary-fixed-variant": "#5c4200",
+                    "on-surface-variant": "#444652",
+                    "surface": "#f9f9ff",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#cfdaf2",
+                    "on-secondary-fixed": "#261900"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "sm": "8px",
+                    "xxl": "64px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "container-max": "1280px",
+                    "margin-desktop": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(0, 27, 98, 0.05) 0%, rgba(252, 188, 17, 0.05) 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex flex-col min-h-screen">
+<!-- Top Navigation Bar -->
+<nav class="w-full sticky top-0 z-50 bg-surface/80 backdrop-blur-md shadow-[0px_4px_20px_rgba(16,48,136,0.05)]">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-margin-desktop py-4">
+<div class="flex items-center gap-xl">
+<span class="font-headline-md text-headline-md font-bold text-primary">Mi Negocio</span>
+<div class="hidden md:flex gap-lg items-center font-body-md text-body-md">
+<a class="text-primary border-b-2 border-primary font-bold pb-1" href="#">Offers</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Fresh</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Bakery</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Dairy</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden lg:flex items-center bg-surface-container px-md py-xs rounded-full gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">currency_exchange</span>
+<span class="font-label-md text-primary">Tasa BCV: 1$ = 54.20 VES</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-container-low transition-colors rounded-full active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low transition-colors rounded-full active:scale-95 relative">
+<span class="material-symbols-outlined text-on-surface-variant">shopping_cart</span>
+<span class="absolute top-1 right-1 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">3</span>
+</button>
+<button class="hidden md:block bg-primary text-on-primary px-lg py-sm rounded-xl font-label-md active:scale-95 transition-transform">
+                        Checkout
+                    </button>
+</div>
+</div>
+</div>
+</nav>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative overflow-hidden hero-gradient py-xxl">
+<div class="max-w-7xl mx-auto px-margin-desktop grid lg:grid-cols-2 items-center gap-xxl">
+<div class="z-10">
+<div class="inline-flex items-center gap-xs bg-secondary-container/20 text-on-secondary-container px-md py-xs rounded-full mb-md">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm">Delivery Express en Caracas Este</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-primary mb-md">Frescura que llega directo a tu mesa.</h1>
+<p class="font-body-lg text-on-surface-variant mb-xl max-w-lg">
+                        Seleccionamos lo mejor del campo para que disfrutes de vegetales, frutas y carnes de primera calidad sin salir de casa.
+                    </p>
+<div class="flex flex-wrap gap-md">
+<button class="bg-primary text-on-primary px-xl py-md rounded-xl font-label-md hover:bg-primary-container transition-all active:scale-95 flex items-center gap-sm">
+                            Empezar Compra
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="glass-card px-xl py-md rounded-xl font-label-md text-primary hover:bg-surface-container-low transition-all active:scale-95">
+                            Ver Ofertas Hoy
+                        </button>
+</div>
+</div>
+<div class="relative">
+<div class="aspect-square rounded-[40px] overflow-hidden shadow-xl glass-border border-8">
+<img class="w-full h-full object-cover" data-alt="A lush and vibrant close-up of a rustic wooden crate filled with a variety of fresh organic vegetables and exotic fruits. The setting is a clean, bright, high-end kitchen with soft morning light streaming through a window. Red bell peppers, dragon fruit, and leafy greens stand out against the deep navy and gold accents of the surrounding modern environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCVNUv2ufUpBLEEZ0hSgeYcQTo4jJIJMdXofst8Mqbemp4sMV9GBnQT1jBsIF1deWAg9hQYnVTnY5CjXkKsUeo0M7p6L3pKDVDcmEhUHiFrlUN5DZUPwCjEinnwVRregJ8edu6qUpERUcOSHRvjV5W0mdq83Pd32LPJILWa2-Xd4o-f2B83dIvzD10eatn9EisZFPGJfePmpXbQ7YJTgPZrBWz7A_q_wy_dTf_y_L7nMAunA6CBKztaUvt0NxSnS4Byd2C4auHsOru"/>
+</div>
+<!-- Floating Stat Badge -->
+<div class="absolute -bottom-6 -left-6 glass-card p-md rounded-2xl shadow-lg flex items-center gap-md">
+<div class="w-12 h-12 bg-success-green/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-success-green">local_shipping</span>
+</div>
+<div>
+<p class="font-label-md text-primary">Entrega Promedio</p>
+<p class="font-headline-md text-primary font-bold">45 min</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Flash Offers Section -->
+<section class="py-xxl bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-margin-desktop">
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h2 class="font-headline-lg text-primary">Ofertas Relámpago</h2>
+<p class="font-body-md text-on-surface-variant">Solo por tiempo limitado o hasta agotarse la existencia.</p>
+</div>
+<div class="flex items-center gap-sm bg-error-container text-on-error-container px-lg py-sm rounded-xl font-bold font-label-md">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+<span id="countdown">02:45:12</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+<!-- Product Card 1 -->
+<div class="glass-card rounded-2xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="h-48 relative">
+<img class="w-full h-full object-cover" data-alt="A premium close-up of fresh, ripe Hass avocados arranged on a minimalist white surface. The lighting is crisp and commercial-grade, highlighting the texture of the skins. The background features a subtle navy blue gradient that aligns with the corporate modern brand identity of Mi Negocio supermarket." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRTyp0yPfbyhdycLsgXiAaD-dLsWmuD4IWq7JfVBjDkKHxP0X9hmX_fvSVlECtZ84TWpO65pH0X8Ji04LPKvt1FYfrtpJdNik1uq7PIlW8OVFhu2OjB0bZoITYjdbivYiGREaBX8v-P8gWFeGCGie1PA6Hym1wHK8oBx-bLSRpajXTR3PUSE2Vdt2PVZYrdiBh3fm1OEGsnFOcxgxfrHNJ2RyofseWzSujJknyRoA7cJ__4f01u_9TaQ3Gq3b_IR7L-FCMAPT_e092"/>
+<div class="absolute top-sm left-sm bg-secondary-container text-on-secondary-container font-bold text-[12px] px-sm py-1 rounded-lg">
+                                -25%
+                            </div>
+</div>
+<div class="p-md">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Vegetales</p>
+<h3 class="font-headline-md text-primary mt-xs">Aguacate Hass</h3>
+<div class="flex justify-between items-center mt-md">
+<div>
+<span class="font-headline-md text-primary font-bold">$2.50</span>
+<span class="text-on-surface-variant line-through text-sm ml-sm">$3.35</span>
+</div>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="glass-card rounded-2xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="h-48 relative">
+<img class="w-full h-full object-cover" data-alt="A professional food photography shot of a artisan sourdough bread loaf, golden brown and perfectly baked, sitting on a wooden cutting board. The atmosphere is warm and high-end, evoking the smell of a fresh bakery. Deep navy shadows and bright highlights create a sophisticated and reliable corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT7FhyA2EstpEikmbifRezbdzBLReTJk2d2dSSN6GdU3JcH7N8JbtDfIVuNgwqlK3nLWXhkaNMr_YHmRnG4L60LczgpO3iPz_MGYl350HzqHPacKL49eXcuYZlqEBzqSKUMVgbXQoFR4_PdSt-dhWIJpdn3ZXihXe2JbX3KsU4o22ytkSFABRlG1ORP5VgcQTtE-fZOr-yjsVtrL1gsZZFu4LjVFHcYehNFu0T1p7R7hZSbuE0nXFCuMQNGJ2BltOOYDnWOQOo18lK"/>
+<div class="absolute top-sm left-sm bg-secondary-container text-on-secondary-container font-bold text-[12px] px-sm py-1 rounded-lg">
+                                -15%
+                            </div>
+</div>
+<div class="p-md">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Bakery</p>
+<h3 class="font-headline-md text-primary mt-xs">Pan Artesanal</h3>
+<div class="flex justify-between items-center mt-md">
+<div>
+<span class="font-headline-md text-primary font-bold">$4.20</span>
+<span class="text-on-surface-variant line-through text-sm ml-sm">$4.95</span>
+</div>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="glass-card rounded-2xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="h-48 relative">
+<img class="w-full h-full object-cover" data-alt="A macro shot of vibrant, fresh blueberries in a minimalist glass bowl. The deep blues of the fruit contrast beautifully with the bright, high-key lighting of the scene. The image is designed to suggest health, data-driven freshness, and premium quality, fitting the authoritative yet approachable brand style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7zYoYB-l1WFSaa8PLolcO0T8CAPFAlWuO3_mP4X1Z4WUvYbk8pKxc-n-pA-fDoWM0W0lnnj34VT_HDJuYzFXehdtpc25QaKXAiG_apv7OnB8FpYhZI4cST5tvppBYT3TzRYqOzKILU_2itN_78OWrx6E9SjN3hFz0hLS2uoDXRIQGymoBWWUeYmoKdMlpqDGgQi7IXhIPCfv8jgHu7XIjOmLwfn3juBT8mn4rZN2AWgsi3pRyveMsu7xe0EmLaPeGv7rUUCV-7JJY"/>
+<div class="absolute top-sm left-sm bg-secondary-container text-on-secondary-container font-bold text-[12px] px-sm py-1 rounded-lg">
+                                -10%
+                            </div>
+</div>
+<div class="p-md">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Frutas</p>
+<h3 class="font-headline-md text-primary mt-xs">Blueberries 250g</h3>
+<div class="flex justify-between items-center mt-md">
+<div>
+<span class="font-headline-md text-primary font-bold">$3.10</span>
+<span class="text-on-surface-variant line-through text-sm ml-sm">$3.45</span>
+</div>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="glass-card rounded-2xl overflow-hidden hover:translate-y-[-4px] transition-all duration-300">
+<div class="h-48 relative">
+<img class="w-full h-full object-cover" data-alt="A high-end presentation of organic premium milk in a classic glass bottle, set against a clean, white marble countertop. The lighting is soft and natural, emphasizing purity and freshness. Subtle hints of deep blue and amber in the background connect it to the global visual tokens of the Mi Negocio brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCblMublOV5IiWQfJL2tomMUBL-GDZ64RCw6yM5lhha3i_N4BBSQKLcraRrnw88X9xticVe0N4DDpBtZ-ZC4SVowTmy3J0Q7xTc2HCelQPg-BZChOmQaOz8RgvnF1RsZZzX8IowzAN16KQfQZqDMdxNESufkFAMrjsgBTVswqiqcDCeGIGtICeuw4vEw-sNwSIXZ2BgWa_LA3MjxQMcz8FhRWo9HhZ7IJapw8-C36guGmrgsGhwvlQWFWwG4btEbbEUdgrLxQWTAM5w"/>
+<div class="absolute top-sm left-sm bg-secondary-container text-on-secondary-container font-bold text-[12px] px-sm py-1 rounded-lg">
+                                -20%
+                            </div>
+</div>
+<div class="p-md">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Lácteos</p>
+<h3 class="font-headline-md text-primary mt-xs">Leche Entera 1L</h3>
+<div class="flex justify-between items-center mt-md">
+<div>
+<span class="font-headline-md text-primary font-bold">$1.80</span>
+<span class="text-on-surface-variant line-through text-sm ml-sm">$2.25</span>
+</div>
+<button class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Categories -->
+<section class="py-xxl">
+<div class="max-w-7xl mx-auto px-margin-desktop">
+<h2 class="font-headline-lg text-primary mb-xl text-center">Explora por Categoría</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-gutter h-[600px]">
+<div class="md:col-span-2 md:row-span-2 relative rounded-3xl overflow-hidden group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A wide, sweeping shot of a beautifully organized produce section in a modern, upscale supermarket. The shelves are overflowing with colorful fruits and vegetables, meticulously arranged. The lighting is bright and high-key, creating a sense of pristine cleanliness and abundance, following the glassmorphism and data-driven command-and-control aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG8P1-XEbzpBYK6Yf6OpCw68FC5b-oHSqyOacb-3VGWAH17xUMGpHzL4Xwg6VQi8gFI7-3zEyVA26mGqOSMXRRKkmfw0pTYxERNISn4IyAO88oEOfXxMojmJDXXaDlYM8KvGrmNeBRJCafnS-3VWozKeG5SpuTBYs9B5ARm5kjkt7BwkUzwg24H4nDY0WFhpZUy3-tNh05GfoCI2eGWixt9xecxsz_TkHgqsmzIzEaIcGf-Y4cRGs0FiZDlON90H6vkeFJZ0V5Ddj2"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-xl">
+<h3 class="font-display-lg text-white">Huerto Fresco</h3>
+<p class="text-white/80 font-body-md mb-md">Directo del campo a tu hogar en menos de 24h.</p>
+<button class="w-fit bg-secondary-container text-on-secondary-container px-lg py-sm rounded-xl font-label-md">Ver Todo</button>
+</div>
+</div>
+<div class="md:col-span-2 relative rounded-3xl overflow-hidden group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A top-down view of premium quality steaks and fresh meat cuts on a clean dark slate surface. Sprigs of rosemary and sea salt add a gourmet touch. The lighting is focused and dramatic, highlighting the rich colors and quality of the meat, aligning with the authoritative and premium corporate identity of the supermarket." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxSmKIzouNFJhdZBm8ZJPfvvLwzAf4EIPcPPcYNfsB6OI9hjCuauLEYZBXpCh4FW3z8nTQ4bkWlX9dyWbST5kcNdSn0yqasV51RRFH1-A45sHmkEo8psQOLvTu86k105F-H8x939uK2RMcYkZBuZsPCdLTTAGpJMzEK4iENC66i4duVjWZxWPJe0ZWDODWUWj064l7Bcrn63WGyhfjcKPqLGPhSsf-Q2pn22HkeMT_UhwgDcPO4uo72N9dp4V894oJBCL4fT9yd7ys"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-lg">
+<h3 class="font-headline-lg text-white">Carnicería Elite</h3>
+<button class="w-fit text-white font-label-md flex items-center gap-xs mt-xs">Explorar <span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="relative rounded-3xl overflow-hidden group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A colorful and appetizing display of freshly squeezed fruit juices and smoothies in elegant glass bottles. The vibrant colors of orange, green, and red stand out against a clean, white background. This image evokes health and vitality while maintaining the sophisticated, high-tech, and approachable atmosphere of the brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh8Tdj88iyaqIFXOOnKC662WMcCKgTv20i9cv-jh23GZNHCsKPL8K5BKQneh0j8d2j8MsglVZRz86dxLKcao6ZgE0YZgpbR9-dprHrdnSv-X26_6Qs8O5WwsXOEj9HwZE3k4RfIPi-qlY5zXTG11jHOCCIBG1ujJ8g5d2AlgEvqMM11nQklpsBBCFylNiO8Gl6vxZx8wMETvh6_Jrj3NJ0vjuggp5B1_LQZPzvl9d72ytWk5oxNGqfjMAamwjFTY1P7c_qU1bgm2wS"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-lg">
+<h3 class="font-headline-md text-white">Bebidas</h3>
+</div>
+</div>
+<div class="relative rounded-3xl overflow-hidden group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A gourmet selection of international cheeses and cold cuts arranged on a rustic wooden platter. The image is rich in texture and detail, captured with high-end photographic techniques. The color palette is warm and inviting, but the composition remains crisp and structured, reflecting the brand's 'command and control' design philosophy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHT_l6YPUyq2MoQV42avQt5aoOiM562rBouY3UPYKi0J03opgZnsj_EHTckc_wSW4Y7dpTkrPAsyL7UX5rz2zuSUNPQ6QX76_7QT_QJJYoDlRiBQ6rtznHjqWUA6S77l2SSXBmfhPKRtQEekdNBQRgQFtngH1Zo6aNbFmS1rVK0UpZhaHbq-QRgZ8b4IcmXjBG-QXLnllH4yMHjG7aIr0sBIUR1jlhsqaqS7wve4DuKUJI1JexReBFlw3WckEjkGdWWBrpCrCTSvc3"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-lg">
+<h3 class="font-headline-md text-white">Delicatessen</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-xxl bg-surface-ice">
+<div class="max-w-7xl mx-auto px-margin-desktop">
+<div class="text-center mb-xxl">
+<h2 class="font-headline-lg text-primary mb-sm">Lo que dicen nuestros clientes</h2>
+<div class="flex justify-center gap-1">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="glass-card p-xl rounded-2xl">
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-primary">AM</div>
+<div>
+<p class="font-label-md text-primary">Adriana Méndez</p>
+<p class="text-[12px] text-on-surface-variant">Cliente desde 2023</p>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant italic">"La calidad de los vegetales es impresionante, parecen recién cosechados. El delivery a Los Palos Grandes llegó puntual."</p>
+</div>
+<div class="glass-card p-xl rounded-2xl border-primary-container">
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center font-bold text-on-secondary-container">JG</div>
+<div>
+<p class="font-label-md text-primary">Juan González</p>
+<p class="text-[12px] text-on-surface-variant">Cliente desde 2022</p>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant italic">"Comprar online es súper fluido. Me encanta que la tasa BCV esté actualizada siempre, hace todo más transparente."</p>
+</div>
+<div class="glass-card p-xl rounded-2xl">
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-primary">CP</div>
+<div>
+<p class="font-label-md text-primary">Carla Pérez</p>
+<p class="text-[12px] text-on-surface-variant">Cliente frecuente</p>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant italic">"La mejor opción para el mercado semanal. La panadería es de otro nivel, el pan de masa madre es mi favorito."</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl bg-inverse-surface mt-auto">
+<div class="max-w-7xl mx-auto px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-xl mb-xl border-b border-white/10 pb-xl">
+<div class="col-span-1 md:col-span-1">
+<span class="font-headline-sm text-headline-sm font-bold text-secondary-container">Mi Negocio</span>
+<p class="text-surface-variant/70 font-label-sm mt-md leading-relaxed">
+                        Tu supermercado digital premium en Caracas. Frescura, variedad y confianza en cada entrega.
+                    </p>
+</div>
+<div>
+<h4 class="text-white font-label-md mb-md">Explorar</h4>
+<ul class="flex flex-col gap-sm">
+<li><a class="text-surface-variant/70 hover:text-white transition-all hover:underline font-label-sm" href="#">Promociones</a></li>
+<li><a class="text-surface-variant/70 hover:text-white transition-all hover:underline font-label-sm" href="#">Nuevos Ingresos</a></li>
+<li><a class="text-surface-variant/70 hover:text-white transition-all hover:underline font-label-sm" href="#">Marcas Exclusivas</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-label-md mb-md">Soporte</h4>
+<ul class="flex flex-col gap-sm">
+<li><a class="text-surface-variant/70 hover:text-white transition-all hover:underline font-label-sm" href="#">Ayuda y FAQ</a></li>
+<li><a class="text-surface-variant/70 hover:text-white transition-all hover:underline font-label-sm" href="#">Rastreo de Pedido</a></li>
+<li><a class="text-surface-variant/70 hover:text-white transition-all hover:underline font-label-sm" href="#">Zonas de Cobertura</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-label-md mb-md">Contacto</h4>
+<p class="text-surface-variant/70 font-label-sm mb-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">call</span> +58 212 555 0123
+                    </p>
+<p class="text-surface-variant/70 font-label-sm mb-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">mail</span> pedidos@minegocio.com
+                    </p>
+<div class="flex gap-md mt-md">
+<a class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-white/20 transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">public</span>
+</a>
+<a class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-white/20 transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center gap-md">
+<p class="font-label-sm text-surface-variant/70">© 2024 Mi Negocio Supermarket. All rights reserved.</p>
+<div class="flex gap-lg">
+<a class="text-surface-variant/70 hover:text-white transition-all font-label-sm" href="#">Privacy Policy</a>
+<a class="text-surface-variant/70 hover:text-white transition-all font-label-sm" href="#">Terms of Service</a>
+<a class="text-surface-variant/70 hover:text-white transition-all font-label-sm" href="#">Compliance</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Countdown logic
+        function updateCountdown() {
+            const timerElement = document.getElementById('countdown');
+            let [hours, minutes, seconds] = timerElement.innerText.split(':').map(Number);
+            
+            if (seconds > 0) {
+                seconds--;
+            } else {
+                if (minutes > 0) {
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    if (hours > 0) {
+                        hours--;
+                        minutes = 59;
+                        seconds = 59;
+                    }
+                }
+            }
+            
+            timerElement.innerText = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        setInterval(updateCountdown, 1000);
+
+        // Header interaction on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2');
+            }
+        });
+    </script>
+</body></html>

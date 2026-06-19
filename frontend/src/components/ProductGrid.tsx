@@ -55,7 +55,7 @@ export default function ProductGrid({ products }: { products: Product[] }) {
               if (cartItem) {
                 return (
                   <div 
-                    className="absolute top-5 right-5 h-10 bg-ananas-green text-white rounded-full shadow-md flex items-center justify-between px-2 z-20 w-24"
+                    className="absolute top-5 right-5 h-10 bg-mi-blue text-white rounded-full shadow-md flex items-center justify-between px-2 z-20 w-24"
                     onClick={(e) => e.preventDefault()}
                   >
                     <button 
@@ -122,10 +122,10 @@ export default function ProductGrid({ products }: { products: Product[] }) {
               </div>
             
               <div className="mt-auto">
-                <h3 className="text-sm font-bold text-gray-500 mb-2 uppercase leading-snug line-clamp-2 min-h-[40px] group-hover:text-ananas-dark transition">{p.name}</h3>
+                <h3 className="text-sm font-bold text-gray-500 mb-2 uppercase leading-snug line-clamp-2 min-h-[40px] group-hover:text-mi-blue transition">{p.name}</h3>
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-2xl font-black text-gray-800">{convertAndFormatPrice(p.price, currency, rates)}</p>
-                  <span className="text-xs font-bold text-ananas-dark bg-ananas-green/10 px-2 py-1 rounded-lg border border-ananas-green/20">{p.unit || '1 Kg'}</span>
+                  <span className="text-xs font-bold text-mi-blue bg-mi-blue/10 px-2 py-1 rounded-lg border border-mi-blue/20">{p.unit || '1 Kg'}</span>
                 </div>
 
                 <div className="text-[10px] font-medium text-gray-400 border-b border-gray-100 pb-3 mb-3 text-center">
@@ -138,7 +138,7 @@ export default function ProductGrid({ products }: { products: Product[] }) {
                   <button 
                     disabled={p.stock === 0}
                     onClick={(e) => handleAddToCart(p, e)}
-                    className="w-full bg-ananas-green disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-xl hover:bg-ananas-dark transition shadow-md shadow-ananas-green/20 flex items-center justify-center gap-2"
+                    className="w-full bg-mi-blue disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-xl hover:bg-mi-blue-mid transition shadow-md shadow-mi-blue/20 flex items-center justify-center gap-2"
                   >
                     <Plus size={16} strokeWidth={2.5} /> {p.stock === 0 ? 'Sin stock' : 'Agregar'}
                   </button>

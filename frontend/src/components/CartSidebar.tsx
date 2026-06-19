@@ -15,7 +15,7 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const itemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  // Club Ananas: 1 point per dollar, approx 2% savings hint
+  // Club Mi Negocio: 1 punto por dólar
   const pointsToEarn = Math.floor(subtotal);
   const hasDelivery = subtotal < 15;
   const deliveryNote = hasDelivery
@@ -44,7 +44,7 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
             className="fixed inset-y-0 right-0 w-full md:w-[420px] bg-white shadow-2xl z-50 flex flex-col"
           >
             {/* Header */}
-            <div className="px-5 py-4 bg-ananas-green text-white flex justify-between items-center">
+            <div className="px-5 py-4 bg-mi-blue text-white flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <ShoppingCart size={22} />
                 <div>
@@ -71,17 +71,17 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
 
             {/* Free shipping progress bar */}
             {mounted && cart.length > 0 && (
-              <div className="px-5 py-2.5 bg-ananas-green/5 border-b border-ananas-green/10">
+              <div className="px-5 py-2.5 bg-mi-blue/5 border-b border-mi-blue/10">
                 <div className="flex justify-between text-xs font-bold mb-1.5">
                   <span className="text-gray-600">{deliveryNote}</span>
-                  {!hasDelivery && <span className="text-ananas-green">✓</span>}
+                  {!hasDelivery && <span className="text-mi-blue">✓</span>}
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min((subtotal / 15) * 100, 100)}%` }}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
-                    className="h-full bg-ananas-green rounded-full"
+                    className="h-full bg-mi-blue rounded-full"
                   />
                 </div>
               </div>
@@ -100,7 +100,7 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                   </div>
                   <button
                     onClick={onClose}
-                    className="mt-2 flex items-center gap-2 bg-ananas-green text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-ananas-dark transition shadow-md"
+                    className="mt-2 flex items-center gap-2 bg-mi-blue text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-mi-blue-mid transition shadow-md"
                   >
                     Ver productos <ArrowRight size={16} />
                   </button>
@@ -131,14 +131,14 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                         <span className="text-sm font-black w-5 text-center text-gray-800">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-6 h-6 rounded-full bg-ananas-green/10 text-ananas-green flex items-center justify-center hover:bg-ananas-green hover:text-white transition font-bold"
+                          className="w-6 h-6 rounded-full bg-mi-blue/10 text-mi-blue flex items-center justify-center hover:bg-mi-blue hover:text-white transition font-bold"
                         >
                           <Plus size={12} />
                         </button>
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2 shrink-0">
-                      <span className="font-black text-ananas-green text-sm">
+                      <span className="font-black text-mi-blue text-sm">
                         {convertAndFormatPrice(item.price * item.quantity, currency, rates)}
                       </span>
                       <span className="text-[10px] text-gray-400">
@@ -159,12 +159,12 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
             {/* Footer */}
             {mounted && cart.length > 0 && (
               <div className="p-5 bg-white border-t border-gray-100 shadow-[0_-10px_25px_-15px_rgba(0,0,0,0.08)]">
-                {/* Club Ananas points hint */}
+                {/* Club Mi Negocio points hint */}
                 {user && (
                   <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-200 rounded-xl px-3 py-2 mb-4">
                     <Tag size={14} className="text-yellow-600" />
-                    <p className="text-xs font-bold text-yellow-700">
-                      Ganarás <span className="text-yellow-600">~{pointsToEarn} puntos</span> Club Ananas con este pedido
+                    <p className="text-xs font-bold text-mi-blue-mid">
+                      Ganarás <span className="text-mi-yellow font-black">~{pointsToEarn} puntos</span> Club Mi Negocio con este pedido
                     </p>
                   </div>
                 )}
@@ -176,13 +176,13 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                 </div>
                 <div className="flex justify-between text-sm font-medium text-gray-500 mb-4">
                   <span>Envío</span>
-                  <span className={subtotal >= 15 ? 'text-ananas-green font-bold' : 'text-gray-500'}>
+                  <span className={subtotal >= 15 ? 'text-mi-blue font-bold' : 'text-gray-500'}>
                     {subtotal >= 15 ? 'Gratis 🎉' : 'Se calcula al finalizar'}
                   </span>
                 </div>
                 <div className="flex justify-between font-black text-gray-900 text-xl mb-5 border-t border-gray-100 pt-4">
                   <span>Total</span>
-                  <span className="text-ananas-green">{convertAndFormatPrice(subtotal, currency, rates)}</span>
+                  <span className="text-mi-blue">{convertAndFormatPrice(subtotal, currency, rates)}</span>
                 </div>
 
                 <button
@@ -195,14 +195,14 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                       router.push('/checkout');
                     }
                   }}
-                  className="w-full bg-ananas-green text-white py-4 rounded-2xl font-black text-lg hover:bg-ananas-dark hover:shadow-xl hover:shadow-ananas-green/30 transition-all flex items-center justify-center gap-2 group"
+                  className="w-full bg-mi-blue text-white py-4 rounded-2xl font-black text-lg hover:bg-mi-blue-mid hover:shadow-xl hover:shadow-mi-blue/30 transition-all flex items-center justify-center gap-2 group"
                 >
                   <span>Ir al Pago</span>
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button
                   onClick={onClose}
-                  className="w-full mt-2 py-2.5 text-sm font-bold text-gray-500 hover:text-ananas-green transition"
+                  className="w-full mt-2 py-2.5 text-sm font-bold text-gray-500 hover:text-mi-blue transition"
                 >
                   Seguir comprando
                 </button>

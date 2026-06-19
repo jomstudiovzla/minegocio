@@ -10,9 +10,9 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthP
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const PERKS = [
-  { icon: Star,       text: 'Acumula puntos Club Ananas con cada compra' },
-  { icon: Truck,      text: 'Envío gratis en pedidos desde $15' },
-  { icon: Tag,        text: 'Ofertas exclusivas para miembros' },
+  { icon: Star,        text: 'Acumula puntos Club Mi Negocio con cada compra' },
+  { icon: Truck,       text: 'Envío gratis en pedidos desde $15' },
+  { icon: Tag,         text: 'Ofertas exclusivas para miembros registrados' },
   { icon: ShieldCheck, text: 'Pagos 100% seguros – Zelle, Pago Móvil, PayPal' },
 ];
 
@@ -100,7 +100,9 @@ export default function LoginPage() {
            login(userDoc.data() as any);
            router.push(redirectPath);
         } else {
-           setError('Tu cuenta existe, pero no encontramos tus datos. Contacta soporte.');
+           // Si el usuario existe en Auth pero no en Firestore (ej. error de permisos previo), pedirle los datos faltantes o crearlo.
+           setGoogleUserData({ uid, email: userCredential.user.email || email.trim(), clubPoints: 350, clubLevel: 'Bronce' });
+           setShowExtraInfoForm(true);
         }
       } catch (err: any) {
         setError('Correo o contraseña equivocada. Si no tienes cuenta, regístrate.');
@@ -136,7 +138,9 @@ export default function LoginPage() {
          setShowExtraInfoForm(true);
       }
     } catch (err: any) {
-      if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+      if (err.code === 'auth/unauthorized-domain' || err.code === 'auth/invalid-continue-uri') {
+        setError('Error: Debes autorizar "localhost" en la consola de Firebase -> Authentication -> Settings -> Authorized domains.');
+      } else if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
         setError('Error al iniciar sesión con Google: ' + err.message);
       }
     }
@@ -168,32 +172,36 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex">
 
-      {/* Left panel – branding */}
-      <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-ananas-dark via-[#1a3a1a] to-ananas-green relative overflow-hidden flex-col justify-between p-12">
+      {/* Left panel – branding Mi Negocio */}
+      <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-mi-blue via-[#0a1f5c] to-mi-blue-mid relative overflow-hidden flex-col justify-between p-12">
         {/* Decorative circles */}
         <div className="absolute -top-20 -left-20 w-72 h-72 bg-white/5 rounded-full" />
         <div className="absolute -bottom-16 -right-16 w-80 h-80 bg-white/5 rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-ananas-green/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-mi-yellow/8 rounded-full blur-3xl pointer-events-none" />
 
         {/* Logo */}
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-3">
-            <span className="text-4xl">🍍</span>
-            <span className="text-3xl font-black text-white tracking-tight">Ananas</span>
+            <div className="bg-mi-yellow p-2.5 rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#001b62" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </div>
+            <div>
+              <span className="text-2xl font-black text-white tracking-tight">MI NEGOCIO</span>
+              <p className="text-mi-yellow text-xs font-semibold tracking-widest uppercase">Supermercado Online</p>
+            </div>
           </Link>
-          <p className="text-white/60 text-sm font-medium mt-1">Tu frutería y mercado en línea</p>
         </div>
 
         {/* Perks */}
         <div className="relative z-10 space-y-5">
           <h2 className="text-2xl font-black text-white mb-6 leading-tight">
-            Todo lo fresco,<br />
-            <span className="text-yellow-400">en tu puerta hoy</span>
+            Todo tu mercado,<br />
+            <span className="text-mi-yellow">en tu puerta hoy</span>
           </h2>
           {PERKS.map(({ icon: Icon, text }) => (
             <div key={text} className="flex items-center gap-3">
               <div className="w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
-                <Icon size={18} className="text-yellow-400" />
+                <Icon size={18} className="text-mi-yellow" />
               </div>
               <p className="text-white/80 text-sm font-medium">{text}</p>
             </div>
@@ -202,7 +210,7 @@ export default function LoginPage() {
 
         {/* Footer tagline */}
         <p className="relative z-10 text-white/40 text-xs font-medium">
-          © 2026 Ananas Frutería · Caracas Este
+          © {new Date().getFullYear()} Mi Negocio, C.A. · Caracas
         </p>
       </div>
 
@@ -215,8 +223,10 @@ export default function LoginPage() {
         >
           {/* Mobile logo */}
           <div className="flex lg:hidden items-center gap-2 justify-center mb-8">
-            <span className="text-3xl">🍍</span>
-            <span className="text-2xl font-black text-ananas-green">Ananas</span>
+            <div className="bg-mi-blue p-2 rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </div>
+            <span className="text-2xl font-black text-mi-blue">Mi Negocio</span>
           </div>
 
           <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
@@ -229,7 +239,7 @@ export default function LoginPage() {
                   onClick={() => { setIsReg(idx === 1); setError(''); }}
                   className={`flex-1 py-2.5 rounded-xl text-sm font-black transition-all ${
                     isRegistering === (idx === 1)
-                      ? 'bg-white text-ananas-green shadow-sm'
+                      ? 'bg-white text-mi-blue shadow-sm'
                       : 'text-gray-500 hover:text-gray-700'
                   }`}
                 >
@@ -261,7 +271,7 @@ export default function LoginPage() {
                         required type="text" value={name}
                         onChange={e => setName(e.target.value)}
                         placeholder="Juan Pérez"
-                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green/30 focus:border-ananas-green transition"
+                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
@@ -271,7 +281,7 @@ export default function LoginPage() {
                           required type="text" value={cedula}
                           onChange={e => setCedula(e.target.value)}
                           placeholder="V-12345678"
-                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green/30 focus:border-ananas-green transition"
+                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                         />
                       </div>
                       <div>
@@ -280,7 +290,7 @@ export default function LoginPage() {
                           required type="tel" value={phone}
                           onChange={e => setPhone(e.target.value)}
                           placeholder="0414-000-0000"
-                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green/30 focus:border-ananas-green transition"
+                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                         />
                       </div>
                     </div>
@@ -293,9 +303,9 @@ export default function LoginPage() {
 
                     <button
                       type="submit"
-                      className="w-full bg-ananas-green hover:bg-ananas-dark text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-ananas-green/25 mt-2"
+                      className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-mi-blue/25 mt-2"
                     >
-                      Continuar a Ananas
+                      Continuar a Mi Negocio
                     </button>
                   </form>
                 </motion.div>
@@ -308,11 +318,11 @@ export default function LoginPage() {
                   transition={{ duration: 0.2 }}
                 >
                   <h1 className="text-2xl font-black text-gray-800 mb-1">
-                    {isRegistering ? '¡Bienvenido a Ananas! 🍍' : 'Qué bueno verte de nuevo'}
+                    {isRegistering ? '¡Bienvenido a Mi Negocio! 🛒' : 'Qué bueno verte de nuevo'}
                   </h1>
                 <p className="text-sm text-gray-500 font-medium mb-6">
                   {isRegistering
-                    ? 'Crea tu cuenta y empieza a acumular puntos Club Ananas.'
+                    ? 'Crea tu cuenta y empieza a acumular puntos Club Mi Negocio.'
                     : 'Ingresa tus datos para continuar.'}
                 </p>
 
@@ -326,7 +336,7 @@ export default function LoginPage() {
                           required type="text" value={name}
                           onChange={e => setName(e.target.value)}
                           placeholder="Juan Pérez"
-                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green/30 focus:border-ananas-green transition"
+                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-3">
@@ -336,7 +346,7 @@ export default function LoginPage() {
                             required type="text" value={cedula}
                             onChange={e => setCedula(e.target.value)}
                             placeholder="V-12345678"
-                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green/30 focus:border-ananas-green transition"
+                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                           />
                         </div>
                         <div>
@@ -345,7 +355,7 @@ export default function LoginPage() {
                             required type="tel" value={phone}
                             onChange={e => setPhone(e.target.value)}
                             placeholder="0414-000-0000"
-                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green/30 focus:border-ananas-green transition"
+                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                           />
                         </div>
                       </div>
@@ -359,7 +369,7 @@ export default function LoginPage() {
                       required type="email" value={email}
                       onChange={e => setEmail(e.target.value)}
                       placeholder="tu@correo.com"
-                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green/30 focus:border-ananas-green transition"
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                     />
                   </div>
 
@@ -373,12 +383,12 @@ export default function LoginPage() {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-11 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ananas-green/30 focus:border-ananas-green transition"
+                        className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-11 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPass(s => !s)}
-                        className="absolute right-3 top-3.5 text-gray-400 hover:text-ananas-green transition"
+                        className="absolute right-3 top-3.5 text-gray-400 hover:text-mi-blue transition"
                       >
                         {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
                       </button>
@@ -395,9 +405,9 @@ export default function LoginPage() {
                   {/* Submit */}
                   <button
                     type="submit"
-                    className="w-full bg-ananas-green hover:bg-ananas-dark text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-ananas-green/25 flex items-center justify-center gap-2 group mt-2"
+                    className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-mi-blue/25 flex items-center justify-center gap-2 group mt-2"
                   >
-                    {isRegistering ? 'Crear mi cuenta' : 'Entrar a Ananas'}
+                    {isRegistering ? 'Crear mi cuenta' : 'Entrar a Mi Negocio'}
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                 </form>
@@ -415,7 +425,7 @@ export default function LoginPage() {
 
                   <button
                     onClick={handleGoogleLogin}
-                    className="mt-6 w-full flex items-center justify-center gap-3 bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 font-black text-sm py-3.5 rounded-2xl transition shadow-sm"
+                    className="mt-6 w-full flex items-center justify-center gap-3 bg-white border border-mi-blue-low hover:border-mi-blue hover:bg-mi-blue-ice text-gray-700 font-black text-sm py-3.5 rounded-2xl transition shadow-sm"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                       <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -430,9 +440,9 @@ export default function LoginPage() {
                 {/* Privacy note */}
                 <p className="text-center text-xs text-gray-400 font-medium mt-5">
                   Al continuar aceptas nuestros{' '}
-                  <Link href="/terminos" className="underline hover:text-ananas-green">Términos</Link>
+                  <Link href="/terminos" className="underline hover:text-mi-blue">Términos</Link>
                   {' '}y{' '}
-                  <Link href="/privacidad" className="underline hover:text-ananas-green">Privacidad</Link>.
+                  <Link href="/privacidad" className="underline hover:text-mi-blue">Privacidad</Link>.
                 </p>
                 </motion.div>
               )}

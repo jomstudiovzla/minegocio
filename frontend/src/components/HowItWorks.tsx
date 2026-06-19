@@ -1,56 +1,121 @@
 "use client";
 import React from 'react';
-import { ShoppingBasket, CreditCard, Truck } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ShoppingBasket, CreditCard, Truck, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+
+const STEPS = [
+  {
+    icon: ShoppingBasket,
+    num: '01',
+    title: 'Llena tu Carrito',
+    desc: 'Explora nuestro catálogo y selecciona frutas, verduras y productos frescos para tu hogar.',
+    color: 'bg-mi-blue/10 text-mi-blue',
+    numColor: 'text-mi-blue/20',
+    link: '/#categories',
+  },
+  {
+    icon: CreditCard,
+    num: '02',
+    title: 'Paga Seguro',
+    desc: 'Elige tu método preferido: Zelle, Pago Móvil, PayPal o Efectivo al recibir tu pedido.',
+    color: 'bg-mi-blue-mid/10 text-mi-blue-mid',
+    numColor: 'text-mi-blue-mid/20',
+    link: '/pagos',
+  },
+  {
+    icon: Truck,
+    num: '03',
+    title: 'Recibe en Casa',
+    desc: 'Empacamos con cuidado y entregamos el mismo día. Tu mercado llega fresco a tu puerta.',
+    color: 'bg-mi-yellow/15 text-mi-yellow-dark',
+    numColor: 'text-mi-yellow/30',
+    link: '/delivery',
+  },
+];
 
 export default function HowItWorks() {
   return (
-    <div className="py-20 bg-gray-50 border-t border-gray-100 mt-12 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-ananas-green/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-yellow-400/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+    <section className="relative py-24 overflow-hidden">
+      {/* Fondo con patrón diagonal sutil */}
+      <div className="absolute inset-0 bg-gradient-to-br from-mi-blue-ice via-white to-mi-blue-surface stripe-pattern" />
+
+      {/* Orbes decorativos */}
+      <div className="absolute top-0 left-0 w-80 h-80 bg-mi-blue/4 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-mi-yellow/5 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="max-w-[1600px] w-[96%] mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <p className="text-ananas-green font-bold text-sm tracking-widest uppercase mb-2">Tan fácil como pelar una mandarina</p>
-          <h2 className="text-3xl md:text-4xl font-black text-gray-800">¿Cómo comprar en Ananas?</h2>
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="inline-block text-mi-blue font-black text-xs tracking-[0.25em] uppercase mb-3 px-4 py-1.5 bg-mi-blue/8 rounded-full border border-mi-blue/15">
+            Tan fácil como ir al mercado
+          </span>
+          <h2 className="text-4xl md:text-5xl font-black text-mi-blue mt-3 tracking-tight">
+            ¿Cómo comprar en{' '}
+            <span className="text-gradient-blue">Mi Negocio</span>?
+          </h2>
+        </motion.div>
+
+        {/* Steps */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative">
+          {/* Línea conectora (desktop) */}
+          <div className="hidden md:block absolute top-14 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] h-px bg-gradient-to-r from-mi-blue/20 via-mi-blue/10 to-transparent z-0" />
+
+          {STEPS.map(({ icon: Icon, num, title, desc, color, numColor, link }, i) => (
+            <motion.div
+              key={num}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.15, duration: 0.6 }}
+            >
+              <Link href={link} className="group block bg-white rounded-3xl p-8 border border-mi-blue-fixed hover:border-mi-blue/30 shadow-sm hover:shadow-xl hover:shadow-mi-blue/8 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                {/* Número grande de fondo */}
+                <span className={`absolute right-4 top-2 text-8xl font-black ${numColor} select-none pointer-events-none leading-none`}>
+                  {num}
+                </span>
+
+                {/* Ícono */}
+                <div className={`w-16 h-16 ${color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform relative z-10`}>
+                  <Icon size={32} />
+                </div>
+
+                {/* Texto */}
+                <h3 className="text-xl font-black text-mi-blue mb-3 relative z-10">{title}</h3>
+                <p className="text-gray-500 font-medium leading-relaxed text-sm relative z-10">{desc}</p>
+
+                {/* Arrow reveal */}
+                <div className="mt-5 flex items-center gap-1.5 text-mi-blue/40 group-hover:text-mi-blue font-bold text-sm transition-colors relative z-10">
+                  Saber más <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          
-          {/* Step 1 */}
-          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 text-center group hover:-translate-y-2 transition-transform duration-300 relative">
-            <div className="hidden md:block absolute top-1/2 -right-8 w-16 h-0.5 bg-gray-200 z-0"></div>
-            <div className="w-20 h-20 bg-green-50 rounded-2xl flex items-center justify-center mx-auto mb-6 text-ananas-green group-hover:scale-110 transition-transform relative z-10">
-              <ShoppingBasket size={36} />
-              <div className="absolute -top-3 -right-3 w-8 h-8 bg-ananas-green text-white rounded-full flex items-center justify-center font-black text-sm border-4 border-white">1</div>
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-3">1. Llena tu Carrito</h3>
-            <p className="text-gray-500 font-medium">Explora nuestro catálogo y selecciona las frutas, verduras y productos más frescos para tu hogar.</p>
-          </div>
-
-          {/* Step 2 */}
-          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 text-center group hover:-translate-y-2 transition-transform duration-300 relative">
-            <div className="hidden md:block absolute top-1/2 -right-8 w-16 h-0.5 bg-gray-200 z-0"></div>
-            <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 text-blue-500 group-hover:scale-110 transition-transform relative z-10">
-              <CreditCard size={36} />
-              <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-black text-sm border-4 border-white">2</div>
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-3">2. Paga Seguro</h3>
-            <p className="text-gray-500 font-medium">Elige tu método preferido: Zelle, Pago Móvil, PayPal o Efectivo al momento de recibir tu pedido.</p>
-          </div>
-
-          {/* Step 3 */}
-          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 text-center group hover:-translate-y-2 transition-transform duration-300 relative">
-            <div className="w-20 h-20 bg-orange-50 rounded-2xl flex items-center justify-center mx-auto mb-6 text-orange-500 group-hover:scale-110 transition-transform relative z-10">
-              <Truck size={36} />
-              <div className="absolute -top-3 -right-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-black text-sm border-4 border-white">3</div>
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-3">3. Recibe en Casa</h3>
-            <p className="text-gray-500 font-medium">Nosotros nos encargamos del resto. Recibirás tu pedido empacado con amor directo en tu puerta.</p>
-          </div>
-
-        </div>
+        {/* CTA bottom */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-14"
+        >
+          <Link
+            href="/como-funciona"
+            className="inline-flex items-center gap-2 bg-mi-blue text-white px-8 py-4 rounded-2xl font-bold hover:bg-mi-blue-mid transition-colors shadow-lg shadow-mi-blue/20"
+          >
+            Ver guía completa <ArrowRight size={18} />
+          </Link>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 }

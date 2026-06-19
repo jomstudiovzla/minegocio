@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { collection, onSnapshot, query, doc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { db, auth } from '@/lib/firebase';
 import { useStore, Order, AdminLog } from '@/store/useStore';
 import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
 
@@ -10,16 +11,44 @@ export default function FirebaseSync() {
   const setProducts = useStore(state => state.setProducts);
   const setOrders = useStore(state => state.setOrders);
   const setAdminLogs = useStore(state => state.setAdminLogs);
+  const login = useStore(state => state.login);
+  const logout = useStore(state => state.logout);
 
   useEffect(() => {
     console.log("FirebaseSync montado. Suscribiendo a colecciones...");
 
-    // Productos a través de Clean Architecture y Zod
+    // 1. Productos a través de Clean Architecture
     const unsubProducts = ProductRepository.subscribeToAllProducts((prods) => {
       setProducts(prods as any);
     });
 
-    // Órdenes
+    // 2. Autenticación y Perfil de Usuario en Tiempo Real
+    let unsubUserDoc: (() => void) | null = null;
+
+    const unsubAuth = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        // Escuchar el documento del usuario en Firestore en tiempo real
+        const userRef = doc(db, 'users', firebaseUser.uid);
+        unsubUserDoc = onSnapshot(userRef, (snap) => {
+          if (snap.exists()) {
+            login(snap.data() as any);
+          } else {
+            // Documento no existe (puede estar a mitad de registro o ser admin local)
+            if (firebaseUser.email === 'admin@jomstudio.com') {
+               login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' } as any);
+            }
+          }
+        });
+      } else {
+        if (unsubUserDoc) {
+          unsubUserDoc();
+          unsubUserDoc = null;
+        }
+        // No forzamos logout general por si hay navegación local, pero aquí se podría manejar.
+      }
+    });
+
+    // 3. Órdenes
     let previousOrders: Record<string, string> = {};
     const qOrders = query(collection(db, "orders"));
     const unsubOrders = onSnapshot(qOrders, (snapshot) => {
@@ -38,18 +67,17 @@ export default function FirebaseSync() {
         }
         previousOrders[order.id] = order.status;
       });
-      // Ordenar localmente por fecha (las más recientes primero), protegiendo contra NaN por fechas localizadas
+      // Ordenar localmente por fecha
       ords.sort((a, b) => {
         const timeA = a.createdAt || new Date(a.date).getTime();
         const timeB = b.createdAt || new Date(b.date).getTime();
-        
         if (isNaN(timeA) || isNaN(timeB)) return 0;
         return timeB - timeA;
       });
       setOrders(ords);
     });
 
-    // Logs de Admin
+    // 4. Logs de Admin
     const qLogs = query(collection(db, "adminLogs"));
     const unsubLogs = onSnapshot(qLogs, (snapshot) => {
       const logs: AdminLog[] = [];
@@ -67,10 +95,12 @@ export default function FirebaseSync() {
 
     return () => {
       unsubProducts();
+      unsubAuth();
+      if (unsubUserDoc) unsubUserDoc();
       unsubOrders();
       unsubLogs();
     };
-  }, [setProducts, setOrders, setAdminLogs]);
+  }, [setProducts, setOrders, setAdminLogs, login, logout]);
 
   return null;
 }

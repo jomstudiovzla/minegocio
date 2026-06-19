@@ -30,8 +30,8 @@ function SearchResults() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 bg-ananas-green/10 rounded-xl flex items-center justify-center">
-            <Search size={20} className="text-ananas-green" />
+          <div className="w-10 h-10 bg-mi-blue/10 rounded-xl flex items-center justify-center">
+            <Search size={20} className="text-mi-blue" />
           </div>
           <div>
             <h1 className="text-3xl font-black text-gray-800">
@@ -56,8 +56,8 @@ function SearchResults() {
             onClick={() => setActiveCategory(null)}
             className={`px-4 py-2 rounded-full text-sm font-bold border transition-all ${
               activeCategory === null
-                ? 'bg-ananas-green text-white border-ananas-green shadow-md shadow-ananas-green/20'
-                : 'bg-white text-gray-600 border-gray-200 hover:border-ananas-green hover:text-ananas-green'
+                ? 'bg-mi-blue text-white border-mi-blue shadow-md shadow-mi-blue/20'
+                : 'bg-white text-gray-600 border-gray-200 hover:border-mi-blue hover:text-mi-blue'
             }`}
           >
             Todos ({allResults.length})
@@ -71,8 +71,8 @@ function SearchResults() {
                 onClick={() => setActiveCategory(cat === activeCategory ? null : cat)}
                 className={`px-4 py-2 rounded-full text-sm font-bold border transition-all ${
                   activeCategory === cat
-                    ? 'bg-ananas-green text-white border-ananas-green shadow-md shadow-ananas-green/20'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-ananas-green hover:text-ananas-green'
+                    ? 'bg-mi-blue text-white border-mi-blue shadow-md shadow-mi-blue/20'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-mi-blue hover:text-mi-blue'
                 }`}
               >
                 {label} ({count})
@@ -110,7 +110,7 @@ export default function SearchPage() {
   return (
     <Suspense fallback={
       <div className="p-12 text-center">
-        <div className="w-8 h-8 border-4 border-ananas-green border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <div className="w-8 h-8 border-4 border-mi-blue border-t-transparent rounded-full animate-spin mx-auto mb-4" />
         <p className="text-gray-500 font-medium">Buscando productos...</p>
       </div>
     }>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Panel Administrativo - Mi Negocio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#c0c7ce",
+                        "tertiary-fixed": "#dce3ea",
+                        "surface-container-low": "#f0f3ff",
+                        "tertiary-container": "#32393e",
+                        "inverse-surface": "#263143",
+                        "surface-tint": "#3f58b0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#9ba2a9",
+                        "surface-container": "#e7eeff",
+                        "on-primary-container": "#859dfa",
+                        "on-surface": "#111c2d",
+                        "success-green": "#16a34a",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#103088",
+                        "secondary": "#7a5900",
+                        "outline": "#757683",
+                        "surface-bright": "#f9f9ff",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#b6c4ff",
+                        "outline-variant": "#c5c5d4",
+                        "glass-border": "rgba(226, 232, 240, 0.8)",
+                        "primary": "#001b62",
+                        "on-tertiary-fixed-variant": "#41484d",
+                        "on-primary-fixed-variant": "#244097",
+                        "on-tertiary-fixed": "#151c21",
+                        "on-background": "#111c2d",
+                        "secondary-fixed-dim": "#fcbc11",
+                        "primary-fixed": "#dce1ff",
+                        "surface-container-highest": "#d8e3fb",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#6b4d00",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d8e3fb",
+                        "on-primary-fixed": "#001551",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "inverse-on-surface": "#ecf1ff",
+                        "secondary-container": "#fcbc11",
+                        "error-red": "#ba1a1a",
+                        "background": "#f9f9ff",
+                        "surface-container-high": "#dee8ff",
+                        "surface-ice": "#f9f9ff",
+                        "secondary-fixed": "#ffdea2",
+                        "tertiary": "#1d2429",
+                        "on-secondary-fixed-variant": "#5c4200",
+                        "on-surface-variant": "#444652",
+                        "surface": "#f9f9ff",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#cfdaf2",
+                        "on-secondary-fixed": "#261900"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "40px",
+                        "sm": "8px",
+                        "xxl": "64px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "lg": "24px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "code-sm": ["monospace"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "code-sm": ["13px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9f9ff;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav-shadow {
+            box-shadow: 0 4px 12px rgba(16, 48, 136, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 flex flex-col fixed left-0 top-0 z-40 bg-surface shadow-md border-r border-outline-variant">
+<div class="p-md flex flex-col h-full gap-base">
+<!-- Brand Section -->
+<div class="px-md py-lg flex items-center gap-sm">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary leading-none">Mi Negocio</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Admin Panel</p>
+</div>
+</div>
+<!-- Main Menu -->
+<nav class="flex-1 flex flex-col gap-xs px-sm">
+<!-- Dashboard Active -->
+<div class="bg-secondary-container text-on-secondary-container rounded-lg font-bold flex items-center gap-md px-md py-3 cursor-pointer active-nav-shadow transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-md px-md py-3 cursor-pointer transition-transform duration-200 hover:translate-x-1">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-md px-md py-3 cursor-pointer transition-transform duration-200 hover:translate-x-1">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-md text-label-md">Orders</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-md px-md py-3 cursor-pointer transition-transform duration-200 hover:translate-x-1">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Customers</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-md px-md py-3 cursor-pointer transition-transform duration-200 hover:translate-x-1">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-label-md text-label-md">Security</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-md px-md py-3 cursor-pointer transition-transform duration-200 hover:translate-x-1">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</div>
+</nav>
+<!-- Bottom Actions -->
+<div class="mt-auto px-sm border-t border-outline-variant pt-md flex flex-col gap-xs pb-md">
+<button class="w-full bg-primary text-on-primary py-3 px-md rounded-xl font-label-md flex items-center justify-center gap-sm shadow-md hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add_chart</span>
+                    New Report
+                </button>
+<div class="text-on-surface-variant hover:text-error hover:bg-error-container/20 rounded-lg flex items-center gap-md px-md py-3 cursor-pointer mt-md">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-30 bg-surface/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30">
+<div class="max-w-container-max mx-auto px-lg py-4 flex justify-between items-center">
+<div class="flex items-center gap-lg">
+<h2 class="font-headline-md text-headline-md font-bold text-primary">Dashboard de Gestión</h2>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-md focus:ring-2 focus:ring-primary focus:outline-none w-64 transition-all" placeholder="Buscar pedidos, productos..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-xs px-md py-2 bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-label-md text-label-md text-primary font-bold">850 CLP = $1.00</span>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-surface"></span>
+</button>
+<div class="flex items-center gap-sm pl-md border-l border-outline-variant">
+<img alt="Admin Avatar" class="w-10 h-10 rounded-full object-cover border-2 border-primary-fixed" data-alt="A professional portrait of a senior logistics manager in a modern corporate setting, smiling slightly with confidence. The lighting is bright and clean, reflecting a high-tech administrative office atmosphere. The background is softly blurred with hints of data screens and glass partitions, using a sophisticated palette of deep blues and whites to signify authority and modern efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATVVrw-VxuzUJEmJZZXzeMrHvtTI5_MuIF5Rfm74_dxSoUBpj03_gmkPvO5z-J-xBrUr5zSNcDiJVKux36S7bdtjZNMFEy4Fw0EXgpQDmOFEWgEWIpF9w_TqsrLuBefr3b-4dHNw7ER75d5PkciF-3cXMbElNumc7i0EDZShP1OpMz5nwEQgpwAYQA-cZuLAoQxbTirpDi2Mgz9nImUOI53KEyhq6MxTjxfi8V2Rcj_cYWim2nZ3YlNTl9QAMZfjNNJ3g0H-xdi4ZI"/>
+<div class="hidden sm:block">
+<p class="font-label-md text-label-md text-on-surface font-bold">Admin Central</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Operational Mode</p>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-lg max-w-container-max mx-auto w-full">
+<!-- Summary Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-lg">
+<div class="glass-card p-lg rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div class="p-2 bg-primary-container rounded-lg">
+<span class="material-symbols-outlined text-on-primary">trending_up</span>
+</div>
+<span class="text-success-green font-label-md text-label-md flex items-center gap-xs">
+                            +12.5% <span class="material-symbols-outlined text-sm">arrow_upward</span>
+</span>
+</div>
+<p class="text-on-surface-variant font-label-md text-label-md">Ventas Hoy</p>
+<h3 class="text-headline-md font-headline-md font-extrabold text-primary">$1,245,000</h3>
+</div>
+<div class="glass-card p-lg rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div class="p-2 bg-secondary-container rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container">shopping_cart</span>
+</div>
+<span class="text-success-green font-label-md text-label-md flex items-center gap-xs">
+                            +4% <span class="material-symbols-outlined text-sm">arrow_upward</span>
+</span>
+</div>
+<p class="text-on-surface-variant font-label-md text-label-md">Pedidos Pendientes</p>
+<h3 class="text-headline-md font-headline-md font-extrabold text-primary">156</h3>
+</div>
+<div class="glass-card p-lg rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div class="p-2 bg-surface-container-highest rounded-lg">
+<span class="material-symbols-outlined text-primary">inventory</span>
+</div>
+<span class="text-error font-label-md text-label-md flex items-center gap-xs">
+                            -2 <span class="material-symbols-outlined text-sm">arrow_downward</span>
+</span>
+</div>
+<p class="text-on-surface-variant font-label-md text-label-md">Stock Crítico</p>
+<h3 class="text-headline-md font-headline-md font-extrabold text-primary">24 SKUs</h3>
+</div>
+<div class="glass-card p-lg rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-md">
+<div class="p-2 bg-tertiary-fixed rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-fixed">group</span>
+</div>
+<span class="text-success-green font-label-md text-label-md flex items-center gap-xs">
+                            +89 <span class="material-symbols-outlined text-sm">person_add</span>
+</span>
+</div>
+<p class="text-on-surface-variant font-label-md text-label-md">Nuevos Clientes</p>
+<h3 class="text-headline-md font-headline-md font-extrabold text-primary">3,412</h3>
+</div>
+</div>
+<!-- Advanced Management Sections -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Real-time Orders (Main Action Area) -->
+<div class="lg:col-span-2 space-y-gutter">
+<section class="glass-card rounded-xl overflow-hidden shadow-sm">
+<div class="p-lg flex justify-between items-center border-b border-outline-variant/30">
+<div>
+<h4 class="font-headline-md text-headline-md font-bold text-primary">Monitoreo de Pedidos</h4>
+<p class="text-body-md font-body-md text-on-surface-variant">Trazabilidad en tiempo real</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-2 border border-outline-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors">Exportar</button>
+<button class="px-md py-2 bg-secondary text-on-secondary rounded-lg font-label-md text-label-md shadow-sm active:scale-95 transition-all">Priorizar</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low border-b border-outline-variant/50">
+<tr>
+<th class="px-lg py-3 font-label-md text-label-md text-primary">ID Pedido</th>
+<th class="px-lg py-3 font-label-md text-label-md text-primary">Cliente</th>
+<th class="px-lg py-3 font-label-md text-label-md text-primary">Total</th>
+<th class="px-lg py-3 font-label-md text-label-md text-primary">Estado</th>
+<th class="px-lg py-3 font-label-md text-label-md text-primary">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20">
+<tr class="hover:bg-surface-container transition-colors cursor-pointer group">
+<td class="px-lg py-4 font-label-md text-label-md text-primary font-bold">#ORD-2849</td>
+<td class="px-lg py-4">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold text-xs">MA</div>
+<span class="font-body-md text-body-md">María Alarcón</span>
+</div>
+</td>
+<td class="px-lg py-4 font-body-md text-body-md">$45,990</td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 bg-secondary-container/30 text-on-secondary-container rounded-full font-label-sm text-label-sm border border-secondary-container">En Preparación</span>
+</td>
+<td class="px-lg py-4 text-center">
+<button class="p-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors cursor-pointer">
+<td class="px-lg py-4 font-label-md text-label-md text-primary font-bold">#ORD-2848</td>
+<td class="px-lg py-4">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-bold text-xs">JS</div>
+<span class="font-body-md text-body-md">Juan Soto</span>
+</div>
+</td>
+<td class="px-lg py-4 font-body-md text-body-md">$128,500</td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 bg-success-green/10 text-success-green rounded-full font-label-sm text-label-sm border border-success-green/20">Despachado</span>
+</td>
+<td class="px-lg py-4 text-center">
+<button class="p-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Advanced Inventory / Bulk Upload -->
+<section class="glass-card p-lg rounded-xl shadow-sm border-2 border-dashed border-primary/20">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+<div>
+<h4 class="font-headline-md text-headline-md font-bold text-primary">Gestión de Inventario</h4>
+<p class="text-body-md font-body-md text-on-surface-variant">Carga masiva y actualización de catálogos</p>
+</div>
+<div class="flex gap-sm w-full md:w-auto">
+<label class="flex-1 md:flex-none flex items-center justify-center gap-sm px-lg py-3 bg-white border border-outline rounded-xl font-label-md text-label-md cursor-pointer hover:bg-surface-ice transition-all">
+<span class="material-symbols-outlined">upload_file</span>
+                                    Cargar CSV/Excel
+                                    <input class="hidden" type="file"/>
+</label>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-sm px-lg py-3 bg-primary text-on-primary rounded-xl font-label-md text-label-md shadow-md hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined">add</span>
+                                    Nuevo Producto
+                                </button>
+</div>
+</div>
+<div class="mt-lg grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant">
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-md text-label-md text-primary">Aceite Maravilla 1L</span>
+<span class="font-label-sm text-label-sm text-error font-bold">Bajo Stock</span>
+</div>
+<div class="w-full bg-outline-variant h-2 rounded-full overflow-hidden">
+<div class="bg-error h-full" style="width: 15%"></div>
+</div>
+<div class="flex justify-between mt-xs">
+<span class="text-xs text-on-surface-variant">Stock: 12 unidades</span>
+<span class="text-xs text-on-surface-variant">Min: 50</span>
+</div>
+</div>
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant">
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-md text-label-md text-primary">Leche Entera 1L</span>
+<span class="font-label-sm text-label-sm text-success-green font-bold">Saludable</span>
+</div>
+<div class="w-full bg-outline-variant h-2 rounded-full overflow-hidden">
+<div class="bg-success-green h-full" style="width: 85%"></div>
+</div>
+<div class="flex justify-between mt-xs">
+<span class="text-xs text-on-surface-variant">Stock: 450 unidades</span>
+<span class="text-xs text-on-surface-variant">Min: 100</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- CRM & Security Sidebar (Contextual) -->
+<div class="space-y-gutter">
+<!-- CRM Section -->
+<section class="glass-card p-lg rounded-xl shadow-sm">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-primary">stars</span>
+<h4 class="font-headline-md text-headline-md font-bold text-primary">CRM Premium</h4>
+</div>
+<div class="space-y-md">
+<div class="p-md bg-surface-container rounded-lg flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
+<img alt="Top Customer" class="w-full h-full object-cover" data-alt="A detailed portrait of a satisfied high-value customer, a young professional woman with a warm expression. The background is a bright, upscale kitchen environment, with soft natural light coming through a window. The style is clean, modern, and high-fidelity, using a color palette of soft whites and navy blue accents to reflect the brand's corporate yet approachable identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0T2UXIktDvaygx5jXAb4osOkq9HcP8H2MNn8APG71BIFAEvLNn91NfJmI7_D0ESJEm7HjW4VK1Q7sgZLrkPJejCeadksjKmWQcs1FO1Vh1iBMMihYdAsmJ04g3Ehxz5JgUnpu_AZpbtXpz2SHW4Xjylh7AOlTuQJwKR5r08_ljvA8npPa7u5O7ibRMnzQB3PfrFMnGjcuVFake_GZlTWd_mz-eVcPEAs5Nt7cPw_U1p4qmoGm2ESNASZY3cp-pz7QHi4dnqAkhJXx"/>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md font-bold text-primary">Isabel Rodríguez</p>
+<p class="text-xs text-on-surface-variant">Cliente VIP • 42 Compras</p>
+</div>
+<button class="p-2 hover:bg-white rounded-full transition-colors text-primary">
+<span class="material-symbols-outlined">mail</span>
+</button>
+</div>
+<div class="p-md bg-surface-container rounded-lg flex items-center gap-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
+<img alt="Top Customer" class="w-full h-full object-cover" data-alt="A portrait of a senior male executive, representing a loyal corporate client of the supermarket chain. He is dressed in business casual attire, with a background consisting of a modern, well-lit office interior. The lighting is crisp and clear, emphasizing professionalism and reliability. The visual theme integrates deep navy and amber tones to maintain brand consistency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrjQKwpGb_6P_CqC1FmxxZnL6tKWwv_0hYX1RmfTg4-aJRxT4GYi_DOyBO_Eft6vQahf6NyfPgOWVjwowVzqyh5sNnfhBCIoRcF6H7F8rTFVFotXGsdwdsncskACBrQG5VwVWZbKKl7tgoyDJSN2Vu7LXHzuFz8fYxyFKfVe6s3h2MW0YwOQPEjQZuZ8iut8k1nJwgmStOeXYNVx9BuJjlBtMZ_U0wqraVyEFLQ9PKAssg2-3ZdQ81eLtJT9nmb8xPetOdkuxHb-lC"/>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md font-bold text-primary">Carlos Méndez</p>
+<p class="text-xs text-on-surface-variant">Segmento: Empresas</p>
+</div>
+<button class="p-2 hover:bg-white rounded-full transition-colors text-primary">
+<span class="material-symbols-outlined">call</span>
+</button>
+</div>
+</div>
+<button class="w-full mt-lg py-3 text-primary font-label-md text-label-md border border-primary rounded-xl hover:bg-primary hover:text-white transition-all">Ver Todos los Clientes</button>
+</section>
+<!-- Security & Logs -->
+<section class="glass-card p-lg rounded-xl shadow-sm bg-inverse-surface text-white">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">security</span>
+<h4 class="font-label-md text-label-md font-bold uppercase tracking-wider">Trazabilidad &amp; Seguridad</h4>
+</div>
+<div class="space-y-sm">
+<div class="flex gap-md text-xs border-l-2 border-secondary-container pl-md py-1">
+<span class="text-secondary-fixed">14:42</span>
+<span class="text-surface-variant">Admin login desde IP 192.168.1.1</span>
+</div>
+<div class="flex gap-md text-xs border-l-2 border-outline-variant pl-md py-1">
+<span class="text-secondary-fixed">13:15</span>
+<span class="text-surface-variant">Cambio de precio SKU-841 (Aceite)</span>
+</div>
+<div class="flex gap-md text-xs border-l-2 border-outline-variant pl-md py-1">
+<span class="text-secondary-fixed">12:05</span>
+<span class="text-surface-variant">Backup automático completado</span>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-white/10">
+<div class="flex justify-between items-center">
+<span class="text-xs font-label-sm text-surface-variant">Uptime del Sistema</span>
+<span class="text-xs font-label-sm text-success-green">99.9% Online</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full py-xl mt-auto bg-inverse-surface border-t border-outline-variant/10">
+<div class="max-w-container-max mx-auto px-lg flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="flex flex-col items-center md:items-start">
+<h5 class="font-headline-sm text-headline-sm font-bold text-secondary-container">Mi Negocio Supermarket</h5>
+<p class="text-surface-variant/70 text-label-sm font-label-sm">© 2024 Mi Negocio Supermarket. All rights reserved.</p>
+</div>
+<div class="flex gap-lg">
+<a class="text-surface-variant/70 hover:text-white transition-all text-label-sm font-label-sm hover:underline" href="#">Privacy Policy</a>
+<a class="text-surface-variant/70 hover:text-white transition-all text-label-sm font-label-sm hover:underline" href="#">Terms of Service</a>
+<a class="text-surface-variant/70 hover:text-white transition-all text-label-sm font-label-sm hover:underline" href="#">Compliance</a>
+<a class="text-surface-variant/70 hover:text-white transition-all text-label-sm font-label-sm hover:underline" href="#">Investor Relations</a>
+</div>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interactions and effects
+        document.addEventListener('DOMContentLoaded', () => {
+            const navItems = document.querySelectorAll('nav > div');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Update active state logic
+                    navItems.forEach(i => {
+                        i.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'font-bold', 'active-nav-shadow');
+                        i.classList.add('text-on-surface-variant', 'hover:bg-surface-container-high');
+                    });
+                    item.classList.add('bg-secondary-container', 'text-on-secondary-container', 'font-bold', 'active-nav-shadow');
+                    item.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-high');
+                });
+            });
+
+            // Pulse effect for order monitoring status
+            setInterval(() => {
+                const statusBadges = document.querySelectorAll('.bg-secondary-container\\/30');
+                statusBadges.forEach(badge => {
+                    badge.classList.toggle('opacity-70');
+                });
+            }, 1000);
+        });
+    </script>
+</body></html>

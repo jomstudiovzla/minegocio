@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mi Negocio - Categorías y Compra</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c5c5d4; border-radius: 10px; }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        .cart-open { animation: slideInRight 0.3s ease-out forwards; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#c0c7ce",
+                      "tertiary-fixed": "#dce3ea",
+                      "surface-container-low": "#f0f3ff",
+                      "tertiary-container": "#32393e",
+                      "inverse-surface": "#263143",
+                      "surface-tint": "#3f58b0",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-container": "#9ba2a9",
+                      "surface-container": "#e7eeff",
+                      "on-primary-container": "#859dfa",
+                      "on-surface": "#111c2d",
+                      "success-green": "#16a34a",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#103088",
+                      "secondary": "#7a5900",
+                      "outline": "#757683",
+                      "surface-bright": "#f9f9ff",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "inverse-primary": "#b6c4ff",
+                      "outline-variant": "#c5c5d4",
+                      "glass-border": "rgba(226, 232, 240, 0.8)",
+                      "primary": "#001b62",
+                      "on-tertiary-fixed-variant": "#41484d",
+                      "on-primary-fixed-variant": "#244097",
+                      "on-tertiary-fixed": "#151c21",
+                      "on-background": "#111c2d",
+                      "secondary-fixed-dim": "#fcbc11",
+                      "primary-fixed": "#dce1ff",
+                      "surface-container-highest": "#d8e3fb",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#6b4d00",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#d8e3fb",
+                      "on-primary-fixed": "#001551",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "inverse-on-surface": "#ecf1ff",
+                      "secondary-container": "#fcbc11",
+                      "error-red": "#ba1a1a",
+                      "background": "#f9f9ff",
+                      "surface-container-high": "#dee8ff",
+                      "surface-ice": "#f9f9ff",
+                      "secondary-fixed": "#ffdea2",
+                      "tertiary": "#1d2429",
+                      "on-secondary-fixed-variant": "#5c4200",
+                      "on-surface-variant": "#444652",
+                      "surface": "#f9f9ff",
+                      "on-error-container": "#93000a",
+                      "surface-dim": "#cfdaf2",
+                      "on-secondary-fixed": "#261900"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "40px",
+                      "sm": "8px",
+                      "xxl": "64px",
+                      "xs": "4px",
+                      "md": "16px",
+                      "gutter": "24px",
+                      "lg": "24px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"]
+              },
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-lg py-md max-w-container-max mx-auto shadow-sm bg-surface">
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<h1 class="font-headline-md text-headline-md font-extrabold text-primary">Mi Negocio</h1>
+</div>
+</div>
+<nav class="hidden md:flex gap-lg items-center">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Market</a>
+<a class="font-label-md text-label-md text-primary font-bold border-b-2 border-primary pb-xs" href="#">Categories</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">My Orders</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Profile</a>
+</nav>
+<div class="flex items-center gap-md">
+<div class="relative hidden sm:block">
+<input class="bg-surface-container-low border-none rounded-full px-lg py-sm text-label-md w-64 focus:ring-2 focus:ring-primary" placeholder="Buscar productos..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-outline">search</span>
+</div>
+<button class="relative p-sm hover:bg-surface-container-high rounded-full transition-all" onclick="toggleCart()">
+<span class="material-symbols-outlined text-on-surface" data-icon="shopping_cart">shopping_cart</span>
+<span class="absolute top-0 right-0 bg-secondary text-on-secondary text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
+</button>
+<button class="p-sm hover:bg-surface-container-high rounded-full transition-all">
+<span class="material-symbols-outlined text-on-surface" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row gap-lg">
+<!-- Filters Sidebar (Hidden on Mobile) -->
+<aside class="hidden md:block w-64 flex-shrink-0">
+<div class="glass-card rounded-xl p-md sticky top-32">
+<h2 class="font-headline-md text-headline-md text-primary mb-md">Filtros</h2>
+<div class="space-y-lg">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface mb-sm">Categorías</h3>
+<div class="space-y-xs">
+<label class="flex items-center gap-sm cursor-pointer hover:text-primary transition-colors group">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-md text-body-md">Frutas y Verduras</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer hover:text-primary transition-colors">
+<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-md text-body-md">Lácteos y Huevos</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer hover:text-primary transition-colors">
+<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-md text-body-md">Panadería</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer hover:text-primary transition-colors">
+<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-md text-body-md">Carnes y Aves</span>
+</label>
+</div>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface mb-sm">Precio</h3>
+<input class="w-full accent-primary" type="range"/>
+<div class="flex justify-between text-label-sm text-outline mt-xs">
+<span>$0</span>
+<span>$10.000+</span>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md py-sm rounded-lg hover:brightness-110 transition-all">
+                        Aplicar Filtros
+                    </button>
+</div>
+</div>
+</aside>
+<!-- Product Grid Content -->
+<section class="flex-grow">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-lg gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Frutas y Verduras Frescas</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Productos seleccionados del día</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-high px-md py-sm rounded-lg flex items-center gap-xs font-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">sort</span>
+                        Ordenar por
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Product Card 1 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-quality studio photograph of various fresh green vegetables including broccoli, kale, and asparagus arranged artistically on a white surface. The lighting is bright and airy, capturing the crisp textures and vibrant colors. The overall aesthetic is clean and modern, following a light-mode UI style with soft shadows and a professional corporate feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQuJc4RQw1zzAVLL0PTCqPBLlVxcSNQElGgBiGDJ3dOQ_dQS6yjWXTiRz2B15YQDgRtsLdKJE4CfHRTDk55hRA-kVm8R8iYSvYKxmruRp1tH6P27zZnGFPwUqvXFzmr2YpatQ3z0DvG7ZPoWZi0MN5Y-iy8-uRQB70_ZGtP35cC9qtbfFkIcuuoJ9r77qN5wgDokWG8ZmraPN1te9G478QzHfDjm9noaNdAFl27LttqUeSWqLyM5YsYpKkNtMIAEhU_BU8zXJsTqeH"/>
+<div class="absolute top-sm right-sm bg-secondary text-on-secondary px-sm py-xs rounded-full font-label-sm shadow-sm">
+                            -20%
+                        </div>
+</div>
+<div class="p-md">
+<span class="text-label-sm text-outline uppercase tracking-wider">Orgánico</span>
+<h3 class="font-headline-md text-[18px] text-on-surface mt-xs">Pack Mix Vegetales</h3>
+<div class="flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm text-on-surface-variant">4.8 (120)</span>
+</div>
+<div class="mt-md flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-label-sm text-outline line-through">$4.500</span>
+<span class="text-headline-md text-primary font-bold">$3.600</span>
+</div>
+<button class="bg-secondary-container text-on-secondary-container p-sm rounded-lg hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Macro close-up shot of vibrant red strawberries and blueberries in a wooden bowl, glistening with water droplets to emphasize freshness. The background is a soft, out-of-focus light gray, creating a sense of professional food photography. The color palette is dominated by rich reds and deep blues against a bright, clean environment, perfectly matching a high-end grocery app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEyArAy4pz0oeWV1i0hh1PZaQIKu_5YkkLUHy4Uva_uu4seDQ40XZqegjGb6ABxGep5p-4H8RZnNrPscCxaKi3d3mWezWKb-vnTtFRAw_lKn-U-Tu039yXRvitFH0vxqC3CyiN7rEM0nGzbAziCl6CMNdqPSR2yd62lTWHAAAM7oFtauH7DYeJXNbbcqJQU1K4hX08JyPZrSzVwEWPYnJBNIsKWQRiJqa1_YHfDBGfVUAja40r1nMK0lVBzyRKNk3O-TqKp-qdresk"/>
+</div>
+<div class="p-md">
+<span class="text-label-sm text-outline uppercase tracking-wider">Fresco</span>
+<h3 class="font-headline-md text-[18px] text-on-surface mt-xs">Frutillas Premium 500g</h3>
+<div class="flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm text-on-surface-variant">4.9 (85)</span>
+</div>
+<div class="mt-md flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-headline-md text-primary font-bold">$2.990</span>
+</div>
+<button class="bg-secondary-container text-on-secondary-container p-sm rounded-lg hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional product shot of glass milk bottles and blocks of artisanal cheese arranged on a marble kitchen counter. The scene is illuminated by soft, natural morning light, creating a serene and wholesome atmosphere. The white and cream tones of the dairy products contrast beautifully with subtle blue accents in the background, reinforcing a high-tech yet approachable corporate modern brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuCQj8UGbrR7QSD9UwylRl3qFNZzWsRxaShD8mzPpfk9dYac0TOUBhUJe4EDZFW5WVeaY9DF915T7o9iHyvY_ISPPkdUmd28x_MmOdFv5F0hN1hmGidXNSJG6JEue9wpf1Mf7iSipjwUlosaR2efTJ8LJmSbdodVPcQkbAZoy6D5nErTI6M2yO0jmlRy2WadV5zghI8XfbdWTMgaw1hZLfokiCyJ_M-R7wSQxslj-LA5ZCi_jR1Yw8cx6rdfrjg5kDojnD-b-XTKiL"/>
+</div>
+<div class="p-md">
+<span class="text-label-sm text-outline uppercase tracking-wider">Artesanal</span>
+<h3 class="font-headline-md text-[18px] text-on-surface mt-xs">Queso Mantecoso 250g</h3>
+<div class="flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm text-on-surface-variant">4.7 (54)</span>
+</div>
+<div class="mt-md flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-headline-md text-primary font-bold">$4.200</span>
+</div>
+<button class="bg-secondary-container text-on-secondary-container p-sm rounded-lg hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A brightly lit close-up of a carton of eggs and a bottle of milk sitting on a light blue wooden surface. The composition is minimalist and focuses on the high-quality, farm-fresh nature of the dairy staples. The lighting is crisp and clear, emphasizing a clean and reliable shopping experience within a modern digital interface using navy and amber visual tokens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu6v965mYyp_6q6gjHBMN-VRS5WApeF8X7BjSia0WagnfclMAwV47DM_nhb85omBk_Khmpw01PbCxqjUONpx8vzosJ_WQYrBbvV20S9CJABcsDIKnnewU1NbA67fg00_BCK5ANFrAB_t9Qf6Hc-patTVR4Sp5fVixMAJ7zkv38uRJcl-vhT3FI5CciCKb9saUiUzQWaL5ydoSxK8At3Ujklv2T65Z5u-Nqlps9xeH8FE24ro5q1AatT1r2wauMEhpzS5scZeXN6X2h"/>
+</div>
+<div class="p-md">
+<span class="text-label-sm text-outline uppercase tracking-wider">Básico</span>
+<h3 class="font-headline-md text-[18px] text-on-surface mt-xs">Leche Entera 1L</h3>
+<div class="flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm text-on-surface-variant">5.0 (210)</span>
+</div>
+<div class="mt-md flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-headline-md text-primary font-bold">$1.150</span>
+</div>
+<button class="bg-secondary-container text-on-secondary-container p-sm rounded-lg hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A dynamic shot of a grocery basket overflowing with fresh green apples, citrus fruits, and leafy vegetables. The shot uses a slightly angled perspective to create depth, with a soft backdrop blur that highlights the textures of the produce. The scene is bright and professional, evoking a sense of abundance and health in a sophisticated light-mode UI environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0jKOWRghQk3FPvpoPU8YQ2EVL0FSOmrZX52_ugfPyfdjZnrXljtB0la0Q8YG0-QfXmvin54EyyaXmPQmYoIcsqwZPJEEHzSWRk86I5OZzpa9E2FlkosQbPA8aO6O-1ToAcijv7LAXFQYUD91O_rCNpYxJ44kHzy9fFwSxBqxgG55rL_Kka7Cnk78fjfsPArNhBZTRZhgC3A29Wwpxxh6xvkAy0wBMRtoNJ7NAx56N0Ebkm5o9SlJbT-tUbroxplPhEFB3K0lCuFJh"/>
+</div>
+<div class="p-md">
+<span class="text-label-sm text-outline uppercase tracking-wider">Temporada</span>
+<h3 class="font-headline-md text-[18px] text-on-surface mt-xs">Canasta Frutas Estación</h3>
+<div class="flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm text-on-surface-variant">4.6 (42)</span>
+</div>
+<div class="mt-md flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-headline-md text-primary font-bold">$12.900</span>
+</div>
+<button class="bg-secondary-container text-on-secondary-container p-sm rounded-lg hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- More cards can be added here following same pattern -->
+</div>
+</section>
+</main>
+<!-- NavigationDrawer (Off-canvas Cart) -->
+<div class="hidden fixed inset-0 z-[60]" id="cartDrawer">
+<!-- Overlay -->
+<div class="absolute inset-0 bg-primary/20 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
+<!-- Drawer Panel -->
+<aside class="absolute right-0 top-0 h-full w-full sm:w-96 bg-surface-container-highest flex flex-col shadow-2xl cart-open">
+<div class="p-lg flex items-center justify-between border-b border-outline-variant/30">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Mi Carrito</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">3 productos seleccionados</p>
+</div>
+<button class="p-sm hover:bg-surface-container-low rounded-full" onclick="toggleCart()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-grow overflow-y-auto custom-scrollbar p-md space-y-md">
+<!-- Cart Item 1 -->
+<div class="flex gap-md bg-surface-container-lowest p-sm rounded-lg border border-outline-variant/20 shadow-sm">
+<img class="w-20 h-20 object-cover rounded-md" data-alt="A close-up of fresh strawberries in the cart." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3a0ueugmSGXbUoYjAbCrqYHpcI4jvsUx_lZvaWgPsfPp1sWU7Z3BjEJi-NR-Hf1xAOHUDUzlMN79VbGL0HRpWlTj-4sQjPRmq7zffQ2TZBJEj2r_2Va982fH4pz3QMr9kYWeRmbR8_o4WlOCfcz6tXZnPSBVIy6lpqTcDkZr4mYz1pwh6D-fzXtyNr0pRyVyxdkkV4w96_A54wo8B3gHBLP33opwPyQ66jKjwbyot_2u13ZF8mZUG8s6wFxEOkQq3nGxuJj-VJwLP"/>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md text-label-md text-on-surface">Frutillas Premium</h4>
+<button class="text-error hover:text-error/80"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+<p class="text-label-sm text-outline">500g</p>
+<div class="flex justify-between items-center mt-sm">
+<div class="flex items-center gap-sm bg-surface-container-low rounded-lg px-xs py-xs">
+<button class="w-6 h-6 flex items-center justify-center hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[16px]">remove</span></button>
+<span class="font-label-md text-on-surface">1</span>
+<button class="w-6 h-6 flex items-center justify-center hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[16px]">add</span></button>
+</div>
+<span class="font-headline-md text-[16px] text-primary">$2.990</span>
+</div>
+</div>
+</div>
+<!-- Cart Item 2 -->
+<div class="flex gap-md bg-surface-container-lowest p-sm rounded-lg border border-outline-variant/20 shadow-sm">
+<img class="w-20 h-20 object-cover rounded-md" data-alt="A bottle of fresh milk in the shopping cart." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCODgqvjydGcWlo2ZVuXNSGWQ2cnUu6kp5nC9LEKKjQrhFB3pViDPxCVgkxEgE6P_t_jr9AzkCeODjwqIZDKNHggCEAidM6uL-lx54PS8t8TKyvLnrnivcLKVN4yMvtKvnTNeGCAXfQUIMgDo6RieVp3t_ypwfs0JUCEtZXddqftVEn7WORnd8HKjocsdTJvHSMPjL8w2_bmAUvBYAZkEf77dImAumnyOmd2z_I5MBHj3B7M2NYzurAeFRNRrsOXo0TCr5QFolV8ih8"/>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md text-label-md text-on-surface">Leche Entera 1L</h4>
+<button class="text-error hover:text-error/80"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+<p class="text-label-sm text-outline">Colun</p>
+<div class="flex justify-between items-center mt-sm">
+<div class="flex items-center gap-sm bg-surface-container-low rounded-lg px-xs py-xs">
+<button class="w-6 h-6 flex items-center justify-center hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[16px]">remove</span></button>
+<span class="font-label-md text-on-surface">2</span>
+<button class="w-6 h-6 flex items-center justify-center hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[16px]">add</span></button>
+</div>
+<span class="font-headline-md text-[16px] text-primary">$2.300</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Checkout -->
+<div class="p-lg bg-surface-container-lowest border-t border-outline-variant/30 space-y-md">
+<div class="space-y-sm">
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Subtotal</span>
+<span class="text-on-surface">$5.290</span>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Envío</span>
+<span class="text-success-green">Gratis</span>
+</div>
+<div class="flex justify-between font-headline-md text-primary pt-sm border-t border-dashed border-outline-variant">
+<span>Total</span>
+<span>$5.290</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-sm pt-sm">
+<button class="bg-secondary text-on-secondary font-label-md py-md rounded-xl hover:brightness-110 flex items-center justify-center gap-xs shadow-sm transition-all">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+                        Pago Rápido
+                    </button>
+<button class="bg-primary text-on-primary font-label-md py-md rounded-xl hover:brightness-110 transition-all shadow-md">
+                        Finalizar Compra
+                    </button>
+</div>
+<p class="text-[10px] text-center text-outline uppercase tracking-widest mt-md">Transacción Segura SSL de Mi Negocio</p>
+</div>
+</aside>
+</div>
+<!-- Micro-interaction Scripts -->
+<script>
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                drawer.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Add subtle hover effect for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = 'rgba(16, 48, 136, 0.4)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(226, 232, 240, 0.8)';
+            });
+        });
+    </script>
+</body></html>

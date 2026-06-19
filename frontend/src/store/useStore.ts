@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { products as initialProducts } from '@/data/mockDb';
 import { ProductEntity as Product } from '@/core/domain/entities/Product';
 import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
 import { db } from '@/lib/firebase';
@@ -143,7 +142,7 @@ export const useStore = create<AppState>()(
       cart: [],
       user: null,
       zone: null,
-      products: initialProducts as Product[],
+      products: [], // Cargados en tiempo real desde Firestore vía FirebaseSync
       orders: [],
       adminLogs: [],
       userNotifications: [],
@@ -437,7 +436,7 @@ export const useStore = create<AppState>()(
       }
     }),
     {
-      name: 'ananas-storage',
+      name: 'mi-negocio-storage',
     }
   )
 );

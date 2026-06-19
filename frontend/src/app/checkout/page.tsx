@@ -70,7 +70,7 @@ export default function CheckoutPage() {
       <div className="max-w-xl mx-auto py-20 px-4 text-center">
         <ShoppingBag size={64} className="text-gray-300 mx-auto mb-6" />
         <h2 className="text-2xl font-bold text-gray-500 mb-4">Tu carrito está vacío</h2>
-        <Link href="/" className="bg-ananas-green text-white px-8 py-3 rounded-full font-bold hover:bg-ananas-dark transition inline-block">
+        <Link href="/" className="bg-mi-blue text-white px-8 py-3 rounded-full font-bold hover:bg-mi-blue-mid transition inline-block">
           Volver al Inicio
         </Link>
       </div>
@@ -142,7 +142,7 @@ export default function CheckoutPage() {
 
     // Simulate API call to process checkout
     setTimeout(() => {
-      const generatedId = `ANAN-${Math.floor(100000 + Math.random() * 900000)}`;
+      const generatedId = `MINE-${Math.floor(100000 + Math.random() * 900000)}`;
       setOrderId(generatedId);
       
       // Save order
@@ -192,7 +192,7 @@ export default function CheckoutPage() {
           animate={{ opacity: 1, scale: 1 }}
           className="bg-white rounded-3xl border border-gray-100 shadow-xl p-8 md:p-12 text-center"
         >
-          <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 text-ananas-green">
+          <div className="w-20 h-20 bg-mi-blue-low rounded-full flex items-center justify-center mx-auto mb-6 text-mi-blue">
             <CheckCircle2 size={48} />
           </div>
           <h1 className="text-3xl font-black text-gray-800 mb-2">
@@ -231,7 +231,7 @@ export default function CheckoutPage() {
             </div>
             {summary.discount > 0 && (
               <div className="flex justify-between border-b border-gray-200 pb-3 text-red-500 font-semibold">
-                <span>Descuento Club Ananas:</span>
+                <span>Descuento Club Mi Negocio:</span>
                 <span>-{convertAndFormatPrice(summary.discount, currency, rates)}</span>
               </div>
             )}
@@ -241,7 +241,7 @@ export default function CheckoutPage() {
             </div>
             <div className="flex justify-between pt-1">
               <span className="text-gray-800 font-bold text-lg">Total Pagado:</span>
-              <span className="font-black text-ananas-green text-xl">{convertAndFormatPrice(summary.total, currency, rates)}</span>
+              <span className="font-black text-mi-blue text-xl">{convertAndFormatPrice(summary.total, currency, rates)}</span>
             </div>
           </div>
 
@@ -251,7 +251,7 @@ export default function CheckoutPage() {
             </p>
             <Link 
               href="/"
-              className="bg-ananas-green text-white px-8 py-4 rounded-xl font-bold hover:bg-ananas-dark transition shadow-lg shadow-ananas-green/20 block text-center"
+              className="bg-mi-blue text-white px-8 py-4 rounded-xl font-bold hover:bg-mi-blue-mid transition shadow-lg shadow-mi-blue/20 block text-center"
             >
               Seguir comprando
             </Link>
@@ -264,7 +264,7 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-[1600px] w-[96%] mx-auto py-12 px-4">
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/cart" className="text-gray-500 hover:text-ananas-green transition p-2 bg-white rounded-full border border-gray-200 shadow-sm">
+        <Link href="/cart" className="text-gray-500 hover:text-mi-blue transition p-2 bg-white rounded-full border border-gray-200 shadow-sm">
           <ArrowLeft size={20} />
         </Link>
         <h1 className="text-3xl font-black text-gray-800">Finalizar Compra</h1>
@@ -276,7 +276,7 @@ export default function CheckoutPage() {
           {/* Shipping Methods */}
           <div className="bg-white rounded-3xl border border-gray-100 p-8 shadow-sm">
             <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-              <Truck size={22} className="text-ananas-green" /> 1. Método de Envío
+              <Truck size={22} className="text-mi-blue" /> 1. Método de Envío
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
@@ -284,11 +284,11 @@ export default function CheckoutPage() {
                 onClick={() => setShippingMethod('delivery')}
                 className={`p-6 rounded-2xl border text-left flex gap-4 items-center transition-all ${
                   shippingMethod === 'delivery' 
-                    ? 'border-ananas-green bg-green-50/50 shadow-md shadow-ananas-green/5' 
+                    ? 'border-mi-blue bg-mi-blue-ice shadow-md shadow-mi-blue/5' 
                     : 'border-gray-200 hover:border-gray-300 bg-white'
                 }`}
               >
-                <div className={`p-3 rounded-xl ${shippingMethod === 'delivery' ? 'bg-ananas-green text-white' : 'bg-gray-100 text-gray-500'}`}>
+                <div className={`p-3 rounded-xl ${shippingMethod === 'delivery' ? 'bg-mi-blue text-white' : 'bg-gray-100 text-gray-500'}`}>
                   <Truck size={24} />
                 </div>
                 <div>
@@ -302,11 +302,11 @@ export default function CheckoutPage() {
                 onClick={() => setShippingMethod('pickup')}
                 className={`p-6 rounded-2xl border text-left flex gap-4 items-center transition-all ${
                   shippingMethod === 'pickup' 
-                    ? 'border-ananas-green bg-green-50/50 shadow-md shadow-ananas-green/5' 
+                    ? 'border-mi-blue bg-mi-blue-ice shadow-md shadow-mi-blue/5' 
                     : 'border-gray-200 hover:border-gray-300 bg-white'
                 }`}
               >
-                <div className={`p-3 rounded-xl ${shippingMethod === 'pickup' ? 'bg-ananas-green text-white' : 'bg-gray-100 text-gray-500'}`}>
+                <div className={`p-3 rounded-xl ${shippingMethod === 'pickup' ? 'bg-mi-blue text-white' : 'bg-gray-100 text-gray-500'}`}>
                   <Store size={24} />
                 </div>
                 <div>
@@ -320,7 +320,7 @@ export default function CheckoutPage() {
           {/* Delivery & Personal Details */}
           <div className="bg-white rounded-3xl border border-gray-100 p-8 shadow-sm space-y-6">
             <h2 className="text-xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-              <MapPin size={22} className="text-ananas-green" /> 2. Datos del Cliente y Entrega
+              <MapPin size={22} className="text-mi-blue" /> 2. Datos del Cliente y Entrega
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -333,7 +333,7 @@ export default function CheckoutPage() {
                   value={form.name}
                   onChange={handleInputChange}
                   placeholder="Ej. Juan Pérez"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-ananas-green focus:bg-white transition"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-mi-blue focus:bg-white transition"
                 />
               </div>
 
@@ -346,7 +346,7 @@ export default function CheckoutPage() {
                   value={form.cedula}
                   onChange={handleInputChange}
                   placeholder="Ej. V-12345678"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-ananas-green focus:bg-white transition"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-mi-blue focus:bg-white transition"
                 />
               </div>
 
@@ -359,7 +359,7 @@ export default function CheckoutPage() {
                   value={form.phone}
                   onChange={handleInputChange}
                   placeholder="Ej. 04121234567"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-ananas-green focus:bg-white transition"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-mi-blue focus:bg-white transition"
                 />
               </div>
             </div>
@@ -374,7 +374,7 @@ export default function CheckoutPage() {
                   onChange={handleInputChange}
                   placeholder="Calle, Edificio/Casa, Apto. (La zona está fijada a San Luis, El Cafetal)"
                   rows={3}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 font-medium focus:outline-none focus:border-ananas-green focus:bg-white transition resize-none"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 font-medium focus:outline-none focus:border-mi-blue focus:bg-white transition resize-none"
                 />
                 <div className="flex items-center gap-2 text-xs text-gray-400 mt-2">
                   <MapPin size={14} /> 
@@ -394,7 +394,7 @@ export default function CheckoutPage() {
                   required
                   value={form.deliveryDate}
                   onChange={handleInputChange}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-ananas-green focus:bg-white transition"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-mi-blue focus:bg-white transition"
                 />
               </div>
 
@@ -406,7 +406,7 @@ export default function CheckoutPage() {
                   name="deliveryTime"
                   value={form.deliveryTime}
                   onChange={handleInputChange}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-ananas-green focus:bg-white transition"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-mi-blue focus:bg-white transition"
                 >
                   <option value="09:00 - 12:00">Mañana (09:00 AM - 12:00 PM)</option>
                   <option value="12:00 - 15:00">Mediodía (12:00 PM - 03:00 PM)</option>
@@ -419,7 +419,7 @@ export default function CheckoutPage() {
           {/* Payment Methods */}
           <div className="bg-white rounded-3xl border border-gray-100 p-8 shadow-sm space-y-6">
             <h2 className="text-xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-              <CreditCard size={22} className="text-ananas-green" /> 3. Método de Pago
+              <CreditCard size={22} className="text-mi-blue" /> 3. Método de Pago
             </h2>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -427,7 +427,7 @@ export default function CheckoutPage() {
                 type="button"
                 onClick={() => setPaymentMethod('pagomovil')}
                 className={`p-4 rounded-xl border text-center transition-all ${
-                  paymentMethod === 'pagomovil' ? 'border-ananas-green bg-green-50/50 font-bold' : 'border-gray-200'
+                  paymentMethod === 'pagomovil' ? 'border-mi-blue bg-mi-blue-ice font-bold' : 'border-gray-200'
                 }`}
               >
                 📱 Pago Móvil
@@ -436,7 +436,7 @@ export default function CheckoutPage() {
                 type="button"
                 onClick={() => setPaymentMethod('zelle')}
                 className={`p-4 rounded-xl border text-center transition-all ${
-                  paymentMethod === 'zelle' ? 'border-ananas-green bg-green-50/50 font-bold' : 'border-gray-200'
+                  paymentMethod === 'zelle' ? 'border-mi-blue bg-mi-blue-ice font-bold' : 'border-gray-200'
                 }`}
               >
                 🟣 Zelle
@@ -445,7 +445,7 @@ export default function CheckoutPage() {
                 type="button"
                 onClick={() => setPaymentMethod('transferencia')}
                 className={`p-4 rounded-xl border text-center transition-all ${
-                  paymentMethod === 'transferencia' ? 'border-ananas-green bg-green-50/50 font-bold' : 'border-gray-200'
+                  paymentMethod === 'transferencia' ? 'border-mi-blue bg-mi-blue-ice font-bold' : 'border-gray-200'
                 }`}
               >
                 🏦 Transferencia
@@ -454,7 +454,7 @@ export default function CheckoutPage() {
                 type="button"
                 onClick={() => setPaymentMethod('creditcard')}
                 className={`p-4 rounded-xl border text-center transition-all ${
-                  paymentMethod === 'creditcard' ? 'border-ananas-green bg-green-50/50 font-bold' : 'border-gray-200'
+                  paymentMethod === 'creditcard' ? 'border-mi-blue bg-mi-blue-ice font-bold' : 'border-gray-200'
                 }`}
               >
                 💳 Tarjeta Crédito
@@ -463,7 +463,7 @@ export default function CheckoutPage() {
                 type="button"
                 onClick={() => setPaymentMethod('paypal')}
                 className={`p-4 rounded-xl border text-center transition-all ${
-                  paymentMethod === 'paypal' ? 'border-ananas-green bg-green-50/50 font-bold' : 'border-gray-200'
+                  paymentMethod === 'paypal' ? 'border-mi-blue bg-mi-blue-ice font-bold' : 'border-gray-200'
                 }`}
               >
                 🔵 PayPal
@@ -472,7 +472,7 @@ export default function CheckoutPage() {
                 type="button"
                 onClick={() => setPaymentMethod('binance')}
                 className={`p-4 rounded-xl border text-center transition-all ${
-                  paymentMethod === 'binance' ? 'border-ananas-green bg-green-50/50 font-bold' : 'border-gray-200'
+                  paymentMethod === 'binance' ? 'border-mi-blue bg-mi-blue-ice font-bold' : 'border-gray-200'
                 }`}
               >
                 🟡 Binance Pay
@@ -481,7 +481,7 @@ export default function CheckoutPage() {
                 type="button"
                 onClick={() => setPaymentMethod('cash')}
                 className={`p-4 rounded-xl border text-center transition-all col-span-2 ${
-                  paymentMethod === 'cash' ? 'border-ananas-green bg-green-50/50 font-bold' : 'border-gray-200'
+                  paymentMethod === 'cash' ? 'border-mi-blue bg-mi-blue-ice font-bold' : 'border-gray-200'
                 }`}
               >
                 💵 Efectivo / Cash
@@ -512,7 +512,7 @@ export default function CheckoutPage() {
                       value={form.reference}
                       onChange={handleInputChange}
                       placeholder="Ej. 9812"
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-ananas-green transition"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-mi-blue transition"
                     />
                   </div>
                 </div>
@@ -522,8 +522,8 @@ export default function CheckoutPage() {
                 <div className="space-y-4">
                   <div className="text-sm text-gray-600 font-medium">
                     <p className="font-bold text-gray-800 mb-2">Instrucciones de Zelle:</p>
-                    <p>Correo: <strong className="text-gray-800">pagos@ananas.com</strong></p>
-                    <p>Titular: <strong className="text-gray-800">Ananas Frutería C.A.</strong></p>
+                    <p>Correo: <strong className="text-gray-800">pagos@minegocio.com</strong></p>
+                    <p>Titular: <strong className="text-gray-800">Mi Negocio, C.A.</strong></p>
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-gray-500 mb-2">Correo de la Cuenta Zelle Emisora</label>
@@ -534,7 +534,7 @@ export default function CheckoutPage() {
                       value={form.zellePayer}
                       onChange={handleInputChange}
                       placeholder="Ej. pagador@ejemplo.com"
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-ananas-green transition"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-mi-blue transition"
                     />
                   </div>
                 </div>
@@ -546,7 +546,7 @@ export default function CheckoutPage() {
                     <p className="font-bold text-gray-800 mb-2 border-b pb-2">Instrucciones de Transferencia Bancaria:</p>
                     <p>Banco: <strong className="text-gray-800">Banco Mercantil (0105)</strong></p>
                     <p>Cuenta: <strong className="text-gray-800">0105-0012-34-5678901234</strong></p>
-                    <p>Beneficiario: <strong className="text-gray-800">Ananas Frutería C.A.</strong></p>
+                    <p>Beneficiario: <strong className="text-gray-800">Mi Negocio, C.A.</strong></p>
                     <p>RIF: <strong className="text-gray-800">J-12345678-9</strong></p>
                     <div className="mt-4 bg-green-50 p-3.5 rounded-xl border border-green-100 flex justify-between items-center text-green-800 text-sm font-bold">
                       <span>Monto exacto a pagar:</span>
@@ -563,7 +563,7 @@ export default function CheckoutPage() {
                       value={form.reference}
                       onChange={handleInputChange}
                       placeholder="Ej. 104829"
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-ananas-green transition"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-mi-blue transition"
                     />
                   </div>
                 </div>
@@ -572,9 +572,9 @@ export default function CheckoutPage() {
               {paymentMethod === 'creditcard' && (
                 <div className="space-y-4">
                   <p className="font-bold text-gray-800 text-sm">Pago con Tarjeta de Crédito (Adaptador Stripe):</p>
-                  <p className="text-xs text-ananas-green bg-green-50 p-3 rounded-lg font-medium border border-green-100 flex gap-2 items-start mt-2">
+                  <p className="text-xs text-mi-blue bg-blue-50 p-3 rounded-lg font-medium border border-blue-100 flex gap-2 items-start mt-2">
                     <ShieldCheck size={16} className="shrink-0 mt-0.5" />
-                    Tus pagos están encriptados bajo estrictos protocolos de seguridad internacionales (PCI Compliance). Ananas Frutería no almacena los datos de tu tarjeta.
+                    Tus pagos están encriptados bajo estrictos protocolos de seguridad internacionales (PCI Compliance). Mi Negocio no almacena los datos de tu tarjeta.
                   </p>
                   <div className="grid grid-cols-1 gap-4">
                     <div>
@@ -586,7 +586,7 @@ export default function CheckoutPage() {
                         value={form.cardNumber}
                         onChange={handleInputChange}
                         placeholder="4242 4242 4242 4242"
-                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-ananas-green transition"
+                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-mi-blue transition"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -599,7 +599,7 @@ export default function CheckoutPage() {
                           value={form.cardExpiry}
                           onChange={handleInputChange}
                           placeholder="MM/AA"
-                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-ananas-green transition"
+                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-mi-blue transition"
                         />
                       </div>
                       <div>
@@ -611,7 +611,7 @@ export default function CheckoutPage() {
                           value={form.cardCvv}
                           onChange={handleInputChange}
                           placeholder="123"
-                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-ananas-green transition"
+                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-mi-blue transition"
                         />
                       </div>
                     </div>
@@ -623,7 +623,7 @@ export default function CheckoutPage() {
                 <div className="space-y-4 text-center py-4">
                   <div className="text-sm text-gray-600 font-medium mb-3">
                     <p className="font-bold text-gray-800 mb-2">Pago Seguro vía PayPal:</p>
-                    <p>Serás redirigido a la ventana de PayPal para confirmar el cargo de <strong className="text-ananas-green">${total.toFixed(2)} USD</strong>.</p>
+                    <p>Serás redirigido a la ventana de PayPal para confirmar el cargo de <strong className="text-mi-blue">${total.toFixed(2)} USD</strong>.</p>
                   </div>
                   <div className="bg-[#FFC439] hover:bg-[#F2B522] text-blue-900 py-3 px-6 rounded-xl font-black transition inline-flex items-center gap-2 cursor-pointer shadow-sm">
                     PayPal checkout
@@ -683,8 +683,8 @@ export default function CheckoutPage() {
                       </button>
                     </div>
                   ) : (
-                    <label className="flex flex-col items-center justify-center border border-dashed border-gray-300 rounded-xl p-4 cursor-pointer hover:bg-white hover:border-ananas-green transition group">
-                      <span className="text-xs text-gray-400 group-hover:text-ananas-green transition font-medium">
+                    <label className="flex flex-col items-center justify-center border border-dashed border-gray-300 rounded-xl p-4 cursor-pointer hover:bg-white hover:border-mi-blue transition group">
+                      <span className="text-xs text-gray-400 group-hover:text-mi-blue transition font-medium">
                         Subir imagen del comprobante
                       </span>
                       <input 
@@ -722,7 +722,7 @@ export default function CheckoutPage() {
               <div className="bg-yellow-50/70 border border-yellow-100 rounded-2xl p-4 space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-yellow-600 font-bold">✨ Club Ananas</span>
+                    <span className="text-yellow-600 font-bold">✨ Club Mi Negocio</span>
                   </div>
                   <span className="text-xs text-gray-500 font-bold">{user.clubPoints} pts disponibles</span>
                 </div>
@@ -734,7 +734,7 @@ export default function CheckoutPage() {
                     type="checkbox"
                     checked={usePoints}
                     onChange={(e) => setUsePoints(e.target.checked)}
-                    className="w-5 h-5 rounded border-gray-300 text-ananas-green focus:ring-ananas-green accent-ananas-green"
+                    className="w-5 h-5 rounded border-gray-300 text-mi-yellow focus:ring-mi-yellow accent-mi-yellow"
                   />
                   <span className="text-sm font-bold text-gray-700">
                     Usar {Math.min(user.clubPoints, 350)} puntos (-{convertAndFormatPrice(Math.min(user.clubPoints, 350) * 0.01, currency, rates)})
@@ -754,7 +754,7 @@ export default function CheckoutPage() {
               </div>
               {discount > 0 && (
                 <div className="flex justify-between text-red-500 font-semibold">
-                  <span>Descuento Club Ananas</span>
+                  <span>Descuento Club Mi Negocio</span>
                   <span>-{convertAndFormatPrice(discount, currency, rates)}</span>
                 </div>
               )}
@@ -768,10 +768,10 @@ export default function CheckoutPage() {
 
             <div className="flex justify-between items-center">
               <span className="text-lg font-bold text-gray-800">Total a Pagar</span>
-              <span className="text-3xl font-black text-ananas-green">{convertAndFormatPrice(total, currency, rates)}</span>
+              <span className="text-3xl font-black text-mi-blue">{convertAndFormatPrice(total, currency, rates)}</span>
             </div>
 
-            <div className="bg-green-50/50 border border-ananas-green/20 rounded-xl p-3 text-center">
+            <div className="bg-mi-blue-ice border border-mi-blue/20 rounded-xl p-3 text-center">
               <p className="text-[11px] text-gray-500">
                 Los precios en Bs. se calculan a la <strong>tasa oficial del BCV</strong> del día.
                 <br/>
@@ -781,17 +781,17 @@ export default function CheckoutPage() {
 
             <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
               <div className="flex gap-2 items-center text-xs text-gray-500 justify-center">
-                <ShieldCheck size={16} className="text-ananas-green" /> <span className="font-medium">Transacción 100% Segura (SSL)</span>
+                <ShieldCheck size={16} className="text-mi-blue" /> <span className="font-medium">Transacción 100% Segura (SSL)</span>
               </div>
               <div className="flex gap-2 items-center text-xs text-gray-500 justify-center">
-                <CheckCircle2 size={16} className="text-ananas-green" /> <span className="font-medium">Frescura y Calidad Garantizada</span>
+                <CheckCircle2 size={16} className="text-mi-blue" /> <span className="font-medium">Frescura y Calidad Garantizada</span>
               </div>
             </div>
 
             <button 
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-ananas-green text-white py-4 rounded-xl font-bold text-lg hover:bg-ananas-dark hover:shadow-lg hover:shadow-ananas-green/30 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:bg-gray-300"
+              className="w-full bg-mi-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-mi-blue-mid hover:shadow-lg hover:shadow-mi-blue/30 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:bg-gray-300"
             >
               {isSubmitting ? (
                 <span>Procesando...</span>

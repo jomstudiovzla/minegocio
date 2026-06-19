@@ -106,7 +106,7 @@ export const products: Product[] = [
     "id": "p-plazas-118573",
     "price": 2,
     "subcategory": "Cervezas",
-    "image": "/Ananas/images/products/scraped/p-plazas-118573.jpg",
+    "image": "/images/products/scraped/p-plazas-118573.jpg",
     "unit": "1 Unidad",
     "name": "HIELO EN BOLSA GRANDE POISO",
     "stock": 50,
@@ -122,13 +122,13 @@ export const products: Product[] = [
     "subcategory": "Charcutería",
     "price": 7,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-119503.jpg"
+    "image": "/images/products/scraped/p-plazas-119503.jpg"
   },
   {
     "id": "p-plazas-124224",
     "price": 7,
     "subcategory": "Congelados listos",
-    "image": "/Ananas/images/products/scraped/p-plazas-124224.jpg",
+    "image": "/images/products/scraped/p-plazas-124224.jpg",
     "unit": "1 Unidad",
     "name": "HELADO DE TORTA SUIZA EDMAR 946ML",
     "stock": 50,
@@ -143,7 +143,7 @@ export const products: Product[] = [
     "category": "frutas-vegetales",
     "price": 12,
     "subcategory": "Verduras y hortalizas",
-    "image": "/Ananas/images/products/scraped/p-plazas-125209.jpg",
+    "image": "/images/products/scraped/p-plazas-125209.jpg",
     "unit": "1 Unidad"
   },
   {
@@ -151,7 +151,7 @@ export const products: Product[] = [
     "subcategory": "Verduras y hortalizas",
     "price": 6,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-125210.jpg",
+    "image": "/images/products/scraped/p-plazas-125210.jpg",
     "stock": 50,
     "name": "FLORES DE BROCOLI VIMA CONGELADAS 450G",
     "category": "frutas-vegetales",
@@ -161,7 +161,7 @@ export const products: Product[] = [
     "id": "p-plazas-125832",
     "price": 4,
     "subcategory": "Pollo",
-    "image": "/Ananas/images/products/scraped/p-plazas-125832.jpg",
+    "image": "/images/products/scraped/p-plazas-125832.jpg",
     "unit": "1 Unidad",
     "name": "ALAS DE POLLO X KG",
     "stock": 50,
@@ -174,7 +174,7 @@ export const products: Product[] = [
     "category": "refrigerados-congelados",
     "name": "PECHUGA DE POLLO SIN HUESO X KG",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-125858.jpg",
+    "image": "/images/products/scraped/p-plazas-125858.jpg",
     "unit": "1 Unidad",
     "price": 8,
     "subcategory": "Pollo"
@@ -184,7 +184,7 @@ export const products: Product[] = [
     "price": 9,
     "subcategory": "Carnes",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-125914.jpg",
+    "image": "/images/products/scraped/p-plazas-125914.jpg",
     "stock": 50,
     "name": "CARNE PARA DESMECHAR SV",
     "category": "refrigerados-congelados",
@@ -195,7 +195,7 @@ export const products: Product[] = [
     "subcategory": "Carnes",
     "price": 12,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-125941.jpg",
+    "image": "/images/products/scraped/p-plazas-125941.jpg",
     "stock": 50,
     "name": "PULPA NEGRA SV",
     "category": "refrigerados-congelados",
@@ -209,7 +209,7 @@ export const products: Product[] = [
     "category": "refrigerados-congelados",
     "price": 14,
     "subcategory": "Carnes",
-    "image": "/Ananas/images/products/scraped/p-plazas-125953.jpg",
+    "image": "/images/products/scraped/p-plazas-125953.jpg",
     "unit": "1 Unidad"
   },
   {
@@ -217,7 +217,7 @@ export const products: Product[] = [
     "subcategory": "Verduras y hortalizas",
     "price": 1,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-126060.jpg",
+    "image": "/images/products/scraped/p-plazas-126060.jpg",
     "stock": 50,
     "name": "CALABACINES X KG",
     "category": "frutas-vegetales",
@@ -227,7 +227,7 @@ export const products: Product[] = [
     "id": "p-plazas-126061",
     "subcategory": "Frutas",
     "price": 1,
-    "image": "/Ananas/images/products/scraped/p-plazas-126061.jpg",
+    "image": "/images/products/scraped/p-plazas-126061.jpg",
     "unit": "1 Unidad",
     "name": "CAMBUR X KG",
     "stock": 50,
@@ -240,7 +240,7 @@ export const products: Product[] = [
     "category": "frutas-vegetales",
     "name": "LECHOSA X KG",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-126098.jpg",
+    "image": "/images/products/scraped/p-plazas-126098.jpg",
     "unit": "1 Unidad",
     "subcategory": "Frutas",
     "price": 1
@@ -254,14 +254,14 @@ export const products: Product[] = [
     "price": 4,
     "subcategory": "Frutas",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-126100.jpg"
+    "image": "/images/products/scraped/p-plazas-126100.jpg"
   },
   {
     "id": "p-plazas-126105",
     "subcategory": "Frutas",
     "price": 1,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-126105.jpg",
+    "image": "/images/products/scraped/p-plazas-126105.jpg",
     "stock": 50,
     "name": "MANGO INJERTO X KG",
     "category": "frutas-vegetales",
@@ -269,7 +269,7 @@ export const products: Product[] = [
   },
   {
     "id": "p-plazas-126120",
-    "image": "/Ananas/images/products/scraped/p-plazas-126120.jpg",
+    "image": "/images/products/scraped/p-plazas-126120.jpg",
     "unit": "1 Unidad",
     "subcategory": "Tubérculos",
     "price": 3,
@@ -282,7 +282,7 @@ export const products: Product[] = [
     "id": "p-plazas-126127",
     "subcategory": "Verduras y hortalizas",
     "price": 1,
-    "image": "/Ananas/images/products/scraped/p-plazas-126127.jpg",
+    "image": "/images/products/scraped/p-plazas-126127.jpg",
     "unit": "1 Unidad",
     "name": "PEPINOS X KG",
     "stock": 50,
@@ -298,14 +298,14 @@ export const products: Product[] = [
     "price": 2,
     "subcategory": "Frutas",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-126132.jpg"
+    "image": "/images/products/scraped/p-plazas-126132.jpg"
   },
   {
     "id": "p-plazas-126139",
     "subcategory": "Verdes y hojas",
     "price": 1,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-126139.jpg",
+    "image": "/images/products/scraped/p-plazas-126139.jpg",
     "stock": 50,
     "name": "REPOLLO BLANCO X KG",
     "category": "frutas-vegetales",
@@ -315,7 +315,7 @@ export const products: Product[] = [
     "id": "p-plazas-126151",
     "price": 3,
     "subcategory": "Verduras y hortalizas",
-    "image": "/Ananas/images/products/scraped/p-plazas-126151.jpg",
+    "image": "/images/products/scraped/p-plazas-126151.jpg",
     "unit": "1 Unidad",
     "name": "TOMATES PERITA X KG",
     "stock": 50,
@@ -327,7 +327,7 @@ export const products: Product[] = [
     "price": 2,
     "subcategory": "Verduras y hortalizas",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-126160.jpg",
+    "image": "/images/products/scraped/p-plazas-126160.jpg",
     "stock": 50,
     "name": "ZANAHORIAS X KG",
     "category": "frutas-vegetales",
@@ -341,7 +341,7 @@ export const products: Product[] = [
     "category": "cuidado-personal-salud",
     "price": 4,
     "subcategory": "Higiene personal",
-    "image": "/Ananas/images/products/scraped/p-plazas-129410.jpg",
+    "image": "/images/products/scraped/p-plazas-129410.jpg",
     "unit": "1 Unidad"
   },
   {
@@ -349,7 +349,7 @@ export const products: Product[] = [
     "subcategory": "Higiene personal",
     "price": 3,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-129411.jpg",
+    "image": "/images/products/scraped/p-plazas-129411.jpg",
     "stock": 50,
     "name": "CREMA DENTAL COLGATE TRIPLE ACCION 75ML",
     "category": "cuidado-personal-salud",
@@ -358,7 +358,7 @@ export const products: Product[] = [
   {
     "id": "p-plazas-129413",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-129413.jpg",
+    "image": "/images/products/scraped/p-plazas-129413.jpg",
     "price": 4,
     "subcategory": "Higiene personal",
     "category": "cuidado-personal-salud",
@@ -370,7 +370,7 @@ export const products: Product[] = [
     "id": "p-plazas-130013",
     "price": 14,
     "subcategory": "Higiene personal",
-    "image": "/Ananas/images/products/scraped/p-plazas-130013.jpg",
+    "image": "/images/products/scraped/p-plazas-130013.jpg",
     "unit": "1 Unidad",
     "name": "AFEITADORA GILLETTE SENSOR 3 SENSITVE 4UN",
     "stock": 50,
@@ -384,7 +384,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "AGUA OXIGENADA IGORA VITAL 30 VOL 50ML",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-130493.jpg",
+    "image": "/images/products/scraped/p-plazas-130493.jpg",
     "subcategory": "Higiene personal",
     "price": 2
   },
@@ -393,7 +393,7 @@ export const products: Product[] = [
     "price": 2,
     "subcategory": "Higiene personal",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-130595.jpg",
+    "image": "/images/products/scraped/p-plazas-130595.jpg",
     "stock": 50,
     "name": "JABON EN BARRA EVERY NIGHT BIO NUTRIENTES AVENA 110G",
     "category": "cuidado-personal-salud",
@@ -404,7 +404,7 @@ export const products: Product[] = [
     "subcategory": "Cervezas",
     "price": 1,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-132136.jpg",
+    "image": "/images/products/scraped/p-plazas-132136.jpg",
     "stock": 50,
     "name": "CERVEZA POLAR LIGHT EN BOLETTA NO RETORNABLE DE 355ML",
     "category": "licores",
@@ -419,14 +419,14 @@ export const products: Product[] = [
     "subcategory": "Otros destilados",
     "price": 11,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-132421.jpg"
+    "image": "/images/products/scraped/p-plazas-132421.jpg"
   },
   {
     "id": "p-plazas-132682",
     "subcategory": "Cervezas",
     "price": 1,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-132682.jpg",
+    "image": "/images/products/scraped/p-plazas-132682.jpg",
     "stock": 50,
     "name": "CERVEZA POLAR PILSEN LATA DE 250ML",
     "category": "licores",
@@ -438,7 +438,7 @@ export const products: Product[] = [
     "category": "licores",
     "name": "CERVEZA POLAR PILSEN SLEEK LATA DE 355ML",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-133154.jpg",
+    "image": "/images/products/scraped/p-plazas-133154.jpg",
     "unit": "1 Unidad",
     "subcategory": "Cervezas",
     "price": 1
@@ -448,7 +448,7 @@ export const products: Product[] = [
     "subcategory": "Congelados listos",
     "price": 3,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-136158.jpg",
+    "image": "/images/products/scraped/p-plazas-136158.jpg",
     "stock": 50,
     "name": "YOGUR GRIEGO DE BANANA Y FRESA CAPRIGURT 135G",
     "category": "refrigerados-congelados",
@@ -461,7 +461,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "MUSLOS DE POLLO X KG",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-136433.jpg",
+    "image": "/images/products/scraped/p-plazas-136433.jpg",
     "price": 4,
     "subcategory": "Pollo"
   },
@@ -472,7 +472,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "CEBOLLA CRIOLLA X KG",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-136439.jpg",
+    "image": "/images/products/scraped/p-plazas-136439.jpg",
     "subcategory": "Verduras y hortalizas",
     "price": 2
   },
@@ -484,7 +484,7 @@ export const products: Product[] = [
     "category": "licores",
     "subcategory": "Vinos",
     "price": 1,
-    "image": "/Ananas/images/products/scraped/p-plazas-136583.jpg",
+    "image": "/images/products/scraped/p-plazas-136583.jpg",
     "unit": "1 Unidad"
   },
   {
@@ -494,7 +494,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "CERVEZA SOLERA LATA DE 250ML",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-137240.jpg",
+    "image": "/images/products/scraped/p-plazas-137240.jpg",
     "subcategory": "Cervezas",
     "price": 1
   },
@@ -507,7 +507,7 @@ export const products: Product[] = [
     "subcategory": "Aceites y salsas",
     "price": 4,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-137534.jpg"
+    "image": "/images/products/scraped/p-plazas-137534.jpg"
   },
   {
     "id": "p-plazas-137536",
@@ -518,7 +518,7 @@ export const products: Product[] = [
     "price": 3,
     "subcategory": "Aceites y salsas",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-137536.jpg"
+    "image": "/images/products/scraped/p-plazas-137536.jpg"
   },
   {
     "id": "p-plazas-137939",
@@ -526,7 +526,7 @@ export const products: Product[] = [
     "category": "viveres",
     "name": "COCA COLA ORIGINAL CON MENOS CALORIAS 2L",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-137939.jpg",
+    "image": "/images/products/scraped/p-plazas-137939.jpg",
     "unit": "1 Unidad",
     "price": 1,
     "subcategory": "Bebidas"
@@ -539,13 +539,13 @@ export const products: Product[] = [
     "category": "viveres",
     "price": 1.99,
     "subcategory": "Bebidas",
-    "image": "/Ananas/images/products/scraped/p-plazas-138840.jpg",
+    "image": "/images/products/scraped/p-plazas-138840.jpg",
     "unit": "1 Unidad"
   },
   {
     "id": "p-plazas-139099",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-139099.jpg",
+    "image": "/images/products/scraped/p-plazas-139099.jpg",
     "price": 5,
     "subcategory": "Granos",
     "category": "viveres",
@@ -561,7 +561,7 @@ export const products: Product[] = [
     "category": "viveres",
     "subcategory": "Granos",
     "price": 4,
-    "image": "/Ananas/images/products/scraped/p-plazas-139787.jpg",
+    "image": "/images/products/scraped/p-plazas-139787.jpg",
     "unit": "1 Unidad"
   },
   {
@@ -570,7 +570,7 @@ export const products: Product[] = [
     "category": "viveres",
     "name": "AGUA MINERAL PERRIER GAS BOTELLA PLASTICA 500ML",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-139826.jpg",
+    "image": "/images/products/scraped/p-plazas-139826.jpg",
     "unit": "1 Unidad",
     "subcategory": "Bebidas",
     "price": 3
@@ -579,7 +579,7 @@ export const products: Product[] = [
     "id": "p-plazas-140023",
     "subcategory": "Enlatados",
     "price": 1,
-    "image": "/Ananas/images/products/scraped/p-plazas-140023.jpg",
+    "image": "/images/products/scraped/p-plazas-140023.jpg",
     "unit": "1 Unidad",
     "name": "PUDIN DE FRESA ADDAS 85G",
     "stock": 50,
@@ -590,7 +590,7 @@ export const products: Product[] = [
     "id": "p-plazas-142112",
     "subcategory": "Enlatados",
     "price": 1,
-    "image": "/Ananas/images/products/scraped/p-plazas-142112.jpg",
+    "image": "/images/products/scraped/p-plazas-142112.jpg",
     "unit": "1 Unidad",
     "name": "PAN HOLSUM BLANCO SUPER 420G",
     "stock": 50,
@@ -601,7 +601,7 @@ export const products: Product[] = [
     "id": "p-plazas-142124",
     "subcategory": "Bebidas",
     "price": 2,
-    "image": "/Ananas/images/products/scraped/p-plazas-142124.jpg",
+    "image": "/images/products/scraped/p-plazas-142124.jpg",
     "unit": "1 Unidad",
     "name": "LECHE LIQUIDA DESCREMADA UHT LA PASTOREÑA 1L",
     "stock": 50,
@@ -616,14 +616,14 @@ export const products: Product[] = [
     "category": "viveres",
     "subcategory": "Bebidas",
     "price": 2,
-    "image": "/Ananas/images/products/scraped/p-plazas-142125.jpg",
+    "image": "/images/products/scraped/p-plazas-142125.jpg",
     "unit": "1 Unidad"
   },
   {
     "id": "p-plazas-142173",
     "price": 4,
     "subcategory": "Aceites y salsas",
-    "image": "/Ananas/images/products/scraped/p-plazas-142173.jpg",
+    "image": "/images/products/scraped/p-plazas-142173.jpg",
     "unit": "1 Unidad",
     "name": "ACEITE VATEL VEGETAL 1L",
     "stock": 50,
@@ -639,13 +639,13 @@ export const products: Product[] = [
     "price": 1,
     "subcategory": "Arroz y pasta",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-142720.jpg"
+    "image": "/images/products/scraped/p-plazas-142720.jpg"
   },
   {
     "id": "p-plazas-142747",
     "subcategory": "Arroz y pasta",
     "price": 1,
-    "image": "/Ananas/images/products/scraped/p-plazas-142747.jpg",
+    "image": "/images/products/scraped/p-plazas-142747.jpg",
     "unit": "1 Unidad",
     "name": "ARROZ MARY ESMERALDA 100% 900G",
     "stock": 50,
@@ -656,7 +656,7 @@ export const products: Product[] = [
     "id": "p-plazas-143142",
     "subcategory": "Otros destilados",
     "price": 18,
-    "image": "/Ananas/images/products/scraped/p-plazas-143142.jpg",
+    "image": "/images/products/scraped/p-plazas-143142.jpg",
     "unit": "1 Unidad",
     "name": "SAMBUCA SICILIANA 0,70L",
     "stock": 50,
@@ -670,7 +670,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "CARNE DE RES PARA GUISAR SV",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-144341.jpg",
+    "image": "/images/products/scraped/p-plazas-144341.jpg",
     "price": 9,
     "subcategory": "Carnes"
   },
@@ -681,7 +681,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "SOLOMO DE CUERITO SV",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-144342.jpg",
+    "image": "/images/products/scraped/p-plazas-144342.jpg",
     "subcategory": "Carnes",
     "price": 13
   },
@@ -694,7 +694,7 @@ export const products: Product[] = [
     "price": 9,
     "subcategory": "Carnes",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-144343.jpg"
+    "image": "/images/products/scraped/p-plazas-144343.jpg"
   },
   {
     "id": "p-plazas-144618",
@@ -702,7 +702,7 @@ export const products: Product[] = [
     "category": "viveres",
     "name": "ARROZ MARY SUPERIOR TIPO I 900G",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-144618.jpg",
+    "image": "/images/products/scraped/p-plazas-144618.jpg",
     "unit": "1 Unidad",
     "price": 1,
     "subcategory": "Arroz y pasta"
@@ -710,7 +710,7 @@ export const products: Product[] = [
   {
     "id": "p-plazas-144820",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-144820.jpg",
+    "image": "/images/products/scraped/p-plazas-144820.jpg",
     "price": 14,
     "subcategory": "Farmacia básica",
     "category": "cuidado-personal-salud",
@@ -725,7 +725,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "LETISAN GOTAS 100 MG X 20 ML",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-144920.jpg",
+    "image": "/images/products/scraped/p-plazas-144920.jpg",
     "subcategory": "Farmacia básica",
     "price": 15
   },
@@ -737,7 +737,7 @@ export const products: Product[] = [
     "category": "cuidado-personal-salud",
     "subcategory": "Farmacia básica",
     "price": 8,
-    "image": "/Ananas/images/products/scraped/p-plazas-145185.jpg",
+    "image": "/images/products/scraped/p-plazas-145185.jpg",
     "unit": "1 Unidad"
   },
   {
@@ -749,12 +749,12 @@ export const products: Product[] = [
     "price": 6,
     "subcategory": "Farmacia básica",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-145204.jpg"
+    "image": "/images/products/scraped/p-plazas-145204.jpg"
   },
   {
     "id": "p-plazas-145304",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-145304.jpg",
+    "image": "/images/products/scraped/p-plazas-145304.jpg",
     "subcategory": "Vinos",
     "price": 1,
     "category": "licores",
@@ -768,7 +768,7 @@ export const products: Product[] = [
     "category": "refrigerados-congelados",
     "name": "SALMON SOTAVENTO AHUMADO 400G",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-146542.jpg",
+    "image": "/images/products/scraped/p-plazas-146542.jpg",
     "unit": "1 Unidad",
     "subcategory": "Carnes",
     "price": 38
@@ -778,7 +778,7 @@ export const products: Product[] = [
     "price": 9,
     "subcategory": "Higiene personal",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-146926.jpg",
+    "image": "/images/products/scraped/p-plazas-146926.jpg",
     "stock": 50,
     "name": "CREMA DENTAL COLGATE NATURAL EXTRA CARBON 140G",
     "category": "cuidado-personal-salud",
@@ -789,7 +789,7 @@ export const products: Product[] = [
     "price": 5,
     "subcategory": "Higiene personal",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-146941.jpg",
+    "image": "/images/products/scraped/p-plazas-146941.jpg",
     "stock": 50,
     "name": "TINTE MYSTIC RUBIO CLARO PLATINADO 12.0 TUBO DE 60G",
     "category": "cuidado-personal-salud",
@@ -797,7 +797,7 @@ export const products: Product[] = [
   },
   {
     "id": "p-plazas-147236",
-    "image": "/Ananas/images/products/scraped/p-plazas-147236.jpg",
+    "image": "/images/products/scraped/p-plazas-147236.jpg",
     "unit": "1 Unidad",
     "price": 18,
     "subcategory": "Vinos",
@@ -813,7 +813,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "VINO ROOT 1 CARMENERE 2022 0,75 L",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-147237.jpg",
+    "image": "/images/products/scraped/p-plazas-147237.jpg",
     "price": 18,
     "subcategory": "Vinos"
   },
@@ -826,12 +826,12 @@ export const products: Product[] = [
     "subcategory": "Vinos",
     "price": 18,
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-147238.jpg"
+    "image": "/images/products/scraped/p-plazas-147238.jpg"
   },
   {
     "id": "p-plazas-147477",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-147477.jpg",
+    "image": "/images/products/scraped/p-plazas-147477.jpg",
     "subcategory": "Higiene personal",
     "price": 2,
     "category": "cuidado-personal-salud",
@@ -842,7 +842,7 @@ export const products: Product[] = [
   {
     "id": "p-plazas-147483",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-147483.jpg",
+    "image": "/images/products/scraped/p-plazas-147483.jpg",
     "subcategory": "Congelados listos",
     "price": 5,
     "category": "refrigerados-congelados",
@@ -856,14 +856,14 @@ export const products: Product[] = [
     "category": "cuidado-personal-salud",
     "name": "PAPEL HIG PLAZAS X 4 ROLLOS 200 HOJ DOBL",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-149116.jpg",
+    "image": "/images/products/scraped/p-plazas-149116.jpg",
     "unit": "1 Unidad",
     "subcategory": "Higiene personal",
     "price": 1
   },
   {
     "id": "p-plazas-149286",
-    "image": "/Ananas/images/products/scraped/p-plazas-149286.jpg",
+    "image": "/images/products/scraped/p-plazas-149286.jpg",
     "unit": "1 Unidad",
     "price": 2,
     "subcategory": "Cervezas",
@@ -878,14 +878,14 @@ export const products: Product[] = [
     "category": "frutas-vegetales",
     "name": "PIMENTON ROJO X KG",
     "stock": 50,
-    "image": "/Ananas/images/products/scraped/p-plazas-149644.jpg",
+    "image": "/images/products/scraped/p-plazas-149644.jpg",
     "unit": "1 Unidad",
     "subcategory": "Verduras y hortalizas",
     "price": 5
   },
   {
     "id": "p-plazas-150618",
-    "image": "/Ananas/images/products/scraped/p-plazas-150618.jpg",
+    "image": "/images/products/scraped/p-plazas-150618.jpg",
     "unit": "1 Unidad",
     "subcategory": "Cervezas",
     "price": 1,
@@ -901,7 +901,7 @@ export const products: Product[] = [
     "stock": 50,
     "name": "CERVEZA CARDENAL ULTRA LATA 250ML",
     "unit": "1 Unidad",
-    "image": "/Ananas/images/products/scraped/p-plazas-151364.jpg",
+    "image": "/images/products/scraped/p-plazas-151364.jpg",
     "subcategory": "Cervezas",
     "price": 1
   },
@@ -910,7 +910,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546914965984.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546914965984.jpg",
     "unit": "1 Un",
     "price": 2.1,
     "subcategory": "Ropa",
@@ -927,7 +927,7 @@ export const products: Product[] = [
       "Nuevo"
     ],
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546915080477.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546915080477.jpg",
     "price": 3.33,
     "subcategory": "Ropa",
     "category": "limpieza",
@@ -950,7 +950,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546915230773.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546915230773.jpg",
     "unit": "1 Un"
   },
   {
@@ -964,7 +964,7 @@ export const products: Product[] = [
     "subcategory": "Ropa",
     "price": 1.55,
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-178154691542597.jpg",
+    "image": "/images/products/scraped/p-plazas-178154691542597.jpg",
     "labels": [
       "Nuevo"
     ]
@@ -974,7 +974,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546915471808.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546915471808.jpg",
     "unit": "1 Un",
     "price": 1.19,
     "subcategory": "Ropa",
@@ -989,7 +989,7 @@ export const products: Product[] = [
     "id": "p-plazas-1781546927632553",
     "subcategory": "Cocina",
     "price": 4,
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546927632553.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546927632553.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1004,7 +1004,7 @@ export const products: Product[] = [
   {
     "id": "p-plazas-178154692767962",
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-178154692767962.jpg",
+    "image": "/images/products/scraped/p-plazas-178154692767962.jpg",
     "labels": [
       "Nuevo"
     ],
@@ -1024,7 +1024,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546927726900.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546927726900.jpg",
     "unit": "1 Un",
     "warehouseStock": 177,
     "name": "LAVATODO FIT MANZANA 800CC",
@@ -1044,7 +1044,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546927807565.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546927807565.jpg",
     "unit": "1 Un",
     "price": 6.15,
     "subcategory": "Cocina"
@@ -1058,7 +1058,7 @@ export const products: Product[] = [
     "name": "LAVAPLATOS LIQUIDO BRISOL MULTIACCION 825ML",
     "warehouseStock": 230,
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546927890789.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546927890789.jpg",
     "labels": [
       "Nuevo"
     ],
@@ -1071,7 +1071,7 @@ export const products: Product[] = [
       "Nuevo"
     ],
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546937332485.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546937332485.jpg",
     "price": 1.15,
     "subcategory": "Accesorios de limpieza",
     "category": "limpieza",
@@ -1085,7 +1085,7 @@ export const products: Product[] = [
     "id": "p-plazas-1781546937418292",
     "subcategory": "Accesorios de limpieza",
     "price": 1.19,
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546937418292.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546937418292.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1106,7 +1106,7 @@ export const products: Product[] = [
     "name": "ESPONJA MULTIUSO IZY CLEAN",
     "warehouseStock": 235,
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546937578898.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546937578898.jpg",
     "labels": [
       "Nuevo"
     ],
@@ -1126,7 +1126,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546937737882.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546937737882.jpg",
     "unit": "1 Un"
   },
   {
@@ -1138,7 +1138,7 @@ export const products: Product[] = [
     "name": "ESPONJA JABONOSA IZY CLEAN 5UN",
     "warehouseStock": 220,
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546937824736.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546937824736.jpg",
     "labels": [
       "Nuevo"
     ],
@@ -1153,7 +1153,7 @@ export const products: Product[] = [
       "Nuevo"
     ],
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546946410806.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546946410806.jpg",
     "warehouseStock": 153,
     "stock": 34,
     "name": "RON AÑEJO GRAN RESERVA 0,70L",
@@ -1166,7 +1166,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546946458111.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546946458111.jpg",
     "unit": "1 Un",
     "price": 5.14,
     "subcategory": "Rones",
@@ -1184,7 +1184,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546946505534.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546946505534.jpg",
     "unit": "1 Un",
     "warehouseStock": 82,
     "name": "RON CARTA ROJA 1L",
@@ -1205,7 +1205,7 @@ export const products: Product[] = [
       "Nuevo"
     ],
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546946552155.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546946552155.jpg",
     "price": 5.89,
     "subcategory": "Rones"
   },
@@ -1215,7 +1215,7 @@ export const products: Product[] = [
       "Nuevo"
     ],
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546954346862.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546954346862.jpg",
     "price": 23.49,
     "subcategory": "Whisky",
     "category": "licores",
@@ -1232,7 +1232,7 @@ export const products: Product[] = [
     "labels": [
       "Nuevo"
     ],
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546954392650.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546954392650.jpg",
     "unit": "1 Un",
     "warehouseStock": 117,
     "name": "WHISKY GRANTS STAND FOR TRIPLE WOOD 1L",
@@ -1249,7 +1249,7 @@ export const products: Product[] = [
     "name": "WHISKY OLD PARR 12 AÑOS 0,75L",
     "stock": 52,
     "warehouseStock": 72,
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546954438327.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546954438327.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1271,7 +1271,7 @@ export const products: Product[] = [
       "Nuevo"
     ],
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546954482535.jpg"
+    "image": "/images/products/scraped/p-plazas-1781546954482535.jpg"
   },
   {
     "id": "p-plazas-1781546954528998",
@@ -1279,7 +1279,7 @@ export const products: Product[] = [
       "Nuevo"
     ],
     "unit": "1 Un",
-    "image": "/Ananas/images/products/scraped/p-plazas-1781546954528998.jpg",
+    "image": "/images/products/scraped/p-plazas-1781546954528998.jpg",
     "price": 18.57,
     "subcategory": "Whisky",
     "category": "licores",
@@ -1295,7 +1295,7 @@ export const products: Product[] = [
     "price": 9.95,
     "category": "refrigerados-congelados",
     "subcategory": "Quesos",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546967313907.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546967313907.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1311,7 +1311,7 @@ export const products: Product[] = [
     "price": 12.45,
     "category": "refrigerados-congelados",
     "subcategory": "Quesos",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546967445375.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546967445375.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1327,7 +1327,7 @@ export const products: Product[] = [
     "price": 8.45,
     "category": "refrigerados-congelados",
     "subcategory": "Quesos",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546967498819.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546967498819.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1343,7 +1343,7 @@ export const products: Product[] = [
     "price": 9.95,
     "category": "refrigerados-congelados",
     "subcategory": "Quesos",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546967549861.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546967549861.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1359,7 +1359,7 @@ export const products: Product[] = [
     "price": 7.45,
     "category": "refrigerados-congelados",
     "subcategory": "Quesos",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546967603261.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546967603261.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1375,7 +1375,7 @@ export const products: Product[] = [
     "price": 2.39,
     "category": "cuidado-personal-salud",
     "subcategory": "Cuidado corporal",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546975569720.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546975569720.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1391,7 +1391,7 @@ export const products: Product[] = [
     "price": 3.18,
     "category": "cuidado-personal-salud",
     "subcategory": "Cuidado corporal",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546975620407.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546975620407.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1407,7 +1407,7 @@ export const products: Product[] = [
     "price": 1.45,
     "category": "cuidado-personal-salud",
     "subcategory": "Cuidado corporal",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546975702116.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546975702116.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1423,7 +1423,7 @@ export const products: Product[] = [
     "price": 4.14,
     "category": "cuidado-personal-salud",
     "subcategory": "Cuidado corporal",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546975959807.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546975959807.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1439,7 +1439,7 @@ export const products: Product[] = [
     "price": 2.09,
     "category": "cuidado-personal-salud",
     "subcategory": "Cuidado corporal",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546976298466.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546976298466.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1455,7 +1455,7 @@ export const products: Product[] = [
     "price": 2.1,
     "category": "limpieza",
     "subcategory": "Baño",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546985496739.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546985496739.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1471,7 +1471,7 @@ export const products: Product[] = [
     "price": 3.33,
     "category": "limpieza",
     "subcategory": "Baño",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546985782834.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546985782834.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1487,7 +1487,7 @@ export const products: Product[] = [
     "price": 4.34,
     "category": "limpieza",
     "subcategory": "Baño",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986101952.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986101952.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1503,7 +1503,7 @@ export const products: Product[] = [
     "price": 1.55,
     "category": "limpieza",
     "subcategory": "Baño",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986198600.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986198600.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1519,7 +1519,7 @@ export const products: Product[] = [
     "price": 1.19,
     "category": "limpieza",
     "subcategory": "Baño",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986252879.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986252879.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1535,7 +1535,7 @@ export const products: Product[] = [
     "price": 4,
     "category": "limpieza",
     "subcategory": "Desinfección",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986326711.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986326711.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1551,7 +1551,7 @@ export const products: Product[] = [
     "price": 1.55,
     "category": "limpieza",
     "subcategory": "Desinfección",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-178154698637976.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-178154698637976.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1567,7 +1567,7 @@ export const products: Product[] = [
     "price": 4.45,
     "category": "limpieza",
     "subcategory": "Desinfección",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986429928.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986429928.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1583,7 +1583,7 @@ export const products: Product[] = [
     "price": 2.05,
     "category": "limpieza",
     "subcategory": "Desinfección",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986477453.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986477453.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1599,7 +1599,7 @@ export const products: Product[] = [
     "price": 2.29,
     "category": "limpieza",
     "subcategory": "Desinfección",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986525202.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986525202.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1615,7 +1615,7 @@ export const products: Product[] = [
     "price": 8.29,
     "category": "limpieza",
     "subcategory": "Accesorios de limpieza",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-17815469866929.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-17815469866929.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1631,7 +1631,7 @@ export const products: Product[] = [
     "price": 7.74,
     "category": "limpieza",
     "subcategory": "Accesorios de limpieza",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986747539.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986747539.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1647,7 +1647,7 @@ export const products: Product[] = [
     "price": 2.48,
     "category": "limpieza",
     "subcategory": "Accesorios de limpieza",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546986814903.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546986814903.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1663,7 +1663,7 @@ export const products: Product[] = [
     "price": 1.33,
     "category": "licores",
     "subcategory": "Rones",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546988258106.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546988258106.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1679,7 +1679,7 @@ export const products: Product[] = [
     "price": 1.14,
     "category": "licores",
     "subcategory": "Rones",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-178154698830450.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-178154698830450.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1695,7 +1695,7 @@ export const products: Product[] = [
     "price": 1.39,
     "category": "licores",
     "subcategory": "Rones",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546988352985.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546988352985.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1711,7 +1711,7 @@ export const products: Product[] = [
     "price": 2.15,
     "category": "licores",
     "subcategory": "Rones",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-17815469883967.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-17815469883967.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1727,7 +1727,7 @@ export const products: Product[] = [
     "price": 1.07,
     "category": "licores",
     "subcategory": "Rones",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-178154698844221.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-178154698844221.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1743,7 +1743,7 @@ export const products: Product[] = [
     "price": 1.66,
     "category": "licores",
     "subcategory": "Whisky",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546988487655.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546988487655.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1759,7 +1759,7 @@ export const products: Product[] = [
     "price": 1.66,
     "category": "licores",
     "subcategory": "Whisky",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546988535551.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546988535551.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1775,7 +1775,7 @@ export const products: Product[] = [
     "price": 1.07,
     "category": "licores",
     "subcategory": "Whisky",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546988581650.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546988581650.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1791,7 +1791,7 @@ export const products: Product[] = [
     "price": 2.02,
     "category": "licores",
     "subcategory": "Whisky",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546988630436.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546988630436.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
@@ -1807,7 +1807,7 @@ export const products: Product[] = [
     "price": 18.76,
     "category": "licores",
     "subcategory": "Whisky",
-    "image": "/Ananas/images/products/scraped/p-plazas-filled-1781546988692652.jpg",
+    "image": "/images/products/scraped/p-plazas-filled-1781546988692652.jpg",
     "unit": "1 Un",
     "labels": [
       "Nuevo"
