@@ -47,15 +47,26 @@ export default function LoginPage() {
     if (email.trim().toLowerCase() === 'admin@jomstudio.com' && password.trim() === 'VZLA') {
       try {
         await signInWithEmailAndPassword(auth, email.trim(), password);
+        login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });
+        sessionStorage.setItem('isAdminLoggedIn', 'true');
+        router.push('/account');
+        return;
       } catch (err: any) {
         if (err.code === 'auth/user-not-found') {
-          await createUserWithEmailAndPassword(auth, email.trim(), password);
+          try {
+             await createUserWithEmailAndPassword(auth, email.trim(), password);
+             login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });
+             sessionStorage.setItem('isAdminLoggedIn', 'true');
+             router.push('/account');
+             return;
+          } catch (createErr: any) {
+             setError('Error de Firebase al crear Admin: ' + createErr.message);
+             return;
+          }
         }
+        setError('Error de Firebase (Admin): ' + err.message);
+        return;
       }
-      login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });
-      sessionStorage.setItem('isAdminLoggedIn', 'true');
-      router.push('/account');
-      return;
     }
 
     if (isRegistering) {
