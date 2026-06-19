@@ -20,6 +20,12 @@ export class ProductRepository {
       snapshot.forEach((doc) => {
         try {
           const parsed = ProductSchema.parse(doc.data());
+          // FIX GITHUB PAGES IMAGE PATHS
+          if (parsed.image && parsed.image.startsWith('/')) {
+            const isProd = process.env.NODE_ENV === 'production';
+            const basePath = isProd ? '/minegocio' : '';
+            parsed.image = basePath + parsed.image;
+          }
           products.push(parsed);
         } catch (error) {
           console.error(`Error de validación (Zod) en producto ${doc.id}:`, error);
@@ -40,6 +46,12 @@ export class ProductRepository {
       snapshot.forEach((doc) => {
         try {
           const parsed = ProductSchema.parse(doc.data());
+          // FIX GITHUB PAGES IMAGE PATHS
+          if (parsed.image && parsed.image.startsWith('/')) {
+            const isProd = process.env.NODE_ENV === 'production';
+            const basePath = isProd ? '/minegocio' : '';
+            parsed.image = basePath + parsed.image;
+          }
           products.push(parsed);
         } catch (error) {
           console.error(`Error de validación (Zod) en producto ${doc.id}:`, error);

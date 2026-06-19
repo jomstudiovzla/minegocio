@@ -6,10 +6,12 @@ import { ShieldCheck, CreditCard, Banknote, Smartphone, Clock, Star, Package, Ch
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
+import { getAssetPath } from '@/lib/assetHelper';
+
 const HERO_VIDEOS = [
-  '/hero-video-1.mp4',
-  '/hero-video-2.mp4',
-  '/hero-video-3.mp4',
+  getAssetPath('/hero-video-1.mp4'),
+  getAssetPath('/hero-video-2.mp4'),
+  getAssetPath('/hero-video-3.mp4'),
 ];
 
 export default function Hero() {
