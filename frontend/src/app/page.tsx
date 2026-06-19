@@ -36,6 +36,7 @@ function ProductSkeletonRow() {
 export default function Home() {
   const products = useStore(state => state.products);
   const user = useStore(state => state.user);
+  const localFavorites = useStore(state => state.localFavorites);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -73,11 +74,10 @@ export default function Home() {
                 const catProducts = products.filter(p => p.category === cat.id && p.isActive !== false);
                 if (catProducts.length === 0) return null;
 
-                if (user?.favorites) {
-                  const favs = user.favorites;
+                if (localFavorites && localFavorites.length > 0) {
                   catProducts.sort((a, b) => {
-                    const aFav = favs.includes(a.id) ? 1 : 0;
-                    const bFav = favs.includes(b.id) ? 1 : 0;
+                    const aFav = localFavorites.includes(a.id) ? 1 : 0;
+                    const bFav = localFavorites.includes(b.id) ? 1 : 0;
                     return bFav - aFav;
                   });
                 }

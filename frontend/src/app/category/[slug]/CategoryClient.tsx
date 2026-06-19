@@ -48,6 +48,7 @@ const categoryThemes: Record<string, { title: string; desc: string; border: stri
 export default function CategoryClient({ slug }: { slug: string }) {
   const products = useStore(state => state.products);
   const user = useStore(state => state.user);
+  const localFavorites = useStore(state => state.localFavorites);
   const [mounted, setMounted] = useState(false);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -70,10 +71,9 @@ export default function CategoryClient({ slug }: { slug: string }) {
   });
 
   const sortedProducts = [...categoryProducts].sort((a, b) => {
-    if (user?.favorites) {
-      const favs = user.favorites;
-      const aFav = favs.includes(a.id) ? 1 : 0;
-      const bFav = favs.includes(b.id) ? 1 : 0;
+    if (localFavorites && localFavorites.length > 0) {
+      const aFav = localFavorites.includes(a.id) ? 1 : 0;
+      const bFav = localFavorites.includes(b.id) ? 1 : 0;
       if (aFav !== bFav) return bFav - aFav; // Favoritos primero
     }
     return 0;

@@ -8,7 +8,7 @@ import ProductModal from './ProductModal';
 import CartToast from './CartToast';
 
 export default function ProductGrid({ products }: { products: Product[] }) {
-  const { addToCart, removeFromCart, updateQuantity, cart, currency, rates, user, toggleFavorite } = useStore();
+  const { addToCart, removeFromCart, updateQuantity, cart, currency, rates, localFavorites, toggleFavorite } = useStore();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [toast, setToast] = useState<{ visible: boolean; name: string; image: string }>({ visible: false, name: '', image: '' });
 
@@ -106,17 +106,13 @@ export default function ProductGrid({ products }: { products: Product[] }) {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (user) {
-                      toggleFavorite(p.id);
-                    } else {
-                      setToast({ visible: true, name: 'Inicia sesión para guardar favoritos', image: p.image });
-                    }
+                    toggleFavorite(p.id);
                   }}
                   className={`absolute right-3 z-20 w-8 h-8 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-white transition-all shadow-sm ${cart.some(item => item.id === p.id) ? 'top-16' : 'top-3'}`}
                 >
                   <Heart 
                     size={16} 
-                    className={user?.favorites?.includes(p.id) ? 'text-red-500 fill-red-500' : ''} 
+                    className={localFavorites.includes(p.id) ? 'text-red-500 fill-red-500' : ''} 
                   />
                 </button>
               </div>

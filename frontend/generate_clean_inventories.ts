@@ -2,62 +2,116 @@ import fs from 'fs';
 import path from 'path';
 import * as Papa from 'papaparse';
 
-const CSV_PATH = path.join(__dirname, 'public', 'data', 'productos_plantilla.csv');
+const CSV_PATH_1 = path.join(__dirname, 'public', 'data', 'productos_plantilla.csv');
+const CSV_PATH_2 = path.join(__dirname, 'scrapedProducts.csv');
 const REDUCIDO_PATH = path.join(__dirname, 'public', 'data', 'inventario_reducido.csv');
 const EXTENSO_PATH = path.join(__dirname, 'public', 'data', 'inventario_extenso.csv');
 
 function run() {
-  const csvData = fs.readFileSync(CSV_PATH, 'utf8');
-  let parsed = Papa.parse(csvData, { header: true, delimiter: ';' });
-  if (parsed.data.length < 10) {
-      parsed = Papa.parse(csvData, { header: true, delimiter: ',' });
+  let allRows: any[] = [];
+
+  // Read first file (595 products)
+  if (fs.existsSync(CSV_PATH_1)) {
+    const csvData1 = fs.readFileSync(CSV_PATH_1, 'utf8');
+    let parsed1 = Papa.parse(csvData1, { header: true, delimiter: ';' });
+    if (parsed1.data.length < 10) {
+      parsed1 = Papa.parse(csvData1, { header: true, delimiter: ',' });
+    }
+    allRows = allRows.concat(parsed1.data);
   }
 
-  const rows: any[] = parsed.data.filter((r: any) => r.id && r.nombre);
-
-  // Normalizar y arreglar los datos base
-  rows.forEach(row => {
-    // Asegurar imagen
-    if (row.imagen && row.imagen.includes('jomstudiovzla.github.io')) {
-      // Las dejamos tal cual, o las convertimos en rutas relativas limpias
-      row.imagen = `/images/products/scraped/${row.id}.jpg`;
-    } else if (!row.imagen) {
-       row.imagen = `/images/products/scraped/p1.jpg`; // Fallback
+  // Read second file (75 products with licores)
+  if (fs.existsSync(CSV_PATH_2)) {
+    const csvData2 = fs.readFileSync(CSV_PATH_2, 'utf8');
+    let parsed2 = Papa.parse(csvData2, { header: true, delimiter: ',' });
+    if (parsed2.data.length < 10) {
+      parsed2 = Papa.parse(csvData2, { header: true, delimiter: ';' });
     }
+    allRows = allRows.concat(parsed2.data);
+  }
+
+  const rows: any[] = allRows.filter((r: any) => r.id && (r.name || r.nombre));
+
+  // Map to correct mockDb categories
+  const categoryMap: Record<string, string> = {
+    'frutas-y-vegetales': 'frutas-vegetales',
+    'refrigerados-y-congelados': 'refrigerados-congelados',
+    'cuidado-personal-y-salud': 'cuidado-personal-salud',
+    'viveres': 'viveres',
+    'limpieza': 'limpieza',
+    'licores': 'licores',
+    'charcuteria': 'refrigerados-congelados',
+    'carnes': 'refrigerados-congelados',
+  };
+
+  rows.forEach(row => {
+    row.nombre = row.name || row.nombre || '';
+    row.descripcion = row.description || row.descripcion || '';
+    row.precio = row.price || row.precio || '0';
+    
+    let cat = (row.category || row.categoria || '').toLowerCase().trim();
+    if (categoryMap[cat]) {
+      row.categoria = categoryMap[cat];
+    } else {
+      row.categoria = 'viveres'; // Fallback
+    }
+    
+    row.subcategoria = row.subcategory || row.subcategoria || row.categoria;
+
+    // Local path so it works in localhost without needing the github pages deployment
+    row.imagen = `/images/products/scraped/${row.id}.jpg`;
 
     // Asegurar stock
     row.stock = "100";
     row.warehouseStock = "50";
-
-    // Si no tiene subcategoría, hereda de categoría para agrupar
-    if (!row.subcategoria) {
-      row.subcategoria = row.categoria || "Varios";
-    }
+    
+    delete row.name;
+    delete row.description;
+    delete row.price;
+    delete row.category;
+    delete row.subcategory;
+    delete row.image;
+    delete row.unit;
+    delete row.providerPrice;
+    delete row.originalImageUrl;
   });
 
-  // Agrupar por subcategoria
-  const porSubcategoria: Record<string, any[]> = {};
+  const porCategoria: Record<string, any[]> = {
+    'frutas-vegetales': [],
+    'refrigerados-congelados': [],
+    'viveres': [],
+    'cuidado-personal-salud': [],
+    'limpieza': [],
+    'licores': []
+  };
+
   rows.forEach(row => {
-    const sub = (row.subcategoria || row.categoria || "Varios").trim();
-    if (!porSubcategoria[sub]) porSubcategoria[sub] = [];
-    porSubcategoria[sub].push(row);
+    const cat = row.categoria;
+    if (porCategoria[cat]) {
+      porCategoria[cat].push(row);
+    } else {
+      porCategoria['viveres'].push(row);
+    }
   });
 
   const reducidoRows: any[] = [];
   const extensoRows: any[] = [];
 
-  for (const sub of Object.keys(porSubcategoria)) {
-    const items = porSubcategoria[sub];
-    
-    // Hasta 15 para reducido
+  for (const cat of Object.keys(porCategoria)) {
+    let items = porCategoria[cat];
+    // Filter duplicates just in case
+    const seen = new Set();
+    items = items.filter(i => {
+      if (seen.has(i.id)) return false;
+      seen.add(i.id);
+      return true;
+    });
+
     reducidoRows.push(...items.slice(0, 15));
-    
-    // Hasta 35 para extenso
     extensoRows.push(...items.slice(0, 35));
   }
 
-  // Generar CSVs (eliminando imagen_incrustada si no la necesitamos para no enredar el CSV final local, o la dejamos)
-  // Re-agregamos la formula para Excel/Sheets pero apuntando al dominio de github para que siempre se vea en Excel
+  // Generar CSVs
   reducidoRows.forEach(r => {
      r.imagen_incrustada = `=IMAGE("https://jomstudiovzla.github.io/minegocio${r.imagen}", 1)`;
   });
@@ -73,10 +127,6 @@ function run() {
 
   console.log(`Creado inventario reducido (${reducidoRows.length} items) -> ${REDUCIDO_PATH}`);
   console.log(`Creado inventario extenso (${extensoRows.length} items) -> ${EXTENSO_PATH}`);
-  
-  // Limpiar el original
-  fs.unlinkSync(CSV_PATH);
-  console.log(`Eliminado CSV temporal: ${CSV_PATH}`);
 }
 
 run();

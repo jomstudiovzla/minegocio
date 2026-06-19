@@ -81,6 +81,7 @@ interface AppState {
   cart: CartItem[];
   user: User | null;
   zone: string | null;
+  localFavorites: string[];
   products: Product[];
   orders: Order[];
   adminLogs: AdminLog[];
@@ -157,6 +158,7 @@ export const useStore = create<AppState>()(
       cart: [],
       user: null,
       zone: null,
+      localFavorites: [],
       products: [], // Cargados en tiempo real desde Firestore vía FirebaseSync
       orders: [],
       adminLogs: [],
@@ -206,7 +208,10 @@ export const useStore = create<AppState>()(
       
       setZone: (zone) => set({ zone }),
       
-      login: (user) => set({ user }),
+      login: (user) => set((state) => {
+        const mergedFavs = Array.from(new Set([...state.localFavorites, ...(user.favorites || [])]));
+        return { user: { ...user, favorites: mergedFavs }, localFavorites: mergedFavs };
+      }),
       
       logout: () => set({ user: null }),
       
@@ -350,8 +355,17 @@ export const useStore = create<AppState>()(
       },
 
       toggleFavorite: async (productId) => {
-        const { user } = get();
-        if (!user) return; // Solo usuarios registrados
+        const { user, localFavorites } = get();
+        
+        if (!user) {
+          // Toggle in localFavorites
+          const isFavorite = localFavorites.includes(productId);
+          const newFavorites = isFavorite
+            ? localFavorites.filter(id => id !== productId)
+            : [...localFavorites, productId];
+          set({ localFavorites: newFavorites });
+          return;
+        }
 
         const currentFavorites = user.favorites || [];
         const isFavorite = currentFavorites.includes(productId);
@@ -359,8 +373,11 @@ export const useStore = create<AppState>()(
           ? currentFavorites.filter(id => id !== productId)
           : [...currentFavorites, productId];
 
-        // Optimistic update
-        set({ user: { ...user, favorites: newFavorites } });
+        // Optimistic update for both local and user (to keep UI in sync)
+        set({ 
+          user: { ...user, favorites: newFavorites },
+          localFavorites: newFavorites 
+        });
 
         // Guardar en Firestore en segundo plano
         try {
@@ -368,7 +385,10 @@ export const useStore = create<AppState>()(
         } catch (error) {
           console.error('Error al actualizar favoritos:', error);
           // Revertir en caso de error
-          set({ user: { ...user, favorites: currentFavorites } });
+          set({ 
+            user: { ...user, favorites: currentFavorites },
+            localFavorites: currentFavorites 
+          });
         }
       },
 
