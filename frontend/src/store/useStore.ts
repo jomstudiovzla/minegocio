@@ -71,6 +71,12 @@ export interface UserNotification {
   read: boolean;
 }
 
+export interface FlashOffersConfig {
+  active: boolean;
+  productIds: string[];
+  endTime: string;
+}
+
 interface AppState {
   cart: CartItem[];
   user: User | null;
@@ -79,6 +85,7 @@ interface AppState {
   orders: Order[];
   adminLogs: AdminLog[];
   userNotifications: UserNotification[];
+  flashOffersConfig: FlashOffersConfig | null;
   rates: ExchangeRates;
   currency: 'USD' | 'EUR' | 'VES';
   isAutoRates: boolean;
@@ -98,14 +105,15 @@ interface AppState {
   setCurrency: (currency: 'USD' | 'EUR' | 'VES') => void;
   setIsAutoRates: (val: boolean) => void;
   setRates: (usd: number, eur: number) => void;
-  clearAdminLogs: () => void;
-  markAdminLogAsRead: (id: string) => void;
-  markUserNotificationAsRead: (id: string) => void;
-  clearUserNotifications: () => void;
-  addUserNotification: (notification: { title: string; message: string }) => void;
+  clearAdminLogs: () => Promise<void>;
+  markAdminLogAsRead: (id: string) => Promise<void>;
+  markUserNotificationAsRead: (id: string) => Promise<void>;
+  clearUserNotifications: () => Promise<void>;
+  setUserNotifications: (notifications: UserNotification[]) => void;
   incrementProductView: (productId: string) => void;
   setOrders: (orders: Order[]) => void;
   setAdminLogs: (logs: AdminLog[]) => void;
+  setFlashOffersConfig: (config: FlashOffersConfig | null) => void;
   toggleFavorite: (productId: string) => void;
 }
 
@@ -146,6 +154,7 @@ export const useStore = create<AppState>()(
       orders: [],
       adminLogs: [],
       userNotifications: [],
+      flashOffersConfig: null,
       rates: {
         usd: 62.50,
         eur: 65.30,
@@ -158,6 +167,7 @@ export const useStore = create<AppState>()(
       setProducts: (products) => set({ products }),
       setOrders: (orders) => set({ orders }),
       setAdminLogs: (adminLogs) => set({ adminLogs }),
+      setFlashOffersConfig: (flashOffersConfig) => set({ flashOffersConfig }),
       setIsAutoRates: (isAutoRates) => set({ isAutoRates }),
       setRates: (usd, eur) => set({
         rates: {
@@ -268,27 +278,60 @@ export const useStore = create<AppState>()(
         }
       },
       
-      clearAdminLogs: () => set({ adminLogs: [] }),
+      clearAdminLogs: async () => {
+        const { adminLogs } = get();
+        try {
+          const { db } = await import('@/lib/firebase');
+          const { doc, writeBatch } = await import('firebase/firestore');
+          const batch = writeBatch(db);
+          adminLogs.forEach(log => {
+            batch.delete(doc(db, "adminLogs", log.id));
+          });
+          await batch.commit();
+        } catch (e) {
+          console.error("Error clearing admin logs:", e);
+        }
+      },
       
-      markAdminLogAsRead: (id) => set((state) => ({
-        adminLogs: state.adminLogs.map(log => log.id === id ? { ...log, read: true } : log)
-      })),
+      markAdminLogAsRead: async (id) => {
+        try {
+          const { db } = await import('@/lib/firebase');
+          const { doc, updateDoc } = await import('firebase/firestore');
+          await updateDoc(doc(db, "adminLogs", id), { read: true });
+        } catch (e) {
+          console.error("Error marking admin log read:", e);
+        }
+      },
       
-      markUserNotificationAsRead: (id) => set((state) => ({
-        userNotifications: state.userNotifications.map(n => n.id === id ? { ...n, read: true } : n)
-      })),
+      markUserNotificationAsRead: async (id) => {
+        const { user } = get();
+        if (!user) return;
+        try {
+          const { db } = await import('@/lib/firebase');
+          const { doc, updateDoc } = await import('firebase/firestore');
+          await updateDoc(doc(db, `users/${user.id}/notifications`, id), { read: true });
+        } catch (e) {
+          console.error("Error marking user notification read:", e);
+        }
+      },
 
-      clearUserNotifications: () => set({ userNotifications: [] }),
+      clearUserNotifications: async () => {
+        const { user, userNotifications } = get();
+        if (!user) return;
+        try {
+          const { db } = await import('@/lib/firebase');
+          const { doc, writeBatch } = await import('firebase/firestore');
+          const batch = writeBatch(db);
+          userNotifications.forEach(n => {
+            batch.delete(doc(db, `users/${user.id}/notifications`, n.id));
+          });
+          await batch.commit();
+        } catch (e) {
+          console.error("Error clearing user notifications:", e);
+        }
+      },
 
-      addUserNotification: (notif) => set((state) => ({
-        userNotifications: [{
-          id: Date.now().toString() + Math.random().toString(36).substring(7),
-          date: new Date().toISOString(),
-          title: notif.title,
-          message: notif.message,
-          read: false
-        }, ...state.userNotifications]
-      })),
+      setUserNotifications: (userNotifications) => set({ userNotifications }),
 
       incrementProductView: (productId) => {
         // Actualización optimista local
@@ -324,26 +367,9 @@ export const useStore = create<AppState>()(
 
 
       updateOrderStatus: async (id, status) => {
-        set((state) => {
-          const order = state.orders.find(o => o.id === id);
-          if (!order) return state;
-
-          let newUserNotifications = [...state.userNotifications];
-          if (order.status !== status) {
-            newUserNotifications.unshift({
-              id: Date.now().toString() + Math.random().toString(36).substring(7),
-              date: new Date().toISOString(),
-              title: `Pedido ${id}`,
-              message: `El estado de tu pedido ha cambiado a: ${status}.`,
-              read: false
-            });
-          }
-
-          return {
-            orders: state.orders.map(o => o.id === id ? { ...o, status } : o),
-            userNotifications: newUserNotifications
-          };
-        });
+        set((state) => ({
+          orders: state.orders.map(o => o.id === id ? { ...o, status } : o),
+        }));
 
         try {
           const { db } = await import('@/lib/firebase');

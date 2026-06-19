@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Papa from 'papaparse';
 import { useStore, Order } from '@/store/useStore';
-import { Crown, Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Mail, User as UserIcon, MapPin, DollarSign, TrendingUp, Search, Layers, Edit, BarChart2, Plus, Users, Shield, Star } from 'lucide-react';
+import { Crown, Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Mail, User as UserIcon, MapPin, DollarSign, TrendingUp, Search, Layers, Edit, BarChart2, Plus, Users, Shield, Star, Zap } from 'lucide-react';
 import { Product, products as initialProducts } from '@/data/mockDb';
 import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
 import { useRouter } from 'next/navigation';
@@ -20,6 +20,7 @@ export default function AdminPage() {
   const setRates = useStore(state => state.setRates);
   const adminLogs = useStore(state => state.adminLogs);
   const clearAdminLogs = useStore(state => state.clearAdminLogs);
+  const flashOffersConfig = useStore(state => state.flashOffersConfig);
   
   const [status, setStatus] = useState<{type: 'idle' | 'success' | 'error', msg: string}>({type: 'idle', msg: ''});
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -33,7 +34,7 @@ export default function AdminPage() {
   const [loginError, setLoginError] = useState('');
 
   // Dashboard layout state
-  const [activeTab, setActiveTab] = useState<'orders' | 'inventory' | 'csv' | 'rates' | 'notifications' | 'stats' | 'crm' | 'security'>('orders');
+  const [activeTab, setActiveTab] = useState<'orders' | 'inventory' | 'csv' | 'rates' | 'notifications' | 'stats' | 'crm' | 'security' | 'flashOffers'>('orders');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   
@@ -48,6 +49,61 @@ export default function AdminPage() {
   
   // Search state for inventory
   const [inventorySearch, setInventorySearch] = useState('');
+
+  // Flash Offers state
+  const [flashHours, setFlashHours] = useState<number>(24);
+  const [flashSearch, setFlashSearch] = useState('');
+
+  const handleSaveFlashOffer = async () => {
+    try {
+      const { db } = await import('@/lib/firebase');
+      const { doc, setDoc } = await import('firebase/firestore');
+      const end = new Date();
+      end.setHours(end.getHours() + flashHours);
+      
+      const config = {
+        active: true,
+        endTime: end.toISOString(),
+        productIds: flashOffersConfig?.productIds || []
+      };
+      await setDoc(doc(db, "store", "flashOffers"), config);
+      setStatus({type: 'success', msg: 'Oferta Relámpago activada con éxito.'});
+    } catch(e) {
+      setStatus({type: 'error', msg: 'Error guardando oferta relámpago.'});
+    }
+  };
+
+  const handleToggleFlashProduct = async (productId: string) => {
+    try {
+      const currentIds = flashOffersConfig?.productIds || [];
+      const newIds = currentIds.includes(productId) 
+        ? currentIds.filter(id => id !== productId) 
+        : [...currentIds, productId];
+
+      const { db } = await import('@/lib/firebase');
+      const { doc, setDoc } = await import('firebase/firestore');
+      const config = {
+        active: flashOffersConfig?.active || false,
+        endTime: flashOffersConfig?.endTime || new Date().toISOString(),
+        productIds: newIds
+      };
+      await setDoc(doc(db, "store", "flashOffers"), config);
+    } catch(e) {}
+  };
+
+  const handleDisableFlashOffers = async () => {
+    try {
+      const { db } = await import('@/lib/firebase');
+      const { doc, setDoc } = await import('firebase/firestore');
+      const config = {
+        active: false,
+        endTime: flashOffersConfig?.endTime || new Date().toISOString(),
+        productIds: flashOffersConfig?.productIds || []
+      };
+      await setDoc(doc(db, "store", "flashOffers"), config);
+      setStatus({type: 'success', msg: 'Oferta Relámpago apagada.'});
+    } catch(e) {}
+  };
 
   // Edit product state
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -478,6 +534,16 @@ return (
           <ClipboardList size={16} /> Pedidos en Espera ({pendingOrdersCount})
         </button>
         <button
+          onClick={() => setActiveTab('flashOffers')}
+          className={`flex items-center gap-1.5 pb-2 px-1 md:px-2 font-bold text-xs md:text-sm transition-all border-b-2 ${
+            activeTab === 'flashOffers' 
+              ? 'border-yellow-500 text-yellow-600' 
+              : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          <Zap size={16} /> Ofertas Relámpago
+        </button>
+        <button
           onClick={() => setActiveTab('inventory')}
           className={`flex items-center gap-1.5 pb-2 px-1 md:px-2 font-bold text-xs md:text-sm transition-all border-b-2 ${
             activeTab === 'inventory' 
@@ -556,6 +622,79 @@ return (
           <BarChart2 size={16} /> Estadísticas
         </button>
       </div>
+
+      {/* ------------------ TAB FLASH OFFERS ------------------ */}
+      {activeTab === 'flashOffers' && (
+        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6 animate-in fade-in duration-300">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-mi-yellow/10 p-2.5 rounded-xl"><Zap size={22} className="text-mi-yellow" /></div>
+              <div>
+                <h2 className="text-2xl font-black text-gray-800">Ofertas Relámpago</h2>
+                <p className="text-gray-400 text-xs font-medium">Controla los productos y el tiempo de tus ofertas flash.</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {flashOffersConfig?.active ? (
+                <button onClick={handleDisableFlashOffers} className="bg-red-50 text-red-600 font-bold px-4 py-2 rounded-xl text-sm transition hover:bg-red-100">
+                  Apagar Oferta Activa
+                </button>
+              ) : (
+                <span className="bg-gray-100 text-gray-500 font-bold px-4 py-2 rounded-xl text-sm">
+                  Oferta Inactiva
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="md:col-span-1 bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-4">
+              <h3 className="font-bold text-gray-800 text-lg">Configuración</h3>
+              <div>
+                <label className="block text-xs font-bold text-gray-600 mb-1">Duración (horas a partir de ahora)</label>
+                <div className="flex items-center gap-2">
+                  <input type="number" min="1" max="72" value={flashHours} onChange={e => setFlashHours(Number(e.target.value))} className="w-full border border-gray-200 rounded-lg p-2 font-bold" />
+                  <span className="text-sm text-gray-500 font-bold">hrs</span>
+                </div>
+              </div>
+              <button onClick={handleSaveFlashOffer} className="w-full bg-mi-yellow text-mi-blue font-black py-3 rounded-xl hover:brightness-110 transition shadow-md shadow-mi-yellow/30">
+                Guardar y Activar Oferta
+              </button>
+              {flashOffersConfig?.active && (
+                <p className="text-xs text-center text-green-600 font-bold">
+                  Finaliza: {new Date(flashOffersConfig.endTime).toLocaleString()}
+                </p>
+              )}
+            </div>
+
+            <div className="md:col-span-2 space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold text-gray-800 text-lg">Productos Seleccionados ({(flashOffersConfig?.productIds || []).length})</h3>
+                <div className="relative w-1/2">
+                  <input type="text" placeholder="Buscar catálogo..." value={flashSearch} onChange={e => setFlashSearch(e.target.value)} className="w-full bg-gray-50 border border-gray-200 rounded-full py-2 px-4 text-xs focus:outline-none" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-h-96 overflow-y-auto pr-2">
+                {products.filter(p => p.name.toLowerCase().includes(flashSearch.toLowerCase())).map(p => {
+                  const isSelected = (flashOffersConfig?.productIds || []).includes(p.id);
+                  return (
+                    <div key={p.id} onClick={() => handleToggleFlashProduct(p.id)} className={`cursor-pointer flex items-center gap-3 p-3 rounded-xl border transition ${isSelected ? 'bg-yellow-50 border-yellow-400 shadow-sm' : 'bg-white border-gray-100 hover:border-gray-300'}`}>
+                      <div className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 ${isSelected ? 'bg-yellow-500' : 'border-2 border-gray-300'}`}>
+                        {isSelected && <Check size={14} className="text-white" />}
+                      </div>
+                      <img src={p.image} className="w-8 h-8 object-contain mix-blend-multiply" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-bold text-gray-800 truncate">{p.name}</p>
+                        <p className="text-[10px] text-gray-500">${p.price}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ------------------ TAB CRM PREMIUM ------------------ */}
       {activeTab === 'crm' && (

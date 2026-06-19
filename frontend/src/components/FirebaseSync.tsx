@@ -11,6 +11,8 @@ export default function FirebaseSync() {
   const setProducts = useStore(state => state.setProducts);
   const setOrders = useStore(state => state.setOrders);
   const setAdminLogs = useStore(state => state.setAdminLogs);
+  const setUserNotifications = useStore(state => state.setUserNotifications);
+  const setFlashOffersConfig = useStore(state => state.setFlashOffersConfig);
   const login = useStore(state => state.login);
   const logout = useStore(state => state.logout);
 
@@ -58,12 +60,8 @@ export default function FirebaseSync() {
         ords.push(order);
 
         if (previousOrders[order.id] && previousOrders[order.id] !== order.status) {
-          if (useStore.getState().user?.id !== 'admin') {
-            useStore.getState().addUserNotification({
-              title: `Pedido ${order.id}`,
-              message: `El estado de tu pedido ha cambiado a: ${order.status}`
-            });
-          }
+          // El envío de notificaciones ahora se hace desde updateOrderStatus directamente a Firestore.
+          // Aquí solo actualizamos el tracking local para la tienda.
         }
         previousOrders[order.id] = order.status;
       });
@@ -93,14 +91,38 @@ export default function FirebaseSync() {
       setAdminLogs(logs);
     });
 
+    // 5. User Notifications (Solo si hay usuario y NO es admin)
+    let unsubUserNotifs = () => {};
+    if (useStore.getState().user && useStore.getState().user?.email !== 'admin@jomstudio.com') {
+       const uId = useStore.getState().user!.id;
+       const qNotifs = query(collection(db, `users/${uId}/notifications`));
+       unsubUserNotifs = onSnapshot(qNotifs, (snapshot) => {
+         const notifs: any[] = [];
+         snapshot.forEach(doc => notifs.push(doc.data()));
+         notifs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+         setUserNotifications(notifs);
+       });
+    }
+
+    // 6. Flash Offers Config
+    const unsubFlashOffers = onSnapshot(doc(db, "store", "flashOffers"), (docSnap) => {
+      if (docSnap.exists()) {
+        setFlashOffersConfig(docSnap.data() as any);
+      } else {
+        setFlashOffersConfig(null);
+      }
+    });
+
     return () => {
       unsubProducts();
       unsubAuth();
       if (unsubUserDoc) unsubUserDoc();
       unsubOrders();
       unsubLogs();
+      unsubUserNotifs();
+      unsubFlashOffers();
     };
-  }, [setProducts, setOrders, setAdminLogs, login, logout]);
+  }, [setProducts, setOrders, setAdminLogs, setUserNotifications, setFlashOffersConfig, login, logout]);
 
   return null;
 }

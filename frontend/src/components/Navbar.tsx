@@ -17,13 +17,12 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   const pathname = usePathname();
-  const { cart, user, rates, currency, setCurrency, userNotifications, markUserNotificationAsRead, adminLogs, markAdminLogAsRead, logout } = useStore();
+  const { cart, user, rates, currency, setCurrency, userNotifications, markUserNotificationAsRead, clearUserNotifications, adminLogs, markAdminLogAsRead, clearAdminLogs, logout } = useStore();
 
   const isAdmin = user?.email === 'admin@jomstudio.com';
-  const notificationsToShow = isAdmin ? adminLogs : userNotifications;
-  const unreadCount = isAdmin
-    ? adminLogs.filter(n => !n.read).length
-    : userNotifications.filter(n => !n.read).length;
+  // Filter out read notifications immediately so they don't accumulate visually
+  const notificationsToShow = (isAdmin ? adminLogs : userNotifications).filter(n => !n.read);
+  const unreadCount = notificationsToShow.length;
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -202,12 +201,22 @@ export default function Navbar() {
                           <h4 className="font-bold text-gray-800 text-sm">
                             {isAdmin ? 'Notificaciones Admin' : 'Notificaciones'}
                           </h4>
-                          <span className="text-xs text-gray-500">{unreadCount} nuevas</span>
+                          {unreadCount > 0 && (
+                            <button
+                              onClick={() => {
+                                isAdmin ? clearAdminLogs() : clearUserNotifications();
+                                setIsNotificationsOpen(false);
+                              }}
+                              className="text-xs text-mi-blue hover:text-red-500 font-bold transition"
+                            >
+                              Borrar todas
+                            </button>
+                          )}
                         </div>
                         <div className="max-h-80 overflow-y-auto">
                           {notificationsToShow.length === 0 ? (
                             <div className="px-4 py-8 text-center text-gray-500 text-sm">
-                              No tienes notificaciones
+                              No tienes nuevas notificaciones
                             </div>
                           ) : (
                             notificationsToShow.map((notif) => {
@@ -246,7 +255,9 @@ export default function Navbar() {
                 >
                   <User size={24} className={mounted && user ? 'text-mi-blue' : 'text-gray-600'} />
                   {mounted && user && (
-                    <span className="text-sm font-bold hidden lg:block text-mi-blue">Nivel {user.clubLevel}</span>
+                    <span className="text-sm font-bold hidden lg:block text-mi-blue">
+                      {isAdmin ? 'Nivel Oro' : `Nivel ${user.clubLevel}`}
+                    </span>
                   )}
                 </div>
 

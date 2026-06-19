@@ -37,9 +37,9 @@ export default function FlashOffers() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ hours: 0, minutes: 0, seconds: 0 });
   const [mounted, setMounted] = useState(false);
 
-  const calcTime = useCallback(() => {
+  const calcTime = useCallback((endTimeStr?: string) => {
     const now = new Date();
-    const end = getNextMidnight();
+    const end = endTimeStr ? new Date(endTimeStr) : getNextMidnight();
     const diff = Math.max(0, end.getTime() - now.getTime());
     return {
       hours: Math.floor(diff / 3_600_000),
@@ -48,23 +48,20 @@ export default function FlashOffers() {
     };
   }, []);
 
+  const flashOffersConfig = useStore(state => state.flashOffersConfig);
+
   useEffect(() => {
     setMounted(true);
-    setTimeLeft(calcTime());
-    const interval = setInterval(() => setTimeLeft(calcTime()), 1000);
+    const end = flashOffersConfig?.endTime;
+    setTimeLeft(calcTime(end));
+    const interval = setInterval(() => setTimeLeft(calcTime(end)), 1000);
     return () => clearInterval(interval);
-  }, [calcTime]);
+  }, [calcTime, flashOffersConfig?.endTime]);
 
-  // Pick products labeled "Oferta" or the first 4 products as flash offers
-  const flashProducts = products
-    .filter(p => p.isActive !== false)
-    .filter(p => p.labels?.includes('Oferta') || p.labels?.includes('oferta'))
-    .slice(0, 4);
-
-  // Fallback: if no labeled offers, pick 4 popular ones with a fake discount
-  const displayProducts = flashProducts.length >= 2
-    ? flashProducts
-    : products.filter(p => p.isActive !== false).slice(0, 4);
+  // Si hay config desde Firebase, la usamos estrictamente
+  const displayProducts = flashOffersConfig?.active
+    ? products.filter(p => flashOffersConfig.productIds.includes(p.id) && p.isActive !== false)
+    : [];
 
   const formatPrice = (usd: number) => {
     if (!mounted) return `$${usd.toFixed(2)}`;
@@ -73,7 +70,8 @@ export default function FlashOffers() {
     return `$${usd.toFixed(2)}`;
   };
 
-  if (displayProducts.length === 0) return null;
+  // Si la oferta no está activa o el tiempo llegó a cero, no mostramos nada
+  if (!flashOffersConfig?.active || displayProducts.length === 0 || (timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0)) return null;
 
   return (
     <section className="py-10 px-4 bg-gradient-to-br from-mi-blue via-mi-blue-mid to-mi-blue-light">

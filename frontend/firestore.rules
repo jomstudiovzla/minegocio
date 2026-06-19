@@ -29,6 +29,12 @@ service cloud.firestore {
       allow read, update: if isOwner(userId);
       // La creación requiere que el request lo haga el propio usuario autenticado
       allow create: if request.auth != null && request.auth.uid == userId;
+
+      // Subcolección de notificaciones del usuario
+      match /notifications/{notificationId} {
+        allow read, update: if isOwner(userId) || isAdmin();
+        allow create, delete: if isAdmin() || request.auth != null; // Cualquiera autenticado puede crear (ej: al comprar), pero idealmente el admin o el sistema
+      }
     }
 
     // ── Inventario ───────────────────────────────────────────────────────
@@ -52,14 +58,20 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
-    // ── Admin Logs (Trazabilidad) ─────────────────────────────────────────
+    // ── Logs Administrativos ──────────────────────────────────────────────
     match /adminLogs/{logId} {
-      allow read, write: if isAdmin();
+      allow read, write, delete: if isAdmin();
       allow create: if request.auth != null; // sistema puede crear logs
     }
 
     // ── Tasas de cambio ──────────────────────────────────────────────────
     match /exchangeRates/{rateId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ── Store Config (Flash Offers, etc) ──────────────────────────────────
+    match /store/{docId} {
       allow read: if true;
       allow write: if isAdmin();
     }
