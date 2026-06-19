@@ -2,7 +2,7 @@
 import React from 'react';
 import { X, ShoppingCart, Trash2, Plus, Minus, ShoppingBag, ArrowRight, Tag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useStore, convertAndFormatPrice } from '@/store/useStore';
+import { useStore, convertAndFormatPrice, resolveImage } from '@/store/useStore';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -116,7 +116,7 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                     className="flex gap-3 items-center bg-white p-3 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition group"
                   >
                     <div className="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden shrink-0 flex items-center justify-center">
-                      <img src={item.image.startsWith('/') && process.env.NODE_ENV === 'production' ? '/minegocio' + item.image : item.image} alt={item.name} className="w-full h-full object-contain mix-blend-multiply p-1" />
+                      <img src={resolveImage(item.image)} alt={item.name} className="w-full h-full object-contain mix-blend-multiply p-1" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-bold text-gray-800 line-clamp-1">{item.name}</h4>

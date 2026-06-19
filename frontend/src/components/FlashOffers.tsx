@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback } from 'react';
-import { useStore } from '@/store/useStore';
+import { useStore, resolveImage } from '@/store/useStore';
 import { Zap, ShoppingCart, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -122,7 +122,7 @@ export default function FlashOffers() {
                 {/* Image */}
                 <div className="relative h-40 bg-gray-50 overflow-hidden">
                   <img 
-                    src={product.image.startsWith('/') && process.env.NODE_ENV === 'production' ? '/minegocio' + product.image : product.image} 
+                    src={resolveImage(product.image)} 
                     alt={product.name} 
                     className="w-full h-full object-contain mix-blend-multiply drop-shadow-sm group-hover:scale-110 transition-transform duration-300" 
                   />

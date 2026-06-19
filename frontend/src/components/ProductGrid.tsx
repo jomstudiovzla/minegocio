@@ -1,7 +1,7 @@
 "use client";
 import { Plus, Minus, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useStore, convertAndFormatPrice } from '@/store/useStore';
+import { useStore, convertAndFormatPrice, resolveImage } from '@/store/useStore';
 import { Product } from '@/data/mockDb';
 import { useState } from 'react';
 import ProductModal from './ProductModal';
@@ -93,7 +93,7 @@ export default function ProductGrid({ products }: { products: Product[] }) {
                 <motion.img 
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
-                  src={p.image.startsWith('/') && process.env.NODE_ENV === 'production' ? '/minegocio' + p.image : p.image} 
+                  src={resolveImage(p.image)} 
                   alt={p.name} 
                   className="w-full h-auto object-cover rounded-lg mix-blend-multiply drop-shadow-sm z-10" 
                 />

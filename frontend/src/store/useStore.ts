@@ -144,6 +144,13 @@ export function convertAndFormatPrice(priceInUSD: number, currency: 'USD' | 'EUR
   return `$${converted.toFixed(2)}`;
 }
 
+export function resolveImage(imagePath: string): string {
+  if (!imagePath) return '';
+  if (imagePath.startsWith('http')) return imagePath;
+  const basePath = typeof window !== 'undefined' && window.location.hostname.includes('github.io') ? '/minegocio' : '';
+  return imagePath.startsWith('/') ? basePath + imagePath : basePath + '/' + imagePath;
+}
+
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({

@@ -1,6 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, X } from 'lucide-react';
+import { resolveImage } from '@/store/useStore';
 import { useEffect } from 'react';
 
 interface CartToastProps {
@@ -30,7 +31,7 @@ export default function CartToast({ message, image, visible, onDismiss }: CartTo
         >
           {image && (
             <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 overflow-hidden border border-gray-100">
-              <img src={image.startsWith('/') && process.env.NODE_ENV === 'production' ? '/minegocio' + image : image} alt="" className="max-h-full object-contain mix-blend-multiply" />
+              <img src={resolveImage(image)} alt="" className="max-h-full object-contain mix-blend-multiply" />
             </div>
           )}
           <div className="flex-1 min-w-0">

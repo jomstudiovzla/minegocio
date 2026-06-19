@@ -1,7 +1,7 @@
 "use client";
 import { X, ShoppingCart, Heart, Share2, Truck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useStore, convertAndFormatPrice } from '@/store/useStore';
+import { useStore, convertAndFormatPrice, resolveImage } from '@/store/useStore';
 import { useState, useEffect } from 'react';
 
 interface Product {
@@ -71,7 +71,7 @@ export default function ProductModal({ product, onClose }: { product: Product | 
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2 }}
-              src={product.image.startsWith('/') && process.env.NODE_ENV === 'production' ? '/minegocio' + product.image : product.image} 
+              src={resolveImage(product.image)} 
               alt={product.name} 
               className="w-full h-full object-contain mix-blend-multiply drop-shadow-xl" 
             />
