@@ -469,7 +469,15 @@ export const useStore = create<AppState>()(
       }
     }),
     {
-      name: 'mi-negocio-storage',
+      name: 'mi-negocio-storage-v2',
+      partialize: (state) => ({
+        cart: state.cart,
+        user: state.user,
+        zone: state.zone,
+        currency: state.currency,
+        isAutoRates: state.isAutoRates,
+        flashOffersConfig: state.flashOffersConfig
+      }),
     }
   )
 );
