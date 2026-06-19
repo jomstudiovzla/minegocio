@@ -88,7 +88,13 @@ export default function AdminPage() {
         productIds: newIds
       };
       await setDoc(doc(db, "store", "flashOffers"), config);
-    } catch(e) {}
+      
+      // Optimistic update
+      useStore.getState().setFlashOffersConfig(config);
+    } catch(e: any) {
+      console.error("Flash Offer Toggle Error:", e);
+      setStatus({type: 'error', msg: `Error al seleccionar: ${e.message}`});
+    }
   };
 
   const handleDisableFlashOffers = async () => {
@@ -209,37 +215,59 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (mounted) {
-      if (user) {
-        if (user.email === 'admin@jomstudio.com') {
-          setIsAdminLoggedIn(true);
-          sessionStorage.setItem('isAdminLoggedIn', 'true');
-        } else {
-          // If logged in as non-admin, force logout admin view
-          setIsAdminLoggedIn(false);
-          sessionStorage.removeItem('isAdminLoggedIn');
-        }
-      } else {
-        const logged = sessionStorage.getItem('isAdminLoggedIn');
-        if (logged === 'true') {
-          setIsAdminLoggedIn(true);
-        }
-      }
+      import('@/lib/firebase').then(({ auth }) => {
+        auth.onAuthStateChanged((firebaseUser) => {
+          if (firebaseUser && firebaseUser.email === 'admin@jomstudio.com') {
+            setIsAdminLoggedIn(true);
+            sessionStorage.setItem('isAdminLoggedIn', 'true');
+          } else {
+            setIsAdminLoggedIn(false);
+            sessionStorage.removeItem('isAdminLoggedIn');
+            
+            // If they had a fake local session, remove it
+            if (user && user.email === 'admin@jomstudio.com') {
+              useStore.getState().logout();
+            }
+          }
+        });
+      });
     }
-  }, [mounted, user]);
+  }, [mounted]);
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (adminEmail.trim().toLowerCase() === 'admin@jomstudio.com' && adminPassword.trim() === 'VZLA') {
-      login({
-        id: 'admin',
-        name: 'Administrador',
-        email: 'admin@jomstudio.com',
-        clubPoints: 0,
-        clubLevel: 'Oro'
-      });
-      setIsAdminLoggedIn(true);
-      sessionStorage.setItem('isAdminLoggedIn', 'true');
-      setLoginError('');
+      try {
+        const { auth } = await import('@/lib/firebase');
+        const { signInWithEmailAndPassword, createUserWithEmailAndPassword } = await import('firebase/auth');
+        
+        try {
+          await signInWithEmailAndPassword(auth, adminEmail.trim(), adminPassword.trim());
+        } catch (err: any) {
+          if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
+            try {
+              await createUserWithEmailAndPassword(auth, adminEmail.trim(), adminPassword.trim());
+            } catch (createErr) {
+              console.error('Error auto-creating admin user:', createErr);
+            }
+          } else {
+            console.error('Login error:', err);
+          }
+        }
+        
+        login({
+          id: 'admin',
+          name: 'Administrador',
+          email: 'admin@jomstudio.com',
+          clubPoints: 0,
+          clubLevel: 'Oro'
+        });
+        setIsAdminLoggedIn(true);
+        sessionStorage.setItem('isAdminLoggedIn', 'true');
+        setLoginError('');
+      } catch (err) {
+        setLoginError('Error conectando con Firebase Auth.');
+      }
     } else {
       setLoginError('Credenciales incorrectas. Verifica el correo y la clave.');
     }
