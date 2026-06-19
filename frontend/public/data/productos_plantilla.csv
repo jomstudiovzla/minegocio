@@ -1,84 +1,254 @@
 id,name,price,category,subcategory,image,unit,labels,stock,warehouseStock
-p1,TOMATES PERITA X KG,3.49,frutas-vegetales,Frescos,/images/products/scraped/p-plazas-118573.jpg,1 Kg,Nuevo,69,229
-p2,Cebolla Blanca X KG,2.10,frutas-vegetales,Frescos,/images/products/scraped/p-plazas-119503.jpg,1 Kg,,26,198
-p3,PAPAS X KG,2.95,frutas-vegetales,Frescos,/images/products/scraped/p-plazas-124224.jpg,1 Kg,Nuevo,74,130
-p4,ZANAHORIAS X KG,2.89,frutas-vegetales,Frescos,/images/products/scraped/p-plazas-125209.jpg,1 Kg,,42,360
-p5,PIMENTON VERDE X KG,3.75,frutas-vegetales,Frescos,/images/products/scraped/p-plazas-125210.jpg,1 Kg,,95,404
-p6,Lechuga Romana,1.20,frutas-vegetales,Frescos,/images/products/scraped/p-plazas-125832.jpg,1 Unidad,,19,348
-p7,PLATANO X KG,2.79,frutas-vegetales,Enteras,/images/products/scraped/p-plazas-125858.jpg,1 Kg,,49,189
-p8,CAMBUR X KG,1.35,frutas-vegetales,Enteras,/images/products/scraped/p-plazas-125914.jpg,1 Kg,,16,181
-p9,MANZANA ROYAL GALA X KG,5.25,frutas-vegetales,Enteras,/images/products/scraped/p-plazas-125941.jpg,1 Kg,,92,306
-p10,NARANJAS PARA JUGO X KG,2.50,frutas-vegetales,Enteras,/images/products/scraped/p-plazas-125953.jpg,1 Kg,Oferta,68,241
-p11,LECHOSA X KG,1.75,frutas-vegetales,Enteras,/images/products/scraped/p-plazas-126060.jpg,1 Kg,Nuevo,94,324
-p12,LIMONES X KG,4.19,frutas-vegetales,Frescos,/images/products/scraped/p-plazas-126061.jpg,1 Kg,Nuevo,92,250
-p13,PIÑA X UN,2.55,frutas-vegetales,Enteras,/images/products/scraped/p-plazas-126098.jpg,1 Unidad,,96,124
-p14,Aguacate,5.20,frutas-vegetales,Frescos,/images/products/scraped/p-plazas-126100.jpg,1 Kg,,84,173
-p15,PATILLA ROJA X KG,1.19,frutas-vegetales,Picadas,/images/products/scraped/p-plazas-126105.jpg,500g,,96,359
-p16,CARNE MOLIDA SV,9.95,refrigerados-congelados,Carnes,/images/products/scraped/p-plazas-126120.jpg,1 Kg,,33,64
-p17,Bistec de Ganso,11.50,refrigerados-congelados,Carnes,/images/products/scraped/p-plazas-126127.jpg,1 Kg,Nuevo,20,148
-p18,COSTILLAS DE CERDO BBQ PREPARADOS PLAZAS CONGELADO X KG,21.95,refrigerados-congelados,Carnes,/images/products/scraped/p-plazas-126132.jpg,1 Kg,,89,145
-p19,PECHUGA DE POLLO MOLIDA X KG,11.45,refrigerados-congelados,Pollos,/images/products/scraped/p-plazas-126139.jpg,1 Kg,,82,71
-p20,Pollo Entero X KG,4.50,refrigerados-congelados,Pollos,/images/products/scraped/p-plazas-126151.jpg,1 Kg,Nuevo,42,55
-p21,MUSLOS DE POLLO X KG,4.25,refrigerados-congelados,Pollos,/images/products/scraped/p-plazas-126160.jpg,1 Kg,,50,77
-p22,Alitas de Pollo X KG,6.00,refrigerados-congelados,Pollos,/images/products/scraped/p-plazas-129410.jpg,1 Kg,,32,298
-p23,JAMON ENDIABLADO PLUMROSE 60G,2.15,refrigerados-congelados,Embutidos,/images/products/scraped/p-plazas-129411.jpg,500g,,93,323
-p24,QUESO AMARILLO MAJU X KG,27.29,refrigerados-congelados,Embutidos,/images/products/scraped/p-plazas-129413.jpg,500g,,98,460
-p25,QUESO BLANCO MERIDEÑO X KG,10.99,refrigerados-congelados,Embutidos,/images/products/scraped/p-plazas-130013.jpg,1 Kg,,84,282
-p26,SALCHICHAS FRANKFURT PLUMROSE DE 350G,9.89,refrigerados-congelados,Embutidos,/images/products/scraped/p-plazas-130493.jpg,1 Paquete,,59,430
-p27,Tocino Ahumado Plumrose 250G,4.80,refrigerados-congelados,Embutidos,/images/products/scraped/p-plazas-130595.jpg,250g,,39,155
-p28,CHORIZO MONTSERRATINA TIPO VELA X KG,52.88,refrigerados-congelados,Embutidos,/images/products/scraped/p-plazas-132136.jpg,500g,,55,170
-p29,QUESO GUAYANES X KG,8.19,refrigerados-congelados,Embutidos,/images/products/scraped/p-plazas-132421.jpg,500g,,89,496
-p30,NUGGETS DE POLLO PLAZAS CONGELADOS X KG,13.44,refrigerados-congelados,Pollos,/images/products/scraped/p-plazas-132682.jpg,1 Paquete,,37,322
-p31,COCA COLA SIN AZUCAR 2L,1.44,viveres,Refrescos,/images/products/scraped/p-plazas-133154.jpg,2 L,,78,225
-p32,PEPSI COLA 2L,1.45,viveres,Refrescos,/images/products/scraped/p-plazas-136158.jpg,2 L,,40,182
-p33,CHINOTTO SIN CALORIAS 355CC,0.79,viveres,Refrescos,/images/products/scraped/p-plazas-136433.jpg,2 L,,11,173
-p34,FRESCOLITA SIN CALORIAS 2L,1.44,viveres,Refrescos,/images/products/scraped/p-plazas-136439.jpg,2 L,,35,279
-p35,MALTA MALTIN POLAR 1.5L,1.93,viveres,Refrescos,/images/products/scraped/p-plazas-136583.jpg,1.5 L,Oferta,53,482
-p36,ARROZ MARY DORADO 800G,1.75,viveres,Arroz,/images/products/scraped/p-plazas-137240.jpg,1 Kg,,94,443
-p37,ARROZ PRIMOR TRADICIONAL 900G,1.50,viveres,Arroz,/images/products/scraped/p-plazas-137534.jpg,1 Kg,,82,429
-p38,PASTA CAPRI CANELONES 250G,1.49,viveres,Pasta,/images/products/scraped/p-plazas-137536.jpg,1 Kg,,19,327
-p39,HARINA PAN MAIZ BLANCO GLUTEN FREE 2KG,2.45,viveres,Harinas,/images/products/scraped/p-plazas-137939.jpg,1 Kg,Nuevo,28,331
-p40,CARAOTAS BLANCAS MARY 500G,3.40,viveres,Granos,/images/products/scraped/p-plazas-138840.jpg,500g,,82,461
-p41,LENTEJAS MARY 400G,1.80,viveres,Granos,/images/products/scraped/p-plazas-139099.jpg,500g,,37,174
-p42,ATUN MARGARITA EN ACEITE VEGETAL 140G,3.35,viveres,Enlatados,/images/products/scraped/p-plazas-139787.jpg,140g,,100,220
-p43,ATUN MARGARITA AL NATURAL 140G,3.00,viveres,Enlatados,/images/products/scraped/p-plazas-139826.jpg,140g,,46,218
-p44,MAIZ DULCE CAUJARAL 4UN,7.90,viveres,Enlatados,/images/products/scraped/p-plazas-140023.jpg,300g,,37,249
-p45,ACEITE MAZEITE DE MAIZ 1L,5.80,viveres,Aceites,/images/products/scraped/p-plazas-142112.jpg,1 Litro,,90,193
-p46,JABON LIQUIDO PROTEX DE AVENA 221ML,6.50,cuidado-personal-salud,Aseo,/images/products/scraped/p-plazas-142124.jpg,3 Unidades,,59,82
-p47,DESODORANTE ROLL ON DOVE DERMOACLARANTE 50ML,4.85,cuidado-personal-salud,Aseo,/images/products/scraped/p-plazas-142125.jpg,50ml,,29,236
-p48,CEPILLO DENTAL COLGATE 360 MEDIO,4.74,cuidado-personal-salud,Aseo,/images/products/scraped/p-plazas-142173.jpg,100g,,14,284
-p49,ACONDICIONADOR PANTENE RESTAURACION 400ML,11.34,cuidado-personal-salud,Aseo,/images/products/scraped/p-plazas-142720.jpg,400ml,Oferta,56,492
-p50,PAPEL HIGIENICO SCOTT PREMIUM 4 ROLLOS,6.89,cuidado-personal-salud,Aseo,/images/products/scraped/p-plazas-142747.jpg,4 Rollos,,77,192
-p51,TOALLAS SANITARIAS ALWAYS ACTIVE NOCTURNAS 8UN,3.55,cuidado-personal-salud,Aseo,/images/products/scraped/p-plazas-143142.jpg,10 Unidades,,41,361
-p52,CARTUCHO GILLETTE VENUS SKIN COMFORT4UND,16.48,cuidado-personal-salud,Aseo,/images/products/scraped/p-plazas-144341.jpg,2 Unidades,,24,401
-p53,Crema Corporal Lubriderm,8.50,cuidado-personal-salud,Aseo,/images/products/scraped/p-plazas-144342.jpg,400ml,,77,72
-p54,ALGODON ALGOBAP HIDROFILO 100G,5.68,cuidado-personal-salud,Farmacia,/images/products/scraped/p-plazas-144343.jpg,100g,,94,349
-p55,Hisopos Q-Tips,1.80,cuidado-personal-salud,Farmacia,/images/products/scraped/p-plazas-144618.jpg,100 Unidades,,35,500
-p56,ALCOHOL DE QUEMAR OPIN 900ML,7.98,cuidado-personal-salud,Farmacia,/images/products/scraped/p-plazas-144820.jpg,250ml,,36,346
-p57,AGUA OXIGENADA EL GUARDIAN 500ML,2.85,cuidado-personal-salud,Farmacia,/images/products/scraped/p-plazas-144920.jpg,100ml,,83,257
-p58,CURITAS BRIUTCARE TRANSP X20 UN,4.29,cuidado-personal-salud,Farmacia,/images/products/scraped/p-plazas-145185.jpg,Caja,,71,319
-p59,"DETERG LIQ ARIEL REVITACOLOR 1,8L",23.00,limpieza,/images/products/scraped/p-plazas-145204.jpg,/Ananas/images/products/detergente_liquido.png,2 L,,84,446
-p60,POLVO PARA HORNEAR OLYMPIA 120G,3.75,limpieza,Detergentes,/images/products/scraped/p-plazas-145304.jpg,1 Kg,Oferta,27,155
-p61,"SUAVITEL COMPLETE FRESCA PRIMAVERA 1,3L",11.02,limpieza,/images/products/scraped/p-plazas-146542.jpg,/Ananas/images/products/suavizante.png,1 L,,65,460
-p62,DETERGENTE LAS LLAVES FLORAL POLVO 900G,4.34,limpieza,Detergentes,/images/products/scraped/p-plazas-146926.jpg,500ml,,68,284
-p63,LAVAPLATOS CREMA AXION BICAR 7 EN 1 450G,5.12,limpieza,Detergentes,/images/products/scraped/p-plazas-146941.jpg,250g,,89,499
-p64,"CLORO BONCLOR SUPER CLORO 4,5% 1L",2.15,limpieza,/images/products/scraped/p-plazas-147236.jpg,/Ananas/images/products/cloro.png,1 L,Nuevo,42,50
-p65,Desinfectante Mistolin,2.20,limpieza,Detergentes,/images/products/scraped/p-plazas-147237.jpg,1 L,,55,271
-p66,ESPONJA ETERNA DOBLE USO 2UN,2.75,limpieza,Accesorios,/images/products/scraped/p-plazas-147238.jpg,3 Unidades,Oferta,92,148
-p67,Mopa de Algodon,5.00,limpieza,Accesorios,/images/products/scraped/p-plazas-147477.jpg,1 Unidad,,70,472
-p68,ESCOBA EL EGIPCIO PRECEIN,3.21,limpieza,Accesorios,/images/products/scraped/p-plazas-147483.jpg,1 Unidad,,37,455
-p69,COLETO ALGODON CLARA,4.34,limpieza,Accesorios,/images/products/scraped/p-plazas-149116.jpg,1 Unidad,,93,297
-p70,BOLSAS GRANCO PARA BASURA EXTRA RESISTENTES 60L X 6UN,2.42,limpieza,Accesorios,/images/products/scraped/p-plazas-149286.jpg,10 Unidades,,67,125
-p71,CERVEZA POLAR PILSEN LATA DE 250ML,0.99,licores,Cervezas,/images/products/scraped/p-plazas-149644.jpg,Caja 36,,56,256
-p72,CERVEZA POLAR LIGHT LATA SLEEK DE 355ML,1.06,licores,Cervezas,/images/products/scraped/p-plazas-150618.jpg,Caja 36,,26,495
-p73,CERVEZA SOLERA LATA DE 250ML,0.99,licores,Cervezas,/images/products/scraped/p-plazas-151364.jpg,6 Pack,,43,298
-p74,Cerveza Zulia 6 Pack,6.00,licores,Cervezas,/images/products/scraped/p-plazas-1781546914965984.jpg,6 Pack,,100,78
-p75,Ron Santa Teresa Linaje 750ML,18.00,licores,Destilados,/images/products/scraped/p-plazas-1781546915080477.jpg,750ml,,86,304
-p76,"RON CACIQUE 500 NUEVA IMAGEN 0,75L",15.51,licores,/images/products/scraped/p-plazas-1781546915230773.jpg,/Ananas/images/products/ron_cacique.png,750ml,Nuevo,89,128
-p77,Ron Pampero Aniversario 750ML,22.00,licores,Destilados,/images/products/scraped/p-plazas-178154691542597.jpg,750ml,Nuevo,100,338
-p78,"RON CARUPANO RESERVA EXCLUSIVA 0,70L",19.01,licores,/images/products/scraped/p-plazas-1781546915471808.jpg,/Ananas/images/products/ron_diplomatico.png,750ml,,33,444
-p79,"WHISKY BUCHANANS DE LUXE 0,70 L",49.46,licores,/images/products/scraped/p-plazas-1781546927632553.jpg,/Ananas/images/products/whisky_buchanans.png,750ml,,61,370
-p80,"WHISKY OLD PARR SILVER 0,75L",32.16,licores,/images/products/scraped/p-plazas-178154692767962.jpg,/Ananas/images/products/whisky_parr.png,750ml,Nuevo,16,393
-p81,"VODKA GORDONS MANDARINA 0,70L",11.96,licores,/images/products/scraped/p-plazas-1781546927726900.jpg,/Ananas/images/products/vodka.png,750ml,Nuevo,35,484
-p82,Vino Tinto Casillero del Diablo 750ML,12.50,licores,Vinos,/images/products/scraped/p-plazas-1781546927807565.jpg,750ml,,26,253
-p83,Vino Blanco Santa Helena 750ML,8.50,licores,Vinos,/images/products/scraped/p-plazas-1781546927890789.jpg,750ml,,13,106
+p1,"TOMATES PERITA X KG",2.99,frutas-vegetales,General,/images/products/scraped/scraped_1.jpg,1 Unidad,,44,531
+p2,"LECHOSA X KG",1.75,frutas-vegetales,General,/images/products/scraped/scraped_2.jpg,1 Unidad,Nuevo,108,472
+p3,"ZANAHORIAS X KG",2.45,frutas-vegetales,General,/images/products/scraped/scraped_3.jpg,1 Unidad,,93,304
+p4,"CALABACINES X KG",1.25,frutas-vegetales,General,/images/products/scraped/scraped_4.jpg,1 Unidad,Nuevo,31,594
+p5,"PIMENTON ROJO X KG",5.95,frutas-vegetales,General,/images/products/scraped/scraped_5.jpg,1 Unidad,,47,160
+p6,"MANGO INJERTO X KG",1.45,frutas-vegetales,General,/images/products/scraped/scraped_6.jpg,1 Unidad,Nuevo,100,472
+p7,"REPOLLO BLANCO X KG",1.15,frutas-vegetales,General,/images/products/scraped/scraped_7.jpg,1 Unidad,,90,402
+p8,"PEPINOS X KG",1.29,frutas-vegetales,General,/images/products/scraped/scraped_8.jpg,1 Unidad,,53,378
+p9,"FLORES DE BROCOLI VIMA CONGELADAS 450G",6.25,frutas-vegetales,General,/images/products/scraped/scraped_9.jpg,1 Unidad,,100,515
+p10,"KIWI NATURAL X KG",12.99,frutas-vegetales,General,/images/products/scraped/scraped_10.jpg,1 Unidad,,79,212
+p11,"PULPA DE DURAZNO TU VERDURA 1KG",5.35,frutas-vegetales,General,/images/products/scraped/scraped_11.jpg,1 Unidad,Nuevo,106,100
+p12,"AJOPORRO X KG",2.99,frutas-vegetales,General,/images/products/scraped/scraped_12.jpg,1 Unidad,,13,131
+p13,"CELERY X KG",2.99,frutas-vegetales,General,/images/products/scraped/scraped_13.jpg,1 Unidad,,23,429
+p14,"REPOLLITOS DE BRUSELAS X KG",13.99,frutas-vegetales,General,/images/products/scraped/scraped_14.jpg,1 Unidad,Nuevo,22,213
+p15,"PULPA DE MORA COTOPERI 397G",3.35,frutas-vegetales,General,/images/products/scraped/scraped_15.jpg,1 Unidad,Nuevo,53,152
+p16,"PULPA DE GUAYABA COTOPERI 397G",2,frutas-vegetales,General,/images/products/scraped/scraped_16.jpg,1 Unidad,,64,543
+p17,"ACELGAS LOS FRESCALES BOLSA DE 300G",4.5,frutas-vegetales,General,/images/products/scraped/scraped_17.jpg,1 Unidad,,81,516
+p18,"OCUMO X KG",2.99,frutas-vegetales,General,/images/products/scraped/scraped_18.jpg,1 Unidad,,10,459
+p19,"JENGIBRE X KG",3.45,frutas-vegetales,General,/images/products/scraped/scraped_19.jpg,1 Unidad,,44,318
+p20,"PEREJIL LISO X KG",4.75,frutas-vegetales,General,/images/products/scraped/scraped_20.jpg,1 Unidad,,73,241
+p21,"PAK CHOI ARAUAK MICROGREENS 50G",5.15,frutas-vegetales,General,/images/products/scraped/scraped_21.jpg,1 Unidad,,45,176
+p22,"KALE MORADO ARAUAK MICROGREENS 50G",5.15,frutas-vegetales,General,/images/products/scraped/scraped_22.jpg,1 Unidad,Nuevo,69,499
+p23,"VAINITAS X KG",3.75,frutas-vegetales,General,/images/products/scraped/scraped_23.jpg,1 Unidad,,48,544
+p24,"GUANABANA X KG",3.25,frutas-vegetales,General,/images/products/scraped/scraped_24.jpg,1 Unidad,,76,202
+p25,"AJO PELADO CULPROFES 150G",4,frutas-vegetales,General,/images/products/scraped/scraped_25.jpg,1 Unidad,,68,529
+p26,"PARCHITAS CRIOLLAS X KG",4.25,frutas-vegetales,General,/images/products/scraped/scraped_26.jpg,1 Unidad,,38,223
+p27,"OCUMO CHINO X KG",2.45,frutas-vegetales,General,/images/products/scraped/scraped_27.jpg,1 Unidad,,67,346
+p28,"CARNE MOLIDA SV",9.95,refrigerados-congelados,General,/images/products/scraped/scraped_28.jpg,1 Unidad,,66,372
+p29,"PULPA NEGRA SV",12.45,refrigerados-congelados,General,/images/products/scraped/scraped_29.jpg,1 Unidad,,33,411
+p30,"PECHUGA DE POLLO SIN HUESO X KG",8.45,refrigerados-congelados,General,/images/products/scraped/scraped_30.jpg,1 Unidad,,35,500
+p31,"CARNE PARA DESMECHAR SV",9.95,refrigerados-congelados,General,/images/products/scraped/scraped_31.jpg,1 Unidad,Nuevo,32,558
+p32,"MUSLOS DE POLLO X KG",4.25,refrigerados-congelados,General,/images/products/scraped/scraped_32.jpg,1 Unidad,,73,419
+p33,"SOLOMO DE CUERITO SV",13.75,refrigerados-congelados,General,/images/products/scraped/scraped_33.jpg,1 Unidad,,34,478
+p34,"CARNE DE RES PARA GUISAR SV",9.95,refrigerados-congelados,General,/images/products/scraped/scraped_34.jpg,1 Unidad,,56,225
+p35,"ALAS DE POLLO X KG",4.25,refrigerados-congelados,General,/images/products/scraped/scraped_35.jpg,1 Unidad,,82,361
+p36,"PUNTA TRASERA DE CERDO PLUMROSE",14.91,refrigerados-congelados,General,/images/products/scraped/scraped_36.jpg,1 Unidad,,86,299
+p37,"SALMON SOTAVENTO AHUMADO 400G",38.45,refrigerados-congelados,General,/images/products/scraped/scraped_37.jpg,1 Unidad,,40,285
+p38,"ROAST BEEF DE POLLO PLAZAS CRUDO X KG",14.99,refrigerados-congelados,General,/images/products/scraped/scraped_38.jpg,1 Unidad,,26,510
+p39,"COSTILLAS DE CERDO BBQ PREPARADOS PLAZAS CONGELADO X KG",21.95,refrigerados-congelados,General,/images/products/scraped/scraped_39.jpg,1 Unidad,Nuevo,72,294
+p40,"FILET DE PESCADILLA X KG",18.35,refrigerados-congelados,General,/images/products/scraped/scraped_40.jpg,1 Unidad,,76,517
+p41,"MEDALLONES DE POLLO CON QUESO PLAZAS CRUDOS X KG",18.99,refrigerados-congelados,General,/images/products/scraped/scraped_41.jpg,1 Unidad,,106,346
+p42,"CHURRASCO DE MUSLO POLLO X KG",8.95,refrigerados-congelados,General,/images/products/scraped/scraped_42.jpg,1 Unidad,,51,580
+p43,"GALLINA ENTERA X KG",4.75,refrigerados-congelados,General,/images/products/scraped/scraped_43.jpg,1 Unidad,,45,121
+p44,"PATICAS DE CERDO",3.5,refrigerados-congelados,General,/images/products/scraped/scraped_44.jpg,1 Unidad,,40,238
+p45,"POLLO ENTERO UN POLLO GRADO B X KG",3.99,refrigerados-congelados,General,/images/products/scraped/scraped_45.jpg,1 Unidad,,84,127
+p46,"CAMARONES PRECOCIDOS X KG",29.94,refrigerados-congelados,General,/images/products/scraped/scraped_46.jpg,1 Unidad,,11,400
+p47,"CANGREJO X KG",7.55,refrigerados-congelados,General,/images/products/scraped/scraped_47.jpg,1 Unidad,,50,177
+p48,"CHIPICHIPI CON CONCHA X KG",3.25,refrigerados-congelados,General,/images/products/scraped/scraped_48.jpg,1 Unidad,,55,471
+p49,"GUACUCO CON CONCHA X KG",4.15,refrigerados-congelados,General,/images/products/scraped/scraped_49.jpg,1 Unidad,Nuevo,40,376
+p50,"MEJILLONES CON CONCHA X KG",7.55,refrigerados-congelados,General,/images/products/scraped/scraped_50.jpg,1 Unidad,,55,406
+p51,"MEJILLONES LIMPIOS X KG",14.9,refrigerados-congelados,General,/images/products/scraped/scraped_51.jpg,1 Unidad,Nuevo,72,153
+p52,"PEPITONAS LIMPIAS X KG",5.15,refrigerados-congelados,General,/images/products/scraped/scraped_52.jpg,1 Unidad,Nuevo,18,458
+p53,"ALBONDIGAS DE RES PLAZAS CRUDAS X KG",12.95,refrigerados-congelados,General,/images/products/scraped/scraped_53.jpg,1 Unidad,,40,586
+p54,"GUACUCO LIMPIO X KG",7.45,refrigerados-congelados,General,/images/products/scraped/scraped_54.jpg,1 Unidad,,26,581
+p55,"BATECITOS DE POLLO X KG",6.85,refrigerados-congelados,General,/images/products/scraped/scraped_55.jpg,1 Unidad,,23,235
+p56,"PECHUGA DE POLLO MOLIDA X KG",11.45,refrigerados-congelados,General,/images/products/scraped/scraped_56.jpg,1 Unidad,,52,322
+p57,"INVOLTINI DE POLLO PLAZAS CRUDO X KG",15.45,refrigerados-congelados,General,/images/products/scraped/scraped_57.jpg,1 Unidad,Nuevo,55,288
+p58,"QUESO PALMITA MADURADO DE AÑO DELIZULIA X KG",15.39,refrigerados-congelados,General,/images/products/scraped/scraped_58.jpg,1 Unidad,,100,262
+p59,"QUESO GUAYANES X KG",8.19,refrigerados-congelados,General,/images/products/scraped/scraped_59.jpg,1 Unidad,,11,243
+p60,"QUESO MOZZARELLA CRISBRAY 2021 X KG",12.99,refrigerados-congelados,General,/images/products/scraped/scraped_60.jpg,1 Unidad,,97,400
+p61,"JAMÓN COCIDO PLUMROSE POR KILO",14.59,refrigerados-congelados,General,/images/products/scraped/scraped_61.jpg,1 Unidad,,92,137
+p62,"QUESO BLANCO MERIDEÑO X KG",10.99,refrigerados-congelados,General,/images/products/scraped/scraped_62.jpg,1 Unidad,,23,114
+p63,"QUESO TELITA X KG",8.19,refrigerados-congelados,General,/images/products/scraped/scraped_63.jpg,1 Unidad,,74,419
+p64,"QUESO PASTEURIZADO CRISBRAY 2021 X KG",12.99,refrigerados-congelados,General,/images/products/scraped/scraped_64.jpg,1 Unidad,,75,551
+p65,"QUESO CATA DE ANO RALLADO X KG",17.29,refrigerados-congelados,General,/images/products/scraped/scraped_65.jpg,1 Unidad,,91,574
+p66,"QUESO KALDINI UNTABLE 8 TRIANGULOS 120G",3.29,refrigerados-congelados,General,/images/products/scraped/scraped_66.jpg,1 Unidad,,95,308
+p67,"PEPPERONI MALLORCA X KG",18.99,refrigerados-congelados,General,/images/products/scraped/scraped_67.jpg,1 Unidad,Nuevo,108,213
+p68,"QUESO BLANCO PALMIBUFALA X KG",17.99,refrigerados-congelados,General,/images/products/scraped/scraped_68.jpg,1 Unidad,,106,500
+p69,"QUESO MOZARELLA SANTA MARIA X KG",17.99,refrigerados-congelados,General,/images/products/scraped/scraped_69.jpg,1 Unidad,,91,311
+p70,"QUESO PARMESANO QUENACA X KG",50,refrigerados-congelados,General,/images/products/scraped/scraped_70.jpg,1 Unidad,Nuevo,64,325
+p71,"SALCHICHAS FRANKFURT PLUMROSE DE 350G",9.89,refrigerados-congelados,General,/images/products/scraped/scraped_71.jpg,1 Unidad,,87,512
+p72,"QUESO BOCCONCINI BUFALINDA 600G",12.99,refrigerados-congelados,General,/images/products/scraped/scraped_72.jpg,1 Unidad,,101,350
+p73,"SALCHICHAS BLANCAS LEONESA X KG",21.09,refrigerados-congelados,General,/images/products/scraped/scraped_73.jpg,1 Unidad,,29,168
+p74,"SALCHICHAS WIENERS JUMBO OSCAR MAYER 330G",9.19,refrigerados-congelados,General,/images/products/scraped/scraped_74.jpg,1 Unidad,,80,189
+p75,"RICOTTA SAN MIGUEL EN CREMA SIN SAL 400G",5.39,refrigerados-congelados,General,/images/products/scraped/scraped_75.jpg,1 Unidad,Nuevo,45,508
+p76,"QUESO BOCCONCINI DE BUFALA X KG",25.99,refrigerados-congelados,General,/images/products/scraped/scraped_76.jpg,1 Unidad,,19,126
+p77,"QUESO DE CABRA ANANKE CON ALBAHACA 200G",7.89,refrigerados-congelados,General,/images/products/scraped/scraped_77.jpg,1 Unidad,,35,445
+p78,"SALCHICHAS TIPO WIENERS LARGAS PLUMROSE 450G",10.45,refrigerados-congelados,General,/images/products/scraped/scraped_78.jpg,1 Unidad,,37,300
+p79,"RICOTTA PAISA CON SAL TINA DE 250G",6.29,refrigerados-congelados,General,/images/products/scraped/scraped_79.jpg,1 Unidad,,107,139
+p80,"QUESO PECORINO MADURADO SANTA MARIA X KG",41.49,refrigerados-congelados,General,/images/products/scraped/scraped_80.jpg,1 Unidad,,25,231
+p81,"QUESO GOUDA BLANCO BUFALINDA X KG",27.05,refrigerados-congelados,General,/images/products/scraped/scraped_81.jpg,1 Unidad,Nuevo,92,417
+p82,"MORTADELA TAPARA PISTACHO PLUMROSE X KG",22.32,refrigerados-congelados,General,/images/products/scraped/scraped_82.jpg,1 Unidad,,46,401
+p83,"SALAMI LA LEONESA TIPO JERONA X KG",51.49,refrigerados-congelados,General,/images/products/scraped/scraped_83.jpg,1 Unidad,Nuevo,81,461
+p84,"PASTA DE HIGADO OSCAR MAYER 226G",2.95,refrigerados-congelados,General,/images/products/scraped/scraped_84.jpg,1 Unidad,,83,103
+p85,"ARROZ MARY PREMIUM 900G",1.35,viveres,General,/images/products/scraped/scraped_85.jpg,1 Unidad,Nuevo,16,588
+p86,"ARROZ MARY SUPERIOR TIPO I 900G",1.19,viveres,General,/images/products/scraped/scraped_86.jpg,1 Unidad,,102,361
+p87,"ARROZ MARY ESMERALDA 100% 900G",1.45,viveres,General,/images/products/scraped/scraped_87.jpg,1 Unidad,,60,562
+p88,"LENTEJAS MARY 400G",1.6,viveres,General,/images/products/scraped/scraped_88.jpg,1 Unidad,,26,143
+p89,"CARAOTAS NEGRAS MARY 400G",1.12,viveres,General,/images/products/scraped/scraped_89.jpg,1 Unidad,,75,555
+p90,"ARROZ MARY DORADO 800G",1.75,viveres,General,/images/products/scraped/scraped_90.jpg,1 Unidad,Nuevo,84,168
+p91,"ARROZ MONICA TIPO I 900G",1.49,viveres,General,/images/products/scraped/scraped_91.jpg,1 Unidad,,69,155
+p92,"PASTA MARY SUPERIOR VERMICELLI 1KG",2.1,viveres,General,/images/products/scraped/scraped_92.jpg,1 Unidad,,64,379
+p93,"PASTA MARY SUPERIOR PLUMA 1KG",2.49,viveres,General,/images/products/scraped/scraped_93.jpg,1 Unidad,,82,580
+p94,"PASTA MARY PREMIUM LINGUINI 500G",1.39,viveres,General,/images/products/scraped/scraped_94.jpg,1 Unidad,Nuevo,72,316
+p95,"CARAOTAS NEGRAS PANTERA 400G",1.4,viveres,General,/images/products/scraped/scraped_95.jpg,1 Unidad,,89,540
+p96,"SALSA PARA PASTAS OSOLE BOLOGNESA 200G",1.89,viveres,General,/images/products/scraped/scraped_96.jpg,1 Unidad,,11,498
+p97,"PASTA COLAVITA RIGATONI 500G",3.95,viveres,General,/images/products/scraped/scraped_97.jpg,1 Unidad,,48,454
+p98,"PASTA COLAVITA VERMICELLI 500G",3.95,viveres,General,/images/products/scraped/scraped_98.jpg,1 Unidad,,40,538
+p99,"PASTA COLAVITA SPAGHETTINI 500G",3.35,viveres,General,/images/products/scraped/scraped_99.jpg,1 Unidad,,35,410
+p100,"PASTA COLAVITA SPAGHETTI 500G",3.95,viveres,General,/images/products/scraped/scraped_100.jpg,1 Unidad,,50,400
+p101,"PASTA DE CECCO FUSILLI N°34 500G",4.99,viveres,General,/images/products/scraped/scraped_101.jpg,1 Unidad,Nuevo,84,180
+p102,"PASTA DE CECCO TIPO PENNE RIGATE 500G",4.99,viveres,General,/images/products/scraped/scraped_102.jpg,1 Unidad,Nuevo,40,596
+p103,"PASTA DE CECCO SPAGHETTINI 500G",4.25,viveres,General,/images/products/scraped/scraped_103.jpg,1 Unidad,Nuevo,14,568
+p104,"PASTA DE CECCO SPAGHETTI N°12 500G",4.99,viveres,General,/images/products/scraped/scraped_104.jpg,1 Unidad,Nuevo,104,349
+p105,"CANELLONI GRANORO QUINOA S GLUTEN 250G",9.99,viveres,General,/images/products/scraped/scraped_105.jpg,1 Unidad,,17,471
+p106,"SALSA CAPRI RAPIDISIMA NAPOLI 490G",4,viveres,General,/images/products/scraped/scraped_106.jpg,1 Unidad,Nuevo,20,381
+p107,"SALSA BOLOGNESA HEINZ 495G",4.49,viveres,General,/images/products/scraped/scraped_107.jpg,1 Unidad,,62,494
+p108,"PASTA MARY PREMIUM RIGATONI 500G",1.49,viveres,General,/images/products/scraped/scraped_108.jpg,1 Unidad,,101,507
+p109,"CARAOTAS ROSADAS PANTERA 454G",3.15,viveres,General,/images/products/scraped/scraped_109.jpg,1 Unidad,,72,563
+p110,"PASSATA HEINZ 480G",4.26,viveres,General,/images/products/scraped/scraped_110.jpg,1 Unidad,,39,208
+p111,"PASTA CAPRI CANELONES 250G",1.75,viveres,General,/images/products/scraped/scraped_111.jpg,1 Unidad,,28,126
+p112,"TOMATES CHERRY KALDINI ABRE F400G",4.47,viveres,General,/images/products/scraped/scraped_112.jpg,1 Unidad,,27,454
+p113,"PASTA RONCO PREMIUM VERMICELLI 1KG",2.39,viveres,General,/images/products/scraped/scraped_113.jpg,1 Unidad,,55,360
+p114,"COCA COLA ORIGINAL CON MENOS CALORIAS 2L",1.44,viveres,General,/images/products/scraped/scraped_114.jpg,1 Unidad,,18,357
+p115,"MALTA MALTIN POLAR EN BOTELLA NO RETORNABLE 250ML",0.93,viveres,General,/images/products/scraped/scraped_115.jpg,1 Unidad,Nuevo,46,572
+p116,"PEPSI COLA 2L",1.45,viveres,General,/images/products/scraped/scraped_116.jpg,1 Unidad,,22,325
+p117,"AGUA MINERAL MINALBA 355ML",0.93,viveres,General,/images/products/scraped/scraped_117.jpg,1 Unidad,Nuevo,19,275
+p118,"REFRESCO COLA NEGRA GLUP 2L",1.32,viveres,General,/images/products/scraped/scraped_118.jpg,1 Unidad,Nuevo,75,437
+p119,"BEBIDA JUSTY SABOR NARANJA 1,5 L",1.3,viveres,General,/images/products/scraped/scraped_119.jpg,1 Unidad,,51,192
+p120,"COCA COLA ORIGINAL 1L",1.02,viveres,General,/images/products/scraped/scraped_120.jpg,1 Unidad,,26,334
+p121,"COCA COLA MENOS CALORIAS 1,5L",1.15,viveres,General,/images/products/scraped/scraped_121.jpg,1 Unidad,Nuevo,109,500
+p122,"BEBIDA DEL VALLE FRESH CITRUS 1.5LT",1.09,viveres,General,/images/products/scraped/scraped_122.jpg,1 Unidad,,13,561
+p123,"JUGO DE NARANJA YUKERY 1,5L",5.49,viveres,General,/images/products/scraped/scraped_123.jpg,1 Unidad,,40,563
+p124,"AGUA MINERAL PERRIER GAS BOTELLA PLASTICA 500ML",3.61,viveres,General,/images/products/scraped/scraped_124.jpg,1 Unidad,Nuevo,91,353
+p125,"JUGO DE MANZANA OHANA CON STEVIA 320ML",2.52,viveres,General,/images/products/scraped/scraped_125.jpg,1 Unidad,,68,273
+p126,"NECTAR LA PASTORENA UHT DE DURAZNO 1L",3.21,viveres,General,/images/products/scraped/scraped_126.jpg,1 Unidad,,11,408
+p127,"REFRESCO FRESH GLUP 1L",0.88,viveres,General,/images/products/scraped/scraped_127.jpg,1 Unidad,,37,240
+p128,"BEBIDA SAN PELLEGRINO LIMONATA 330ML",4.14,viveres,General,/images/products/scraped/scraped_128.jpg,1 Unidad,,56,172
+p129,"AGUA MINERAL PLAZAS 500 ML",0.85,viveres,General,/images/products/scraped/scraped_129.jpg,1 Unidad,,51,327
+p130,"NECTAR YUKERY PERA PET 500ML",2.1,viveres,General,/images/products/scraped/scraped_130.jpg,1 Unidad,,106,124
+p131,"AGUA MINERAL LOS ALPES 5L",4.98,viveres,General,/images/products/scraped/scraped_131.jpg,1 Unidad,,67,372
+p132,"LECHE ALPINA ACHOCOLATADA 200ML",2.99,viveres,General,/images/products/scraped/scraped_132.jpg,1 Unidad,,44,234
+p133,"JUGO DE MANZANA OHANA CON STEVIA 1L",2.7,viveres,General,/images/products/scraped/scraped_133.jpg,1 Unidad,Nuevo,34,402
+p134,"MALTA MALTIN POLAR 1.5L",1.93,viveres,General,/images/products/scraped/scraped_134.jpg,1 Unidad,,90,573
+p135,"JUGO COTOPERI DURAZNO PET 1,5L",3.72,viveres,General,/images/products/scraped/scraped_135.jpg,1 Unidad,,20,553
+p136,"TE VERDE CON LIMON LIPTON 500ML",2.32,viveres,General,/images/products/scraped/scraped_136.jpg,1 Unidad,,25,574
+p137,"BEBIDA FRESKO SAB NARANJA 1,5L",1.44,viveres,General,/images/products/scraped/scraped_137.jpg,1 Unidad,,76,265
+p138,"BEBIDA GASIFICADA NEVADA SABOR PARCHITA 355ML",0.84,viveres,General,/images/products/scraped/scraped_138.jpg,1 Unidad,,93,469
+p139,"CHESSE TRIS 150G",2,viveres,General,/images/products/scraped/scraped_139.jpg,1 Unidad,,36,561
+p140,"DORITOS MEGA QUESO 150G",2.99,viveres,General,/images/products/scraped/scraped_140.jpg,1 Unidad,,65,224
+p141,"PEPITO EL ORIGINAL 80G",1.29,viveres,General,/images/products/scraped/scraped_141.jpg,1 Unidad,,74,393
+p142,"MAIZ PARA COTUFAS MARY 400 G",1.55,viveres,General,/images/products/scraped/scraped_142.jpg,1 Unidad,Nuevo,64,468
+p143,"PAPAS FRITAS FRITOPAPA PARA PERROS CALIENTES 150G",2.99,viveres,General,/images/products/scraped/scraped_143.jpg,1 Unidad,Nuevo,22,586
+p144,"PEPITO EL ORIGINAL XXL 180G",3.16,viveres,General,/images/products/scraped/scraped_144.jpg,1 Unidad,Nuevo,40,404
+p145,"MANI SALADO JACKS 175G",3.19,viveres,General,/images/products/scraped/scraped_145.jpg,1 Unidad,Nuevo,49,457
+p146,"CHISKESITO FAMILIAR 145G",2.25,viveres,General,/images/products/scraped/scraped_146.jpg,1 Unidad,Nuevo,74,355
+p147,"PLATANITOS NATUCHIPS CON SAL 80G",2.15,viveres,General,/images/products/scraped/scraped_147.jpg,1 Unidad,Nuevo,27,485
+p148,"DETODITO RESUELTO 110G",2.59,viveres,General,/images/products/scraped/scraped_148.jpg,1 Unidad,,88,425
+p149,"TOSTON PLATANAZO CON AJO 85G",1.95,viveres,General,/images/products/scraped/scraped_149.jpg,1 Unidad,,42,110
+p150,"BOLI KRUNCH MUNCHY 85G",1.29,viveres,General,/images/products/scraped/scraped_150.jpg,1 Unidad,,49,191
+p151,"MANI MEREY MIX COMETIN 190G",5.29,viveres,General,/images/products/scraped/scraped_151.jpg,1 Unidad,,27,527
+p152,"COTUFAS ACARAMELADAS COMETIN 100G",1.24,viveres,General,/images/products/scraped/scraped_152.jpg,1 Unidad,,14,424
+p153,"MEZCLADITOS BULLS 80G",2.8,viveres,General,/images/products/scraped/scraped_153.jpg,1 Unidad,,49,212
+p154,"CHIPS DE AREPA KSERITAS MAIZ SABOR PICANTE 100G",3.99,viveres,General,/images/products/scraped/scraped_154.jpg,1 Unidad,,27,137
+p155,"TOSTON MUNCHYPS 150 G",4.54,viveres,General,/images/products/scraped/scraped_155.jpg,1 Unidad,,88,374
+p156,"TOSTONES CON AJO MUNCHY 110G",3.39,viveres,General,/images/products/scraped/scraped_156.jpg,1 Unidad,,60,535
+p157,"PAPAS EL VALLE SUPREME EXTRA CRUJIENTES SIN GLUTEN 140G",6.15,viveres,General,/images/products/scraped/scraped_157.jpg,1 Unidad,,102,582
+p158,"PAPAS EL VALLE PREMIUM SABOR TRUFA NEGRA 150G",7.3,viveres,General,/images/products/scraped/scraped_158.jpg,1 Unidad,,105,401
+p159,"PAPAS EL VALLE SABOR CAMPESINAS SIN GLUTEN 130G",6.15,viveres,General,/images/products/scraped/scraped_159.jpg,1 Unidad,,90,425
+p160,"PAPAS CON SAL PUNCH MUNCHY 80G",2.99,viveres,General,/images/products/scraped/scraped_160.jpg,1 Unidad,,79,381
+p161,"AROS DE MAIZ RINGOS CEBOLLA Y PEREJIL 62G",1.65,viveres,General,/images/products/scraped/scraped_161.jpg,1 Unidad,Nuevo,16,463
+p162,"CHIPS DE AREPA KSERITAS MAIZ SABOR ORIGINAL 100G",3.99,viveres,General,/images/products/scraped/scraped_162.jpg,1 Unidad,,23,219
+p163,"FRUTOS SECOS BOKAS MIX 180G",5.65,viveres,General,/images/products/scraped/scraped_163.jpg,1 Unidad,Nuevo,95,424
+p164,"PLATANITOS ONDULADOS NATUCHIPS 145G",3.8,viveres,General,/images/products/scraped/scraped_164.jpg,1 Unidad,,92,450
+p165,"PALITOS TREO CHEEZ PEK TOCINETA PICANTE 75G",1.15,viveres,General,/images/products/scraped/scraped_165.jpg,1 Unidad,,57,522
+p166,"CHICHARRON SON PICANTE MUNCHY 62G",2.89,viveres,General,/images/products/scraped/scraped_166.jpg,1 Unidad,,12,164
+p167,"GALLETAS DE SODA PUIG 240G",2.15,viveres,General,/images/products/scraped/scraped_167.jpg,1 Unidad,,36,232
+p168,"GALLETAS MARIA SELECTA PUIG 250G",2.15,viveres,General,/images/products/scraped/scraped_168.jpg,1 Unidad,Nuevo,91,141
+p169,"GALLETAS TIP TOP MANI 96G",0.99,viveres,General,/images/products/scraped/scraped_169.jpg,1 Unidad,,22,218
+p170,"POLVORON MARINELA NARANJA 75G",0.86,viveres,General,/images/products/scraped/scraped_170.jpg,1 Unidad,,87,498
+p171,"GALLETAS TIP TOP DE CHOCOMANI 96G",0.99,viveres,General,/images/products/scraped/scraped_171.jpg,1 Unidad,,95,587
+p172,"PASTA SECA PLAZAS 200G UND",2,viveres,General,/images/products/scraped/scraped_172.jpg,1 Unidad,,34,214
+p173,"BISCOTTI ARTI BISCOTTI NARANJA CONFITADA 150G",4.98,viveres,General,/images/products/scraped/scraped_173.jpg,1 Unidad,Nuevo,103,249
+p174,"PONQUECITOS AMERICA DE VAINILLA CON GOTAS 6UN",3.79,viveres,General,/images/products/scraped/scraped_174.jpg,1 Unidad,,23,195
+p175,"PANELITAS IGM 350G",4.98,viveres,General,/images/products/scraped/scraped_175.jpg,1 Unidad,,37,441
+p176,"OBLEAS DE AMARANTO HALO BITES VAINILLA 30G",5.59,viveres,General,/images/products/scraped/scraped_176.jpg,1 Unidad,,24,422
+p177,"GALLETAS VAN ECKEL BOLSA DE 500G",9.35,viveres,General,/images/products/scraped/scraped_177.jpg,1 Unidad,,95,350
+p178,"BISCOTTI ARTI BISCOTTI ARANDANOS & ALMENDRAS 150G",4.98,viveres,General,/images/products/scraped/scraped_178.jpg,1 Unidad,Nuevo,90,455
+p179,"BISCOTTI ARTI BISCOTTI CHOCOLATE & ALMENDRAS 150G",4.98,viveres,General,/images/products/scraped/scraped_179.jpg,1 Unidad,Nuevo,88,176
+p180,"BISCOTTI ARTI BISCOTTI PISTACHO 150G",5.46,viveres,General,/images/products/scraped/scraped_180.jpg,1 Unidad,,89,196
+p181,"ROSQUILLAS LEOPAN 100G",4.05,viveres,General,/images/products/scraped/scraped_181.jpg,1 Unidad,,96,502
+p182,"ROSQUILLAS LEOPAN 150G",5.05,viveres,General,/images/products/scraped/scraped_182.jpg,1 Unidad,Nuevo,85,181
+p183,"CANELITAS MARINELA FAMILIAR 4 PAQUETES X 60G",3.09,viveres,General,/images/products/scraped/scraped_183.jpg,1 Unidad,,54,456
+p184,"OBLEAS DE AMARANTO HALO VAINILLA 60G",7.55,viveres,General,/images/products/scraped/scraped_184.jpg,1 Unidad,Nuevo,24,581
+p185,"TORTA RIFEL DE VAINILLA DE 6 EMPAQUES INDIVIDUALES 360G",7.35,viveres,General,/images/products/scraped/scraped_185.jpg,1 Unidad,,34,195
+p186,"BARQUILLAS FLAQUITO ST MORITZ 4UN X 30G",4.25,viveres,General,/images/products/scraped/scraped_186.jpg,1 Unidad,,32,110
+p187,"GALLETAS PECAS CON CHOCOLATE CHIPS TAN RICO 6UN 192G",5.7,viveres,General,/images/products/scraped/scraped_187.jpg,1 Unidad,,61,507
+p188,"GALLETAS KASERITAS DE VAINILLA CON SPLENDA 100G",3.99,viveres,General,/images/products/scraped/scraped_188.jpg,1 Unidad,,37,362
+p189,"GALLETAS KASERITAS DE ALMENDRAS CON SPLENDA 100G",3.99,viveres,General,/images/products/scraped/scraped_189.jpg,1 Unidad,Nuevo,15,285
+p190,"GALLETAS BELVITA HONY BRAN 252G",3.19,viveres,General,/images/products/scraped/scraped_190.jpg,1 Unidad,Nuevo,50,517
+p191,"GALLETAS RENATA WAFER DE FRESA 115G",1.29,viveres,General,/images/products/scraped/scraped_191.jpg,1 Unidad,,21,429
+p192,"GALLETAS Q-KISS PUIG DE MANTEQUILLA 200G",3.89,viveres,General,/images/products/scraped/scraped_192.jpg,1 Unidad,,12,338
+p193,"GALLETAS RENATA VAINILLA RELLENAS DE FRESA 112G",1.01,viveres,General,/images/products/scraped/scraped_193.jpg,1 Unidad,Nuevo,36,501
+p194,"GALLETAS SORBETICOS WAFER DE FRESA FAMILIAR 105G",1.5,viveres,General,/images/products/scraped/scraped_194.jpg,1 Unidad,,24,275
+p195,"GALLETAS MARIA DELICIAS DE CHOCOLATE 272G",6.99,viveres,General,/images/products/scraped/scraped_195.jpg,1 Unidad,,18,211
+p196,"GALLETAS KASERITAS SURTIDAS CON SPLENDA 100G",3.99,viveres,General,/images/products/scraped/scraped_196.jpg,1 Unidad,,91,492
+p197,"CLORO KRIS NATURAL 1L",2.1,limpieza,General,/images/products/scraped/scraped_197.jpg,1 Unidad,,100,327
+p198,"DETERG LAS LLAVES FLORAL LIMP ACTIV400G",1.55,limpieza,General,/images/products/scraped/scraped_198.jpg,1 Unidad,,17,197
+p199,"LAVAPLATOS LIQ KRIS 800 CC",4,limpieza,General,/images/products/scraped/scraped_199.jpg,1 Unidad,Nuevo,107,553
+p200,"DETERG LAS LLAVES CITRICA LIMP ACTIV400G",1.55,limpieza,General,/images/products/scraped/scraped_200.jpg,1 Unidad,,91,497
+p201,"DETERGENTE ALIVE CON SUAVIZANTE 1KG",4.45,limpieza,General,/images/products/scraped/scraped_201.jpg,1 Unidad,,86,572
+p202,"CLORO JABONOSO PLAZAS 1L",2.05,limpieza,General,/images/products/scraped/scraped_202.jpg,1 Unidad,Nuevo,103,455
+p203,"AMBIENT GLADE AUT SPORT NITRO AP 7CC 60D",8.29,limpieza,General,/images/products/scraped/scraped_203.jpg,1 Unidad,,48,221
+p204,"ALMIDON FAULTLESS HEAVY LIMON EXTRA 567G",7.74,limpieza,General,/images/products/scraped/scraped_204.jpg,1 Unidad,,78,417
+p205,"BOLSA SAMANTA PLAST 30LT X8U X25P",2.48,limpieza,General,/images/products/scraped/scraped_205.jpg,1 Unidad,,59,559
+p206,"COLETO LA PALMA REAL GRANDE DE 3 RAYAS",6.69,limpieza,General,/images/products/scraped/scraped_206.jpg,1 Unidad,,101,425
+p207,"KEROSENE OPIN 900ML",7.19,limpieza,General,/images/products/scraped/scraped_207.jpg,1 Unidad,,71,468
+p208,"BOLSAS PROPALIM TIPO TOBITA 10LTS X 10UN",2.45,limpieza,General,/images/products/scraped/scraped_208.jpg,1 Unidad,,60,593
+p209,"BOLSAS PROPALIM TIPO TOBITA 15LTS X 8UND",2.45,limpieza,General,/images/products/scraped/scraped_209.jpg,1 Unidad,,106,232
+p210,"BOLSAS PROPALIM TIP B EXT FUERT200L X3UN",6.99,limpieza,General,/images/products/scraped/scraped_210.jpg,1 Unidad,,99,248
+p211,"ESPONJA ETERNA FLASH 1UN",1.69,limpieza,General,/images/products/scraped/scraped_211.jpg,1 Unidad,,96,457
+p212,"DETERGENTE EN POLVO PUREX FRAGANCIA ORIGINAL 850G",4.25,limpieza,General,/images/products/scraped/scraped_212.jpg,1 Unidad,,88,573
+p213,"SUPER BLANQUEADOR PLAZAS SIN CLORO 1L",5.42,limpieza,General,/images/products/scraped/scraped_213.jpg,1 Unidad,,100,583
+p214,"LAVAPLATOS LIQUIDO PLAZAS BAJA ESPUMA 800ML",5.35,limpieza,General,/images/products/scraped/scraped_214.jpg,1 Unidad,Nuevo,61,110
+p215,"DESINFECTANTE PLAZAS BEBE 1L",4,limpieza,General,/images/products/scraped/scraped_215.jpg,1 Unidad,Nuevo,60,349
+p216,"DESINFECTANTE PLAZAS CEREZA 1L",4,limpieza,General,/images/products/scraped/scraped_216.jpg,1 Unidad,,79,591
+p217,"LAVAPLATOS EN CREMA SUPREMO 3X PODER 225G",2.64,limpieza,General,/images/products/scraped/scraped_217.jpg,1 Unidad,Nuevo,18,482
+p218,"LAVAPLATOS EN CREMA SUPREMO 3X PODER 450G",4.67,limpieza,General,/images/products/scraped/scraped_218.jpg,1 Unidad,,56,582
+p219,"LAVAPLATOS LIQUIDO SUPREMO LIMON 400ML",4.54,limpieza,General,/images/products/scraped/scraped_219.jpg,1 Unidad,,109,544
+p220,"LIMPIADOR ANTIBACTERIAL FRAGANCIA LAVANDA FULLER 1L",3.31,limpieza,General,/images/products/scraped/scraped_220.jpg,1 Unidad,,12,261
+p221,"SUAVIZANTE DOWNY INTENSE EXOTICO 1,4L",11.11,limpieza,General,/images/products/scraped/scraped_221.jpg,1 Unidad,,33,251
+p222,"BOLSAS GRANCO PARA BASURA EXTRA RESISTENTES 60L X 6UN",2.42,limpieza,General,/images/products/scraped/scraped_222.jpg,1 Unidad,,38,235
+p223,"INSECTICIDA RAID MAX CUCARACHAS Y CHIRIPAS SIN OLOR 360CC",10.85,limpieza,General,/images/products/scraped/scraped_223.jpg,1 Unidad,,11,249
+p224,"BACTERICIDA BONCLOR LARGA DURACION ROSA 1L",3.5,limpieza,General,/images/products/scraped/scraped_224.jpg,1 Unidad,,104,229
+p225,"PAPEL HIGIENICO PLAZAS X 4 ROLLOS 400 HOJAS DOBLES",2.39,cuidado-personal-salud,General,/images/products/scraped/scraped_225.jpg,1 Unidad,,101,349
+p226,"PAPEL HIGIENICO ROSAL PLUS 4 ROLLOS DE 215 HOJAS",1.5,cuidado-personal-salud,General,/images/products/scraped/scraped_226.jpg,1 Unidad,,14,387
+p227,"CREMA DENTAL COLGATE TRIPLE ACCION 75ML",3.18,cuidado-personal-salud,General,/images/products/scraped/scraped_227.jpg,1 Unidad,Nuevo,57,237
+p228,"PAPEL HIG PLAZAS X 4 ROLLOS 200 HOJ DOBL",1.45,cuidado-personal-salud,General,/images/products/scraped/scraped_228.jpg,1 Unidad,,88,475
+p229,"CREMA DENTAL COLGATE TRIPLE ACCION 100ML",4.14,cuidado-personal-salud,General,/images/products/scraped/scraped_229.jpg,1 Unidad,,58,398
+p230,"TOALLAS HUMEDAS OKI BABY LOTION 20 UND",1.3,cuidado-personal-salud,General,/images/products/scraped/scraped_230.jpg,1 Unidad,,46,553
+p231,"CEPILLO DENTAL COLGATE 360 MEDIO",4.74,cuidado-personal-salud,General,/images/products/scraped/scraped_231.jpg,1 Unidad,,48,375
+p232,"AGUA OXIGENADA IGORA VITAL 30 VOL 50ML",2.29,cuidado-personal-salud,General,/images/products/scraped/scraped_232.jpg,1 Unidad,Nuevo,61,260
+p233,"TAPAZOL 5MG X 60 TABLETAS",14.25,cuidado-personal-salud,General,/images/products/scraped/scraped_233.jpg,1 Unidad,,88,360
+p234,"LETISAN GOTAS 100 MG X 20 ML",15.05,cuidado-personal-salud,General,/images/products/scraped/scraped_234.jpg,1 Unidad,,22,210
+p235,"PANTOPRAZOL COLMED 40MG X 10 TABLETAS RECUBIERTAS ENTERICAS",8.15,cuidado-personal-salud,General,/images/products/scraped/scraped_235.jpg,1 Unidad,,107,233
+p236,"NIFEDIPINA LATTAN MEDIC 20MG X 30 COMPRIMIDOS",6.35,cuidado-personal-salud,General,/images/products/scraped/scraped_236.jpg,1 Unidad,,32,285
+p237,"CREMA DENTAL COLGATE NATURAL EXTRA CARBON 140G",9.87,cuidado-personal-salud,General,/images/products/scraped/scraped_237.jpg,1 Unidad,,108,133
+p238,"TINTE MYSTIC RUBIO CLARO PLATINADO 12.0 TUBO DE 60G",5.19,cuidado-personal-salud,General,/images/products/scraped/scraped_238.jpg,1 Unidad,,25,459
+p239,"CREMA DENTAL ORAL B ENCIAS DETOX 102G",7.31,cuidado-personal-salud,General,/images/products/scraped/scraped_239.jpg,1 Unidad,,24,187
+p240,"CEPILLOS INTERDENTALES ORAL B DENTAL EXPERT 20UN",7.75,cuidado-personal-salud,General,/images/products/scraped/scraped_240.jpg,1 Unidad,,37,573
+p241,"SINUX X 10 TABLETAS RECUBIERTAS",8.15,cuidado-personal-salud,General,/images/products/scraped/scraped_241.jpg,1 Unidad,,72,477
+p242,"ZONTRICON X 6 COMPRIMIDOS",24.45,cuidado-personal-salud,General,/images/products/scraped/scraped_242.jpg,1 Unidad,,19,519
+p243,"VALSARTAN LA SANTE 80 MG X 14 TABL",6.11,cuidado-personal-salud,General,/images/products/scraped/scraped_243.jpg,1 Unidad,,41,553
+p244,"QUINCHONCHO ARCO IRIS 300MG X 90 CAPS",9.19,cuidado-personal-salud,General,/images/products/scraped/scraped_244.jpg,1 Unidad,,75,517
+p245,"DERMACORTINE EMULSION X 60ML",22.46,cuidado-personal-salud,General,/images/products/scraped/scraped_245.jpg,1 Unidad,,43,121
+p246,"PROTECT SOLAR ULTRASKIN CREMA FPS30 X60G",16.94,cuidado-personal-salud,General,/images/products/scraped/scraped_246.jpg,1 Unidad,,107,454
+p247,"DIOSMINA CALOX 600MG X 14TABL RECUB",15.9,cuidado-personal-salud,General,/images/products/scraped/scraped_247.jpg,1 Unidad,,101,125
+p248,"BLOCKSOL PANTALLA SOLAR TONO OSCURO 60G",22.04,cuidado-personal-salud,General,/images/products/scraped/scraped_248.jpg,1 Unidad,,96,110
+p249,"VIOLETA DE GENCIANA FSI X 30ML",2.3,cuidado-personal-salud,General,/images/products/scraped/scraped_249.jpg,1 Unidad,,41,326
+p250,"MARTESIA 300MG X 14 CAPS",14.11,cuidado-personal-salud,General,/images/products/scraped/scraped_250.jpg,1 Unidad,Nuevo,98,450
+p251,"RAMIPRES 2,5MG X 30 COMPR",10.95,cuidado-personal-salud,General,/images/products/scraped/scraped_251.jpg,1 Unidad,Nuevo,36,163
+p252,"BIOTIN 5000MCG NOW X 60 CAPSULAS",19,cuidado-personal-salud,General,/images/products/scraped/scraped_252.jpg,1 Unidad,Nuevo,17,583
+p253,"ARNICA FC LOCION CORPORAL AEROSOL X 75G",8.24,cuidado-personal-salud,General,/images/products/scraped/scraped_253.jpg,1 Unidad,,41,578

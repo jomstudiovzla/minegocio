@@ -121,10 +121,10 @@ export default function FlashOffers() {
               >
                 {/* Image */}
                 <div className="relative h-40 bg-gray-50 overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300"
+                  <img 
+                    src={product.image.startsWith('/') && process.env.NODE_ENV === 'production' ? '/minegocio' + product.image : product.image} 
+                    alt={product.name} 
+                    className="w-full h-full object-contain mix-blend-multiply drop-shadow-sm group-hover:scale-110 transition-transform duration-300" 
                   />
                   {/* Discount badge */}
                   <div className="discount-badge absolute top-2 left-2 bg-red-500 text-white text-xs font-black px-2 py-1 rounded-lg shadow-lg">

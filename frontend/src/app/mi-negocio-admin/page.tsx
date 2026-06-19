@@ -1192,6 +1192,32 @@ return (
             <p className="text-gray-600 font-bold group-hover:text-red-600">Haz clic para Reemplazar Inventario</p>
           </div>
 
+          <div 
+            onClick={async () => {
+              if (window.confirm("¿ESTÁS SEGURO? Esto eliminará todos los productos del inventario y de la base de datos de Firebase. Esta acción no se puede deshacer.")) {
+                setStatus({type: 'loading', msg: 'Borrando inventario...'});
+                try {
+                  const { db } = await import('@/lib/firebase');
+                  const { collection, getDocs, deleteDoc, doc } = await import('firebase/firestore');
+                  const snapshot = await getDocs(collection(db, "products"));
+                  const deletePromises = snapshot.docs.map(d => deleteDoc(doc(db, "products", d.id)));
+                  await Promise.all(deletePromises);
+                  useStore.getState().setProducts([]);
+                  setStatus({type: 'success', msg: 'Inventario borrado exitosamente.'});
+                } catch (e: any) {
+                  console.error(e);
+                  setStatus({type: 'error', msg: `Error borrando inventario: ${e.message}`});
+                }
+              }
+            }}
+            className="w-full max-w-md mx-auto aspect-[5/1] bg-red-600 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-red-700 transition shadow-lg group mb-8"
+          >
+            <div className="flex items-center gap-2">
+              <ShieldAlert size={24} className="text-white" />
+              <p className="text-white font-black text-lg">Borrar Todo el Inventario</p>
+            </div>
+          </div>
+
           {status.type === 'success' && (
             <div className="bg-green-50 text-green-700 p-4 rounded-xl flex items-center justify-center gap-2 mb-6 font-bold max-w-md mx-auto">
               <CheckCircle size={20} /> {status.msg}

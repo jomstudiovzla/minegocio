@@ -68,11 +68,12 @@ export default function ProductModal({ product, onClose }: { product: Product | 
               </span>
             ))}
             <motion.img 
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              src={product.image} 
-              alt={product.name}
-              className="max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-md"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              src={product.image.startsWith('/') && process.env.NODE_ENV === 'production' ? '/minegocio' + product.image : product.image} 
+              alt={product.name} 
+              className="w-full h-full object-contain mix-blend-multiply drop-shadow-xl" 
             />
           </div>
 
