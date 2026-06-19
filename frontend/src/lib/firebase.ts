@@ -3,12 +3,12 @@ import { getFirestore, initializeFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  projectId: "mi-negocio-38233",
-  appId: "1:760091165460:web:4a9c75b5140d31939bf801",
-  storageBucket: "mi-negocio-38233.firebasestorage.app",
-  apiKey: "AIzaSyB2yrUnwoAMA55ov-k0GeojC6mEEpUlYhI",
-  authDomain: "mi-negocio-38233.firebaseapp.com",
-  messagingSenderId: "760091165460",
+  projectId: "minegocio2-c20ef",
+  appId: "1:17384818092:web:1a266b8d3cbb7bf4bae609",
+  storageBucket: "minegocio2-c20ef.firebasestorage.app",
+  apiKey: "AIzaSyDk0ScqYYFy589FQyRWNw53En8iXMwSafA",
+  authDomain: "minegocio2-c20ef.firebaseapp.com",
+  messagingSenderId: "17384818092",
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

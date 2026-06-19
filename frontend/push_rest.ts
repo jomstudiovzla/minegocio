@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const PROJECT_ID = "mi-negocio-38233";
-const API_KEY = "AIzaSyB2yrUnwoAMA55ov-k0GeojC6mEEpUlYhI";
+const PROJECT_ID = "minegocio2-c20ef";
+const API_KEY = "AIzaSyDk0ScqYYFy589FQyRWNw53En8iXMwSafA";
 const REFERER = "https://jomstudiovzla.github.io/";
 
 async function uploadProducts() {
