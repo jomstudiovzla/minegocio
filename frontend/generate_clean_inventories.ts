@@ -137,6 +137,13 @@ function run() {
     extensoRows.push(...items.slice(0, 35));
   }
 
+  // Reasignar un ID unificado a todos los productos seleccionados (ej: PRD-001, PRD-002...)
+  // extensoRows contiene todos los productos (los de reducidoRows son un subconjunto de estos).
+  extensoRows.forEach((r, idx) => {
+    // Solo cambiamos el ID, la propiedad r.imagen ya tiene guardada la ruta original de la foto.
+    r.id = `PRD-${(idx + 1).toString().padStart(3, '0')}`;
+  });
+
   // Generar CSVs
   reducidoRows.forEach(r => {
      r.imagen_incrustada = `=IMAGE("https://jomstudiovzla.github.io/minegocio${r.imagen}", 1)`;

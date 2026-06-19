@@ -32,8 +32,8 @@ async function downloadImage(url: string, filename: string) {
 
   response.data.pipe(writer);
 
-  return new Promise((resolve, reject) => {
-    writer.on('finish', resolve);
+  return new Promise<void>((resolve, reject) => {
+    writer.on('finish', () => resolve());
     writer.on('error', reject);
   });
 }
@@ -88,13 +88,13 @@ async function scrape() {
               console.log(`Scraped: ${name} -> ${filename}`);
               idCounter++;
             } catch (err) {
-              console.error(`Failed to download image for ${name}: ${err.message}`);
+              console.error(`Failed to download image for ${name}: ${(err as Error).message}`);
             }
           }
         }
       }
     } catch (e) {
-      console.error(`Failed to scrape ${cat.url}: ${e.message}`);
+      console.error(`Failed to scrape ${cat.url}: ${(e as Error).message}`);
     }
   }
 
