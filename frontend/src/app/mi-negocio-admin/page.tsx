@@ -22,7 +22,7 @@ export default function AdminPage() {
   const clearAdminLogs = useStore(state => state.clearAdminLogs);
   const flashOffersConfig = useStore(state => state.flashOffersConfig);
   
-  const [status, setStatus] = useState<{type: 'idle' | 'success' | 'error', msg: string}>({type: 'idle', msg: ''});
+  const [status, setStatus] = useState<{type: 'idle' | 'loading' | 'success' | 'error', msg: string}>({type: 'idle', msg: ''});
   const fileInputRef = useRef<HTMLInputElement>(null);
   const replaceFileInputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);

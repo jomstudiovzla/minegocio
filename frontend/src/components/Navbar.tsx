@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, Search, User, ShoppingCart, ChevronRight, Check, Bell, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter, usePathname } from 'next/navigation';
-import { useStore } from '@/core/infrastructure/store/useStore';
+import { useStore } from '@/store/useStore';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getAssetPath } from '@/lib/assetHelper';
