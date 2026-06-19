@@ -20,11 +20,12 @@ Si no estás de acuerdo con alguno de estos términos, debes abstenerte de usar 
 Nos reservamos el derecho de modificar el catálogo, precios, zonas de cobertura y horarios sin previo aviso.`
   },
   {
-    title: "3. Precios y Pagos",
-    content: `• Todos los precios están expresados en dólares estadounidenses (USD) por defecto y pueden visualizarse en Bolívares (VES) según la tasa oficial del Banco Central de Venezuela (BCV).
-• Los precios pueden cambiar sin previo aviso debido a la volatilidad del mercado.
-• El pago debe realizarse según el método seleccionado en el checkout y confirmarse mediante comprobante.
-• Mi Negocio se reserva el derecho de cancelar un pedido si el pago no es verificado en el plazo establecido.`
+    title: "3. Precios, Tasas de Cambio y Facturación",
+    content: `• Todos los precios mostrados en dólares estadounidenses (USD) son referenciales. 
+• Los pagos en Bolívares (VES) se calculan estricta y obligatoriamente bajo la **tasa de cambio oficial del Banco Central de Venezuela (BCV)** correspondiente a la fecha de pago.
+• Se emitirá la respectiva factura fiscal cumpliendo con las providencias del SENIAT.
+• Nos apegamos a la Ley Orgánica de Precios Justos (SUNDDE) para evitar la especulación y asegurar la transparencia.
+• Mi Negocio se reserva el derecho de cancelar un pedido si el pago no es verificado en el plazo establecido o el comprobante es fraudulento.`
   },
   {
     title: "4. Pedidos y Confirmación",

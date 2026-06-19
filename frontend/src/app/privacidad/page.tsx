@@ -5,9 +5,9 @@ const sections = [
   {
     icon: Database,
     title: "1. Información que recopilamos",
-    content: `Al usar Mi Negocio, recopilamos la siguiente información:
+    content: `En cumplimiento del marco constitucional venezolano (Art. 28, 60 CBRV) y la Ley sobre Mensajes de Datos y Firmas Electrónicas, al usar Mi Negocio, recopilamos la siguiente información:
     
-• **Datos de registro:** nombre, correo electrónico, número de teléfono y cédula/RIF (opcionales para el registro, requeridos para el checkout).
+• **Datos de registro:** nombre, correo electrónico, número de teléfono y cédula/RIF (requeridos para facturación SENIAT).
 • **Datos del pedido:** dirección de entrega, productos seleccionados, método de pago elegido y comprobante adjunto.
 • **Datos de navegación:** páginas visitadas, productos vistos y términos buscados, para mejorar tu experiencia.
 • **Preferencias:** zona de entrega, idioma de moneda y favoritos guardados.
@@ -19,23 +19,23 @@ No recopilamos datos de tarjetas de crédito ni información bancaria sensible d
     title: "2. Cómo usamos tu información",
     content: `Usamos tus datos exclusivamente para:
 
-• Procesar y gestionar tus pedidos de forma eficiente.
+• Procesar y gestionar tus pedidos y emitir la facturación fiscal correspondiente.
 • Enviarte notificaciones sobre el estado de tu pedido (WhatsApp o correo).
 • Mejorar nuestro catálogo según las preferencias y búsquedas de nuestros clientes.
 • Gestionar tu cuenta y el programa de puntos Club Mi Negocio.
-• Resolver disputas, devoluciones y consultas de soporte.
+• Resolver disputas, devoluciones y consultas de soporte ante la SUNDDE.
 
 No vendemos, alquilamos ni compartimos tu información personal con terceros para fines publicitarios.`
   },
   {
     icon: Lock,
     title: "3. Seguridad de tus datos",
-    content: `Tomamos la seguridad de tu información muy en serio:
+    content: `Tomamos la seguridad de tu información muy en serio, en apego a la Ley Especial Contra los Delitos Informáticos:
 
-• Toda la información se almacena en servidores seguros de Google Firebase con cifrado en tránsito (TLS/SSL) y en reposo.
-• El acceso al panel de administración está protegido por credenciales exclusivas y no está indexado públicamente.
-• Los comprobantes de pago se almacenan de forma segura y solo el personal autorizado puede acceder a ellos.
-• Realizamos copias de seguridad regulares para proteger la integridad de los datos.`
+• Toda la información se almacena en servidores seguros con cifrado en tránsito (TLS/SSL) y en reposo.
+• El acceso al panel de administración está protegido por credenciales exclusivas y auditable.
+• Los comprobantes de pago se almacenan de forma segura para validación interna contable.
+• Realizamos copias de seguridad regulares para proteger la integridad de los datos financieros y personales.`
   },
   {
     icon: UserCheck,
