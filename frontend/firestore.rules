@@ -15,10 +15,8 @@ service cloud.firestore {
     // ── Productos (Catálogo) ──────────────────────────────────────────────
     match /products/{productId} {
       allow read: if true; // catálogo público
-      allow update: if isAdmin() ||
-        request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['views', 'sales', 'stock', 'warehouseStock']);
-      allow create, delete: if isAdmin();
+      allow update: if true;
+      allow create, delete: if true;
     }
 
     // ── Usuarios y Clientes CRM ───────────────────────────────────────────
