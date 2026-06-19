@@ -34,7 +34,8 @@ async function upload() {
     }
     console.log("Sesión iniciada exitosamente.");
 
-    const csvPath = path.join(process.cwd(), 'public', 'data', 'productos_plantilla.csv');
+    const csvPath = path.join(process.cwd(), 'public', 'data', 'inventario_extenso.csv');
+    console.log(`Leyendo CSV desde: ${csvPath}`);
     if (!fs.existsSync(csvPath)) {
       console.log("No se encontró el archivo:", csvPath);
       process.exit(1);
@@ -56,7 +57,7 @@ async function upload() {
         price: parseFloat(row.price || row.precio || '0'),
         category: row.category || row.categoria || '',
         subcategory: row.subcategory || row.subcategoria || 'General',
-        image: row.image || row.imagen || '',
+        image: `/images/products/scraped/${row.id}.jpg`,
         unit: row.unit || row.unidad || '1 Unidad',
         labels: row.labels ? String(row.labels).split('|') : [],
         description: row.description || row.descripcion || '',
@@ -69,7 +70,7 @@ async function upload() {
       });
     }
 
-    console.log(`Encontrados ${products.length} productos. Borrando antiguos y subiendo a Firestore...`);
+    console.log(`Encontrados ${products.length} productos en el CSV. Procediendo a Firestore...`);
     
     // Clean old products first
     const snapshot = await getDocs(collection(db, 'products'));

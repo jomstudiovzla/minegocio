@@ -6,20 +6,17 @@ import * as path from 'path';
 const BASE_URL = 'https://vallearriba.elplazas.com';
 
 const categories = [
-  { url: '/frutas-y-vegetales.html' },
-  { url: '/refrigerados-y-congelados/carnes-aves-y-pescado.html' },
-  { url: '/refrigerados-y-congelados/charcuteria.html' },
-  { url: '/viveres/arroz-granos-y-pastas.html' },
-  { url: '/viveres/bebidas.html' },
-  { url: '/viveres/snacks.html' },
-  { url: '/viveres/galletas.html' },
-  { url: '/limpieza.html' },
-  { url: '/cuidado-personal-y-salud.html' }
+  { url: '/frutas-y-vegetales.html', id: 'frutas-vegetales' },
+  { url: '/refrigerados-y-congelados/charcuteria.html', id: 'refrigerados-congelados' },
+  { url: '/viveres/arroz-granos-y-pastas.html', id: 'viveres' },
+  { url: '/cuidado-personal-y-salud.html', id: 'cuidado-personal-salud' },
+  { url: '/limpieza.html', id: 'limpieza' },
+  { url: '/licores.html', id: 'licores' }
 ];
 
 const dateStr = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-const EXPORT_DIR = path.join(process.cwd(), 'Inventario_Plaza_Export');
-const OUTPUT_CSV = path.join(EXPORT_DIR, `Inventario_Actualizado_${dateStr}.csv`);
+const EXPORT_DIR = path.join(process.cwd(), 'public', 'data');
+const OUTPUT_CSV = path.join(EXPORT_DIR, 'inventario_extenso.csv');
 
 // Agregamos BOM para UTF-8 en Excel
 const UTF8_BOM = '\uFEFF';
@@ -42,17 +39,22 @@ async function scrape() {
 
   for (const cat of categories) {
     console.log(`\nNavegando a categoría: ${cat.url}`);
-    let categoryName = cat.url.split('/')[1].replace('.html', ''); // Ej: frutas-y-vegetales
+    let categoryName = cat.id;
     
     try {
       let page = 1;
       let hasMoreProducts = true;
+      let catProductCount = 0;
       
       while (hasMoreProducts && page <= 5) {
         const pageUrl = `${BASE_URL}${cat.url}?p=${page}`;
         console.log(`  -> Extrayendo página ${page}: ${pageUrl}`);
         
-        const res = await axios.get(pageUrl);
+        const res = await axios.get(pageUrl, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+          }
+        });
         const $ = cheerio.load(res.data);
 
         const items = $('.item.product.product-item');
@@ -62,6 +64,12 @@ async function scrape() {
         }
 
         for (let i = 0; i < items.length; i++) {
+          if (catProductCount >= 30) {
+            console.log(`  -> Alcanzado el límite de 30 productos para la categoría ${categoryName}.`);
+            hasMoreProducts = false;
+            break;
+          }
+
           const el = items[i];
           
           // ID generado
@@ -94,6 +102,7 @@ async function scrape() {
               
               // Export using semicolons (;) so it matches the Admin Panel requirements
               products.push(`"${id}";"${name}";"${description}";"${price}";"${categoryName}";"${imgUrl}";"${productUrl}";"${imageFormula}"`);
+              catProductCount++;
           }
         }
         
