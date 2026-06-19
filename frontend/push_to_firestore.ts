@@ -34,7 +34,7 @@ async function upload() {
     }
     console.log("Sesión iniciada exitosamente.");
 
-    const csvPath = path.join(process.cwd(), 'public', 'data', 'productos_plantilla.csv');
+    const csvPath = path.join(process.cwd(), 'public', 'data', 'inventario_extenso.csv');
     console.log(`Leyendo CSV desde: ${csvPath}`);
     if (!fs.existsSync(csvPath)) {
       console.log("No se encontró el archivo:", csvPath);

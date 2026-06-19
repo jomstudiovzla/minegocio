@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
 import Papa from 'papaparse';
-import { useStore, Order } from '@/store/useStore';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useStore, Order, convertAndFormatPrice, resolveImage } from '@/store/useStore';
 import { Crown, Upload, CheckCircle, AlertTriangle, LogOut, Package, ClipboardList, ShieldAlert, Image as ImageIcon, Check, X, Mail, User as UserIcon, MapPin, DollarSign, TrendingUp, Search, Layers, Edit, BarChart2, Plus, Users, Shield, Star, Zap } from 'lucide-react';
 import { Product, products as initialProducts } from '@/data/mockDb';
 import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
@@ -777,7 +778,7 @@ return (
                       <div className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 ${isSelected ? 'bg-yellow-500' : 'border-2 border-gray-300'}`}>
                         {isSelected && <Check size={14} className="text-white" />}
                       </div>
-                      <img src={p.image} className="w-8 h-8 object-contain mix-blend-multiply" />
+                      <img src={resolveImage(p.image)} className="w-8 h-8 object-contain mix-blend-multiply" />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-bold text-gray-800 truncate">{p.name}</p>
                         <p className="text-[10px] text-gray-500">${p.price}</p>
@@ -1093,7 +1094,7 @@ return (
                     <tr key={p.id} className="hover:bg-gray-50/30 transition">
                       <td className="py-3 px-4 flex items-center gap-3">
                         <div className="w-10 h-10 bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center p-1 border border-gray-100">
-                          <img src={p.image} alt={p.name} className="max-h-full object-contain mix-blend-multiply" />
+                          <img src={resolveImage(p.image)} alt={p.name} className="max-h-full object-contain mix-blend-multiply" />
                         </div>
                         <span className="font-bold text-gray-800 truncate max-w-[180px] block" title={p.name}>{p.name}</span>
                       </td>
@@ -1473,7 +1474,7 @@ return (
                       <div key={item.id} className="flex items-center justify-between border-b border-gray-50 pb-2">
                         <div className="flex items-center gap-3">
                           <img 
-                            src={item.image} 
+                            src={resolveImage(item.image)} 
                             alt={item.name} 
                             className="w-10 h-10 object-contain rounded-lg bg-gray-50 border border-gray-100" 
                             onError={(e) => {
