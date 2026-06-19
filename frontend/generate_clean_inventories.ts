@@ -116,25 +116,32 @@ function run() {
       return true;
     });
 
+    // Separar los items reducidos y extensos
+    const slicedReducido = items.slice(0, 15);
+    const slicedExtenso = items.slice(0, 35);
+
     const subs = validSubcategories[cat] || [cat];
     
-    // Asignar subcategoría uniformemente (o inferir por nombre si es obvio)
-    items.forEach((item, index) => {
-        let assigned = subs[index % subs.length];
-        const nameUpper = item.nombre.toUpperCase();
-        if (cat === 'licores') {
-            if (nameUpper.includes('CERVEZA')) assigned = 'Cervezas';
-            else if (nameUpper.includes('RON')) assigned = 'Rones';
-            else if (nameUpper.includes('WHISKY') || nameUpper.includes('CAROREÑA')) assigned = 'Whisky';
-        }
-        item.subcategoria = assigned;
-    });
+    // Función para asignar subcategorías a una lista ya cortada
+    const assignSubcategories = (list: any[]) => {
+      list.forEach((item, index) => {
+          let assigned = subs[index % subs.length];
+          const nameUpper = item.nombre.toUpperCase();
+          if (cat === 'licores') {
+              if (nameUpper.includes('CERVEZA')) assigned = 'Cervezas';
+              else if (nameUpper.includes('RON')) assigned = 'Rones';
+              else if (nameUpper.includes('WHISKY') || nameUpper.includes('CAROREÑA')) assigned = 'Whisky';
+          }
+          item.subcategoria = assigned;
+      });
+      list.sort((a, b) => a.subcategoria.localeCompare(b.subcategoria));
+    };
 
-    // Sort so subcategories are somewhat grouped
-    items.sort((a, b) => a.subcategoria.localeCompare(b.subcategoria));
+    assignSubcategories(slicedReducido);
+    assignSubcategories(slicedExtenso);
 
-    reducidoRows.push(...items.slice(0, 15));
-    extensoRows.push(...items.slice(0, 35));
+    reducidoRows.push(...slicedReducido);
+    extensoRows.push(...slicedExtenso);
   }
 
   // Reasignar un ID unificado a todos los productos seleccionados (ej: PRD-001, PRD-002...)
