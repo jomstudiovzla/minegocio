@@ -1,16 +1,17 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, writeBatch, doc } from 'firebase/firestore';
+import { getFirestore, writeBatch, doc, getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as Papa from 'papaparse';
 
 const firebaseConfig = {
-  projectId: "mi-negocio-38233",
-  appId: "1:760091165460:web:4a9c75b5140d31939bf801",
-  storageBucket: "mi-negocio-38233.firebasestorage.app",
-  apiKey: "AIzaSyB2yrUnwoAMA55ov-k0GeojC6mEEpUlYhI",
-  authDomain: "mi-negocio-38233.firebaseapp.com",
-  messagingSenderId: "760091165460",
+  projectId: "minegocio2-c20ef",
+  appId: "1:17384818092:web:1a266b8d3cbb7bf4bae609",
+  storageBucket: "minegocio2-c20ef.firebasestorage.app",
+  apiKey: "AIzaSyDk0ScqYYFy589FQyRWNw53En8iXMwSafA",
+  authDomain: "minegocio2-c20ef.firebaseapp.com",
+  messagingSenderId: "17384818092",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -33,7 +34,6 @@ async function upload() {
     }
     console.log("Sesión iniciada exitosamente.");
 
-    // Parse CSV manually since this is a simple script
     const csvPath = path.join(process.cwd(), 'public', 'data', 'productos_plantilla.csv');
     if (!fs.existsSync(csvPath)) {
       console.log("No se encontró el archivo:", csvPath);
@@ -41,44 +41,62 @@ async function upload() {
     }
 
     const csvData = fs.readFileSync(csvPath, 'utf8');
-    const lines = csvData.split('\n').filter(l => l.trim().length > 0);
-    const headers = lines[0].split(',');
+    const parsed = Papa.parse(csvData, {
+      header: true,
+      delimiter: ';',
+      skipEmptyLines: true,
+    });
 
     const products = [];
-    for (let i = 1; i < lines.length; i++) {
-      // Split by comma, naive approach (assuming no commas in strings for this specific template)
-      // Actually let's use a regex to split by comma outside quotes if needed, but our template has no quotes.
-      const cols = lines[i].split(',');
-      if (cols.length < headers.length) continue;
-
+    for (const row of parsed.data as any[]) {
+      if (!row.id) continue;
       products.push({
-        id: cols[0],
-        name: cols[1],
-        price: parseFloat(cols[2] || '0'),
-        category: cols[3],
-        subcategory: cols[4],
-        image: cols[5],
-        unit: cols[6],
-        labels: cols[7] ? cols[7].split('|') : [],
-        description: cols[8],
-        providerPrice: parseFloat(cols[9] || '0'),
-        stock: parseInt(cols[10] || '0', 10),
-        warehouseStock: parseInt(cols[11] || '0', 10),
-        isActive: true, // required by schema
+        id: row.id,
+        name: row.name,
+        price: parseFloat(row.price || '0'),
+        category: row.category,
+        subcategory: row.subcategory,
+        image: row.image,
+        unit: row.unit,
+        labels: row.labels ? row.labels.split('|') : [],
+        description: row.description || '',
+        providerPrice: parseFloat(row.providerPrice || '0'),
+        stock: parseInt(row.stock || '0', 10),
+        warehouseStock: parseInt(row.warehouseStock || '0', 10),
+        isActive: true,
         views: 0,
         sales: 0
       });
     }
 
-    console.log(`Encontrados ${products.length} productos. Subiendo a Firestore...`);
+    console.log(`Encontrados ${products.length} productos. Borrando antiguos y subiendo a Firestore...`);
     
-    const batch = writeBatch(db);
-    products.forEach(p => {
+    // Clean old products first
+    const snapshot = await getDocs(collection(db, 'products'));
+    for (const d of snapshot.docs) {
+      await deleteDoc(d.ref);
+    }
+    console.log(`Borrados ${snapshot.docs.length} productos antiguos.`);
+
+    // Batch upload in chunks of 500
+    let batch = writeBatch(db);
+    let count = 0;
+    
+    for (const p of products) {
       const docRef = doc(db, 'products', p.id);
       batch.set(docRef, p);
-    });
+      count++;
+      
+      if (count % 400 === 0) {
+        await batch.commit();
+        batch = writeBatch(db);
+      }
+    }
 
-    await batch.commit();
+    if (count % 400 !== 0) {
+      await batch.commit();
+    }
+    
     console.log("¡Productos subidos exitosamente a Firestore!");
     process.exit(0);
 

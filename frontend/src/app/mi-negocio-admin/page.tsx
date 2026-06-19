@@ -292,6 +292,7 @@ export default function AdminPage() {
 
     Papa.parse(file, {
       header: true,
+      delimiter: ';',
       skipEmptyLines: true,
       dynamicTyping: true,
       complete: async (results) => {
@@ -401,6 +402,7 @@ export default function AdminPage() {
 
     Papa.parse(file, {
       header: true,
+      delimiter: ';',
       skipEmptyLines: true,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       complete: async (results: any) => {
