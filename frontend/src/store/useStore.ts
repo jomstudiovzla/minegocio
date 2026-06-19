@@ -147,7 +147,7 @@ export function convertAndFormatPrice(priceInUSD: number, currency: 'USD' | 'EUR
 export function resolveImage(imagePath: string): string {
   if (!imagePath) return '';
   if (imagePath.startsWith('http')) return imagePath;
-  const basePath = typeof window !== 'undefined' && window.location.hostname.includes('github.io') ? '/minegocio' : '';
+  const basePath = process.env.NODE_ENV === 'production' ? '/minegocio' : '';
   return imagePath.startsWith('/') ? basePath + imagePath : basePath + '/' + imagePath;
 }
 
