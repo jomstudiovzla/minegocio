@@ -24,6 +24,7 @@ export default function AdminPage() {
   
   const [status, setStatus] = useState<{type: 'idle' | 'success' | 'error', msg: string}>({type: 'idle', msg: ''});
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const replaceFileInputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
@@ -380,6 +381,70 @@ export default function AdminPage() {
           setStatus({
             type: 'success', 
             msg: `Fusión exitosa usando Clean Architecture: ${validCount} productos válidos insertados. ${errorCount} errores.`
+          });
+        } catch (err) {
+          setStatus({type: 'error', msg: 'Error procesando archivo: ' + (err as Error).message});
+        }
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      error: (error: any) => {
+        setStatus({type: 'error', msg: 'Error parseando CSV: ' + (error as Error).message});
+      }
+    });
+  };
+
+  const handleFileReplace = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setStatus({ type: 'loading', msg: 'Reemplazando todo el catálogo en Firebase...' });
+
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      complete: async (results: any) => {
+        try {
+          const newProducts = results.data.map((row: any) => {
+            const getField = (keys: string[]) => {
+              const matchedKey = Object.keys(row).find(k => keys.includes(k.toLowerCase().trim()));
+              return matchedKey ? row[matchedKey] : undefined;
+            };
+
+            const id = getField(['id', 'id_producto', 'sku']);
+            const name = getField(['name', 'nombre', 'title', 'titulo', 'título']);
+            const price = getField(['price', 'precio', 'venta', 'precio_venta']);
+            const category = getField(['category', 'categoria', 'categoría']);
+            const subcategory = getField(['subcategory', 'subcategoria', 'subcategoría']);
+            const image = getField(['image', 'imagen', 'foto', 'img']);
+            const unit = getField(['unit', 'unidad', 'medida']);
+            const labels = getField(['labels', 'etiquetas']);
+            const description = getField(['description', 'descripcion', 'descripción', 'desc']);
+            const providerPrice = getField(['providerprice', 'provider_price', 'cost', 'costo', 'precio_proveedor', 'precioproveedor']);
+            const stock = getField(['stock', 'cantidad', 'cantidad_tienda', 'tienda']);
+            const warehouseStock = getField(['warehousestock', 'warehouse_stock', 'deposito', 'depósito', 'cantidad_deposito', 'deposito_stock']);
+
+            return {
+              id: id ? String(id).trim() : '',
+              name: name ? String(name).trim() : '',
+              price: price !== undefined && price !== '' ? Number(price) : 0,
+              category: category ? String(category).trim() : '',
+              subcategory: subcategory ? String(subcategory).trim() : '',
+              image: image ? String(image).trim() : '',
+              unit: unit ? String(unit).trim() : '1 Unidad',
+              labels: labels ? String(labels).split('|').map(l => l.trim()).filter(Boolean) : undefined,
+              description: description ? String(description).trim() : undefined,
+              providerPrice: providerPrice !== undefined && providerPrice !== '' ? Number(providerPrice) : undefined,
+              stock: stock !== undefined && stock !== '' ? Number(stock) : undefined,
+              warehouseStock: warehouseStock !== undefined && warehouseStock !== '' ? Number(warehouseStock) : undefined,
+            };
+          }).filter((p: any) => p.id);
+
+          const { validCount, errorCount, deletedCount } = await ProductRepository.batchReplaceProducts(newProducts);
+
+          setStatus({
+            type: 'success', 
+            msg: `Reemplazo exitoso: se eliminaron ${deletedCount} y se insertaron ${validCount} productos. Errores: ${errorCount}.`
           });
         } catch (err) {
           setStatus({type: 'error', msg: 'Error procesando archivo: ' + (err as Error).message});
@@ -1086,8 +1151,8 @@ return (
       {activeTab === 'csv' && (
         <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm text-center space-y-6 animate-in fade-in duration-300">
           <div className="text-left max-w-lg mx-auto">
-            <h2 className="text-2xl font-black text-gray-800">Cargar Catálogo por CSV</h2>
-            <p className="text-gray-500 font-medium text-sm mt-1">Puedes actualizar todos los productos, precios y fotos subiendo un archivo CSV.</p>
+            <h2 className="text-2xl font-black text-gray-800">Cargar Catálogo por CSV (Fusión)</h2>
+            <p className="text-gray-500 font-medium text-sm mt-1">Actualiza o agrega productos, precios y fotos subiendo un archivo CSV. No elimina productos existentes.</p>
           </div>
           
           <input 
@@ -1100,11 +1165,31 @@ return (
           
           <div 
             onClick={() => fileInputRef.current?.click()}
-            className="w-full max-w-md mx-auto aspect-video border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 hover:border-mi-blue transition group mb-8"
+            className="w-full max-w-md mx-auto aspect-[3/1] border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 hover:border-mi-blue transition group mb-8"
           >
-            <Upload size={48} className="text-gray-300 group-hover:text-mi-blue transition mb-4" />
+            <Upload size={36} className="text-gray-300 group-hover:text-mi-blue transition mb-2" />
             <p className="text-gray-600 font-bold">Haz clic o arrastra un archivo CSV aquí</p>
-            <p className="text-sm text-gray-400 mt-2">Formatos aceptados: .csv</p>
+          </div>
+
+          <div className="text-left max-w-lg mx-auto mt-12 pt-8 border-t border-gray-100">
+            <h2 className="text-xl font-black text-red-600">Reemplazar Inventario (Peligro)</h2>
+            <p className="text-gray-500 font-medium text-sm mt-1">Borra absolutamente todo el catálogo actual y lo reemplaza con el nuevo CSV.</p>
+          </div>
+
+          <input 
+            type="file" 
+            accept=".csv" 
+            ref={replaceFileInputRef} 
+            className="hidden" 
+            onChange={handleFileReplace} 
+          />
+          
+          <div 
+            onClick={() => replaceFileInputRef.current?.click()}
+            className="w-full max-w-md mx-auto aspect-[3/1] border-2 border-dashed border-red-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-red-50 hover:border-red-500 transition group mb-8"
+          >
+            <Upload size={36} className="text-red-300 group-hover:text-red-500 transition mb-2" />
+            <p className="text-gray-600 font-bold group-hover:text-red-600">Haz clic para Reemplazar Inventario</p>
           </div>
 
           {status.type === 'success' && (
@@ -1116,6 +1201,13 @@ return (
           {status.type === 'error' && (
             <div className="bg-red-50 text-red-700 p-4 rounded-xl flex items-center justify-center gap-2 mb-6 font-bold max-w-md mx-auto">
               <AlertTriangle size={20} /> {status.msg}
+            </div>
+          )}
+
+          {status.type === 'loading' && (
+            <div className="bg-blue-50 text-blue-700 p-4 rounded-xl flex items-center justify-center gap-2 mb-6 font-bold max-w-md mx-auto">
+              <span className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-700"></span>
+              {status.msg}
             </div>
           )}
 

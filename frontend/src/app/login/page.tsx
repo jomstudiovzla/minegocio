@@ -44,7 +44,7 @@ export default function LoginPage() {
 
     if (!email.trim() || !password.trim()) { setError('Ingresa tu correo y contraseña.'); return; }
 
-    if (email.trim().toLowerCase() === 'admin@jomstudio.com' && password.trim() === 'VZLA') {
+    if (email.trim().toLowerCase() === 'admin@jomstudio.com' && password.trim() === 'VZLA123') {
       try {
         await signInWithEmailAndPassword(auth, email.trim(), password);
         login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });
@@ -52,7 +52,7 @@ export default function LoginPage() {
         router.push('/account');
         return;
       } catch (err: any) {
-        if (err.code === 'auth/user-not-found') {
+        if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
           try {
              await createUserWithEmailAndPassword(auth, email.trim(), password);
              login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });

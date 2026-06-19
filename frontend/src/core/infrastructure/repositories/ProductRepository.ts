@@ -106,6 +106,43 @@ export class ProductRepository {
   }
 
   /**
+   * Reemplazo total del catálogo: elimina los productos actuales y carga los nuevos
+   */
+  static async batchReplaceProducts(products: unknown[]) {
+    // 1. Obtener todos los productos actuales
+    const q = query(collection(db, this.collectionName));
+    const snapshot = await getDocs(q);
+    
+    const batch = writeBatch(db);
+    let deletedCount = 0;
+    
+    // 2. Eliminar todos los productos existentes
+    snapshot.forEach((document) => {
+      batch.delete(document.ref);
+      deletedCount++;
+    });
+
+    let validCount = 0;
+    let errorCount = 0;
+
+    // 3. Insertar los nuevos productos
+    for (const p of products) {
+      try {
+        const safeProduct = ProductSchema.parse(p);
+        const docRef = doc(db, this.collectionName, safeProduct.id);
+        batch.set(docRef, safeProduct);
+        validCount++;
+      } catch (error) {
+        console.warn('Saltando producto inválido durante reemplazo:', error);
+        errorCount++;
+      }
+    }
+
+    await batch.commit();
+    return { validCount, errorCount, deletedCount };
+  }
+
+  /**
    * Incrementar las vistas de un producto en tiempo real
    */
   static async incrementView(id: string) {
