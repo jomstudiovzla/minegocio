@@ -1,6 +1,7 @@
 "use client";
 import { RotateCcw, Clock, CheckCircle, XCircle, AlertCircle, Phone } from 'lucide-react';
 import Link from 'next/link';
+import WhatsAppLink from '@/components/WhatsAppLink';
 
 export default function DevolucionesPage() {
   return (
@@ -106,14 +107,13 @@ export default function DevolucionesPage() {
           <Phone size={32} className="mx-auto mb-3 text-mi-yellow" />
           <h2 className="text-xl font-black mb-2">¿Tienes un problema con tu pedido?</h2>
           <p className="text-white/80 font-medium text-sm mb-6">Contáctanos ahora y lo resolvemos de inmediato.</p>
-          <a
-            href="https://wa.me/584240000000"
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            text="Hola Mi Negocio, tengo un problema con mi pedido"
             className="inline-block bg-green-500 text-white font-bold px-8 py-3 rounded-xl hover:bg-green-600 transition"
+            fallback={<Link href="/account#pedidos" className="inline-block bg-white text-mi-blue font-bold px-8 py-3 rounded-xl hover:bg-mi-blue-low transition">Ver mis pedidos</Link>}
           >
             📱 Reportar por WhatsApp
-          </a>
+          </WhatsAppLink>
         </div>
       </div>
     </div>

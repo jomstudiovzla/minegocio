@@ -1,13 +1,16 @@
 "use client";
+import ProductImage from '@/components/ProductImage';
 import React from 'react';
 import { X, ShoppingCart, Trash2, Plus, Minus, ShoppingBag, ArrowRight, Tag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore, convertAndFormatPrice, resolveImage } from '@/store/useStore';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { FREE_SHIPPING_MIN_USD } from '@/lib/commerce';
+import { emitLineOut, emitQty } from '@/lib/gestures';
 
 export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-  const { cart, removeFromCart, updateQuantity, clearCart, currency, rates, user } = useStore();
+  const { cart, removeFromCart, updateQuantity, clearCart, currency, rates, user, maxQuantityFor } = useStore();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
@@ -17,9 +20,9 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
   const itemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   // Club Mi Negocio: 1 punto por dólar
   const pointsToEarn = Math.floor(subtotal);
-  const hasDelivery = subtotal < 15;
+  const hasDelivery = subtotal < FREE_SHIPPING_MIN_USD;
   const deliveryNote = hasDelivery
-    ? `Agrega $${(15 - subtotal).toFixed(2)} más para envío gratis`
+    ? `Agrega $${(FREE_SHIPPING_MIN_USD - subtotal).toFixed(2)} más para envío gratis`
     : '🎉 ¡Envío gratis desbloqueado!';
 
   return (
@@ -79,7 +82,7 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                 <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={{ width: `${Math.min((subtotal / 15) * 100, 100)}%` }}
+                    animate={{ width: `${Math.min((subtotal / FREE_SHIPPING_MIN_USD) * 100, 100)}%` }}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
                     className="h-full bg-mi-blue rounded-full"
                   />
@@ -116,25 +119,41 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                     className="flex gap-3 items-center bg-white p-3 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition group"
                   >
                     <div className="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden shrink-0 flex items-center justify-center">
-                      <img src={resolveImage(item.image)} alt={item.name} className="w-full h-full object-contain mix-blend-multiply p-1" />
+                      <ProductImage size="sm" src={resolveImage(item.image)} alt={item.name} className="w-full h-full object-contain mix-blend-multiply p-1" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-bold text-gray-800 line-clamp-1">{item.name}</h4>
                       <p className="text-xs text-gray-400 mb-1.5">{item.unit}</p>
                       <div className="flex items-center gap-1.5">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          type="button"
+                          aria-label={`Quitar una unidad de ${item.name}`}
+                          onClick={(e) => {
+                            if (item.quantity <= 1) return;
+                            updateQuantity(item.id, item.quantity - 1);
+                            emitQty(e.currentTarget, false);
+                          }}
                           className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 transition font-bold"
                         >
                           <Minus size={12} />
                         </button>
-                        <span className="text-sm font-black w-5 text-center text-gray-800">{item.quantity}</span>
+                        <span key={item.quantity} className="text-sm font-black w-5 text-center text-gray-800 mn-qty-pop">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-6 h-6 rounded-full bg-mi-blue/10 text-mi-blue flex items-center justify-center hover:bg-mi-blue hover:text-white transition font-bold"
+                          type="button"
+                          onClick={(e) => {
+                            if (item.quantity >= maxQuantityFor(item.id)) return;
+                            updateQuantity(item.id, item.quantity + 1);
+                            emitQty(e.currentTarget, true);
+                          }}
+                          disabled={item.quantity >= maxQuantityFor(item.id)}
+                          aria-label={`Agregar una unidad de ${item.name}`}
+                          className="w-6 h-6 rounded-full bg-mi-blue/10 text-mi-blue flex items-center justify-center hover:bg-mi-blue hover:text-white transition font-bold disabled:opacity-30 disabled:hover:bg-mi-blue/10 disabled:hover:text-mi-blue disabled:cursor-not-allowed"
                         >
                           <Plus size={12} />
                         </button>
+                        {item.quantity >= maxQuantityFor(item.id) && (
+                          <span className="text-[10px] font-bold text-orange-600 ml-1">Máx. {maxQuantityFor(item.id)}</span>
+                        )}
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2 shrink-0">
@@ -145,7 +164,12 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                         {convertAndFormatPrice(item.price, currency, rates)} c/u
                       </span>
                       <button
-                        onClick={() => removeFromCart(item.id)}
+                        type="button"
+                        aria-label={`Quitar ${item.name} del carrito`}
+                        onClick={(e) => {
+                          removeFromCart(item.id);
+                          emitLineOut(e.currentTarget);
+                        }}
                         className="text-gray-300 hover:text-red-400 transition opacity-0 group-hover:opacity-100"
                       >
                         <Trash2 size={15} />
@@ -176,8 +200,8 @@ export default function CartSidebar({ isOpen, onClose }: { isOpen: boolean, onCl
                 </div>
                 <div className="flex justify-between text-sm font-medium text-gray-500 mb-4">
                   <span>Envío</span>
-                  <span className={subtotal >= 15 ? 'text-mi-blue font-bold' : 'text-gray-500'}>
-                    {subtotal >= 15 ? 'Gratis 🎉' : 'Se calcula al finalizar'}
+                  <span className={subtotal >= FREE_SHIPPING_MIN_USD ? 'text-mi-blue font-bold' : 'text-gray-500'}>
+                    {subtotal >= FREE_SHIPPING_MIN_USD ? 'Gratis 🎉' : 'Se calcula al finalizar'}
                   </span>
                 </div>
                 <div className="flex justify-between font-black text-gray-900 text-xl mb-5 border-t border-gray-100 pt-4">

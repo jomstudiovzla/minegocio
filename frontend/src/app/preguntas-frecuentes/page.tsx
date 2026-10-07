@@ -2,6 +2,7 @@
 import { HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+import WhatsAppLink from '@/components/WhatsAppLink';
 
 const faqs = [
   {
@@ -96,14 +97,9 @@ export default function PreguntasFrecuentesPage() {
           <h2 className="text-xl font-black mb-2">¿No encontraste tu respuesta?</h2>
           <p className="text-white/80 font-medium text-sm mb-6">Escríbenos directamente y te ayudamos en minutos.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://wa.me/584240000000"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 text-white font-bold px-6 py-3 rounded-xl hover:bg-green-600 transition"
-            >
+            <WhatsAppLink className="bg-green-500 text-white font-bold px-6 py-3 rounded-xl hover:bg-green-600 transition">
               📱 WhatsApp
-            </a>
+            </WhatsAppLink>
             <Link href="/" className="bg-white text-mi-blue font-bold px-6 py-3 rounded-xl hover:bg-mi-blue-low transition">
               Ir al Catálogo
             </Link>

@@ -2,11 +2,13 @@
 import { motion } from 'framer-motion';
 import { useStore } from '@/store/useStore';
 import { useRouter } from 'next/navigation';
-import { ShieldCheck, CreditCard, Banknote, Smartphone, Clock, Star, Package, ChevronDown, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Clock, Star, Package, ChevronDown, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
 import { getAssetPath } from '@/lib/assetHelper';
+import { PAYMENT_ICONS, PAYMENT_LABELS } from '@/lib/commerce';
+import { availableMethods } from '@/lib/paymentConfig';
 
 const HERO_VIDEOS = [
   getAssetPath('/hero-video-1.mp4'),
@@ -17,8 +19,11 @@ const HERO_VIDEOS = [
 export default function Hero() {
   const user = useStore(state => state.user);
   const products = useStore(state => state.products);
-  const orders = useStore(state => state.orders);
+  const paymentConfig = useStore(state => state.paymentConfig);
+  // Solo se anuncian los métodos de pago que el negocio tiene activos de verdad.
+  const activeMethods = paymentConfig ? availableMethods(paymentConfig) : [];
   const rates = useStore(state => state.rates);
+  const businessRif = useStore(state => state.paymentConfig?.business.rif);
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -57,7 +62,7 @@ export default function Hero() {
     { icon: Package,     label: 'Productos',    value: mounted ? `${products.length}+` : '180+', color: 'text-mi-yellow' },
     { icon: Clock,       label: 'Entrega',      value: 'Mismo día',                               color: 'text-green-400' },
     { icon: Star,        label: 'Satisfacción', value: '4.9 / 5',                                 color: 'text-orange-400' },
-    { icon: ShieldCheck, label: 'Pedidos',      value: mounted && orders.length > 0 ? `${orders.length} hoy` : '100% Seguro', color: 'text-mi-blue-pale' },
+    { icon: ShieldCheck, label: 'Pagos',        value: 'Verificados',                             color: 'text-mi-blue-pale' },
   ];
 
   return (
@@ -66,7 +71,7 @@ export default function Hero() {
       <video
         ref={videoRef}
         className="hero-video-bg"
-        src={videoSrc}
+        src={mounted ? videoSrc : undefined}
         autoPlay
         loop
         muted
@@ -197,16 +202,18 @@ export default function Hero() {
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="flex items-center gap-2 text-mi-yellow font-bold bg-mi-yellow/10 border border-mi-yellow/20 px-3 py-1.5 rounded-lg text-sm">
                   <ShieldCheck size={16} />
-                  <span>PAGOS 100% SEGUROS</span>
+                  <span>PAGOS VERIFICADOS</span>
                 </div>
                 <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-white/75 text-sm">
-                  <div className="flex items-center gap-1.5"><Smartphone size={14} /> Zelle / Pago Móvil</div>
-                  <div className="flex items-center gap-1.5"><Banknote size={14} /> Efectivo</div>
-                  <div className="flex items-center gap-1.5"><CreditCard size={14} /> PayPal / Tarjetas</div>
+                  {mounted && activeMethods.map(m => (
+                    <div key={m} className="flex items-center gap-1.5">
+                      <span aria-hidden="true">{PAYMENT_ICONS[m]}</span> {PAYMENT_LABELS[m]}
+                    </div>
+                  ))}
                 </div>
               </div>
               <p className="text-xs text-white/50 mt-3 max-w-lg">
-                No guardamos datos de tarjeta. Confirmación segura por WhatsApp o correo.{' '}
+                Verificamos cada pago antes de despachar y nunca pedimos datos de tarjeta en la página.{' '}
                 <Link href="/delivery" className="underline hover:text-white/80 transition">
                   Ver zonas de entrega →
                 </Link>
@@ -249,8 +256,8 @@ export default function Hero() {
                 <ShieldCheck size={20} className="text-green-400" />
               </div>
               <div>
-                <p className="text-white font-bold text-sm">Comercio verificado</p>
-                <p className="text-white/50 text-xs">RIF J-12345678-9 · Caracas, Venezuela</p>
+                <p className="text-white font-bold text-sm">Pagos verificados uno a uno</p>
+                <p className="text-white/50 text-xs">{businessRif ? `RIF ${businessRif} · ` : ''}San Luis, El Cafetal · Caracas</p>
               </div>
               <div className="ml-auto">
                 <span className="w-2.5 h-2.5 bg-green-400 rounded-full block animate-pulse" />

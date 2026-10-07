@@ -1,20 +1,62 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { useStore } from '@/store/useStore';
+import { useStore, User } from '@/store/useStore';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, EyeOff, ShieldCheck, Star, Truck, Tag, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { auth, db } from '@/lib/firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail,
+  sendEmailVerification,
+} from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import {
+  ADMIN_MIN_PASSWORD,
+  CUSTOMER_MIN_PASSWORD,
+  FREE_SHIPPING_MIN_USD,
+  SAMPLE_ADMIN_USER,
+  WELCOME_POINTS,
+  isAdminEmail,
+  isSampleAdminLogin,
+  isSafeRedirect,
+  writeSampleAdminSession,
+  levelForPoints,
+  normalizeCedula,
+  normalizePhone,
+} from '@/lib/commerce';
 
 const PERKS = [
   { icon: Star,        text: 'Acumula puntos Club Mi Negocio con cada compra' },
-  { icon: Truck,       text: 'Envío gratis en pedidos desde $15' },
+  { icon: Truck,       text: `Envío gratis en pedidos desde $${FREE_SHIPPING_MIN_USD}` },
   { icon: Tag,         text: 'Ofertas exclusivas para miembros registrados' },
-  { icon: ShieldCheck, text: 'Pagos 100% seguros – Zelle, Pago Móvil, PayPal' },
+  { icon: ShieldCheck, text: 'Cada pago se verifica antes de despachar tu pedido' },
 ];
+
+/** Datos de una cuenta de Auth que todavía no tiene ficha completa en Firestore. */
+interface PendingProfile {
+  uid: string;
+  email: string;
+  /** true si ya existe users/{uid}: solo se completan cédula y teléfono. */
+  exists: boolean;
+}
+
+function authErrorMessage(code: string | undefined): string {
+  switch (code) {
+    case 'auth/too-many-requests':
+      return 'Demasiados intentos. Espera unos minutos o restablece tu contraseña.';
+    case 'auth/network-request-failed':
+      return 'Sin conexión. Revisa tu internet e inténtalo de nuevo.';
+    case 'auth/user-disabled':
+      return 'Esta cuenta está desactivada. Escríbenos para ayudarte.';
+    default:
+      return 'Correo o contraseña equivocada. Si no tienes cuenta, regístrate.';
+  }
+}
 
 export default function LoginPage() {
   const login = useStore(state => state.login);
@@ -27,159 +69,286 @@ export default function LoginPage() {
   const [password, setPassword]       = useState('');
   const [showPass, setShowPass]       = useState(false);
   const [error, setError]             = useState('');
+  const [info, setInfo]               = useState('');
+  const [busy, setBusy]               = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
   const [isRegistering, setIsReg]     = useState(false);
   const [redirectPath, setRedirect]   = useState('/account');
   const [showExtraInfoForm, setShowExtraInfoForm] = useState(false);
-  const [googleUserData, setGoogleUserData] = useState<any>(null);
+  const [pendingProfile, setPendingProfile] = useState<PendingProfile | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const red = params.get('redirect');
-    if (red) setRedirect(red);
+    // Solo rutas internas: /login?redirect=https://otro-sitio no se obedece.
+    if (isSafeRedirect(red)) setRedirect(red);
   }, []);
+
+  /** Lleva a cada quien a su sitio: el admin al panel, el cliente a donde iba. */
+  const goAfterLogin = (userEmail: string) => {
+    router.push(isAdminEmail(userEmail) ? '/mi-negocio-admin' : redirectPath);
+  };
+
+  /** Valida cédula y teléfono. Devuelve los valores normalizados o null si hay error. */
+  const validatePersonalData = (): { name: string; cedula: string; phone: string } | null => {
+    const cleanName = name.trim();
+    if (cleanName.length < 3) {
+      setError('Escribe tu nombre completo.');
+      return null;
+    }
+    const cleanCedula = normalizeCedula(cedula);
+    if (!cleanCedula) {
+      setError('La cédula o RIF debe empezar por V-, E- o J- seguido de números. Ejemplo: V-20111222.');
+      return null;
+    }
+    const cleanPhone = normalizePhone(phone);
+    if (!cleanPhone) {
+      setError('El teléfono debe tener 11 dígitos. Ejemplo: 0414-5550101.');
+      return null;
+    }
+    return { name: cleanName, cedula: cleanCedula, phone: cleanPhone };
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (busy) return;
     setError('');
+    setInfo('');
 
-    if (!email.trim() || !password.trim()) { setError('Ingresa tu correo y contraseña.'); return; }
-
-    // Bypassing Firebase strict 6-character limit by intercepting "VZLA" and appending "123" internally
-    const actualPassword = password.trim() === 'VZLA' ? 'VZLA123' : password.trim();
-
-    if (email.trim().toLowerCase() === 'admin@jomstudio.com' && actualPassword === 'VZLA123') {
-      try {
-        await signInWithEmailAndPassword(auth, email.trim(), actualPassword);
-        login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });
-        sessionStorage.setItem('isAdminLoggedIn', 'true');
-        router.push('/account');
-        return;
-      } catch (err: any) {
-        if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
-          try {
-             await createUserWithEmailAndPassword(auth, email.trim(), actualPassword);
-             login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' });
-             sessionStorage.setItem('isAdminLoggedIn', 'true');
-             router.push('/account');
-             return;
-          } catch (createErr: any) {
-             setError('Error de Firebase al crear Admin: ' + createErr.message);
-             return;
-          }
-        }
-        setError('Error de Firebase (Admin): ' + err.message);
-        return;
-      }
-    }
+    const cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail || !password) { setError('Ingresa tu correo y contraseña.'); return; }
 
     if (isRegistering) {
-      if (!name.trim() || !cedula.trim() || !phone.trim()) {
-        setError('Debes proporcionar tu Nombre, Cédula y Teléfono para registrarte de forma segura.');
+      // La cuenta de administración no se crea desde el navegador: vive solo en Firebase.
+      if (cleanEmail === SAMPLE_ADMIN_USER || isAdminEmail(cleanEmail)) {
+        setError('Esa cuenta no se puede registrar aquí.');
         return;
       }
+      const personal = validatePersonalData();
+      if (!personal) return;
+      if (!cleanEmail.includes('@')) {
+        setError('Escribe un correo válido.');
+        return;
+      }
+      if (password.length < CUSTOMER_MIN_PASSWORD) {
+        setError(`Tu contraseña debe tener al menos ${CUSTOMER_MIN_PASSWORD} caracteres.`);
+        return;
+      }
+      if (!acceptTerms) {
+        setError('Debes aceptar los Términos y la Política de Privacidad para crear tu cuenta.');
+        return;
+      }
+
+      setBusy(true);
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+        const userCredential = await createUserWithEmailAndPassword(auth, cleanEmail, password);
         const uid = userCredential.user.uid;
-        
-        const userData = {
+
+        const userData: User = {
           id: uid,
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          cedula: cedula.trim(),
-          phone: phone.trim(),
-          clubPoints: 350,
-          clubLevel: 'Bronce'
+          name: personal.name,
+          email: cleanEmail,
+          cedula: personal.cedula,
+          phone: personal.phone,
+          clubPoints: WELCOME_POINTS,
+          clubLevel: levelForPoints(WELCOME_POINTS),
         };
 
-        await setDoc(doc(db, 'users', uid), userData);
-        
-        login(userData as any);
+        await setDoc(doc(db, 'users', uid), { ...userData, createdAt: new Date().toISOString() });
+        // Verificación de correo: se envía, pero no bloquea la compra.
+        sendEmailVerification(userCredential.user).catch(() => { /* el aviso es opcional */ });
+
+        login(userData);
         router.push(redirectPath);
       } catch (err: any) {
         if (err.code === 'auth/email-already-in-use') {
            setError('Este correo ya se encuentra registrado. Por favor, inicia sesión.');
         } else if (err.code === 'auth/weak-password') {
-           setError('Tu contraseña es muy débil. Debe tener al menos 6 caracteres.');
+           setError(`Tu contraseña es muy débil. Debe tener al menos ${CUSTOMER_MIN_PASSWORD} caracteres.`);
+        } else if (err.code === 'auth/invalid-email') {
+           setError('Ese correo no es válido.');
         } else {
-           setError('Error al registrar: ' + err.message);
+           setError('No pudimos crear tu cuenta. Revisa tu conexión e inténtalo de nuevo.');
         }
+      } finally {
+        setBusy(false);
       }
-    } else {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
-        const uid = userCredential.user.uid;
-
-        const userDoc = await getDoc(doc(db, 'users', uid));
-        if (userDoc.exists()) {
-           login(userDoc.data() as any);
-           router.push(redirectPath);
-        } else {
-           // Si el usuario existe en Auth pero no en Firestore (ej. error de permisos previo), pedirle los datos faltantes o crearlo.
-           setGoogleUserData({ uid, email: userCredential.user.email || email.trim(), clubPoints: 350, clubLevel: 'Bronce' });
-           setShowExtraInfoForm(true);
-        }
-      } catch (err: any) {
-        setError('Correo o contraseña equivocada. Si no tienes cuenta, regístrate.');
-      }
+      return;
     }
+
+    // Muestra local: usuario admin y clave admin. No crea ni entra a Firebase.
+    if (cleanEmail === SAMPLE_ADMIN_USER) {
+      if (!isSampleAdminLogin(cleanEmail, password)) {
+        setError('Credenciales incorrectas.');
+        return;
+      }
+      writeSampleAdminSession();
+      router.push('/mi-negocio-admin');
+      return;
+    }
+
+    // El dueño también entra desde aquí: se inicia sesión de verdad en Firebase
+    // con la clave escrita y luego se abre el panel. Antes solo se redirigía sin
+    // autenticar, así que el panel no tenía sesión y volvía a pedir la clave:
+    // para el dueño parecía que nunca había iniciado sesión.
+    if (isAdminEmail(cleanEmail)) {
+      setBusy(true);
+      try {
+        await signInWithEmailAndPassword(auth, cleanEmail, password);
+        // Clave corta: el panel obliga a cambiarla antes de operar (misma marca
+        // que usa /mi-negocio-admin para no saltarse el cambio al recargar).
+        if (password.length < ADMIN_MIN_PASSWORD) {
+          try { localStorage.setItem('mn-admin-clave-corta', '1'); } catch { /* sin almacenamiento */ }
+        }
+        router.push('/mi-negocio-admin');
+      } catch (err: any) {
+        setError(authErrorMessage(err?.code));
+      } finally {
+        setBusy(false);
+      }
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, cleanEmail, password);
+      const uid = userCredential.user.uid;
+
+      const userDoc = await getDoc(doc(db, 'users', uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data() as User;
+        if (!data.cedula || !data.phone) {
+          setName(data.name || '');
+          setCedula(data.cedula || '');
+          setPhone(data.phone || '');
+          setPendingProfile({ uid, email: data.email || cleanEmail, exists: true });
+          setShowExtraInfoForm(true);
+          return;
+        }
+        login({ ...data, id: uid });
+        router.push(redirectPath);
+      } else {
+        // Cuenta de Auth sin ficha en Firestore: se piden los datos y se crea.
+        setPendingProfile({ uid, email: userCredential.user.email || cleanEmail, exists: false });
+        setShowExtraInfoForm(true);
+      }
+    } catch (err: any) {
+      setError(authErrorMessage(err?.code));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    setError('');
+    setInfo('');
+    const cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail) {
+      setError('Escribe tu correo arriba y vuelve a pulsar "Olvidé mi contraseña".');
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, cleanEmail);
+    } catch (err: any) {
+      if (err?.code === 'auth/invalid-email') {
+        setError('Ese correo no es válido.');
+        return;
+      }
+      if (err?.code === 'auth/too-many-requests') {
+        setError('Demasiados intentos. Espera unos minutos.');
+        return;
+      }
+      // Si el correo no existe no se dice: así nadie puede averiguar quién tiene cuenta.
+    }
+    setInfo(`Si ${cleanEmail} tiene cuenta, te llegará un correo para crear una contraseña nueva. Revisa también la carpeta de spam.`);
   };
 
   const handleGoogleLogin = async () => {
     try {
       setError('');
+      setInfo('');
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
       const uid = userCredential.user.uid;
+      const googleEmail = (userCredential.user.email || '').toLowerCase();
+
+      if (isAdminEmail(googleEmail)) {
+        goAfterLogin(googleEmail);
+        return;
+      }
 
       const userDoc = await getDoc(doc(db, 'users', uid));
       if (userDoc.exists()) {
-         const data = userDoc.data() as any;
+         const data = userDoc.data() as User;
          if (!data.cedula || !data.phone) {
            setName(data.name || userCredential.user.displayName || '');
            setCedula(data.cedula || '');
            setPhone(data.phone || '');
-           setGoogleUserData({ uid, email: data.email, clubPoints: data.clubPoints || 350, clubLevel: data.clubLevel || 'Bronce' });
+           setPendingProfile({ uid, email: data.email || googleEmail, exists: true });
            setShowExtraInfoForm(true);
            return;
          }
-         login(data);
+         login({ ...data, id: uid });
          router.push(redirectPath);
       } else {
-         setName(userCredential.user.displayName || 'Usuario de Google');
+         setName(userCredential.user.displayName || '');
          setCedula('');
          setPhone('');
-         setGoogleUserData({ uid, email: userCredential.user.email || '', clubPoints: 350, clubLevel: 'Bronce' });
+         setPendingProfile({ uid, email: googleEmail, exists: false });
          setShowExtraInfoForm(true);
       }
     } catch (err: any) {
+      console.error('Error al iniciar sesión con Google:', err);
       if (err.code === 'auth/unauthorized-domain' || err.code === 'auth/invalid-continue-uri') {
-        setError('Error: Debes autorizar "localhost" en la consola de Firebase -> Authentication -> Settings -> Authorized domains.');
+        setError('Debes autorizar "localhost" en Firebase Console -> Authentication -> Settings -> Authorized domains.');
+      } else if (err.code === 'auth/popup-blocked') {
+        setError('El navegador bloqueó la ventana emergente de Google. Permite las ventanas emergentes en la barra de direcciones o ingresa con tu correo y contraseña.');
+      } else if (err.code === 'auth/operation-not-allowed') {
+        setError('El proveedor de Google no está activado en Firebase Console -> Authentication -> Sign-in method.');
+      } else if (err.code === 'auth/account-exists-with-different-credential') {
+        setError('Ya existe una cuenta con este correo pero con contraseña. Ingresa usando correo y contraseña.');
+      } else if (err.code === 'auth/network-request-failed') {
+        setError('Error de conexión con Firebase. Revisa tu internet e inténtalo de nuevo.');
       } else if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
-        setError('Error al iniciar sesión con Google: ' + err.message);
+        const detail = err.code ? ` (${err.code})` : '';
+        setError(`No pudimos iniciar sesión con Google${detail}. Inténtalo de nuevo o ingresa con correo y contraseña.`);
       }
     }
   };
 
   const handleExtraInfoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !cedula.trim() || !phone.trim()) {
-      setError('Debes completar todos los datos para continuar.');
-      return;
-    }
-    
-    if (googleUserData) {
-      const userData = {
-        id: googleUserData.uid,
-        name: name.trim(),
-        email: googleUserData.email,
-        cedula: cedula.trim(),
-        phone: phone.trim(),
-        clubPoints: googleUserData.clubPoints,
-        clubLevel: googleUserData.clubLevel
-      };
-      await setDoc(doc(db, 'users', googleUserData.uid), userData);
-      login(userData as any);
+    if (busy || !pendingProfile) return;
+    setError('');
+    const personal = validatePersonalData();
+    if (!personal) return;
+
+    setBusy(true);
+    try {
+      const ref = doc(db, 'users', pendingProfile.uid);
+      if (pendingProfile.exists) {
+        // La ficha ya existe: solo se completan los datos personales. Los puntos no se tocan.
+        await setDoc(ref, personal, { merge: true });
+        const fresh = await getDoc(ref);
+        login({ ...(fresh.data() as User), id: pendingProfile.uid });
+      } else {
+        const userData: User = {
+          id: pendingProfile.uid,
+          name: personal.name,
+          email: pendingProfile.email,
+          cedula: personal.cedula,
+          phone: personal.phone,
+          clubPoints: WELCOME_POINTS,
+          clubLevel: levelForPoints(WELCOME_POINTS),
+        };
+        await setDoc(ref, { ...userData, createdAt: new Date().toISOString() });
+        login(userData);
+      }
       router.push(redirectPath);
+    } catch {
+      setError('No pudimos guardar tus datos. Revisa tu conexión e inténtalo de nuevo.');
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -250,7 +419,7 @@ export default function LoginPage() {
               {['Iniciar Sesión', 'Registrarme'].map((label, idx) => (
                 <button
                   key={label}
-                  onClick={() => { setIsReg(idx === 1); setError(''); }}
+                  onClick={() => { setIsReg(idx === 1); setError(''); setInfo(''); }}
                   className={`flex-1 py-2.5 rounded-xl text-sm font-black transition-all ${
                     isRegistering === (idx === 1)
                       ? 'bg-white text-mi-blue shadow-sm'
@@ -272,7 +441,7 @@ export default function LoginPage() {
                   transition={{ duration: 0.2 }}
                 >
                   <h1 className="text-2xl font-black text-gray-800 mb-1">
-                    Casi listo 🍍
+                    Casi listo 🛒
                   </h1>
                   <p className="text-sm text-gray-500 font-medium mb-6">
                     Por favor completa tus datos para agilizar tus compras en el futuro.
@@ -303,7 +472,7 @@ export default function LoginPage() {
                         <input
                           required type="tel" value={phone}
                           onChange={e => setPhone(e.target.value)}
-                          placeholder="0414-000-0000"
+                          placeholder="0414-5550101"
                           className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                         />
                       </div>
@@ -317,9 +486,10 @@ export default function LoginPage() {
 
                     <button
                       type="submit"
-                      className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-mi-blue/25 mt-2"
+                      disabled={busy}
+                      className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-mi-blue/25 mt-2 disabled:opacity-60"
                     >
-                      Continuar a Mi Negocio
+                      {busy ? 'Guardando…' : 'Continuar a Mi Negocio'}
                     </button>
                   </form>
                 </motion.div>
@@ -368,7 +538,7 @@ export default function LoginPage() {
                           <input
                             required type="tel" value={phone}
                             onChange={e => setPhone(e.target.value)}
-                            placeholder="0414-000-0000"
+                            placeholder="0414-5550101"
                             className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
                           />
                         </div>
@@ -380,7 +550,7 @@ export default function LoginPage() {
                   <div>
                     <label className="block text-xs font-black text-gray-600 mb-1.5 uppercase tracking-wide">Correo electrónico</label>
                     <input
-                      required type="email" value={email}
+                      required type="text" inputMode="email" autoComplete="username" value={email}
                       onChange={e => setEmail(e.target.value)}
                       placeholder="tu@correo.com"
                       className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue/20 focus:border-mi-blue transition"
@@ -409,20 +579,61 @@ export default function LoginPage() {
                     </div>
                   </div>
 
+                  {!isRegistering && (
+                    <div className="text-right -mt-1">
+                      <button
+                        type="button"
+                        onClick={handleForgotPassword}
+                        className="text-xs font-bold text-mi-blue hover:underline"
+                      >
+                        Olvidé mi contraseña
+                      </button>
+                    </div>
+                  )}
+
+                  {isRegistering && (
+                    <>
+                      <p className="text-[11px] text-gray-400 font-medium -mt-1">
+                        Mínimo {CUSTOMER_MIN_PASSWORD} caracteres.
+                      </p>
+                      <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={acceptTerms}
+                          onChange={e => setAcceptTerms(e.target.checked)}
+                          className="w-4 h-4 mt-0.5 rounded border-gray-300 accent-mi-blue"
+                        />
+                        <span className="text-xs text-gray-600 font-medium">
+                          Acepto los{' '}
+                          <Link href="/terminos" target="_blank" className="underline text-mi-blue font-bold">Términos</Link>
+                          {' '}y la{' '}
+                          <Link href="/privacidad" target="_blank" className="underline text-mi-blue font-bold">Política de Privacidad</Link>.
+                        </span>
+                      </label>
+                    </>
+                  )}
+
                   {/* Error */}
                   {error && (
-                    <div className="bg-red-50 border border-red-200 text-red-600 text-sm font-bold px-4 py-3 rounded-xl">
+                    <div role="alert" className="bg-red-50 border border-red-200 text-red-600 text-sm font-bold px-4 py-3 rounded-xl">
                       {error}
+                    </div>
+                  )}
+
+                  {info && (
+                    <div role="status" className="bg-mi-blue-ice border border-mi-blue-fixed text-mi-blue text-sm font-bold px-4 py-3 rounded-xl">
+                      {info}
                     </div>
                   )}
 
                   {/* Submit */}
                   <button
                     type="submit"
-                    className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-mi-blue/25 flex items-center justify-center gap-2 group mt-2"
+                    disabled={busy}
+                    className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-mi-blue/25 flex items-center justify-center gap-2 group mt-2 disabled:opacity-60"
                   >
-                    {isRegistering ? 'Crear mi cuenta' : 'Entrar a Mi Negocio'}
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    {busy ? 'Un momento…' : isRegistering ? 'Crear mi cuenta' : 'Entrar a Mi Negocio'}
+                    {!busy && <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />}
                   </button>
                 </form>
 
@@ -438,6 +649,7 @@ export default function LoginPage() {
                   </div>
 
                   <button
+                    type="button"
                     onClick={handleGoogleLogin}
                     className="mt-6 w-full flex items-center justify-center gap-3 bg-white border border-mi-blue-low hover:border-mi-blue hover:bg-mi-blue-ice text-gray-700 font-black text-sm py-3.5 rounded-2xl transition shadow-sm"
                   >
@@ -453,7 +665,7 @@ export default function LoginPage() {
 
                 {/* Privacy note */}
                 <p className="text-center text-xs text-gray-400 font-medium mt-5">
-                  Al continuar aceptas nuestros{' '}
+                  Consulta nuestros{' '}
                   <Link href="/terminos" className="underline hover:text-mi-blue">Términos</Link>
                   {' '}y{' '}
                   <Link href="/privacidad" className="underline hover:text-mi-blue">Privacidad</Link>.

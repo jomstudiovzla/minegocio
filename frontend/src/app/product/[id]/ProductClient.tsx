@@ -1,7 +1,8 @@
 "use client";
+import ProductImage from '@/components/ProductImage';
 import { useStore, convertAndFormatPrice } from '@/store/useStore';
+import { availableStock } from '@/lib/commerce';
 import { notFound } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { ShoppingCart, Heart, Share2, Truck, Home, ChevronRight, Plus, Minus, Check } from 'lucide-react';
 import Link from 'next/link';
@@ -35,15 +36,14 @@ export default function ProductClient({ id }: { id: string }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           
           <div className="h-[400px] md:h-[500px] bg-gray-50 rounded-3xl p-8 relative flex items-center justify-center overflow-hidden">
-            <motion.img 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              src={product.image} 
+            <ProductImage
+              fadeIn
+              src={product.image}
               alt={product.name}
               className="max-h-full object-contain mix-blend-multiply"
             />
             {product.labels && product.labels.map(label => (
-              <span key={label} className="absolute top-6 left-6 bg-yellow-400 text-yellow-900 text-sm font-black px-3 py-1.5 rounded-lg z-10">
+              <span key={label} className="absolute top-6 left-6 bg-mi-blue text-white text-sm font-black px-3 py-1.5 rounded-lg z-10">
                 {label}
               </span>
             ))}
@@ -54,19 +54,19 @@ export default function ProductClient({ id }: { id: string }) {
               <p className="text-mi-blue font-bold text-sm uppercase tracking-wider mb-2">{product.subcategory}</p>
               <h1 className="text-4xl md:text-5xl font-black text-gray-800 mb-4">{product.name}</h1>
               <p className="text-gray-500 font-medium">
-                {product.description || "Delicioso y fresco, seleccionado especialmente para ti bajo los estándares más altos de calidad de Ananas."}
+                {product.description || "Delicioso y fresco, seleccionado especialmente para ti bajo los estándares más altos de calidad de Mi Negocio."}
               </p>
             </div>
 
             <div className="flex items-end gap-4 mb-8">
               <span className="text-5xl font-black text-mi-blue">{convertAndFormatPrice(product.price, currency, rates)}</span>
               <span className="text-xl font-bold text-gray-400 mb-1">/ {product.unit}</span>
-              {product.stock !== undefined && product.stock <= 5 && product.stock > 0 && (
+              {availableStock(product) <= 5 && availableStock(product) > 0 && (
                 <span className="ml-2 bg-orange-100 text-orange-600 text-xs font-black px-3 py-1.5 rounded-full uppercase">
-                  ¡Solo {product.stock} disponibles!
+                  ¡Solo {availableStock(product)} disponibles!
                 </span>
               )}
-              {product.stock === 0 && (
+              {availableStock(product) === 0 && (
                 <span className="ml-2 bg-red-100 text-red-600 text-xs font-black px-3 py-1.5 rounded-full uppercase">
                   Agotado
                 </span>
@@ -95,9 +95,10 @@ export default function ProductClient({ id }: { id: string }) {
                 </div>
               ) : (
                 <button 
-                  disabled={product.stock === 0}
+                  disabled={availableStock(product) === 0}
                   onClick={() => {
-                    addToCart({ id: product.id, name: product.name, price: product.price, category: product.category, image: product.image, unit: product.unit || '1 Unidad' });
+                    const added = addToCart({ id: product.id, name: product.name, price: product.price, category: product.category, image: product.image, unit: product.unit || '1 Unidad' });
+                    if (!added) return;
                     if (qty > 1) {
                       setTimeout(() => {
                         const existingQty = useStore.getState().cart.find(c => c.id === product.id)?.quantity || 1;
@@ -108,7 +109,7 @@ export default function ProductClient({ id }: { id: string }) {
                   }}
                   className="flex-1 bg-mi-blue disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed hover:bg-mi-blue-mid text-white font-bold text-lg h-14 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-mi-blue/30"
                 >
-                  <ShoppingCart size={20} /> {product.stock === 0 ? 'Sin stock' : 'Añadir al Carrito'}
+                  <ShoppingCart size={20} /> {availableStock(product) === 0 ? 'Sin stock' : 'Añadir al Carrito'}
                 </button>
               )}
             </div>

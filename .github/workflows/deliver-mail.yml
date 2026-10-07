@@ -1,0 +1,50 @@
+name: Entregar correos (Brevo)
+
+# Lee la cola `outboundMail` de Firestore y envía cada carta pendiente por
+# Brevo. Corre solo cada 10 minutos (y también se puede lanzar a mano). La
+# clave de Brevo y la del dueño viven en GitHub → Settings → Secrets, nunca
+# en el navegador del cliente.
+#
+# Secrets necesarios:
+#   BREVO_API_KEY      · clave de API de Brevo (xkeysib-...)
+#   BREVO_SENDER       · correo remitente verificado en Brevo
+#   BREVO_SENDER_NAME  · nombre visible (opcional; por defecto "Mi Negocio")
+#   ADMIN_PASSWORD     · clave de Firebase del dueño (admin@jomstudio.com)
+
+on:
+  # Activar el cron cuando los secrets (BREVO_API_KEY, etc.) estén configurados en GitHub
+  # schedule:
+  #   - cron: '*/10 * * * *'
+  workflow_dispatch: {}
+
+# Que no corran dos entregas a la vez (evita enviar dos veces la misma carta).
+concurrency:
+  group: deliver-mail
+  cancel-in-progress: false
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependencias
+        working-directory: frontend
+        run: npm ci
+
+      - name: Entregar la cola de correos
+        working-directory: frontend
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          BREVO_SENDER: ${{ secrets.BREVO_SENDER }}
+          BREVO_SENDER_NAME: ${{ secrets.BREVO_SENDER_NAME }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        run: npm run deliver:mail

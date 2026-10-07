@@ -1,6 +1,7 @@
 "use client";
 import { Star, ThumbsUp, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
+import WhatsAppLink from '@/components/WhatsAppLink';
 
 const testimonials = [
   { name: "María Fernanda G.", zone: "El Cafetal", rating: 5, date: "12 Jun 2026", type: "Solo frutas", text: "Excelente servicio. Las frutas llegaron súper frescas, el aguacate en su punto exacto como lo pedí. El delivery fue muy puntual. ¡Totalmente recomendados!" },
@@ -96,14 +97,12 @@ export default function ComentariosPage() {
           <MessageCircle size={36} className="text-mi-blue mx-auto mb-3" />
           <h2 className="text-xl font-black text-gray-800 mb-2">¿Ya compraste con nosotros?</h2>
           <p className="text-gray-500 font-medium text-sm mb-6">¡Cuéntanos tu experiencia! Tu opinión nos ayuda a seguir mejorando.</p>
-          <a
-            href="https://wa.me/584240000000?text=Hola%20Mi%20Negocio%2C%20quiero%20dejar%20una%20rese%C3%B1a%20de%20mi%20pedido"
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            text="Hola Mi Negocio, quiero dejar una reseña de mi pedido"
             className="inline-block bg-mi-blue text-white font-bold px-8 py-3 rounded-xl hover:bg-mi-blue-mid transition shadow-lg shadow-mi-blue/20"
           >
             Dejar mi opinión por WhatsApp
-          </a>
+          </WhatsAppLink>
         </div>
       </div>
     </div>

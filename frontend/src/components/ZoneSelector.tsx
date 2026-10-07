@@ -1,14 +1,19 @@
 "use client";
 import { useEffect } from 'react';
 import { useStore } from '@/store/useStore';
+import { normalizeZone } from '@/lib/commerce';
 
+/**
+ * Mantiene una zona válida en el estado. La zona se elige en el checkout y se
+ * guarda con el pedido; aquí solo se corrige un valor viejo o desconocido.
+ */
 export default function ZoneSelector() {
-  const { zone, setZone } = useStore();
+  const zone = useStore(state => state.zone);
+  const setZone = useStore(state => state.setZone);
 
   useEffect(() => {
-    if (zone !== 'San Luis El Cafetal') {
-      setZone('San Luis El Cafetal');
-    }
+    const valid = normalizeZone(zone);
+    if (zone !== valid) setZone(valid);
   }, [zone, setZone]);
 
   return null;

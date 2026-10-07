@@ -1,4 +1,5 @@
 "use client";
+import ProductImage from '@/components/ProductImage';
 import { X, ShoppingCart, Heart, Share2, Truck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore, convertAndFormatPrice, resolveImage } from '@/store/useStore';
@@ -63,17 +64,15 @@ export default function ProductModal({ product, onClose }: { product: Product | 
 
           <div className="w-full md:w-1/2 bg-gray-50 p-8 flex items-center justify-center relative min-h-[300px]">
             {product.labels && product.labels.map(label => (
-              <span key={label} className="absolute top-6 left-6 bg-yellow-400 text-yellow-900 text-sm font-black px-3 py-1.5 rounded-lg z-10">
+              <span key={label} className="absolute top-6 left-6 bg-mi-blue text-white text-sm font-black px-3 py-1.5 rounded-lg z-10">
                 {label}
               </span>
             ))}
-            <motion.img 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              src={resolveImage(product.image)} 
-              alt={product.name} 
-              className="w-full h-full object-contain mix-blend-multiply drop-shadow-xl" 
+            <ProductImage
+              fadeIn
+              src={resolveImage(product.image)}
+              alt={product.name}
+              className="w-full h-full object-contain mix-blend-multiply drop-shadow-xl"
             />
           </div>
 

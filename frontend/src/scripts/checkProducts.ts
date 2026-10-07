@@ -1,24 +1,30 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+/**
+ * Cuenta los productos del catálogo real de Mi Negocio.
+ *     npx tsx src/scripts/checkProducts.ts
+ */
+import { initializeApp } from 'firebase/app';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 
-const firebaseConfig = {
-  projectId: "ananas-market-ve-ddb93",
-  appId: "1:760091165460:web:4a9c75b5140d31939bf801",
-  storageBucket: "ananas-market-ve-ddb93.firebasestorage.app",
-  apiKey: "AIzaSyB2yrUnwoAMA55ov-k0GeojC6mEEpUlYhI",
-  authDomain: "ananas-market-ve-ddb93.firebaseapp.com",
-  messagingSenderId: "760091165460",
-};
-
-const app = initializeApp(firebaseConfig);
+// Misma configuración que src/lib/firebase.ts
+const app = initializeApp({
+  projectId: 'minegocio2-c20ef',
+  appId: '1:17384818092:web:1a266b8d3cbb7bf4bae609',
+  apiKey: 'AIzaSyDk0ScqYYFy589FQyRWNw53En8iXMwSafA',
+  authDomain: 'minegocio2-c20ef.firebaseapp.com',
+});
 const db = getFirestore(app);
 
 async function check() {
-  const snapshot = await getDocs(collection(db, "products"));
-  console.log(`Hay ${snapshot.size} productos en Firebase.`);
-  if (snapshot.size > 0) {
-    console.log("Muestra de producto:", snapshot.docs[0].data().name);
-  }
+  const snapshot = await getDocs(collection(db, 'products'));
+  const withoutCost = snapshot.docs.filter(d => !(Number(d.data().providerPrice) > 0)).length;
+  const outOfStock = snapshot.docs.filter(d => (Number(d.data().stock) || 0) + (Number(d.data().warehouseStock) || 0) === 0).length;
+  console.log(`Hay ${snapshot.size} productos en Firebase (minegocio2-c20ef).`);
+  console.log(`  · ${withoutCost} sin costo de proveedor`);
+  console.log(`  · ${outOfStock} sin unidades en tienda ni depósito`);
+  process.exit(0);
 }
 
-check();
+check().catch(error => {
+  console.error(error);
+  process.exit(1);
+});

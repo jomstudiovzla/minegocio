@@ -11,6 +11,8 @@ export interface Product {
   warehouseStock?: number;
   description?: string;
   providerPrice?: number;
+  /** Alícuota de IVA en % (16, 8 o 0 = exento). El precio ya la incluye. */
+  taxRate?: 16 | 8 | 0;
   views?: number;
   sales?: number;
 }

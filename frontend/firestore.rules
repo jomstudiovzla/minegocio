@@ -1,77 +1,339 @@
 rules_version = '2';
 
+// ─────────────────────────────────────────────────────────────────────────
+// Mi Negocio — Reglas de Firestore
+//
+// Idea general:
+//   · El catálogo se lee sin sesión, pero precio, alta y baja son solo del admin.
+//   · Un cliente solo ve y crea SUS pedidos, y ninguno puede nacer "Facturado".
+//   · Los puntos del club solo se mueven junto con un pedido nuevo del mismo cliente.
+//   · Todo lo que no está nombrado aquí queda cerrado (no hay regla comodín).
+//
+// El correo de administración debe coincidir con ADMIN_EMAIL en src/lib/commerce.ts.
+// Desplegar con:  firebase deploy --only firestore:rules,storage
+// ─────────────────────────────────────────────────────────────────────────
+
 service cloud.firestore {
   match /databases/{database}/documents {
 
     // ── Helpers ──────────────────────────────────────────────────────────
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Administrador = la cuenta con este correo en Firebase Auth.
+    // Refuerzo recomendado: cuando sepas el UID de esa cuenta (Authentication → Users,
+    // o pestaña Trazabilidad del panel), añade   && request.auth.uid == 'UID_DEL_ADMIN'
+    // aquí y en storage.rules. Así un token con ese correo no basta por sí solo.
     function isAdmin() {
-      return request.auth != null && request.auth.token.email == 'admin@jomstudio.com';
+      return signedIn() && request.auth.token.email == 'admin@jomstudio.com';
     }
 
     function isOwner(userId) {
-      return request.auth != null && request.auth.uid == userId;
+      return signedIn() && request.auth.uid == userId;
     }
 
-    // ── Productos (Catálogo) ──────────────────────────────────────────────
+    // ── Personal del panel (cuentas por empleado) ────────────────────────
+    // El rol vive en staff/{uid} y solo el dueño (isAdmin) lo escribe. En plan
+    // gratis no hay custom claims, por eso se lee con get(); cuesta una llamada
+    // de acceso, muy por debajo del límite de 20 por operación.
+    function hasStaffDoc() {
+      return signedIn() && exists(/databases/$(database)/documents/staff/$(request.auth.uid));
+    }
+    function staffData() {
+      return get(/databases/$(database)/documents/staff/$(request.auth.uid)).data;
+    }
+    // Cualquiera con acceso al panel: el dueño o un empleado activo.
+    function isStaff() {
+      return isAdmin() || (hasStaffDoc() && staffData().active == true);
+    }
+    // Dueño o encargado: además de operar, toca catálogo, precios y configuración.
+    function isStaffAdmin() {
+      return isAdmin() || (hasStaffDoc() && staffData().active == true && staffData().role == 'admin');
+    }
+
+    // Campos que cambian en esta escritura (solo válido en update).
+    function changedKeys() {
+      return request.resource.data.diff(resource.data).affectedKeys();
+    }
+
+    // Mismo criterio que levelForPoints() en src/lib/commerce.ts
+    function levelFor(points) {
+      return points >= 500 ? 'Oro' : (points >= 200 ? 'Plata' : 'Bronce');
+    }
+
+    // ── Productos (catálogo) ─────────────────────────────────────────────
+    // Tomado de Ananas y apretado: el público no toca precio, nombre ni imagen.
+    function isViewBump() {
+      return changedKeys().hasOnly(['views'])
+        && request.resource.data.views == resource.data.get('views', 0) + 1;
+    }
+
+    // Una venta: baja tienda+depósito exactamente lo que sube "sales". Nadie puede
+    // inflar el stock ni tocar otra cosa desde el navegador de un cliente.
+    function isSaleMovement() {
+      return signedIn()
+        && changedKeys().hasOnly(['stock', 'warehouseStock', 'sales'])
+        && request.resource.data.stock >= 0
+        && request.resource.data.warehouseStock >= 0
+        && request.resource.data.sales > resource.data.get('sales', 0)
+        && float(request.resource.data.stock) + float(request.resource.data.warehouseStock)
+           == float(resource.data.get('stock', 0)) + float(resource.data.get('warehouseStock', 0))
+              - (float(request.resource.data.sales) - float(resource.data.get('sales', 0)));
+    }
+
     match /products/{productId} {
-      allow read: if true; // catálogo público
-      allow update: if true;
-      allow create, delete: if true;
+      allow read: if true;
+      allow create, delete: if isStaffAdmin();
+      allow update: if isStaffAdmin() || isViewBump() || isSaleMovement();
     }
 
-    // ── Usuarios y Clientes CRM ───────────────────────────────────────────
-    match /users/{userId} {
-      // El admin puede leer y escribir cualquier perfil
-      allow read, write: if isAdmin();
-      // El cliente solo puede leer y actualizar su propio perfil
-      allow read, update: if isOwner(userId);
-      // La creación requiere que el request lo haga el propio usuario autenticado
-      allow create: if request.auth != null && request.auth.uid == userId;
+    // ── Usuarios / clientes (CRM) ────────────────────────────────────────
+    // Alta: solo la propia ficha y con, como máximo, los puntos de bienvenida.
+    function validNewProfile(userId) {
+      return request.resource.data.id == userId
+        && request.resource.data.clubPoints >= 0
+        && request.resource.data.clubPoints <= 350
+        && request.resource.data.clubLevel == levelFor(request.resource.data.clubPoints)
+        // Nadie se da de alta a sí mismo como admin: ese campo solo lo pone la
+        // cuenta de administración (rama isAdmin()). El panel igual valida por
+        // correo de Firebase Auth, pero así el menú de admin no aparece por error.
+        && request.resource.data.get('isAdmin', false) == false
+        && (!('addresses' in request.resource.data) || (request.resource.data.addresses is list && request.resource.data.addresses.size() <= 5));
+    }
 
-      // Subcolección de notificaciones del usuario
+    // Edición de datos personales: no puede tocar puntos, nivel ni acumulados.
+    // Límite anti-DoS: máximo 5 direcciones en la libreta.
+    function isProfileEdit() {
+      return !changedKeys().hasAny([
+        'id', 'email', 'clubPoints', 'clubLevel',
+        'totalOrders', 'totalSpent', 'lastOrderId', 'lastOrderAt', 'isAdmin'
+      ])
+      && (!('addresses' in request.resource.data) || (request.resource.data.addresses is list && request.resource.data.addresses.size() <= 5));
+    }
+
+    // Movimiento de puntos: solo vale si en la MISMA operación se crea un pedido
+    // nuevo de este cliente y las cuentas cuadran con ese pedido.
+    function isLoyaltyMovement(userId) {
+      let orderPath = /databases/$(database)/documents/orders/$(request.resource.data.lastOrderId);
+      let order = getAfter(orderPath).data;
+      return changedKeys().hasOnly([
+          'clubPoints', 'clubLevel', 'lastOrderId', 'lastOrderAt',
+          'totalOrders', 'totalSpent', 'address', 'zone'
+        ])
+        && !exists(orderPath)
+        && order.uid == userId
+        && float(request.resource.data.clubPoints)
+           == float(resource.data.get('clubPoints', 0)) - float(order.pointsUsed) + float(order.pointsEarned)
+        && request.resource.data.clubLevel == levelFor(request.resource.data.clubPoints);
+    }
+
+    match /users/{userId} {
+      // El personal lee las fichas de los clientes para el CRM; escribir
+      // perfiles ajenos sigue siendo solo del dueño.
+      allow read: if isStaff() || isOwner(userId);
+      allow create: if isAdmin() || (isOwner(userId) && validNewProfile(userId));
+      allow update: if isAdmin()
+        || (isOwner(userId) && (isProfileEdit() || isLoyaltyMovement(userId)));
+      allow delete: if isAdmin();
+
+      // Avisos al cliente: los escribe el personal al aprobar, rechazar o despachar.
       match /notifications/{notificationId} {
-        allow read, update: if isOwner(userId) || isAdmin();
-        allow create, delete: if isAdmin() || request.auth != null; // Cualquiera autenticado puede crear (ej: al comprar), pero idealmente el admin o el sistema
+        allow read, update, delete: if isStaff() || isOwner(userId);
+        allow create: if isStaff();
       }
     }
 
-    // ── Inventario ───────────────────────────────────────────────────────
-    match /inventory/{productId} {
-      allow read, write: if isAdmin();
+    // ── Pedidos ──────────────────────────────────────────────────────────
+    function ownsOrder() {
+      return signedIn() && resource.data.uid == request.auth.uid;
     }
 
-    // ── Órdenes ──────────────────────────────────────────────────────────
+    // Estado inicial según el método. "Facturado" nunca es un estado inicial:
+    // solo el admin lo pone cuando confirma el dinero.
+    function validInitialState(o) {
+      return (o.paymentMethod == 'cash'
+              && o.status == 'Procesando' && o.paymentStatus == 'contra_entrega')
+          || (o.paymentMethod in ['pagomovil', 'zelle', 'transferencia', 'binance', 'paypal']
+              && o.status == 'En revisión' && o.paymentStatus == 'en_revision')
+          || (o.paymentMethod == 'creditcard'
+              && o.status == 'Pendiente de pago' && o.paymentStatus == 'pendiente');
+    }
+
+    // Las cuentas del pedido deben cuadrar entre sí. Los precios de cada línea
+    // los comprueba la tienda contra el catálogo; desde las reglas no se pueden
+    // recorrer las líneas, por eso el total tiene un tope.
+    function validOrderAmounts(o) {
+      return o.total is number && o.total >= 0 && o.total <= 5000
+        && o.subtotal is number && o.subtotal >= 0
+        && (o.deliveryFee == 0 || o.deliveryFee == 2.5)
+        && o.get('paypalFee', 0) >= 0
+        && o.pointsUsed >= 0 && o.pointsUsed <= 350
+        && o.pointsEarned >= 0 && o.pointsEarned <= o.total
+        && o.discount >= 0 && float(o.discount) <= float(o.pointsUsed) * 0.01 + 0.001
+        && math.abs(float(o.total)
+             - (float(o.subtotal) + float(o.deliveryFee) - float(o.discount) + float(o.get('paypalFee', 0)))) < 0.02;
+    }
+
+    function validNewOrder(orderId) {
+      let o = request.resource.data;
+      return o.uid == request.auth.uid
+        && o.id == orderId
+        // Solo los campos que escribe el checkout: nada de "stockReturned", "paidAt", etc.
+        && o.keys().hasOnly([
+             'id', 'uid', 'date', 'createdAt', 'items',
+             'subtotal', 'deliveryFee', 'discount', 'paypalFee', 'total',
+             'pointsUsed', 'pointsEarned',
+             'shippingMethod', 'zone', 'address', 'deliveryDate', 'deliveryTime',
+             'paymentMethod', 'status', 'paymentStatus',
+             'paymentCurrency', 'rateUsd', 'rateEur', 'amountBs',
+             'reference', 'payer', 'capturePath', 'captureDocId', 'customerDetails'
+           ])
+        && o.items is list && o.items.size() > 0 && o.items.size() <= 200
+        && validInitialState(o)
+        && validOrderAmounts(o)
+        && (isAdmin()
+            || o.pointsUsed == 0
+            || o.pointsUsed <= get(/databases/$(database)/documents/users/$(request.auth.uid)).data.clubPoints);
+    }
+
+    // El cliente reenvía un comprobante que el admin rechazó. No puede tocar montos ni estado de pago aprobado.
+    function isProofResubmission() {
+      return ownsOrder()
+        && resource.data.paymentStatus == 'rechazado'
+        && resource.data.status != 'Cancelado'
+        && changedKeys().hasOnly([
+             'status', 'paymentStatus', 'reference', 'payer',
+             'capturePath', 'captureDocId', 'proofUpdatedAt'
+           ])
+        && request.resource.data.status == 'En revisión'
+        && request.resource.data.paymentStatus == 'en_revision';
+    }
+
+    // Cancelar es definitivo: el stock ya se devolvió y los puntos se revirtieron.
+    // Ni siquiera la cuenta de administración puede pasar un pedido de
+    // "Cancelado" a otro estado, ni desmarcar que su stock fue devuelto.
+    function isStaffOrderUpdate() {
+      return isStaff()
+        && (resource.data.status != 'Cancelado' || request.resource.data.status == 'Cancelado')
+        && (resource.data.get('stockReturned', false) != true
+            || request.resource.data.get('stockReturned', false) == true);
+    }
+
     match /orders/{orderId} {
-      allow read: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid) || (request.auth != null && resource.data.userId == request.auth.uid);
-      allow create: if request.auth != null;
-      allow update, delete: if isAdmin();
+      // El personal ve todos los pedidos; el cliente solo los suyos (filtrando por uid).
+      allow read: if isStaff() || ownsOrder();
+      allow create: if signedIn() && validNewOrder(orderId);
+      allow update: if isStaffOrderUpdate() || isProofResubmission();
+      allow delete: if isStaffAdmin();
     }
 
-    // ── Pagos y Facturas (Solo lectura frontend, escritura Admin/Cloud Function) ───
+    // ── Capturas de pago (respaldo cuando Storage no está activo) ─────────
+    match /paymentProofs/{proofId} {
+      allow get: if isStaff() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow list: if isStaff();
+      allow delete: if isStaffAdmin();
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.dataUrl is string
+        && request.resource.data.dataUrl.size() < 1000000;
+      // Una captura enviada no se reemplaza: reenviar un comprobante crea un
+      // documento nuevo y el anterior queda como evidencia.
+      allow update: if false;
+    }
+
+    // ── Inventario auxiliar, facturas y pagos: solo admin ─────────────────
+    match /inventory/{productId} {
+      allow read: if isStaff();
+      allow write: if isStaffAdmin();
+    }
     match /invoices/{invoiceId} {
-      allow read: if isOwner(resource.data.uid);
-      allow write: if isAdmin();
+      allow read: if isStaff() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow write: if isStaff();
     }
     match /payments/{paymentId} {
-      allow read, write: if isAdmin();
+      allow read, write: if isStaff();
     }
 
-    // ── Logs Administrativos ──────────────────────────────────────────────
+    // ── Almacén y notas internas: solo admin ─────────────────────────────
+    // Movimientos manuales de existencias (entradas, ventas en tienda, mermas, conteos).
+    match /stockMovements/{movementId} {
+      allow read, create: if isStaff();
+      // Un movimiento no se edita ni se borra: si hubo un error se registra otro que lo corrige.
+      allow update, delete: if false;
+    }
+    // Notas del personal sobre un cliente. El cliente no puede leerlas.
+    match /customerNotes/{userId} {
+      allow read, write: if isStaff();
+    }
+
+    // ── Personal del panel: solo el dueño da o quita acceso ───────────────
+    // El empleado puede leer su propio documento (para saber su rol al entrar);
+    // el resto del personal ve la lista. Escribir —alta, cambio de rol, baja—
+    // es exclusivo del dueño: ni un encargado puede crear otro encargado.
+    match /staff/{uid} {
+      allow read: if isStaff() || isOwner(uid);
+      allow write: if isAdmin();
+    }
+
+    // ── Registro del panel (trazabilidad) ─────────────────────────────────
+    // Un cliente solo puede dejar UNA línea, con id fijo "pedido-<número>", y solo
+    // en la misma operación en la que crea ese pedido a su nombre. No puede
+    // escribir líneas sueltas ni llenar el registro.
+    function isOrderLog(logId) {
+      let orderPath = /databases/$(database)/documents/orders/$(request.resource.data.orderId);
+      return signedIn()
+        && logId == 'pedido-' + request.resource.data.orderId
+        && request.resource.data.type == 'order'
+        && request.resource.data.message is string
+        && request.resource.data.message.size() < 2000
+        && !exists(orderPath)
+        && getAfter(orderPath).data.uid == request.auth.uid;
+    }
+
     match /adminLogs/{logId} {
-      allow read, write, delete: if isAdmin();
-      allow create: if request.auth != null; // sistema puede crear logs
+      allow read: if isStaff();
+      allow update, delete: if isStaffAdmin();
+      allow create: if isStaff() || isOrderLog(logId);
     }
 
-    // ── Tasas de cambio ──────────────────────────────────────────────────
+    // ── Tasas y configuración de tienda (ofertas, datos de cobro, tasas) ──
     match /exchangeRates/{rateId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isStaffAdmin();
     }
-
-    // ── Store Config (Flash Offers, etc) ──────────────────────────────────
     match /store/{docId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isStaffAdmin();
+    }
+
+    // ── Cola de correos (la página encola, el entregador los envía) ───────
+    // La tienda escribe aquí una "carta" cuando pasa algo importante (pedido
+    // nuevo, pago aprobado/rechazado, cambio de estado, devolución). El script
+    // deliverMail.ts —o una función/extensión de correo— la lee y la envía al
+    // buzón. Sin estas reglas, encolar fallaba con permiso denegado y el pedido
+    // parecía no guardarse aunque sí se había guardado.
+    match /outboundMail/{mailId} {
+      // El personal ve toda la bandeja; el cliente solo las cartas dirigidas a
+      // él (consulta filtrada por toUid) o las que él mismo encoló.
+      allow read: if isStaff()
+        || (signedIn() && (resource.data.toUid == request.auth.uid
+                           || resource.data.fromUid == request.auth.uid));
+      // Encolar: cualquiera con sesión crea una carta a su nombre, con topes de
+      // tamaño (los mismos que recorta mailQueue.ts: asunto < 180, cuerpo < 8000).
+      allow create: if signedIn()
+        && request.resource.data.fromUid == request.auth.uid
+        && request.resource.data.status == 'pendiente'
+        && request.resource.data.kind in ['cliente_pedido', 'admin_solicitud']
+        && request.resource.data.to is string
+        && request.resource.data.subject is string
+        && request.resource.data.subject.size() < 180
+        && request.resource.data.text is string
+        && request.resource.data.text.size() < 8000;
+      // Marcar "enviado" o "error" es solo del personal (o del entregador, que
+      // entra con la cuenta del dueño). El cliente nunca cambia una carta.
+      allow update: if isStaff();
+      allow delete: if isStaffAdmin();
     }
   }
 }

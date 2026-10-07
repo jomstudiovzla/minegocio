@@ -21,13 +21,18 @@ const auth = getAuth(app);
 async function upload() {
   try {
     console.log("Iniciando sesión como admin...");
+    // La clave de administración ya no vive en el código. Se pasa al ejecutar:
+    //   ADMIN_PASSWORD='tu-clave' npx tsx push_to_firestore.ts
+    // y la cuenta nunca se crea desde un script.
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      throw new Error("Falta la variable ADMIN_PASSWORD. Ejemplo: ADMIN_PASSWORD='tu-clave' npx tsx push_to_firestore.ts");
+    }
     try {
-      await signInWithEmailAndPassword(auth, 'admin@jomstudio.com', 'VZLA123');
+      await signInWithEmailAndPassword(auth, 'admin@jomstudio.com', adminPassword);
     } catch (e: any) {
       if (e.code === 'auth/invalid-credential' || e.code === 'auth/user-not-found') {
-        console.log("Creando admin...");
-        const { createUserWithEmailAndPassword } = await import('firebase/auth');
-        await createUserWithEmailAndPassword(auth, 'admin@jomstudio.com', 'VZLA123');
+        throw new Error('Firebase rechazó la clave de administración.');
       } else {
         throw e;
       }

@@ -1,17 +1,13 @@
 "use client";
 import { Truck, MapPin, Clock, Package, CheckCircle, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
+import { DELIVERY_FEE_USD, FREE_SHIPPING_MIN_USD } from '@/lib/commerce';
 
+// Estas zonas y tarifas son las mismas que aplica el checkout (src/lib/commerce.ts).
 const zones = [
-  { name: "El Cafetal", fee: "Gratis (pedidos +$30)", time: "2–4 horas" },
-  { name: "San Luis", fee: "Gratis (pedidos +$30)", time: "2–4 horas" },
-  { name: "Los Naranjos", fee: "$2.00", time: "3–5 horas" },
-  { name: "Valle Arriba", fee: "$2.00", time: "3–5 horas" },
-  { name: "Caurimare", fee: "$2.00", time: "3–5 horas" },
-  { name: "Chuao", fee: "$3.00", time: "4–6 horas" },
-  { name: "Las Mercedes", fee: "$3.00", time: "4–6 horas" },
-  { name: "Altamira / La Castellana", fee: "$4.00", time: "4–6 horas" },
-  { name: "Otras zonas de Caracas", fee: "Consultar", time: "Consultar" },
+  { name: "San Luis", fee: `$${DELIVERY_FEE_USD.toFixed(2)} · Gratis desde $${FREE_SHIPPING_MIN_USD}`, time: "2–4 horas" },
+  { name: "El Cafetal", fee: `$${DELIVERY_FEE_USD.toFixed(2)} · Gratis desde $${FREE_SHIPPING_MIN_USD}`, time: "2–4 horas" },
+  { name: "Otras zonas de Caracas", fee: "Solo retiro en tienda por ahora", time: "Listo en 20–60 min" },
 ];
 
 export default function DeliveryPage() {
@@ -41,8 +37,8 @@ export default function DeliveryPage() {
             </p>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Empaque seguro y refrigerado</li>
-              <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Seguimiento por WhatsApp</li>
-              <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Gratis en pedidos mayores a $30 (zonas cercanas)</li>
+              <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Avisos del pedido en tu cuenta</li>
+              <li className="flex items-center gap-2"><CheckCircle size={16} className="text-green-500" /> Gratis en pedidos desde ${FREE_SHIPPING_MIN_USD}</li>
             </ul>
           </div>
 

@@ -1,6 +1,7 @@
 "use client";
 import { Tag, Zap, Gift, Clock } from 'lucide-react';
 import Link from 'next/link';
+import WhatsAppLink from '@/components/WhatsAppLink';
 
 const promos = [
   {
@@ -114,14 +115,12 @@ export default function PromocionesPage() {
           <p className="text-gray-500 font-medium text-sm mb-4">
             Síguenos por WhatsApp para recibir promociones exclusivas antes que nadie.
           </p>
-          <a
-            href="https://wa.me/584240000000?text=Quiero%20recibir%20las%20ofertas%20de%20Mi%20Negocio"
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            text="Quiero recibir las ofertas de Mi Negocio"
             className="inline-block bg-green-500 text-white font-bold px-8 py-3 rounded-xl hover:bg-green-600 transition"
           >
             📱 Suscribirme por WhatsApp
-          </a>
+          </WhatsAppLink>
         </div>
       </div>
     </div>

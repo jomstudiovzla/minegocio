@@ -7,7 +7,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "check:rules": "tsx src/scripts/checkRules.ts",
+    "deliver:mail": "tsx src/scripts/deliverMailBrevo.ts"
   },
   "dependencies": {
     "firebase": "^12.14.0",

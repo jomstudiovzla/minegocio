@@ -20,7 +20,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { cart, user, rates, currency, setCurrency, userNotifications, markUserNotificationAsRead, clearUserNotifications, adminLogs, markAdminLogAsRead, clearAdminLogs, logout } = useStore();
 
-  const isAdmin = user?.email === 'admin@jomstudio.com';
+  const isAdmin = !!user?.isAdmin;
   // Filter out read notifications immediately so they don't accumulate visually
   const notificationsToShow = (isAdmin ? adminLogs : userNotifications).filter(n => !n.read);
   const unreadCount = notificationsToShow.length;
@@ -283,7 +283,7 @@ export default function Navbar() {
                         </button>
                       )}
                       <button
-                        onClick={() => { logout(); router.push('/'); }}
+                        onClick={async () => { await logout(); router.push('/'); }}
                         className="w-full text-left px-4 py-2.5 text-sm hover:bg-red-50 hover:text-red-600 transition text-gray-700"
                       >
                         Cerrar Sesión
@@ -301,8 +301,10 @@ export default function Navbar() {
               </div>
 
               {/* Carrito */}
-              <div className="relative cursor-pointer group" onClick={() => setIsCartOpen(true)}>
-                <ShoppingCart className="text-gray-600 group-hover:text-mi-blue transition" size={24} />
+              <div data-cart-target className="relative cursor-pointer group" onClick={() => setIsCartOpen(true)}>
+                <span data-cart-icon>
+                  <ShoppingCart className="text-gray-600 group-hover:text-mi-blue transition" size={24} />
+                </span>
                 {mounted && cart.length > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}

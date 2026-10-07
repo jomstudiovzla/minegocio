@@ -1,0 +1,43 @@
+rules_version = '2';
+
+// Mi Negocio — Reglas de Firebase Storage
+// Capturas de pago: payments/{uid}/{pedido}-{fecha}.jpg
+//   · las sube solo el dueño de la cuenta, como imagen y de menos de 2 MB;
+//   · las ve el dueño y el administrador; nadie las reemplaza ni las borra salvo el admin.
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'admin@jomstudio.com';
+    }
+    // Personal del panel: el dueño, o un empleado activo según staff/{uid} en
+    // Firestore. Storage puede leer Firestore con firestore.get/exists.
+    function isStaff() {
+      return isAdmin()
+        || (request.auth != null
+            && firestore.exists(/databases/(default)/documents/staff/$(request.auth.uid))
+            && firestore.get(/databases/(default)/documents/staff/$(request.auth.uid)).data.active == true);
+    }
+
+    match /payments/{uid}/{fileName} {
+      allow read: if isStaff() || (request.auth != null && request.auth.uid == uid);
+      allow create: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.size < 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow update, delete: if isAdmin();
+    }
+
+    // Fotos del catálogo: cualquiera las ve; solo el personal las sube o cambia,
+    // como imagen y de menos de 5 MB. El modal "Editar Producto" las usa.
+    match /products/{fileName} {
+      allow read: if true;
+      allow write: if isStaff()
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

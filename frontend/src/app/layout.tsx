@@ -11,8 +11,7 @@ import type { Viewport } from "next";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  // Se permite el zoom: bloquearlo deja fuera a quien necesita ampliar para leer.
   themeColor: "#001b62",
 };
 

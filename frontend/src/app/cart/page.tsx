@@ -1,4 +1,5 @@
 "use client";
+import ProductImage from '@/components/ProductImage';
 import { useStore, convertAndFormatPrice } from '@/store/useStore';
 import { motion } from 'framer-motion';
 import { Trash2, ShoppingCart, ArrowRight } from 'lucide-react';
@@ -7,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity, currency, rates } = useStore();
+  const { cart, removeFromCart, updateQuantity, currency, rates, maxQuantityFor } = useStore();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
@@ -41,7 +42,7 @@ export default function CartPage() {
                 className="flex flex-col sm:flex-row gap-6 items-center bg-white p-6 rounded-3xl border border-gray-100 shadow-sm"
               >
                 <div className="w-32 h-32 bg-gray-50 rounded-2xl overflow-hidden p-4">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />
+                  <ProductImage src={item.image} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />
                 </div>
                 <div className="flex-1 w-full">
                   <p className="text-sm font-bold text-gray-400 mb-1">{item.category}</p>
@@ -52,9 +53,9 @@ export default function CartPage() {
                   <p className="text-2xl font-black text-mi-blue">{convertAndFormatPrice(item.price * item.quantity, currency, rates)}</p>
                   <div className="flex items-center justify-between sm:justify-end gap-6 w-full">
                     <div className="flex items-center bg-gray-50 rounded-xl border border-gray-200">
-                      <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-10 h-10 flex items-center justify-center font-bold text-gray-600 hover:bg-white rounded-l-xl transition">-</button>
+                      <button onClick={() => updateQuantity(item.id, item.quantity - 1)} aria-label={`Quitar una unidad de ${item.name}`} className="w-10 h-10 flex items-center justify-center font-bold text-gray-600 hover:bg-white rounded-l-xl transition">-</button>
                       <span className="w-10 text-center font-bold">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="w-10 h-10 flex items-center justify-center font-bold text-mi-blue hover:bg-white rounded-r-xl transition">+</button>
+                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} disabled={item.quantity >= maxQuantityFor(item.id)} aria-label={`Agregar una unidad de ${item.name}`} className="w-10 h-10 flex items-center justify-center font-bold text-mi-blue hover:bg-white rounded-r-xl transition disabled:opacity-30 disabled:cursor-not-allowed">+</button>
                     </div>
                     <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500 transition p-2 bg-red-50 rounded-full hover:bg-red-100">
                       <Trash2 size={20} />
@@ -87,7 +88,7 @@ export default function CartPage() {
                 if (!isLogged) router.push('/login?redirect=/checkout');
                 else router.push('/checkout');
               }}
-              className="w-full bg-mi-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-mi-blue-mid hover:shadow-lg hover:shadow-mi-blue/30 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-mi-yellow text-mi-blue py-4 rounded-xl font-black text-lg hover:brightness-95 active:scale-[0.98] hover:shadow-lg hover:shadow-mi-yellow/30 transition-all flex items-center justify-center gap-2"
             >
               Finalizar Compra <ArrowRight size={20} />
             </button>

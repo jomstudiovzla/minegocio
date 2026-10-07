@@ -1,128 +1,204 @@
 'use client';
 
 import { useEffect } from 'react';
-import { collection, onSnapshot, query, doc } from 'firebase/firestore';
+import { collection, onSnapshot, query, doc, where, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '@/lib/firebase';
-import { useStore, Order, AdminLog } from '@/store/useStore';
+import { useStore, Order, AdminLog, User, UserNotification } from '@/store/useStore';
 import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
+import { isAdminEmail, levelForPoints, readSampleAdminSession } from '@/lib/commerce';
+import { subscribePaymentConfig } from '@/lib/paymentConfig';
 
+function sortOrders(orders: Order[]): Order[] {
+  return orders.sort((a, b) => {
+    const timeA = a.createdAt || new Date(a.date).getTime();
+    const timeB = b.createdAt || new Date(b.date).getTime();
+    if (isNaN(timeA) || isNaN(timeB)) return 0;
+    return timeB - timeA;
+  });
+}
+
+/**
+ * Fuente única de verdad entre Firebase y la tienda.
+ *
+ * - Lo público (catálogo, ofertas, datos de cobro, tasas) se escucha siempre.
+ * - Lo privado depende de quién confirmó Firebase que eres:
+ *     · cliente → solo SUS pedidos y sus avisos;
+ *     · admin   → todos los pedidos y el registro del panel.
+ * - Si Firebase dice que no hay sesión, este navegador deja de mostrar la cuenta.
+ *   Nadie es "admin" por lo que diga el almacenamiento local.
+ */
 export default function FirebaseSync() {
-  const setProducts = useStore(state => state.setProducts);
-  const setOrders = useStore(state => state.setOrders);
-  const setAdminLogs = useStore(state => state.setAdminLogs);
-  const setUserNotifications = useStore(state => state.setUserNotifications);
-  const setFlashOffersConfig = useStore(state => state.setFlashOffersConfig);
-  const login = useStore(state => state.login);
-  const logout = useStore(state => state.logout);
-
   useEffect(() => {
-    console.log("FirebaseSync montado. Suscribiendo a colecciones...");
+    const store = useStore.getState;
 
-    // 1. Productos a través de Clean Architecture
+    // ── Público ────────────────────────────────────────────────────────────
     const unsubProducts = ProductRepository.subscribeToAllProducts((prods) => {
-      setProducts(prods as any);
+      store().setProducts(prods);
     });
 
-    // 2. Autenticación y Perfil de Usuario en Tiempo Real
-    let unsubUserDoc: (() => void) | null = null;
+    const unsubFlashOffers = onSnapshot(
+      doc(db, 'store', 'flashOffers'),
+      (snap) => store().setFlashOffersConfig(snap.exists() ? (snap.data() as never) : null),
+      (error) => console.error('Ofertas relámpago no disponibles', error),
+    );
+
+    const unsubPaymentConfig = subscribePaymentConfig((config) => store().setPaymentConfig(config));
+
+    // Tasas: si el admin fijó una tasa manual, vale para todos los clientes.
+    const unsubRates = onSnapshot(
+      doc(db, 'store', 'rates'),
+      (snap) => {
+        const data = snap.exists() ? snap.data() : null;
+        if (data && data.auto === false && Number(data.usd) > 0 && Number(data.eur) > 0) {
+          store().setIsAutoRates(false);
+          store().setRates(Number(data.usd), Number(data.eur));
+        } else {
+          const wasManual = !store().isAutoRates;
+          store().setIsAutoRates(true);
+          if (wasManual) store().fetchRates();
+        }
+      },
+      (error) => console.error('Tasas manuales no disponibles', error),
+    );
+
+    // ── Privado ────────────────────────────────────────────────────────────
+    let unsubPrivate: Array<() => void> = [];
+    const stopPrivate = () => {
+      unsubPrivate.forEach((fn) => fn());
+      unsubPrivate = [];
+    };
 
     const unsubAuth = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        // Escuchar el documento del usuario en Firestore en tiempo real
-        const userRef = doc(db, 'users', firebaseUser.uid);
-        unsubUserDoc = onSnapshot(userRef, (snap) => {
-          if (snap.exists()) {
-            login(snap.data() as any);
-          } else {
-            // Documento no existe (puede estar a mitad de registro o ser admin local)
-            if (firebaseUser.email === 'admin@jomstudio.com') {
-               login({ id: 'admin', name: 'Administrador', email: 'admin@jomstudio.com', clubPoints: 0, clubLevel: 'Oro' } as any);
-            }
-          }
-        });
-      } else {
-        if (unsubUserDoc) {
-          unsubUserDoc();
-          unsubUserDoc = null;
+      stopPrivate();
+
+      if (!firebaseUser) {
+        if (readSampleAdminSession()) {
+          store().setAuthReady(true);
+          return;
         }
-        // No forzamos logout general por si hay navegación local, pero aquí se podría manejar.
+        store().clearSession();
+        store().setAuthReady(true);
+        return;
       }
-    });
 
-    // 3. Órdenes
-    let previousOrders: Record<string, string> = {};
-    const qOrders = query(collection(db, "orders"));
-    const unsubOrders = onSnapshot(qOrders, (snapshot) => {
-      const ords: Order[] = [];
-      snapshot.forEach(doc => {
-        const order = doc.data() as Order;
-        ords.push(order);
+      const uid = firebaseUser.uid;
+      const email = (firebaseUser.email || '').toLowerCase();
+      const admin = isAdminEmail(email);
 
-        if (previousOrders[order.id] && previousOrders[order.id] !== order.status) {
-          // El envío de notificaciones ahora se hace desde updateOrderStatus directamente a Firestore.
-          // Aquí solo actualizamos el tracking local para la tienda.
-        }
-        previousOrders[order.id] = order.status;
-      });
-      // Ordenar localmente por fecha
-      ords.sort((a, b) => {
-        const timeA = a.createdAt || new Date(a.date).getTime();
-        const timeB = b.createdAt || new Date(b.date).getTime();
-        if (isNaN(timeA) || isNaN(timeB)) return 0;
-        return timeB - timeA;
-      });
-      setOrders(ords);
-    });
+      // Perfil
+      unsubPrivate.push(
+        onSnapshot(
+          doc(db, 'users', uid),
+          (snap) => {
+            if (snap.exists()) {
+              const data = snap.data();
+              const points = Math.max(0, Math.floor(Number(data.clubPoints) || 0));
+              const profile: User = {
+                ...(data as User),
+                id: uid,
+                email: data.email || email,
+                name: data.name || firebaseUser.displayName || 'Cliente',
+                clubPoints: points,
+                // El nivel siempre sale de los puntos: un solo criterio en toda la tienda.
+                clubLevel: levelForPoints(points),
+                isAdmin: admin,
+              };
+              store().login(profile);
+            } else if (admin) {
+              store().login({ id: uid, name: 'Administrador', email, clubPoints: 0, clubLevel: 'Oro', isAdmin: true });
+            } else {
+              // Cuenta de Auth sin ficha: /login pide los datos que faltan y la crea.
+              const current = store().user;
+              if (current && current.id !== uid) store().clearSession();
+            }
+            store().setAuthReady(true);
+          },
+          (error) => {
+            console.error('No se pudo leer el perfil', error);
+            store().setAuthReady(true);
+          },
+        ),
+      );
 
-    // 4. Logs de Admin
-    const qLogs = query(collection(db, "adminLogs"));
-    const unsubLogs = onSnapshot(qLogs, (snapshot) => {
-      const logs: AdminLog[] = [];
-      snapshot.forEach(doc => {
-        logs.push(doc.data() as AdminLog);
-      });
-      logs.sort((a, b) => {
-        const timeA = new Date(a.date).getTime();
-        const timeB = new Date(b.date).getTime();
-        if (isNaN(timeA) || isNaN(timeB)) return 0;
-        return timeB - timeA;
-      });
-      setAdminLogs(logs);
-    });
+      // El panel (todos los pedidos + registro) lo ve el dueño y cualquier
+      // empleado activo. El cliente solo ve lo suyo.
+      const startPanel = () => {
+        unsubPrivate.push(
+          onSnapshot(
+            query(collection(db, 'orders')),
+            (snapshot) => store().setOrders(sortOrders(snapshot.docs.map((d) => d.data() as Order))),
+            (error) => console.error('No se pudieron leer los pedidos', error),
+          ),
+        );
+        unsubPrivate.push(
+          onSnapshot(
+            query(collection(db, 'adminLogs')),
+            (snapshot) => {
+              const logs = snapshot.docs.map((d) => d.data() as AdminLog);
+              logs.sort((a, b) => {
+                const timeA = new Date(a.date).getTime();
+                const timeB = new Date(b.date).getTime();
+                if (isNaN(timeA) || isNaN(timeB)) return 0;
+                return timeB - timeA;
+              });
+              store().setAdminLogs(logs);
+            },
+            (error) => console.error('No se pudo leer el registro del panel', error),
+          ),
+        );
+        store().setUserNotifications([]);
+      };
 
-    // 5. User Notifications (Solo si hay usuario y NO es admin)
-    let unsubUserNotifs = () => {};
-    if (useStore.getState().user && useStore.getState().user?.email !== 'admin@jomstudio.com') {
-       const uId = useStore.getState().user!.id;
-       const qNotifs = query(collection(db, `users/${uId}/notifications`));
-       unsubUserNotifs = onSnapshot(qNotifs, (snapshot) => {
-         const notifs: any[] = [];
-         snapshot.forEach(doc => notifs.push(doc.data()));
-         notifs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-         setUserNotifications(notifs);
-       });
-    }
+      const startCustomer = () => {
+        // El cliente solo pide sus pedidos: la regla de Firestore exige este filtro.
+        unsubPrivate.push(
+          onSnapshot(
+            query(collection(db, 'orders'), where('uid', '==', uid)),
+            (snapshot) => store().setOrders(sortOrders(snapshot.docs.map((d) => d.data() as Order))),
+            (error) => console.error('No se pudieron leer tus pedidos', error),
+          ),
+        );
+        unsubPrivate.push(
+          onSnapshot(
+            query(collection(db, `users/${uid}/notifications`)),
+            (snapshot) => {
+              const notifs = snapshot.docs.map((d) => d.data() as UserNotification);
+              notifs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+              store().setUserNotifications(notifs);
+            },
+            (error) => console.error('No se pudieron leer tus avisos', error),
+          ),
+        );
+        store().setAdminLogs([]);
+      };
 
-    // 6. Flash Offers Config
-    const unsubFlashOffers = onSnapshot(doc(db, "store", "flashOffers"), (docSnap) => {
-      if (docSnap.exists()) {
-        setFlashOffersConfig(docSnap.data() as any);
+      if (admin) {
+        startPanel();
       } else {
-        setFlashOffersConfig(null);
+        // ¿Es un empleado con acceso? Se decide por staff/{uid} en Firestore.
+        getDoc(doc(db, 'staff', uid))
+          .then((snap) => {
+            // Si la sesión cambió mientras leíamos, no montamos nada.
+            if (auth.currentUser?.uid !== uid) return;
+            if (snap.exists() && (snap.data() as { active?: boolean }).active === true) startPanel();
+            else startCustomer();
+          })
+          .catch(() => {
+            if (auth.currentUser?.uid === uid) startCustomer();
+          });
       }
     });
 
     return () => {
       unsubProducts();
-      unsubAuth();
-      if (unsubUserDoc) unsubUserDoc();
-      unsubOrders();
-      unsubLogs();
-      unsubUserNotifs();
       unsubFlashOffers();
+      unsubPaymentConfig();
+      unsubRates();
+      unsubAuth();
+      stopPrivate();
     };
-  }, [setProducts, setOrders, setAdminLogs, setUserNotifications, setFlashOffersConfig, login, logout]);
+  }, []);
 
   return null;
 }

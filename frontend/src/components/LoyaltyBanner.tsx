@@ -3,18 +3,18 @@ import { motion } from 'framer-motion';
 import { Crown, Star, Gift, Shield, Zap, ChevronRight } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import { CLUB_LEVELS } from '@/lib/commerce';
 
 const BENEFITS = [
   {
     icon: Star,
-    title: 'EcoPuntos',
-    desc: 'Gana puntos por cada compra y canjéalos por descuentos exclusivos.',
+    title: 'Puntos del club',
+    desc: 'Gana 1 punto por cada dólar y canjéalos por descuento en tu próxima compra.',
   },
   {
     icon: Zap,
     title: 'Delivery Prioritario',
-    desc: 'Los miembros Gold y VIP tienen entrega preferencial el mismo día.',
+    desc: 'Los miembros Oro tienen entrega preferencial el mismo día.',
   },
   {
     icon: Gift,
@@ -23,17 +23,13 @@ const BENEFITS = [
   },
   {
     icon: Shield,
-    title: 'Soporte VIP',
+    title: 'Soporte preferente',
     desc: 'Atención personalizada vía WhatsApp y llamada directa con un agente.',
   },
 ];
 
-const LEVELS = [
-  { name: 'Bronze', min: 0,    max: 999,   color: '#cd7f32', badge: '🥉' },
-  { name: 'Silver', min: 1000, max: 4999,  color: '#c0c0c0', badge: '🥈' },
-  { name: 'Gold',   min: 5000, max: 14999, color: '#F8B808', badge: '🥇' },
-  { name: 'VIP',    min: 15000, max: Infinity, color: '#103088', badge: '👑' },
-];
+// Un solo club y un solo criterio: los niveles salen de src/lib/commerce.ts
+const LEVELS = CLUB_LEVELS;
 
 export default function LoyaltyBanner() {
   const user = useStore(state => state.user);
@@ -59,13 +55,13 @@ export default function LoyaltyBanner() {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-mi-yellow/10 border border-mi-yellow/30 px-4 py-1.5 rounded-full mb-4">
             <Crown size={18} className="text-mi-yellow" />
-            <span className="text-mi-yellow font-black text-sm tracking-wide">CLUB DORADO</span>
+            <span className="text-mi-yellow font-black text-sm tracking-wide">CLUB MI NEGOCIO</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-mi-blue tracking-tight mb-3">
             Programa de <span className="gold-shimmer">Fidelización</span>
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Compra, acumula EcoPuntos y desbloquea beneficios exclusivos del Club Dorado.
+            Compra, acumula puntos y sube de nivel: Bronce, Plata y Oro.
           </p>
         </div>
 
@@ -102,7 +98,7 @@ export default function LoyaltyBanner() {
                     <span className="text-4xl">{currentLevel?.badge}</span>
                     <div>
                       <h3 className="text-2xl font-black text-mi-yellow">{currentLevel?.name}</h3>
-                      <p className="text-white/70 text-sm">{user.clubPoints ?? 0} EcoPuntos acumulados</p>
+                      <p className="text-white/70 text-sm">{user.clubPoints ?? 0} puntos acumulados</p>
                     </div>
                   </div>
                   {nextLevel && (
@@ -114,7 +110,7 @@ export default function LoyaltyBanner() {
                       <div className="h-2 bg-white/20 rounded-full overflow-hidden">
                         <div
                           className="ecopoints-bar h-full"
-                          style={{ width: `${progressPct}%` }}
+                          style={{ transform: `scaleX(${progressPct / 100})` }}
                         />
                       </div>
                       <p className="text-xs text-white/60 mt-2">
@@ -126,13 +122,13 @@ export default function LoyaltyBanner() {
               ) : (
                 <div>
                   <p className="text-white/80 text-lg font-semibold mb-4">
-                    Regístrate gratis y empieza a acumular EcoPuntos desde tu primera compra.
+                    Regístrate gratis y empieza a acumular puntos desde tu primera compra.
                   </p>
                   <button
                     onClick={() => router.push('/login')}
                     className="bg-mi-yellow text-mi-blue px-6 py-3 rounded-full font-black hover:brightness-110 hover:scale-105 transition-all shadow-lg shadow-black/20 cursor-pointer"
                   >
-                    Unirme al Club Dorado
+                    Unirme al Club Mi Negocio
                   </button>
                 </div>
               )}

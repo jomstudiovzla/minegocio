@@ -1,0 +1,8 @@
+# Copias de respaldo y archivos de trabajo locales
+backups/
+node_modules/
+.DS_Store
+.claude/
+.impeccable/
+*.xlsx
+errores_imagenes.txt

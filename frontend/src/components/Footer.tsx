@@ -4,6 +4,7 @@ import { Store, MessageCircle, Star, X, Check } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/store/useStore';
+import WhatsAppLink from '@/components/WhatsAppLink';
 
 export default function Footer() {
   const [isTestimonialOpen, setIsTestimonialOpen] = useState(false);
@@ -16,6 +17,8 @@ export default function Footer() {
 
   const router = useRouter();
   const { user } = useStore();
+  // RIF, teléfono y WhatsApp salen del panel (Cobros → Datos del negocio), no del código.
+  const business = useStore(state => state.paymentConfig?.business);
 
   const handleSubscribe = () => {
     if (!subscribeEmail.trim()) return;
@@ -77,9 +80,9 @@ export default function Footer() {
           </p>
           <div className="text-xs text-white/40 mb-6 space-y-1">
             <p><strong className="text-white/60">Razón Social:</strong> Mi Negocio, C.A.</p>
-            <p><strong className="text-white/60">RIF:</strong> J-12345678-9</p>
-            <p><strong className="text-white/60">Sede:</strong> Caracas, Distrito Capital</p>
-            <p><strong className="text-white/60">Teléfono:</strong> +58 412-0000000</p>
+            {business?.rif && <p><strong className="text-white/60">RIF:</strong> {business.rif}</p>}
+            <p><strong className="text-white/60">Sede:</strong> San Luis, El Cafetal, Caracas</p>
+            {business?.phone && <p><strong className="text-white/60">Teléfono:</strong> {business.phone}</p>}
             <p className="mt-2 text-mi-yellow/70">Protegemos tus datos y cumplimos con buenas prácticas de comercio electrónico.</p>
           </div>
           <div className="flex gap-4">
@@ -110,17 +113,14 @@ export default function Footer() {
               </svg>
             </a>
             {/* WhatsApp */}
-            <a
-              href="https://api.whatsapp.com/message/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppLink
               className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white/70 hover:bg-[#25D366] hover:text-white transition shadow-sm hover:shadow-md hover:-translate-y-1 transform cursor-pointer"
-              title="WhatsApp Contacto"
             >
+              <span className="sr-only">Escríbenos por WhatsApp</span>
               <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 448 512" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path>
               </svg>
-            </a>
+            </WhatsAppLink>
             {/* Testimonio */}
             <button
               onClick={() => setIsTestimonialOpen(true)}
@@ -146,7 +146,14 @@ export default function Footer() {
             <li><Link href="/terminos" className="text-white/50 hover:text-mi-yellow transition font-medium text-sm">Términos y Condiciones</Link></li>
             <li><Link href="/privacidad" className="text-white/50 hover:text-mi-yellow transition font-medium text-sm">Políticas de Privacidad</Link></li>
             <li><Link href="/devoluciones" className="text-white/50 hover:text-mi-yellow transition font-medium text-sm">Políticas de Devolución</Link></li>
-            <li><a href="https://api.whatsapp.com/message/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-mi-yellow transition font-medium text-sm">Contáctanos</a></li>
+            <li>
+              <WhatsAppLink
+                className="text-white/50 hover:text-mi-yellow transition font-medium text-sm"
+                fallback={<Link href="/preguntas-frecuentes" className="text-white/50 hover:text-mi-yellow transition font-medium text-sm">Contáctanos</Link>}
+              >
+                Contáctanos
+              </WhatsAppLink>
+            </li>
           </ul>
         </div>
 
@@ -193,7 +200,7 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} Mi Negocio, C.A. Todos los derechos reservados.</p>
           <p className="text-xs text-white/30 italic">Todos los precios calculados con la tasa BCV del día.</p>
           <div className="pt-2 text-xs text-white/25 max-w-2xl">
-            <strong className="text-white/40">Aviso de Seguridad:</strong> Solo te contactaremos desde nuestro número oficial (+58 412-0000000). Desconfía de otros números. Verifica siempre nuestras redes sociales oficiales antes de hacer cualquier pago.
+            <strong className="text-white/40">Aviso de Seguridad:</strong> {business?.whatsapp ? `Solo te contactaremos desde nuestro número oficial (${business.whatsapp}). Desconfía de otros números.` : 'Paga solo a los datos que aparecen en el checkout de esta página. Desconfía de cuentas que te envíen por otros medios.'} Verifica siempre nuestras redes sociales oficiales antes de hacer cualquier pago.
           </div>
         </div>
       </div>

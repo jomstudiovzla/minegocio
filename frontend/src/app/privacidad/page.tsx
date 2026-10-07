@@ -67,7 +67,6 @@ No usamos cookies de rastreo de terceros ni publicidad comportamental. Puedes li
     content: `Si tienes preguntas sobre esta política de privacidad o deseas ejercer tus derechos, contáctanos:
 
 • **Correo:** soporte@minegocio.com
-• **WhatsApp:** +58 424 000 0000
 • **Dirección:** San Luis, El Cafetal, Caracas, Venezuela
 
 Respondemos todas las solicitudes en un plazo máximo de 5 días hábiles.

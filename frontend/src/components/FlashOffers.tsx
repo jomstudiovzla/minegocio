@@ -1,6 +1,8 @@
 "use client";
+import ProductImage from '@/components/ProductImage';
 import { useEffect, useState, useCallback } from 'react';
 import { useStore, resolveImage } from '@/store/useStore';
+import { emitCartAddFromCard } from '@/lib/gestures';
 import { Zap, ShoppingCart, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -113,6 +115,7 @@ export default function FlashOffers() {
             return (
               <motion.div
                 key={product.id}
+                data-product-card
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.08 }}
@@ -120,11 +123,11 @@ export default function FlashOffers() {
                 className="bg-white rounded-2xl overflow-hidden shadow-xl shadow-black/20 flex flex-col group hover:scale-[1.02] transition-transform duration-200"
               >
                 {/* Image */}
-                <div className="relative h-40 bg-gray-50 overflow-hidden">
-                  <img 
-                    src={resolveImage(product.image)} 
-                    alt={product.name} 
-                    className="w-full h-full object-contain mix-blend-multiply drop-shadow-sm group-hover:scale-110 transition-transform duration-300" 
+                <div data-product-photo className="relative h-40 bg-gray-50 overflow-hidden">
+                  <ProductImage
+                    src={resolveImage(product.image)}
+                    alt={product.name}
+                    className="w-full h-full object-contain mix-blend-multiply drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
                   />
                   {/* Discount badge */}
                   <div className="discount-badge absolute top-2 left-2 bg-red-500 text-white text-xs font-black px-2 py-1 rounded-lg shadow-lg">
@@ -157,7 +160,12 @@ export default function FlashOffers() {
                       <p className="text-xl font-black text-mi-blue">{formatPrice(product.price)}</p>
                     </div>
                     <button
-                      onClick={() => addToCart(product)}
+                      type="button"
+                      onClick={(e) => {
+                        const added = addToCart(product);
+                        if (!added) return;
+                        emitCartAddFromCard(e.currentTarget, resolveImage(product.image));
+                      }}
                       className="bg-mi-yellow text-mi-blue p-2.5 rounded-xl hover:brightness-110 hover:scale-110 transition-all shadow-md shadow-mi-yellow/30 cursor-pointer"
                       aria-label={`Agregar ${product.name} al carrito`}
                     >

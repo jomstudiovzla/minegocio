@@ -4,6 +4,18 @@ import { ProductEntity as Product } from '@/core/domain/entities/Product';
 import { ProductRepository } from '@/core/infrastructure/repositories/ProductRepository';
 import { db } from '@/lib/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
+import {
+  availableStock,
+  clearSampleAdminSession,
+  DEFAULT_ZONE,
+  type ClubLevel,
+  type OrderStatus,
+  type PaymentMethod,
+  type PaymentStatus,
+} from '@/lib/commerce';
+import type { PaymentConfig } from '@/lib/paymentConfig';
+
+import type { UserAddress } from '@/lib/addresses';
 
 export interface CartItem {
   id: string;
@@ -16,32 +28,73 @@ export interface CartItem {
 }
 
 export interface User {
+  /** uid de Firebase Auth. */
   id: string;
   name: string;
   email: string;
   cedula?: string;
   phone?: string;
+  address?: string;
+  zone?: string;
+  /** Libreta de direcciones guardadas (hasta 5, mínimo 3 soportadas) */
+  addresses?: UserAddress[];
+  /** Instrucciones frecuentes de entrega (ej. timbre, punto de entrega) */
+  deliveryNotes?: string;
   clubPoints: number;
-  clubLevel: 'Bronce' | 'Plata' | 'Oro';
+  clubLevel: ClubLevel;
   favorites?: string[];
+  totalOrders?: number;
+  totalSpent?: number;
+  /** Solo lo pone FirebaseSync cuando Firebase confirma el correo de administración. */
+  isAdmin?: boolean;
 }
 
 export interface Order {
   id: string;
+  /** uid del cliente: sin esto el cliente no puede leer su propio pedido. */
+  uid?: string;
   date: string;
+  createdAt?: number;
   items: CartItem[];
   subtotal: number;
   deliveryFee: number;
   discount: number;
+  paypalFee?: number;
   total: number;
+  pointsUsed?: number;
+  pointsEarned?: number;
   shippingMethod: 'delivery' | 'pickup';
-  paymentMethod: 'pagomovil' | 'zelle' | 'cash' | 'creditcard' | 'paypal' | 'binance' | 'transferencia';
+  zone?: string;
   address?: string;
   deliveryDate: string;
   deliveryTime: string;
-  status: 'Procesando' | 'Listo para retirar' | 'En camino' | 'Entregado' | 'Cancelado' | 'En revisión' | 'Facturado';
+  paymentMethod: PaymentMethod;
+  status: OrderStatus;
+  paymentStatus?: PaymentStatus;
+  /** Moneda en la que paga el cliente y tasa usada al confirmar. */
+  paymentCurrency?: 'VES' | 'USD';
+  rateUsd?: number;
+  rateEur?: number;
+  amountBs?: number;
+  /** Referencia bancaria, id de transacción o hash. */
+  reference?: string;
+  /** Datos de quien pagó: banco y teléfono (Pago Móvil) o correo (Zelle/PayPal). */
+  payer?: { bank?: string; phone?: string; email?: string };
+  /** Ruta de la captura en Firebase Storage. */
+  capturePath?: string;
+  /** Respaldo: documento en `paymentProofs` cuando Storage no está activo. */
+  captureDocId?: string;
+  /** Solo pedidos viejos: la foto venía dentro del pedido. */
   paymentCapture?: string;
-  createdAt?: number;
+  /** Motivo del rechazo del comprobante, escrito por el admin. */
+  paymentNote?: string;
+  paidAt?: string;
+  paidBy?: string;
+  cashReceived?: { amount: number; currency: 'USD' | 'VES' | 'EUR' };
+  stockReturned?: boolean;
+  cancelReason?: string;
+  /** Factura que emitió el sistema fiscal del negocio para este pedido. */
+  invoice?: { number: string; controlNumber?: string; date: string; by?: string };
   customerDetails?: {
     name: string;
     email: string;
@@ -61,6 +114,9 @@ export interface AdminLog {
   date: string;
   message: string;
   read?: boolean;
+  /** order | payment | stock | login | price | catalog | config */
+  type?: string;
+  actor?: string;
 }
 
 export interface UserNotification {
@@ -80,7 +136,7 @@ export interface FlashOffersConfig {
 interface AppState {
   cart: CartItem[];
   user: User | null;
-  zone: string | null;
+  zone: string;
   localFavorites: string[];
   products: Product[];
   orders: Order[];
@@ -90,18 +146,31 @@ interface AppState {
   rates: ExchangeRates;
   currency: 'USD' | 'EUR' | 'VES';
   isAutoRates: boolean;
+  /** true cuando Firebase ya dijo si hay sesión o no. Antes de eso no se redirige a nadie. */
+  authReady: boolean;
+  /**
+   * true cuando la tasa viene del BCV (API) o la fijó el admin. Mientras sea false,
+   * `rates` es solo un valor de arranque y no se cobra en bolívares con él.
+   */
+  ratesReady: boolean;
+  /** Datos de cobro editados en el panel (`store/paymentConfig`). null = aún cargando. */
+  paymentConfig: PaymentConfig | null;
   setProducts: (products: Product[]) => void;
-  addToCart: (item: Omit<CartItem, 'quantity'>) => void;
+  setAuthReady: (ready: boolean) => void;
+  setPaymentConfig: (config: PaymentConfig | null) => void;
+  /** Devuelve false si ya no quedan unidades para sumar. */
+  addToCart: (item: Omit<CartItem, 'quantity'>) => boolean;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   setZone: (zone: string) => void;
   login: (user: User) => void;
-  logout: () => void;
-  placeOrder: (order: Order) => void;
-  deductPoints: (points: number) => void;
-  addPoints: (points: number) => void;
-  updateOrderStatus: (id: string, status: Order['status']) => void;
+  /** Cierra la sesión de Firebase y limpia los datos de la cuenta en este navegador. */
+  logout: () => Promise<void>;
+  /** Limpia solo el estado local (lo usa FirebaseSync cuando Firebase ya no tiene sesión). */
+  clearSession: () => void;
+  /** Máximo que se puede pedir de un producto según el stock que se ve ahora. */
+  maxQuantityFor: (productId: string) => number;
   fetchRates: () => Promise<void>;
   setCurrency: (currency: 'USD' | 'EUR' | 'VES') => void;
   setIsAutoRates: (val: boolean) => void;
@@ -148,7 +217,10 @@ export function convertAndFormatPrice(priceInUSD: number, currency: 'USD' | 'EUR
 export function resolveImage(imagePath: string): string {
   if (!imagePath) return '';
   if (imagePath.startsWith('http')) return imagePath;
+  if (imagePath.startsWith('data:') || imagePath.startsWith('blob:')) return imagePath;
   const basePath = process.env.NODE_ENV === 'production' ? '/minegocio' : '';
+  // El catálogo ya entrega la ruta con el prefijo: no se pone dos veces.
+  if (basePath && imagePath.startsWith(basePath + '/')) return imagePath;
   return imagePath.startsWith('/') ? basePath + imagePath : basePath + '/' + imagePath;
 }
 
@@ -157,7 +229,7 @@ export const useStore = create<AppState>()(
     (set, get) => ({
       cart: [],
       user: null,
-      zone: null,
+      zone: DEFAULT_ZONE,
       localFavorites: [],
       products: [], // Cargados en tiempo real desde Firestore vía FirebaseSync
       orders: [],
@@ -171,7 +243,19 @@ export const useStore = create<AppState>()(
       },
       currency: 'USD',
       isAutoRates: true,
-      
+      authReady: false,
+      ratesReady: false,
+      paymentConfig: null,
+
+      setAuthReady: (authReady) => set({ authReady }),
+      setPaymentConfig: (paymentConfig) => set({ paymentConfig }),
+
+      maxQuantityFor: (productId) => {
+        const product = get().products.find((p) => p.id === productId);
+        // Si el catálogo aún no cargó no se bloquea aquí: el checkout valida contra la base.
+        return product ? availableStock(product) : Number.POSITIVE_INFINITY;
+      },
+
       setCurrency: (currency) => set({ currency }),
       setProducts: (products) => set({ products }),
       setOrders: (orders) => set({ orders }),
@@ -183,26 +267,46 @@ export const useStore = create<AppState>()(
           usd,
           eur,
           lastUpdated: new Date().toLocaleString()
-        }
+        },
+        ratesReady: true,
       }),
       
-      addToCart: (item) => set((state) => {
-        const existing = state.cart.find((c) => c.id === item.id);
-        if (existing) {
-          return {
-            cart: state.cart.map((c) => c.id === item.id ? { ...c, quantity: c.quantity + 1 } : c)
+      addToCart: (item) => {
+        const max = get().maxQuantityFor(item.id);
+        const existing = get().cart.find((c) => c.id === item.id);
+        const nextQuantity = (existing?.quantity ?? 0) + 1;
+        if (nextQuantity > max) return false;
+        set((state) => {
+          if (existing) {
+            return {
+              cart: state.cart.map((c) => c.id === item.id ? { ...c, quantity: nextQuantity } : c)
+            };
+          }
+          const clean: CartItem = {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: 1,
+            category: item.category,
+            image: item.image,
+            unit: item.unit,
           };
-        }
-        return { cart: [...state.cart, { ...item, quantity: 1 }] };
-      }),
+          return { cart: [...state.cart, clean] };
+        });
+        return true;
+      },
       
       removeFromCart: (id) => set((state) => ({
         cart: state.cart.filter((c) => c.id !== id)
       })),
       
-      updateQuantity: (id, quantity) => set((state) => ({
-        cart: state.cart.map((c) => c.id === id ? { ...c, quantity: Math.max(1, quantity) } : c)
-      })),
+      updateQuantity: (id, quantity) => {
+        const max = get().maxQuantityFor(id);
+        const safe = Math.max(1, Math.min(quantity, Math.max(1, max)));
+        set((state) => ({
+          cart: state.cart.map((c) => c.id === id ? { ...c, quantity: safe } : c)
+        }));
+      },
       
       clearCart: () => set({ cart: [] }),
       
@@ -213,80 +317,20 @@ export const useStore = create<AppState>()(
         return { user: { ...user, favorites: mergedFavs }, localFavorites: mergedFavs };
       }),
       
-      logout: () => set({ user: null }),
-      
-      placeOrder: async (order) => {
-        // En Firebase, no actualizamos el estado de Zustand directamente aquí,
-        // lo hacemos escribiendo en Firestore, y FirebaseSync actualizará Zustand.
-        // Solo para feedback inmediato, lo actualizaremos temporalmente
-        set((state) => ({ orders: [order, ...state.orders] }));
-        
+      clearSession: () => set({ user: null, orders: [], adminLogs: [], userNotifications: [] }),
+
+      logout: async () => {
         try {
-          const { db } = await import('@/lib/firebase');
-          const { doc, setDoc, runTransaction } = await import('firebase/firestore');
-
-          // Crear orden
-          await setDoc(doc(db, "orders", order.id), order);
-          
-          // Log de admin para orden
-          const adminLogId = Date.now().toString() + Math.random().toString(36).substring(7);
-          await setDoc(doc(db, "adminLogs", adminLogId), {
-            id: adminLogId,
-            date: new Date().toISOString(),
-            message: `📦 Nuevo pedido #${order.id} por $${order.total.toFixed(2)}`,
-            read: false
-          });
-
-          // Restar stock
-          for (const item of order.items) {
-             const productRef = doc(db, "products", item.id);
-             await runTransaction(db, async (transaction) => {
-               const productDoc = await transaction.get(productRef);
-               if (!productDoc.exists()) return;
-               
-               const product = productDoc.data();
-               let currentStock = product.stock || 0;
-               let currentWarehouse = product.warehouseStock || 0;
-               const oldStock = currentStock;
-               currentStock -= item.quantity;
-               
-               let transfer = 0;
-               if (currentStock < 5) {
-                 const needed = 15 - currentStock;
-                 if (needed > 0 && currentWarehouse > 0) {
-                   transfer = Math.min(needed, currentWarehouse);
-                   currentStock += transfer;
-                   currentWarehouse -= transfer;
-                 }
-               }
-               
-               const sales = (product.sales || 0) + item.quantity;
-               
-               transaction.update(productRef, {
-                 stock: currentStock,
-                 warehouseStock: currentWarehouse,
-                 sales
-               });
-
-               // Log
-               let logMsg = `🛍️ Venta: ${item.quantity}x ${product.name}. Stock anterior: ${oldStock}.`;
-               if (transfer > 0) {
-                 logMsg += ` 🔄 Reposición automática: +${transfer} desde almacén. Nuevo Stock Tienda: ${currentStock}. Almacén restante: ${currentWarehouse}.`;
-               } else {
-                 logMsg += ` Nuevo Stock Tienda: ${currentStock}.`;
-               }
-               const stockLogId = Date.now().toString() + Math.random().toString(36).substring(7);
-               const logRef = doc(db, "adminLogs", stockLogId);
-               transaction.set(logRef, {
-                 id: stockLogId,
-                 date: new Date().toISOString(),
-                 message: logMsg,
-                 read: false
-               });
-             });
-          }
+          const { auth } = await import('@/lib/firebase');
+          const { signOut } = await import('firebase/auth');
+          await signOut(auth);
         } catch (error) {
-           console.error("Error writing order to Firestore", error);
+          console.error('Error cerrando la sesión de Firebase', error);
+        } finally {
+          // Pase lo que pase, este navegador deja de mostrar la cuenta.
+          get().clearSession();
+          clearSampleAdminSession();
+          try { sessionStorage.removeItem('isAdminLoggedIn'); } catch { /* sin sessionStorage */ }
         }
       },
       
@@ -393,74 +437,6 @@ export const useStore = create<AppState>()(
       },
 
 
-      updateOrderStatus: async (id, status) => {
-        set((state) => ({
-          orders: state.orders.map(o => o.id === id ? { ...o, status } : o),
-        }));
-
-        try {
-          const { db } = await import('@/lib/firebase');
-          const { doc, updateDoc, runTransaction } = await import('firebase/firestore');
-          
-          const orderRef = doc(db, "orders", id);
-          await updateDoc(orderRef, { status });
-
-          // FirebaseSync actuará como fuente de verdad para el resto (logs, stock, etc).
-          // Sin embargo, si es cancelado, debemos procesar la devolución de stock en Firebase.
-          if (status === 'Cancelado') {
-             const state = useStore.getState();
-             const order = state.orders.find(o => o.id === id);
-             if (order) {
-                for (const item of order.items) {
-                   const productRef = doc(db, "products", item.id);
-                   await runTransaction(db, async (transaction) => {
-                     const pDoc = await transaction.get(productRef);
-                     if (pDoc.exists()) {
-                       const product = pDoc.data();
-                       const newStock = (product.stock || 0) + item.quantity;
-                       transaction.update(productRef, { stock: newStock });
-
-                       const stockLogId = Date.now().toString() + Math.random().toString(36).substring(7);
-                       transaction.set(doc(db, "adminLogs", stockLogId), {
-                         id: stockLogId,
-                         date: new Date().toISOString(),
-                         message: `❌ Cancelación: Pedido ${id} anulado. +${item.quantity}x ${product.name} devueltos al Stock Tienda. Nuevo Stock Tienda: ${newStock}.`,
-                         read: false
-                       });
-                     }
-                   });
-                }
-             }
-          }
-        } catch (error) {
-           console.error("Error updating order status in Firebase", error);
-        }
-      },
-      
-      deductPoints: (points) => set((state) => {
-        if (!state.user) return {};
-        const newPoints = Math.max(0, state.user.clubPoints - points);
-        let clubLevel = state.user.clubLevel;
-        if (newPoints >= 500) clubLevel = 'Oro';
-        else if (newPoints >= 200) clubLevel = 'Plata';
-        else clubLevel = 'Bronce';
-        return {
-          user: { ...state.user, clubPoints: newPoints, clubLevel }
-        };
-      }),
-      
-      addPoints: (points) => set((state) => {
-        if (!state.user) return {};
-        const newPoints = state.user.clubPoints + points;
-        let clubLevel = state.user.clubLevel;
-        if (newPoints >= 500) clubLevel = 'Oro';
-        else if (newPoints >= 200) clubLevel = 'Plata';
-        else clubLevel = 'Bronce';
-        return {
-          user: { ...state.user, clubPoints: newPoints, clubLevel }
-        };
-      }),
-
       fetchRates: async () => {
         try {
           // Skip auto fetch if manual mode is enabled
@@ -473,14 +449,19 @@ export const useStore = create<AppState>()(
           if (usdRes.ok && eurRes.ok) {
             const usdData = await usdRes.json();
             const eurData = await eurRes.json();
-            const usdRate = usdData.promedio || usdData.venta || 587.41;
-            const eurRate = eurData.promedio || eurData.venta || 683.03;
+            const usdRate = Number(usdData.promedio || usdData.venta);
+            const eurRate = Number(eurData.promedio || eurData.venta);
+            // Si mientras llegaba la respuesta el admin fijó una tasa manual, manda la manual.
+            if (!useStore.getState().isAutoRates) return;
+            // Sin un número real no se inventa una tasa: se deja la anterior.
+            if (!(usdRate > 0) || !(eurRate > 0)) return;
             set({
               rates: {
-                usd: Number(usdRate),
-                eur: Number(eurRate),
+                usd: usdRate,
+                eur: eurRate,
                 lastUpdated: new Date().toLocaleString()
-              }
+              },
+              ratesReady: true,
             });
           }
         } catch (error) {

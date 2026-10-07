@@ -1,7 +1,9 @@
 "use client";
+import ProductImage from '@/components/ProductImage';
 import { Plus, Minus, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useStore, convertAndFormatPrice, resolveImage } from '@/store/useStore';
+import { availableStock } from '@/lib/commerce';
 import { Product } from '@/data/mockDb';
 import { useState } from 'react';
 import ProductModal from './ProductModal';
@@ -14,8 +16,9 @@ export default function ProductGrid({ products }: { products: Product[] }) {
 
   const handleAddToCart = (p: Product, e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart({ id: p.id, name: p.name, price: p.price, category: p.category, image: p.image, unit: p.unit || '1 Unidad' });
-    setToast({ visible: true, name: p.name, image: p.image });
+    const added = addToCart({ id: p.id, name: p.name, price: p.price, category: p.category, image: p.image, unit: p.unit || '1 Unidad' });
+    // Si ya no quedan unidades no se anuncia un "añadido" que no ocurrió.
+    if (added) setToast({ visible: true, name: p.name, image: p.image });
   };
 
   if (products.length === 0) {
@@ -39,12 +42,12 @@ export default function ProductGrid({ products }: { products: Product[] }) {
             className="bg-white rounded-[1.5rem] p-5 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 relative group flex flex-col"
           >
             {/* Badge stock bajo */}
-            {p.stock !== undefined && p.stock <= 5 && p.stock > 0 && (
+            {availableStock(p) <= 5 && availableStock(p) > 0 && (
               <span className="absolute top-4 left-4 bg-orange-100 text-orange-600 text-[10px] font-black px-2 py-1 rounded-lg z-20 uppercase tracking-wide">
-                ¡Solo {p.stock}!
+                ¡Solo {availableStock(p)}!
               </span>
             )}
-            {p.stock === 0 && (
+            {availableStock(p) === 0 && (
               <span className="absolute top-4 left-4 bg-red-100 text-red-600 text-[10px] font-black px-2 py-1 rounded-lg z-20 uppercase tracking-wide">
                 Agotado
               </span>
@@ -90,15 +93,14 @@ export default function ProductGrid({ products }: { products: Product[] }) {
             <div onClick={() => setSelectedProduct(p as Product)} className="block flex-1 flex flex-col cursor-pointer">
               <div className="h-48 flex items-center justify-center mb-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-4 overflow-hidden relative">
                 <div className="absolute inset-0 mix-blend-overlay bg-black/5 rounded-2xl"></div>
-                <motion.img 
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                  src={resolveImage(p.image)} 
-                  alt={p.name} 
-                  className="w-full h-auto object-cover rounded-lg mix-blend-multiply drop-shadow-sm z-10" 
+                <ProductImage
+                  zoom
+                  src={resolveImage(p.image)}
+                  alt={p.name}
+                  className="w-full h-auto object-cover rounded-lg mix-blend-multiply drop-shadow-sm z-10"
                 />
                 {p.labels && p.labels.map(label => (
-                  <span key={label} className="absolute top-2 left-2 bg-yellow-400 text-yellow-900 text-xs font-black px-2 py-1 rounded-md z-10">
+                  <span key={label} className="absolute top-2 left-2 bg-mi-blue text-white text-xs font-black px-2 py-1 rounded-md z-10">
                     {label}
                   </span>
                 ))}
@@ -132,11 +134,11 @@ export default function ProductGrid({ products }: { products: Product[] }) {
 
                 {!cart.find(item => item.id === p.id) && (
                   <button 
-                    disabled={p.stock === 0}
+                    disabled={availableStock(p) === 0}
                     onClick={(e) => handleAddToCart(p, e)}
-                    className="w-full bg-mi-blue disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-xl hover:bg-mi-blue-mid transition shadow-md shadow-mi-blue/20 flex items-center justify-center gap-2"
+                    className="w-full bg-mi-yellow disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-mi-blue font-black py-2.5 rounded-xl hover:brightness-95 active:scale-[0.98] transition shadow-md shadow-mi-yellow/30 flex items-center justify-center gap-2"
                   >
-                    <Plus size={16} strokeWidth={2.5} /> {p.stock === 0 ? 'Sin stock' : 'Agregar'}
+                    <Plus size={16} strokeWidth={2.5} /> {availableStock(p) === 0 ? 'Sin stock' : 'Agregar'}
                   </button>
                 )}
               </div>
