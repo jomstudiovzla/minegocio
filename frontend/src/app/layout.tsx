@@ -33,11 +33,11 @@ export const metadata: Metadata = {
     title: "Mi Negocio | Frescura hasta tu puerta",
     description:
       "Tu supermercado online de confianza en Caracas. Frutas, vegetales, víveres y más. ¡Haz tu pedido fácil y rápido!",
-    url: "https://mi-negocio.ve/",
+    url: `${SITE_URL}/`,
     siteName: "Mi Negocio",
     images: [
       {
-        url: "https://raw.githubusercontent.com/jomstudiovzla/mi-negocio/main/frontend/public/og-image.jpg",
+        url: SITE_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "Mi Negocio – Supermercado Online Caracas",
@@ -56,6 +56,35 @@ export const metadata: Metadata = {
 };
 
 import { getAssetPath } from "@/lib/assetHelper";
+import { SITE_URL, SITE_OG_IMAGE } from "@/lib/seo";
+
+const storeJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "GroceryStore",
+  name: "Supermercado Mi Negocio",
+  image: SITE_OG_IMAGE,
+  url: `${SITE_URL}/`,
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Caracas",
+    addressRegion: "Distrito Capital",
+    addressCountry: "VE",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 10.4806,
+    longitude: -66.9036,
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    opens: "07:00",
+    closes: "21:00",
+  },
+  paymentAccepted: "Cash, Pago Móvil, Zelle, Transferencia",
+  currenciesAccepted: "USD, VES",
+};
 
 export default function RootLayout({
   children,
@@ -69,6 +98,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
         <link rel="manifest" href={getAssetPath('/manifest.json')} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(storeJsonLd) }}
+        />
       </head>
       <body className="antialiased">
         <FirebaseSync />

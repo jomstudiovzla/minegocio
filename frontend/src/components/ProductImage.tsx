@@ -13,6 +13,9 @@ interface ProductImageProps {
   fadeIn?: boolean;
   /** Tamaño del aviso cuando no hay foto. */
   size?: 'sm' | 'md';
+  /** Estrategia de carga nativa del navegador para optimizar velocidad */
+  loading?: 'lazy' | 'eager';
+  fetchPriority?: 'high' | 'low' | 'auto';
 }
 
 /**
@@ -20,7 +23,16 @@ interface ProductImageProps {
  * neutro en vez del ícono de imagen rota del navegador. Revisa también las
  * fotos que fallaron antes de que React tomara control de la página.
  */
-export default function ProductImage({ src, alt, className = '', zoom = false, fadeIn = false, size = 'md' }: ProductImageProps) {
+export default function ProductImage({
+  src,
+  alt,
+  className = '',
+  zoom = false,
+  fadeIn = false,
+  size = 'md',
+  loading = 'lazy',
+  fetchPriority = 'auto',
+}: ProductImageProps) {
   const ref = useRef<HTMLImageElement>(null);
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
 
@@ -48,6 +60,10 @@ export default function ProductImage({ src, alt, className = '', zoom = false, f
       src={src}
       alt={alt}
       className={className}
+      loading={loading}
+      decoding="async"
+      // @ts-expect-error fetchpriority attribute is supported in modern browsers
+      fetchpriority={fetchPriority}
       onError={() => setFailedSrc(src)}
       whileHover={zoom ? { scale: 1.05 } : undefined}
       transition={zoom ? { duration: 0.3 } : undefined}

@@ -106,6 +106,8 @@ export default function ProductSection({ title, products }: { title: string, cat
                   zoom
                   src={p.image}
                   alt={p.name}
+                  loading={i < 3 ? 'eager' : 'lazy'}
+                  fetchPriority={i === 0 ? 'high' : 'auto'}
                   className="w-full h-auto object-cover rounded-lg mix-blend-multiply drop-shadow-sm z-10"
                 />
 

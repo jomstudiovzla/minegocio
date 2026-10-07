@@ -97,6 +97,8 @@ export default function ProductGrid({ products }: { products: Product[] }) {
                   zoom
                   src={resolveImage(p.image)}
                   alt={p.name}
+                  loading={i < 4 ? 'eager' : 'lazy'}
+                  fetchPriority={i < 2 ? 'high' : 'auto'}
                   className="w-full h-auto object-cover rounded-lg mix-blend-multiply drop-shadow-sm z-10"
                 />
                 {p.labels && p.labels.map(label => (

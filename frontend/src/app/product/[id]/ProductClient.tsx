@@ -40,6 +40,8 @@ export default function ProductClient({ id }: { id: string }) {
               fadeIn
               src={product.image}
               alt={product.name}
+              loading="eager"
+              fetchPriority="high"
               className="max-h-full object-contain mix-blend-multiply"
             />
             {product.labels && product.labels.map(label => (

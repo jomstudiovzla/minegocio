@@ -72,6 +72,8 @@ export default function ProductModal({ product, onClose }: { product: Product | 
               fadeIn
               src={resolveImage(product.image)}
               alt={product.name}
+              loading="eager"
+              fetchPriority="high"
               className="w-full h-full object-contain mix-blend-multiply drop-shadow-xl"
             />
           </div>
