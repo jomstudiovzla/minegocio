@@ -29,7 +29,7 @@ async function upload() {
       throw new Error("Falta la variable ADMIN_PASSWORD. Ejemplo: ADMIN_PASSWORD='tu-clave' npx tsx push_to_firestore.ts");
     }
     try {
-      await signInWithEmailAndPassword(auth, 'admin@jomstudio.com', adminPassword);
+      await signInWithEmailAndPassword(auth, 'jomstudiovzla@gmail.com', adminPassword);
     } catch (e: any) {
       if (e.code === 'auth/invalid-credential' || e.code === 'auth/user-not-found') {
         throw new Error('Firebase rechazó la clave de administración.');

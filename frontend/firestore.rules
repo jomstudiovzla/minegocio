@@ -26,7 +26,7 @@ service cloud.firestore {
     // o pestaña Trazabilidad del panel), añade   && request.auth.uid == 'UID_DEL_ADMIN'
     // aquí y en storage.rules. Así un token con ese correo no basta por sí solo.
     function isAdmin() {
-      return signedIn() && request.auth.token.email == 'admin@jomstudio.com';
+      return signedIn() && request.auth.token.email == 'jomstudiovzla@gmail.com';
     }
 
     function isOwner(userId) {

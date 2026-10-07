@@ -9,8 +9,8 @@
  */
 
 // ── Administración ────────────────────────────────────────────────────────
-/** Único correo con acceso al panel. Debe coincidir con `isAdmin()` en firestore.rules. */
-export const ADMIN_EMAIL = 'admin@jomstudio.com';
+/** Único correo con acceso al panel. Debe coincidir con `isAdmin()` en firestore.rules y storage.rules. */
+export const ADMIN_EMAIL = 'jomstudiovzla@gmail.com';
 /** Longitud mínima de la clave de administración. */
 export const ADMIN_MIN_PASSWORD = 12;
 /** Longitud mínima de la clave de un cliente (mínimo de Firebase). */

@@ -58,7 +58,7 @@ test('sin huecos, el almacén dice que todo está bien', () => {
     items: [{ id: 'huevos', name: 'Huevos cartón x 30', quantity: 1, price: 7 }],
   };
   const letter = adminRequestLetter(full, catalog, 'revisar', '');
-  assert.equal(letter.to, 'admin@jomstudio.com');
+  assert.equal(letter.to, 'jomstudiovzla@gmail.com');
   assert.match(letter.text, /Todo está bien/);
   assert.equal(findStockGaps(full, catalog).length, 0);
 });

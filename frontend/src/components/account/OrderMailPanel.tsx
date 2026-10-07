@@ -158,8 +158,8 @@ export default function OrderMailPanel({ order, products, sessionEmail }: {
       {error && <p className="text-sm font-bold text-red-600">{error}</p>}
       <p className="text-[11px] text-gray-500">
         {denied
-          ? 'Las reglas de correo todavía no están publicadas, así que desde aquí no se puede leer la cola. El texto de arriba es la carta. El aviso al negocio va a admin@jomstudio.com.'
-          : 'El aviso al negocio va a admin@jomstudio.com. Tu copia usa el correo de tu sesión. Sale al buzón cuando deliverMail.ts tiene el SMTP; hasta entonces queda en cola.'}
+          ? 'Las reglas de correo todavía no están publicadas, así que desde aquí no se puede leer la cola. El texto de arriba es la carta. El aviso va al correo del negocio.'
+          : 'El aviso va al correo del negocio. Tu copia usa el correo de tu sesión. Sale al buzón cuando el entregador de correo tiene conexión; hasta entonces queda en cola.'}
       </p>
     </div>
   );

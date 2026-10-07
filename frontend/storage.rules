@@ -7,7 +7,7 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     function isAdmin() {
-      return request.auth != null && request.auth.token.email == 'admin@jomstudio.com';
+      return request.auth != null && request.auth.token.email == 'jomstudiovzla@gmail.com';
     }
     // Personal del panel: el dueño, o un empleado activo según staff/{uid} en
     // Firestore. Storage puede leer Firestore con firestore.get/exists.

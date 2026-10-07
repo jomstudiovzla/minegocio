@@ -184,7 +184,7 @@ test('login: solo se obedecen redirecciones internas', () => {
 });
 
 test('admin: un solo correo', () => {
-  assert.equal(isAdminEmail('Admin@JomStudio.com '), true);
+  assert.equal(isAdminEmail('JomStudioVzla@Gmail.com '), true);
   assert.equal(isAdminEmail('maria@correo.com'), false);
   assert.equal(isAdminEmail(null), false);
 });
