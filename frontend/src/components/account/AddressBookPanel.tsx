@@ -43,6 +43,14 @@ export default function AddressBookPanel() {
   const [deliveryNotes, setDeliveryNotes] = useState(user?.deliveryNotes || '');
   const [isSavingProfile, setIsSavingProfile] = useState(false);
 
+  React.useEffect(() => {
+    if (user) {
+      setCedula(prev => prev || user.cedula || '');
+      setPhone(prev => prev || user.phone || '');
+      setDeliveryNotes(prev => prev || user.deliveryNotes || '');
+    }
+  }, [user]);
+
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   if (!user) return null;

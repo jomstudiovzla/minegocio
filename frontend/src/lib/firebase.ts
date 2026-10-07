@@ -7,6 +7,7 @@ import {
   indexedDBLocalPersistence,
   browserLocalPersistence,
   browserSessionPersistence,
+  browserPopupRedirectResolver,
 } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
@@ -40,6 +41,7 @@ function resolveAuth(): Auth {
         browserLocalPersistence,
         browserSessionPersistence,
       ],
+      popupRedirectResolver: browserPopupRedirectResolver,
     });
   } catch {
     // Ya estaba inicializado (p. ej. Fast Refresh en desarrollo): se reutiliza.

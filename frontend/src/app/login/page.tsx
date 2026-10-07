@@ -268,6 +268,7 @@ export default function LoginPage() {
       setError('');
       setInfo('');
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
       const userCredential = await signInWithPopup(auth, provider);
       const uid = userCredential.user.uid;
       const googleEmail = (userCredential.user.email || '').toLowerCase();
@@ -307,6 +308,8 @@ export default function LoginPage() {
         setError('El proveedor de Google no está activado en Firebase Console -> Authentication -> Sign-in method.');
       } else if (err.code === 'auth/account-exists-with-different-credential') {
         setError('Ya existe una cuenta con este correo pero con contraseña. Ingresa usando correo y contraseña.');
+      } else if (err.code === 'auth/argument-error') {
+        setError('Error en los parámetros de autenticación del navegador. Recarga la página o ingresa con tu correo y contraseña.');
       } else if (err.code === 'auth/network-request-failed') {
         setError('Error de conexión con Firebase. Revisa tu internet e inténtalo de nuevo.');
       } else if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
