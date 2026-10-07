@@ -150,17 +150,19 @@ export default function LoginPage() {
       }
 
       // Cédula única: si esa identificación ya tiene cuenta, no se crea otra.
-      // Es "best-effort": si las reglas del índice aún no están publicadas o no se
-      // puede leer, NO se bloquea el registro (se cae con gracia). El índice solo
-      // guarda { uid, createdAt }: nunca el correo, para no exponer datos.
+      // El índice (cedulaIndex) ya está publicado, así que un fallo aquí es de red:
+      // se detiene y se avisa, en vez de crear una cuenta duplicada a ciegas. El
+      // índice solo guarda { uid, cedula, createdAt }: nunca el correo.
       try {
         const cedulaSnap = await getDoc(doc(db, 'cedulaIndex', personal.cedula));
         if (cedulaSnap.exists()) {
           setExistingCedula(personal.cedula);
           return;
         }
-      } catch {
-        /* índice no disponible todavía: no bloquear el registro */
+      } catch (err) {
+        console.error('No se pudo comprobar la cédula en el índice', err);
+        setError('No pudimos verificar tu cédula. Revisa tu conexión a internet e inténtalo de nuevo.');
+        return;
       }
 
       setBusy(true);
@@ -179,10 +181,10 @@ export default function LoginPage() {
         };
 
         await setDoc(doc(db, 'users', uid), { ...userData, createdAt: new Date().toISOString() });
-        // Reclama la cédula en el índice (solo uid + fecha, sin datos personales).
+        // Reclama la cédula en el índice (uid + cédula + fecha; nunca el correo).
         // Si falla, la cuenta ya quedó creada: el índice es un extra, no se deshace nada.
         try {
-          await setDoc(doc(db, 'cedulaIndex', personal.cedula), { uid, createdAt: new Date().toISOString() });
+          await setDoc(doc(db, 'cedulaIndex', personal.cedula), { uid, cedula: personal.cedula, createdAt: new Date().toISOString() });
         } catch {
           /* índice no disponible: la cuenta sigue válida */
         }
@@ -305,8 +307,12 @@ export default function LoginPage() {
       // No se revela si el correo existe o no: el aviso es el mismo.
     }
     setExistingAccount('');
+    setExistingCedula('');
     setIsReg(false);
-    setInfo(`Te enviamos un correo a ${target} para crear una contraseña nueva. Revisa tu bandeja y también la carpeta de Spam.`);
+    // Mensaje condicional ("si tiene cuenta"): sirve para ambas tarjetas. En la de
+    // cédula, el correo escrito puede no ser el de la cuenta, así que no se afirma
+    // el envío; además no se revela quién tiene cuenta (anti-enumeración).
+    setInfo(`Si ${target} tiene cuenta, te llegará un correo para crear una contraseña nueva. Revisa tu bandeja y también la carpeta de Spam.`);
   };
 
   /** Tarjeta "ya tienes cuenta": pasa a iniciar sesión conservando el correo escrito. */
@@ -380,16 +386,19 @@ export default function LoginPage() {
     const personal = validatePersonalData();
     if (!personal) return;
 
-    // Cédula única (best-effort): si otra cuenta ya reclamó esa identificación,
-    // no se asocia. Si es la misma cuenta (su propia cédula), se permite.
+    // Cédula única: si otra cuenta ya reclamó esa identificación, no se asocia.
+    // Si es la misma cuenta (su propia cédula), se permite. Un fallo aquí es de
+    // red: se detiene y se avisa, en vez de asociar a ciegas una cédula repetida.
     try {
       const cedulaSnap = await getDoc(doc(db, 'cedulaIndex', personal.cedula));
       if (cedulaSnap.exists() && (cedulaSnap.data() as { uid?: string }).uid !== pendingProfile.uid) {
         setError('Esa cédula o RIF ya está registrada en otra cuenta. Si es tuya, inicia sesión con ese correo.');
         return;
       }
-    } catch {
-      /* índice no disponible: no bloquear */
+    } catch (err) {
+      console.error('No se pudo comprobar la cédula en el índice', err);
+      setError('No pudimos verificar tu cédula. Revisa tu conexión e inténtalo de nuevo.');
+      return;
     }
 
     setBusy(true);
@@ -413,9 +422,9 @@ export default function LoginPage() {
         await setDoc(ref, { ...userData, createdAt: new Date().toISOString() });
         login(userData);
       }
-      // Reclama la cédula en el índice (solo uid + fecha).
+      // Reclama la cédula en el índice (uid + cédula + fecha; nunca el correo).
       try {
-        await setDoc(doc(db, 'cedulaIndex', personal.cedula), { uid: pendingProfile.uid, createdAt: new Date().toISOString() });
+        await setDoc(doc(db, 'cedulaIndex', personal.cedula), { uid: pendingProfile.uid, cedula: personal.cedula, createdAt: new Date().toISOString() });
       } catch {
         /* el índice es un extra: no deshace el perfil */
       }
@@ -768,8 +777,15 @@ export default function LoginPage() {
                           <div className="flex flex-col sm:flex-row gap-2 mt-3">
                             <button
                               type="button"
-                              onClick={handleGoToLoginFromCard}
+                              onClick={handleRecoverExisting}
                               className="flex-1 bg-mi-blue hover:bg-mi-blue-mid text-white text-xs font-black py-2.5 rounded-xl transition cursor-pointer"
+                            >
+                              Recuperar contraseña
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleGoToLoginFromCard}
+                              className="flex-1 bg-white border border-mi-blue/30 hover:border-mi-blue text-mi-blue text-xs font-black py-2.5 rounded-xl transition cursor-pointer"
                             >
                               Iniciar sesión
                             </button>
