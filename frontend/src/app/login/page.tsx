@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, EyeOff, ShieldCheck, Star, Truck, Tag, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import LegalModal from '@/components/LegalModal';
 import { auth, db } from '@/lib/firebase';
 import {
   signInWithEmailAndPassword,
@@ -72,6 +73,8 @@ export default function LoginPage() {
   const [info, setInfo]               = useState('');
   const [busy, setBusy]               = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [legalModalOpen, setLegalModalOpen] = useState(false);
+  const [legalModalTab, setLegalModalTab] = useState<'terminos' | 'privacidad'>('terminos');
   const [isRegistering, setIsReg]     = useState(false);
   const [redirectPath, setRedirect]   = useState('/account');
   const [showExtraInfoForm, setShowExtraInfoForm] = useState(false);
@@ -608,9 +611,33 @@ export default function LoginPage() {
                         />
                         <span className="text-xs text-gray-600 font-medium">
                           Acepto los{' '}
-                          <Link href="/terminos" target="_blank" className="underline text-mi-blue font-bold">Términos</Link>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setLegalModalTab('terminos');
+                              setLegalModalOpen(true);
+                            }}
+                            className="underline text-mi-blue font-bold hover:text-mi-blue-mid cursor-pointer"
+                            title="Haz clic para ver los Términos sin salir de la página"
+                          >
+                            Términos
+                          </button>
                           {' '}y la{' '}
-                          <Link href="/privacidad" target="_blank" className="underline text-mi-blue font-bold">Política de Privacidad</Link>.
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setLegalModalTab('privacidad');
+                              setLegalModalOpen(true);
+                            }}
+                            className="underline text-mi-blue font-bold hover:text-mi-blue-mid cursor-pointer"
+                            title="Haz clic para ver la Política de Privacidad sin salir de la página"
+                          >
+                            Política de Privacidad
+                          </button>.
                         </span>
                       </label>
                     </>
@@ -633,7 +660,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={busy}
-                    className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-mi-blue/25 flex items-center justify-center gap-2 group mt-2 disabled:opacity-60"
+                    className="w-full bg-mi-blue hover:bg-mi-blue-mid text-white font-black text-base py-4 rounded-2xl transition-all shadow-lg shadow-mi-blue/25 flex items-center justify-center gap-2 group mt-2 disabled:opacity-60 cursor-pointer"
                   >
                     {busy ? 'Un momento…' : isRegistering ? 'Crear mi cuenta' : 'Entrar a Mi Negocio'}
                     {!busy && <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />}
@@ -654,7 +681,7 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={handleGoogleLogin}
-                    className="mt-6 w-full flex items-center justify-center gap-3 bg-white border border-mi-blue-low hover:border-mi-blue hover:bg-mi-blue-ice text-gray-700 font-black text-sm py-3.5 rounded-2xl transition shadow-sm"
+                    className="mt-6 w-full flex items-center justify-center gap-3 bg-white border border-mi-blue-low hover:border-mi-blue hover:bg-mi-blue-ice text-gray-700 font-black text-sm py-3.5 rounded-2xl transition shadow-sm cursor-pointer"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                       <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -669,9 +696,27 @@ export default function LoginPage() {
                 {/* Privacy note */}
                 <p className="text-center text-xs text-gray-400 font-medium mt-5">
                   Consulta nuestros{' '}
-                  <Link href="/terminos" className="underline hover:text-mi-blue">Términos</Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLegalModalTab('terminos');
+                      setLegalModalOpen(true);
+                    }}
+                    className="underline hover:text-mi-blue cursor-pointer"
+                  >
+                    Términos
+                  </button>
                   {' '}y{' '}
-                  <Link href="/privacidad" className="underline hover:text-mi-blue">Privacidad</Link>.
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLegalModalTab('privacidad');
+                      setLegalModalOpen(true);
+                    }}
+                    className="underline hover:text-mi-blue cursor-pointer"
+                  >
+                    Privacidad
+                  </button>.
                 </p>
                 </motion.div>
               )}
@@ -679,6 +724,14 @@ export default function LoginPage() {
           </div>
         </motion.div>
       </div>
+
+      {/* Modal legal interactivo sin navegación ni pérdida de datos */}
+      <LegalModal
+        isOpen={legalModalOpen}
+        onClose={() => setLegalModalOpen(false)}
+        initialTab={legalModalTab}
+        onAccept={() => setAcceptTerms(true)}
+      />
     </div>
   );
 }
