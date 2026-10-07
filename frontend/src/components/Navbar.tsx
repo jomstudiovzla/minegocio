@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { Menu, Search, User, ShoppingCart, ChevronRight, Check, Bell, Download } from 'lucide-react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Menu, Search, User, ShoppingCart, ChevronRight, Check, Bell, Download, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter, usePathname } from 'next/navigation';
-import { useStore } from '@/store/useStore';
+import { useStore, convertAndFormatPrice } from '@/store/useStore';
 import Link from 'next/link';
-import Image from 'next/image';
 import { getAssetPath } from '@/lib/assetHelper';
-import { categories } from '@/data/mockDb';
+import { categories, products as fallbackProducts } from '@/data/mockDb';
+import { searchProducts } from '@/lib/searchUtils';
 import CartSidebar from './CartSidebar';
 
 export default function Navbar() {
@@ -16,9 +16,21 @@ export default function Navbar() {
   const [isCurrencyMenuOpen, setIsCurrencyMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [searchSelectedIndex, setSearchSelectedIndex] = useState(-1);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
   const { cart, user, rates, currency, setCurrency, userNotifications, markUserNotificationAsRead, clearUserNotifications, adminLogs, markAdminLogAsRead, clearAdminLogs, logout } = useStore();
+
+  const storeProducts = useStore(state => state.products);
+  const allProducts = storeProducts && storeProducts.length > 0 ? storeProducts : fallbackProducts;
+
+  const suggestions = useMemo(() => {
+    const q = searchQuery.trim();
+    if (q.length < 2) return [];
+    return searchProducts(allProducts, q).slice(0, 6);
+  }, [allProducts, searchQuery]);
 
   const isAdmin = !!user?.isAdmin;
   // Filter out read notifications immediately so they don't accumulate visually
@@ -30,11 +42,38 @@ export default function Navbar() {
 
   useEffect(() => {
     setSearchQuery('');
+    setIsSearchFocused(false);
+    setSearchSelectedIndex(-1);
   }, [pathname]);
 
-  const handleSearch = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSearchSelectedIndex(prev => (prev < suggestions.length - 1 ? prev + 1 : 0));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSearchSelectedIndex(prev => (prev > 0 ? prev - 1 : suggestions.length - 1));
+    } else if (e.key === 'Escape') {
+      setIsSearchFocused(false);
+    } else if (e.key === 'Enter') {
+      if (searchSelectedIndex >= 0 && suggestions[searchSelectedIndex]) {
+        e.preventDefault();
+        setIsSearchFocused(false);
+        router.push(`/product/${suggestions[searchSelectedIndex].id}`);
+      } else if (searchQuery.trim()) {
+        setIsSearchFocused(false);
+        router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+      }
     }
   };
 
@@ -115,21 +154,129 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Centro: Buscador */}
-            <div className="flex-1 max-w-2xl mx-8 relative hidden md:block group">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={handleSearch}
-                placeholder="¿Qué necesitas hoy?"
-                className="w-full bg-mi-blue-ice border border-mi-blue-low rounded-full py-3 px-6 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue-light/40 focus:border-mi-blue transition shadow-inner"
-              />
-              <Search
-                className="absolute right-5 top-3 text-gray-400 group-hover:text-mi-blue cursor-pointer transition"
-                size={20}
-                onClick={() => searchQuery.trim() && router.push(`/search?q=${encodeURIComponent(searchQuery)}`)}
-              />
+            {/* Centro: Buscador con autocompletado en vivo */}
+            <div className="flex-1 max-w-2xl mx-8 relative hidden md:block group" ref={searchContainerRef}>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setIsSearchFocused(true);
+                    setSearchSelectedIndex(-1);
+                  }}
+                  onFocus={() => setIsSearchFocused(true)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="¿Qué necesitas hoy?"
+                  className="w-full bg-mi-blue-ice border border-mi-blue-low rounded-full py-3 pl-6 pr-12 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-mi-blue-light/40 focus:border-mi-blue transition shadow-inner"
+                />
+                <div className="absolute right-4 top-3 flex items-center gap-1.5">
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setIsSearchFocused(false);
+                      }}
+                      className="text-gray-400 hover:text-gray-600 transition p-0.5 rounded-full"
+                      aria-label="Limpiar búsqueda"
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                  <Search
+                    className="text-gray-400 group-hover:text-mi-blue cursor-pointer transition"
+                    size={20}
+                    onClick={() => {
+                      if (searchQuery.trim()) {
+                        setIsSearchFocused(false);
+                        router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Menú de sugerencias en tiempo real */}
+              <AnimatePresence>
+                {isSearchFocused && searchQuery.trim().length >= 2 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-mi-blue-low overflow-hidden z-50 backdrop-blur-xl"
+                  >
+                    {suggestions.length > 0 ? (
+                      <>
+                        <div className="px-4 py-2 bg-gray-50/90 border-b border-gray-100 flex items-center justify-between text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                          <span>Sugerencias ({suggestions.length})</span>
+                          <span className="text-[10px] lowercase text-gray-400">Presiona ↑ ↓ y Enter</span>
+                        </div>
+                        <div className="max-h-80 overflow-y-auto divide-y divide-gray-50">
+                          {suggestions.map((p, idx) => (
+                            <div
+                              key={p.id}
+                              onMouseEnter={() => setSearchSelectedIndex(idx)}
+                              onClick={() => {
+                                setIsSearchFocused(false);
+                                router.push(`/product/${p.id}`);
+                              }}
+                              className={`p-3 flex items-center justify-between gap-3 cursor-pointer transition ${
+                                searchSelectedIndex === idx ? 'bg-mi-blue-ice' : 'hover:bg-gray-50'
+                              }`}
+                            >
+                              <div className="flex items-center gap-3 min-w-0">
+                                <div className="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 overflow-hidden shrink-0 flex items-center justify-center p-1">
+                                  <img
+                                    src={getAssetPath(p.image)}
+                                    alt={p.name}
+                                    className="w-full h-full object-contain"
+                                    onError={(e) => {
+                                      (e.target as HTMLElement).style.display = 'none';
+                                    }}
+                                  />
+                                </div>
+                                <div className="min-w-0">
+                                  <p className="text-sm font-bold text-gray-800 truncate">{p.name}</p>
+                                  <span className="text-xs font-semibold text-gray-400 capitalize">
+                                    {p.category.replace(/-/g, ' ')}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="text-right shrink-0">
+                                <span className="text-sm font-black text-mi-blue block">
+                                  {convertAndFormatPrice(p.price, currency, rates)}
+                                </span>
+                                {currency !== 'VES' && rates.usd > 0 && (
+                                  <span className="text-[10px] font-medium text-gray-400 block">
+                                    Bs. {(p.price * rates.usd).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsSearchFocused(false);
+                            router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                          }}
+                          className="w-full text-center py-3 bg-gray-50 hover:bg-mi-blue-ice text-mi-blue font-bold text-xs uppercase tracking-wider transition border-t border-gray-100 flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          <Search size={14} /> Ver todos los resultados para &ldquo;{searchQuery}&rdquo;
+                        </button>
+                      </>
+                    ) : (
+                      <div className="p-6 text-center text-sm text-gray-500">
+                        <p className="font-semibold text-gray-700">No encontramos sugerencias para &ldquo;{searchQuery}&rdquo;</p>
+                        <p className="text-xs text-gray-400 mt-1">Presiona Enter para buscar en todo el catálogo de productos</p>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Derecha: moneda, notif, usuario, carrito, app */}

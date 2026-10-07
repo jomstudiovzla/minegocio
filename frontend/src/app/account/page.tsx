@@ -426,12 +426,19 @@ export default function AccountPage() {
                   <span>Subtotal</span>
                   <span className="font-bold text-gray-800">{convertAndFormatPrice(selectedOrder.subtotal, currency, rates)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Costo de Envío</span>
-                  <span className="font-bold text-gray-800">
-                    {selectedOrder.deliveryFee > 0 ? convertAndFormatPrice(selectedOrder.deliveryFee, currency, rates) : 'Gratis'}
-                  </span>
-                </div>
+                {selectedOrder.shippingMethod === 'delivery' ? (
+                  <div className="flex justify-between">
+                    <span>Costo de Envío</span>
+                    <span className="font-bold text-gray-800">
+                      {selectedOrder.deliveryFee > 0 ? convertAndFormatPrice(selectedOrder.deliveryFee, currency, rates) : 'Gratis'}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex justify-between">
+                    <span>Método de Entrega</span>
+                    <span className="font-bold text-gray-800">Retiro en Tienda</span>
+                  </div>
+                )}
                 {selectedOrder.discount > 0 && (
                   <div className="flex justify-between text-red-500 font-semibold">
                     <span>Descuento Club Mi Negocio</span>

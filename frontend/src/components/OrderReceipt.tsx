@@ -76,7 +76,11 @@ export default function OrderReceipt({ order }: { order: Order }) {
 
       <div className="pr-totals">
         <p><span>Subtotal</span><span>${order.subtotal.toFixed(2)}</span></p>
-        <p><span>Envío</span><span>{order.deliveryFee > 0 ? `$${order.deliveryFee.toFixed(2)}` : 'Gratis'}</span></p>
+        {order.shippingMethod === 'delivery' ? (
+          <p><span>Envío</span><span>{order.deliveryFee > 0 ? `$${order.deliveryFee.toFixed(2)}` : 'Gratis'}</span></p>
+        ) : (
+          <p><span>Entrega</span><span>Retiro en Tienda</span></p>
+        )}
         {order.discount > 0 && <p><span>Descuento Club ({order.pointsUsed ?? 0} pts)</span><span>-${order.discount.toFixed(2)}</span></p>}
         {(order.paypalFee ?? 0) > 0 && <p><span>Comisión PayPal</span><span>${order.paypalFee!.toFixed(2)}</span></p>}
         <p className="pr-total"><span>Total</span><span>${order.total.toFixed(2)}</span></p>

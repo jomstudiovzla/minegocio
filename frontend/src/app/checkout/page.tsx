@@ -37,8 +37,6 @@ import { doc, updateDoc } from 'firebase/firestore';
 
 const inputClass =
   'w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-mi-blue focus:bg-white transition';
-const payInputClass =
-  'w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 font-medium focus:outline-none focus:border-mi-blue transition';
 
 /** Dato de pago con botón de copiar: evita errores al pasarlo a la app del banco. */
 function CopyValue({ label, value, copyValue }: { label: string; value: string; copyValue?: string }) {
@@ -114,6 +112,7 @@ export default function CheckoutPage() {
   const [proofPreview, setProofPreview] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [orderError, setOrderError] = useState<OrderError | null>(null);
   const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
 
@@ -238,14 +237,20 @@ export default function CheckoutPage() {
               <span className="font-bold text-gray-800">{o.customerDetails?.name}</span>
             </div>
             <div className="flex justify-between border-b border-gray-200 pb-3">
-              <span className="text-gray-500 font-bold">Método de Envío:</span>
+              <span className="text-gray-500 font-bold">Método de Entrega:</span>
               <span className="font-bold text-gray-800">{o.shippingMethod === 'delivery' ? 'Delivery a domicilio' : 'Retiro en Tienda (Pickup)'}</span>
             </div>
             {o.shippingMethod === 'delivery' && (
-              <div className="flex justify-between gap-4 border-b border-gray-200 pb-3">
-                <span className="text-gray-500 font-bold">Dirección:</span>
-                <span className="font-bold text-gray-800 text-right max-w-[260px]">{o.address}, {o.zone}</span>
-              </div>
+              <>
+                <div className="flex justify-between border-b border-gray-200 pb-3">
+                  <span className="text-gray-500 font-bold">Costo de Envío:</span>
+                  <span className="font-bold text-gray-800">{o.deliveryFee > 0 ? `$${o.deliveryFee.toFixed(2)}` : 'Gratis'}</span>
+                </div>
+                <div className="flex justify-between gap-4 border-b border-gray-200 pb-3">
+                  <span className="text-gray-500 font-bold">Dirección:</span>
+                  <span className="font-bold text-gray-800 text-right max-w-[260px]">{o.address}, {o.zone}</span>
+                </div>
+              </>
             )}
             <div className="flex justify-between border-b border-gray-200 pb-3">
               <span className="text-gray-500 font-bold">Fecha / Hora de Entrega:</span>
@@ -339,6 +344,41 @@ export default function CheckoutPage() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
+    if (fieldErrors[name]) {
+      setFieldErrors(prev => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
+  };
+
+  const getInputClass = (fieldName: string) => {
+    const hasError = !!fieldErrors[fieldName];
+    return `w-full rounded-xl px-4 py-3 font-medium transition focus:outline-none ${
+      hasError
+        ? 'border-2 border-red-500 bg-red-50/20 text-red-900 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+        : 'bg-gray-50 border border-gray-200 focus:border-mi-blue focus:bg-white focus:ring-2 focus:ring-mi-blue/20'
+    }`;
+  };
+
+  const getPayInputClass = (fieldName: string) => {
+    const hasError = !!fieldErrors[fieldName];
+    return `w-full rounded-xl px-4 py-2.5 font-medium transition focus:outline-none ${
+      hasError
+        ? 'border-2 border-red-500 bg-red-50/20 text-red-900 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+        : 'bg-white border border-gray-200 focus:border-mi-blue focus:ring-2 focus:ring-mi-blue/20'
+    }`;
+  };
+
+  const renderFieldError = (fieldName: string) => {
+    if (!fieldErrors[fieldName]) return null;
+    return (
+      <p className="text-xs font-bold text-red-600 mt-1.5 flex items-center gap-1 animate-in fade-in">
+        <AlertTriangle size={13} className="shrink-0" />
+        <span>{fieldErrors[fieldName]}</span>
+      </p>
+    );
   };
 
   const handleCaptureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -359,48 +399,96 @@ export default function CheckoutPage() {
 
   const validate = (): { cedula: string; phone: string } | null => {
     if (!paymentMethod) {
-      setFormError('Todavía no hay un método de pago disponible. Escríbenos para ayudarte.');
+      setFormError('Por favor selecciona un método de pago antes de continuar.');
       return null;
     }
-    if (form.name.trim().length < 3) { setFormError('Escribe tu nombre completo.'); return null; }
-    const cedula = normalizeCedula(form.cedula);
-    if (!cedula) { setFormError('La cédula o RIF debe empezar por V-, E- o J- seguido de números. Ejemplo: V-20111222.'); return null; }
-    const phone = normalizePhone(form.phone);
-    if (!phone) { setFormError('El teléfono debe tener 11 dígitos. Ejemplo: 0414-5550101.'); return null; }
-    if (shippingMethod === 'delivery') {
-      if (!canDeliver) { setFormError('Tu zona no tiene reparto por ahora: elige Retiro en Tienda.'); return null; }
-      if (form.address.trim().length < 8) { setFormError('Escribe la dirección de entrega completa (calle, edificio o casa, apto).'); return null; }
+
+    const errors: Record<string, string> = {};
+
+    if (form.name.trim().length < 3) {
+      errors.name = 'Escribe tu nombre completo (mínimo 3 caracteres).';
     }
-    if (!isValidDeliveryDate(form.deliveryDate)) { setFormError('La fecha de entrega no puede ser anterior a hoy.'); return null; }
-    if (stockIssues.length > 0) { setFormError('Ajusta las cantidades marcadas en el resumen antes de confirmar.'); return null; }
+    const cedula = normalizeCedula(form.cedula);
+    if (!cedula) {
+      errors.cedula = 'La cédula o RIF debe comenzar con V-, E- o J- (ej. V-20111222).';
+    }
+    const phone = normalizePhone(form.phone);
+    if (!phone) {
+      errors.phone = 'El teléfono debe tener 11 dígitos (ej. 0414-5550101).';
+    }
+
+    if (shippingMethod === 'delivery') {
+      if (!canDeliver) {
+        setFormError('Tu zona no tiene reparto por ahora: elige Retiro en Tienda.');
+        return null;
+      }
+      if (form.address.trim().length < 8) {
+        errors.address = 'Escribe la dirección de entrega completa (calle, edificio o casa, apto).';
+      }
+    }
+
+    if (!isValidDeliveryDate(form.deliveryDate)) {
+      errors.deliveryDate = 'La fecha de entrega no puede ser anterior a hoy.';
+    }
+
+    if (stockIssues.length > 0) {
+      setFormError('Ajusta las cantidades marcadas en el resumen antes de confirmar.');
+      return null;
+    }
 
     const reference = form.reference.trim();
     const paysInBs = paymentMethod === 'pagomovil' || paymentMethod === 'transferencia';
+
     if (paysInBs && !ratesReady) {
-      setFormError('No pudimos obtener la tasa del día, así que no podemos darte el monto en bolívares. Espera un momento o elige otro método de pago.');
+      setFormError('No pudimos obtener la tasa del día para el monto en Bs. Espera un momento o elige otro método.');
       return null;
     }
+
     if (paysInBs && !form.payerBank) {
-      setFormError('Elige el banco desde el que hiciste el pago.');
+      errors.payerBank = 'Selecciona el banco de origen.';
+    }
+
+    if (paymentMethod === 'pagomovil') {
+      if (!/^\d{4,}$/.test(reference)) {
+        errors.reference = 'Escribe al menos los últimos 4 dígitos de la referencia (solo números).';
+      }
+      if (!normalizePhone(form.payerPhone)) {
+        errors.payerPhone = 'Escribe el teléfono emisor (11 dígitos, ej. 0414-5550101).';
+      }
+    }
+
+    if (paymentMethod === 'transferencia' && !/^\d{4,}$/.test(reference)) {
+      errors.reference = 'Escribe el número de referencia de la transferencia (solo números).';
+    }
+
+    if ((paymentMethod === 'zelle' || paymentMethod === 'paypal') && !/^\S+@\S+\.\S+$/.test(form.payerEmail.trim())) {
+      errors.payerEmail = `Escribe el correo de la cuenta ${paymentMethod === 'zelle' ? 'Zelle' : 'PayPal'} que envió el pago.`;
+    }
+
+    if (paymentMethod === 'paypal' && reference.length < 6) {
+      errors.reference = 'Escribe el ID de transacción que te dio PayPal.';
+    }
+
+    if (paymentMethod === 'binance' && reference.length < 6) {
+      errors.reference = 'Escribe el ID de orden o el hash que te dio Binance.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setFormError('Por favor completa o corrige los campos obligatorios marcados en rojo.');
+      const firstFieldId = Object.keys(errors)[0];
+      setTimeout(() => {
+        const el = document.getElementById(firstFieldId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.focus();
+        }
+      }, 50);
       return null;
     }
-    if (paymentMethod === 'pagomovil') {
-      if (!/^\d{4,}$/.test(reference)) { setFormError('Escribe la referencia del Pago Móvil (al menos los últimos 4 dígitos, solo números).'); return null; }
-      if (!normalizePhone(form.payerPhone)) { setFormError('Escribe el teléfono desde el que hiciste el Pago Móvil (11 dígitos).'); return null; }
-    }
-    if (paymentMethod === 'transferencia' && !/^\d{4,}$/.test(reference)) {
-      setFormError('Escribe el número de referencia de la transferencia (solo números).'); return null;
-    }
-    if ((paymentMethod === 'zelle' || paymentMethod === 'paypal') && !/^\S+@\S+\.\S+$/.test(form.payerEmail.trim())) {
-      setFormError(`Escribe el correo de la cuenta ${paymentMethod === 'zelle' ? 'Zelle' : 'PayPal'} que envió el pago.`); return null;
-    }
-    if (paymentMethod === 'paypal' && reference.length < 6) {
-      setFormError('Escribe el ID de transacción que te dio PayPal.'); return null;
-    }
-    if (paymentMethod === 'binance' && reference.length < 6) {
-      setFormError('Escribe el ID de orden o el hash que te dio Binance.'); return null;
-    }
-    return { cedula, phone };
+
+    setFieldErrors({});
+    return { cedula: cedula!, phone: phone! };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -597,17 +685,20 @@ export default function CheckoutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-bold text-gray-600 mb-2">Nombre Completo</label>
-                <input id="name" type="text" name="name" required value={form.name} onChange={handleInputChange} placeholder="Ej. María López" autoComplete="name" className={inputClass} />
+                <input id="name" type="text" name="name" required value={form.name} onChange={handleInputChange} placeholder="Ej. María López" autoComplete="name" className={getInputClass('name')} />
+                {renderFieldError('name')}
               </div>
 
               <div>
                 <label htmlFor="cedula" className="block text-sm font-bold text-gray-600 mb-2">Cédula o RIF</label>
-                <input id="cedula" type="text" name="cedula" required value={form.cedula} onChange={handleInputChange} placeholder="Ej. V-20111222" className={inputClass} />
+                <input id="cedula" type="text" name="cedula" required value={form.cedula} onChange={handleInputChange} placeholder="Ej. V-20111222" className={getInputClass('cedula')} />
+                {renderFieldError('cedula')}
               </div>
 
               <div className="sm:col-span-2">
                 <label htmlFor="phone" className="block text-sm font-bold text-gray-600 mb-2">Teléfono de Contacto</label>
-                <input id="phone" type="tel" name="phone" required value={form.phone} onChange={handleInputChange} placeholder="Ej. 0414-5550101" autoComplete="tel" className={inputClass} />
+                <input id="phone" type="tel" name="phone" required value={form.phone} onChange={handleInputChange} placeholder="Ej. 0414-5550101" autoComplete="tel" className={getInputClass('phone')} />
+                {renderFieldError('phone')}
               </div>
             </div>
 
@@ -716,8 +807,9 @@ export default function CheckoutPage() {
                         onChange={handleInputChange}
                         placeholder="Calle, Edificio/Casa, Apto. (ej. Calle 3, Res. Los Pinos, Apto 4B)"
                         rows={2}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 font-medium focus:outline-none focus:border-mi-blue focus:bg-white transition resize-none text-sm"
+                        className={getInputClass('address')}
                       />
+                      {renderFieldError('address')}
                     </div>
 
                     <div>
@@ -791,8 +883,9 @@ export default function CheckoutPage() {
                   min={todayISO()}
                   value={form.deliveryDate}
                   onChange={handleInputChange}
-                  className={inputClass}
+                  className={getInputClass('deliveryDate')}
                 />
+                {renderFieldError('deliveryDate')}
               </div>
 
               <div>
@@ -859,19 +952,22 @@ export default function CheckoutPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor="payerBank" className="block text-xs font-bold text-gray-500 mb-2">Banco desde el que pagaste</label>
-                          <select id="payerBank" name="payerBank" value={form.payerBank} onChange={handleInputChange} className={payInputClass}>
+                          <select id="payerBank" name="payerBank" value={form.payerBank} onChange={handleInputChange} className={getPayInputClass('payerBank')}>
                             <option value="">Elegir…</option>
                             {VENEZUELAN_BANKS.map(b => <option key={b} value={b}>{b}</option>)}
                           </select>
+                          {renderFieldError('payerBank')}
                         </div>
                         <div>
                           <label htmlFor="payerPhone" className="block text-xs font-bold text-gray-500 mb-2">Teléfono desde el que pagaste</label>
-                          <input id="payerPhone" type="tel" name="payerPhone" value={form.payerPhone} onChange={handleInputChange} placeholder="Ej. 0414-5550101" className={payInputClass} />
+                          <input id="payerPhone" type="tel" name="payerPhone" value={form.payerPhone} onChange={handleInputChange} placeholder="Ej. 0414-5550101" className={getPayInputClass('payerPhone')} />
+                          {renderFieldError('payerPhone')}
                         </div>
                       </div>
                       <div>
                         <label htmlFor="reference" className="block text-xs font-bold text-gray-500 mb-2">Referencia bancaria (mínimo los últimos 4 dígitos)</label>
-                        <input id="reference" type="text" inputMode="numeric" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 9812" className={payInputClass} />
+                        <input id="reference" type="text" inputMode="numeric" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 9812" className={getPayInputClass('reference')} />
+                        {renderFieldError('reference')}
                       </div>
                     </div>
                   )}
@@ -890,11 +986,13 @@ export default function CheckoutPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor="payerEmail" className="block text-xs font-bold text-gray-500 mb-2">Correo de la cuenta Zelle que envió</label>
-                          <input id="payerEmail" type="email" name="payerEmail" value={form.payerEmail} onChange={handleInputChange} placeholder="Ej. pagador@ejemplo.com" className={payInputClass} />
+                          <input id="payerEmail" type="email" name="payerEmail" value={form.payerEmail} onChange={handleInputChange} placeholder="Ej. pagador@ejemplo.com" className={getPayInputClass('payerEmail')} />
+                          {renderFieldError('payerEmail')}
                         </div>
                         <div>
                           <label htmlFor="reference" className="block text-xs font-bold text-gray-500 mb-2">Número de confirmación (opcional)</label>
-                          <input id="reference" type="text" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 4f8a21c9" className={payInputClass} />
+                          <input id="reference" type="text" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 4f8a21c9" className={getPayInputClass('reference')} />
+                          {renderFieldError('reference')}
                         </div>
                       </div>
                     </div>
@@ -918,14 +1016,16 @@ export default function CheckoutPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor="payerBank" className="block text-xs font-bold text-gray-500 mb-2">Banco desde el que transferiste</label>
-                          <select id="payerBank" name="payerBank" value={form.payerBank} onChange={handleInputChange} className={payInputClass}>
+                          <select id="payerBank" name="payerBank" value={form.payerBank} onChange={handleInputChange} className={getPayInputClass('payerBank')}>
                             <option value="">Elegir…</option>
                             {VENEZUELAN_BANKS.map(b => <option key={b} value={b}>{b}</option>)}
                           </select>
+                          {renderFieldError('payerBank')}
                         </div>
                         <div>
                           <label htmlFor="reference" className="block text-xs font-bold text-gray-500 mb-2">Número de referencia</label>
-                          <input id="reference" type="text" inputMode="numeric" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 104829" className={payInputClass} />
+                          <input id="reference" type="text" inputMode="numeric" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 104829" className={getPayInputClass('reference')} />
+                          {renderFieldError('reference')}
                         </div>
                       </div>
                     </div>
@@ -951,11 +1051,13 @@ export default function CheckoutPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label htmlFor="payerEmail" className="block text-xs font-bold text-gray-500 mb-2">Correo de tu cuenta PayPal</label>
-                          <input id="payerEmail" type="email" name="payerEmail" value={form.payerEmail} onChange={handleInputChange} placeholder="Ej. pagador@ejemplo.com" className={payInputClass} />
+                          <input id="payerEmail" type="email" name="payerEmail" value={form.payerEmail} onChange={handleInputChange} placeholder="Ej. pagador@ejemplo.com" className={getPayInputClass('payerEmail')} />
+                          {renderFieldError('payerEmail')}
                         </div>
                         <div>
                           <label htmlFor="reference" className="block text-xs font-bold text-gray-500 mb-2">ID de transacción de PayPal</label>
-                          <input id="reference" type="text" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 5TY05013RG002845M" className={payInputClass} />
+                          <input id="reference" type="text" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 5TY05013RG002845M" className={getPayInputClass('reference')} />
+                          {renderFieldError('reference')}
                         </div>
                       </div>
                     </div>
@@ -976,7 +1078,8 @@ export default function CheckoutPage() {
                       </div>
                       <div>
                         <label htmlFor="reference" className="block text-xs font-bold text-gray-500 mb-2">ID de orden o hash de la transacción</label>
-                        <input id="reference" type="text" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 284731950274816001" className={payInputClass} />
+                        <input id="reference" type="text" name="reference" value={form.reference} onChange={handleInputChange} placeholder="Ej. 284731950274816001" className={getPayInputClass('reference')} />
+                        {renderFieldError('reference')}
                       </div>
                     </div>
                   )}
@@ -1122,10 +1225,17 @@ export default function CheckoutPage() {
                 <span>Subtotal ({cart.length} items)</span>
                 <span>{convertAndFormatPrice(subtotal, currency, rates)}</span>
               </div>
-              <div className="flex justify-between">
-                <span>Costo de Envío</span>
-                <span>{deliveryFee > 0 ? convertAndFormatPrice(deliveryFee, currency, rates) : 'Gratis'}</span>
-              </div>
+              {shippingMethod === 'delivery' ? (
+                <div className="flex justify-between">
+                  <span>Costo de Envío</span>
+                  <span>{deliveryFee > 0 ? convertAndFormatPrice(deliveryFee, currency, rates) : 'Gratis'}</span>
+                </div>
+              ) : (
+                <div className="flex justify-between text-gray-600">
+                  <span>Método de Entrega</span>
+                  <span className="font-bold text-gray-800">Retiro en Tienda ($0.00)</span>
+                </div>
+              )}
               {discount > 0 && (
                 <div className="flex justify-between text-red-500 font-semibold">
                   <span>Descuento Club Mi Negocio</span>

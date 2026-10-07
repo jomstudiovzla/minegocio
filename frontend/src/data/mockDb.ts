@@ -15,6 +15,7 @@ export interface Product {
   taxRate?: 16 | 8 | 0;
   views?: number;
   sales?: number;
+  isActive?: boolean;
 }
 
 export interface Category {
@@ -1818,5 +1819,45 @@ export const products: Product[] = [
     "warehouseStock": 244,
     "providerPrice": 13.13,
     "description": "SAMBUCA SICILIANA 0,70L de alta calidad, garantizado por Automercados Plazas."
+  }
+  ,
+  {
+    "id": "PRD-191",
+    "name": "PAN PARA HAMBURGUESAS HOLSUM X 6U",
+    "price": 2.45,
+    "providerPrice": 1.70,
+    "category": "viveres",
+    "subcategory": "Panadería",
+    "unit": "Paquete 6u",
+    "stock": 50,
+    "warehouseStock": 100,
+    "image": "/images/products/scraped/p102.jpg",
+    "description": "Pan fresco suave y esponjoso especial para hamburguesas, paquete de 6 unidades."
+  },
+  {
+    "id": "PRD-192",
+    "name": "PAN HOLSUM BLANCO SUPER 420G",
+    "price": 2.35,
+    "providerPrice": 1.65,
+    "category": "viveres",
+    "subcategory": "Panadería",
+    "unit": "420g",
+    "stock": 50,
+    "warehouseStock": 100,
+    "image": "/images/products/scraped/p102.jpg",
+    "description": "Pan blanco de sándwich Holsum Super, ideal para desayunos y meriendas."
+  },
+  {
+    "id": "PRD-193",
+    "name": "TINTE MYSTIC NEGRO NATURAL 1.0 TUBO 60G",
+    "price": 4.50,
+    "providerPrice": 3.15,
+    "category": "cuidado-personal-salud",
+    "subcategory": "Cuidado del Cabello",
+    "unit": "Tubo 60g",
+    "stock": 30,
+    "warehouseStock": 60,
+    "image": "/images/products/scraped/p569.jpg",
+    "description": "Tinte permanente en crema Mystic tono Negro Natural 1.0 con cobertura total de canas."
   }
 ];

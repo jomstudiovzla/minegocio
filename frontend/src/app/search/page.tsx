@@ -5,18 +5,17 @@ import ProductGrid from '@/components/ProductGrid';
 import { Suspense, useState } from 'react';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 
+import { searchProducts } from '@/lib/searchUtils';
+import { products as fallbackProducts } from '@/data/mockDb';
+
 function SearchResults() {
   const searchParams = useSearchParams();
-  const query = searchParams.get('q')?.toLowerCase() || '';
-  const products = useStore(state => state.products);
+  const query = searchParams.get('q') || '';
+  const storeProducts = useStore(state => state.products);
+  const products = storeProducts && storeProducts.length > 0 ? storeProducts : fallbackProducts;
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  const allResults = products.filter(p =>
-    p.name.toLowerCase().includes(query) ||
-    p.category.toLowerCase().includes(query) ||
-    p.subcategory.toLowerCase().includes(query) ||
-    (p.description || '').toLowerCase().includes(query)
-  );
+  const allResults = searchProducts(products, query);
 
   // Unique categories from results
   const categories = Array.from(new Set(allResults.map(p => p.category)));
