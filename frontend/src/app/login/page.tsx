@@ -82,6 +82,8 @@ export default function LoginPage() {
   // Correo que ya tiene cuenta: cuando está, se muestra la tarjeta amable de
   // "ya tienes cuenta" con recuperar clave o iniciar sesión, sin borrar lo escrito.
   const [existingAccount, setExistingAccount] = useState('');
+  // Cédula/RIF que ya está registrada: muestra la tarjeta de identificación duplicada.
+  const [existingCedula, setExistingCedula] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -121,6 +123,7 @@ export default function LoginPage() {
     setError('');
     setInfo('');
     setExistingAccount('');
+    setExistingCedula('');
 
     const cleanEmail = email.trim().toLowerCase();
     if (!cleanEmail || !password) { setError('Ingresa tu correo y contraseña.'); return; }
@@ -146,6 +149,20 @@ export default function LoginPage() {
         return;
       }
 
+      // Cédula única: si esa identificación ya tiene cuenta, no se crea otra.
+      // Es "best-effort": si las reglas del índice aún no están publicadas o no se
+      // puede leer, NO se bloquea el registro (se cae con gracia). El índice solo
+      // guarda { uid, createdAt }: nunca el correo, para no exponer datos.
+      try {
+        const cedulaSnap = await getDoc(doc(db, 'cedulaIndex', personal.cedula));
+        if (cedulaSnap.exists()) {
+          setExistingCedula(personal.cedula);
+          return;
+        }
+      } catch {
+        /* índice no disponible todavía: no bloquear el registro */
+      }
+
       setBusy(true);
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, cleanEmail, password);
@@ -162,6 +179,13 @@ export default function LoginPage() {
         };
 
         await setDoc(doc(db, 'users', uid), { ...userData, createdAt: new Date().toISOString() });
+        // Reclama la cédula en el índice (solo uid + fecha, sin datos personales).
+        // Si falla, la cuenta ya quedó creada: el índice es un extra, no se deshace nada.
+        try {
+          await setDoc(doc(db, 'cedulaIndex', personal.cedula), { uid, createdAt: new Date().toISOString() });
+        } catch {
+          /* índice no disponible: la cuenta sigue válida */
+        }
         // Verificación de correo: se envía, pero no bloquea la compra.
         sendEmailVerification(userCredential.user).catch(() => { /* el aviso es opcional */ });
 
@@ -288,6 +312,7 @@ export default function LoginPage() {
   /** Tarjeta "ya tienes cuenta": pasa a iniciar sesión conservando el correo escrito. */
   const handleGoToLoginFromCard = () => {
     setExistingAccount('');
+    setExistingCedula('');
     setError('');
     setIsReg(false);
   };
@@ -355,6 +380,18 @@ export default function LoginPage() {
     const personal = validatePersonalData();
     if (!personal) return;
 
+    // Cédula única (best-effort): si otra cuenta ya reclamó esa identificación,
+    // no se asocia. Si es la misma cuenta (su propia cédula), se permite.
+    try {
+      const cedulaSnap = await getDoc(doc(db, 'cedulaIndex', personal.cedula));
+      if (cedulaSnap.exists() && (cedulaSnap.data() as { uid?: string }).uid !== pendingProfile.uid) {
+        setError('Esa cédula o RIF ya está registrada en otra cuenta. Si es tuya, inicia sesión con ese correo.');
+        return;
+      }
+    } catch {
+      /* índice no disponible: no bloquear */
+    }
+
     setBusy(true);
     try {
       const ref = doc(db, 'users', pendingProfile.uid);
@@ -375,6 +412,12 @@ export default function LoginPage() {
         };
         await setDoc(ref, { ...userData, createdAt: new Date().toISOString() });
         login(userData);
+      }
+      // Reclama la cédula en el índice (solo uid + fecha).
+      try {
+        await setDoc(doc(db, 'cedulaIndex', personal.cedula), { uid: pendingProfile.uid, createdAt: new Date().toISOString() });
+      } catch {
+        /* el índice es un extra: no deshace el perfil */
       }
       router.push(redirectPath);
     } catch {
@@ -451,7 +494,7 @@ export default function LoginPage() {
               {['Iniciar Sesión', 'Registrarme'].map((label, idx) => (
                 <button
                   key={label}
-                  onClick={() => { setIsReg(idx === 1); setError(''); setInfo(''); setExistingAccount(''); }}
+                  onClick={() => { setIsReg(idx === 1); setError(''); setInfo(''); setExistingAccount(''); setExistingCedula(''); }}
                   className={`flex-1 py-2.5 rounded-xl text-sm font-black transition-all ${
                     isRegistering === (idx === 1)
                       ? 'bg-white text-mi-blue shadow-sm'
@@ -697,6 +740,36 @@ export default function LoginPage() {
                               type="button"
                               onClick={handleGoToLoginFromCard}
                               className="flex-1 bg-white border border-mi-blue/30 hover:border-mi-blue text-mi-blue text-xs font-black py-2.5 rounded-xl transition cursor-pointer"
+                            >
+                              Iniciar sesión
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Tarjeta amable: la cédula/RIF ya está registrada */}
+                  {existingCedula && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="rounded-2xl border border-mi-blue/20 bg-blue-50/60 p-4 shadow-sm"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-mi-blue/10 flex items-center justify-center shrink-0">
+                          <ShieldCheck size={18} className="text-mi-blue" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-black text-gray-800">¡Hola! Ya tienes una cuenta activa</p>
+                          <p className="text-xs text-gray-600 font-medium mt-0.5">
+                            La identificación <span className="font-bold">{existingCedula}</span> ya está registrada en Mi Negocio. Por seguridad fiscal, cada cédula o RIF es única. Inicia sesión con tu correo (o usa «Olvidé mi contraseña» si no la recuerdas).
+                          </p>
+                          <div className="flex flex-col sm:flex-row gap-2 mt-3">
+                            <button
+                              type="button"
+                              onClick={handleGoToLoginFromCard}
+                              className="flex-1 bg-mi-blue hover:bg-mi-blue-mid text-white text-xs font-black py-2.5 rounded-xl transition cursor-pointer"
                             >
                               Iniciar sesión
                             </button>

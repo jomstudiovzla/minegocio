@@ -307,6 +307,24 @@ service cloud.firestore {
       allow write: if isStaffAdmin();
     }
 
+    // ── Índice de Cédulas/RIF para evitar cuentas duplicadas ─────────────
+    // El ID del documento ES la cédula normalizada (ej. V-12345678), así que
+    // Firestore garantiza la unicidad de forma atómica. El cuerpo solo guarda
+    // { uid, createdAt }: NUNCA el correo ni datos personales, porque este índice
+    // se puede leer sin sesión (para comprobar duplicados en el registro).
+    match /cedulaIndex/{cedula} {
+      // get: comprobar si una cédula existe, incluso sin sesión (registro).
+      allow get: if true;
+      // list: jamás, para que nadie pueda enumerar/raspar las cédulas.
+      allow list: if false;
+      // create: un usuario con sesión reclama SU propia cédula (uid == el suyo).
+      // Como el ID es la cédula, create solo entra si no existía: unicidad real.
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
+      // Una cédula indexada no se reescribe; solo el dueño del panel puede borrarla.
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
     // ── Cola de correos (la página encola, el entregador los envía) ───────
     // La tienda escribe aquí una "carta" cuando pasa algo importante (pedido
     // nuevo, pago aprobado/rechazado, cambio de estado, devolución). El script
