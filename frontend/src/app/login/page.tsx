@@ -79,6 +79,9 @@ export default function LoginPage() {
   const [redirectPath, setRedirect]   = useState('/account');
   const [showExtraInfoForm, setShowExtraInfoForm] = useState(false);
   const [pendingProfile, setPendingProfile] = useState<PendingProfile | null>(null);
+  // Correo que ya tiene cuenta: cuando está, se muestra la tarjeta amable de
+  // "ya tienes cuenta" con recuperar clave o iniciar sesión, sin borrar lo escrito.
+  const [existingAccount, setExistingAccount] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -117,6 +120,7 @@ export default function LoginPage() {
     if (busy) return;
     setError('');
     setInfo('');
+    setExistingAccount('');
 
     const cleanEmail = email.trim().toLowerCase();
     if (!cleanEmail || !password) { setError('Ingresa tu correo y contraseña.'); return; }
@@ -165,7 +169,8 @@ export default function LoginPage() {
         router.push(redirectPath);
       } catch (err: any) {
         if (err.code === 'auth/email-already-in-use') {
-           setError('Este correo ya se encuentra registrado. Por favor, inicia sesión.');
+           // En vez de un texto rojo seco, mostramos la tarjeta amable con opciones.
+           setExistingAccount(cleanEmail);
         } else if (err.code === 'auth/weak-password') {
            setError(`Tu contraseña es muy débil. Debe tener al menos ${CUSTOMER_MIN_PASSWORD} caracteres.`);
         } else if (err.code === 'auth/invalid-email') {
@@ -264,6 +269,27 @@ export default function LoginPage() {
       // Si el correo no existe no se dice: así nadie puede averiguar quién tiene cuenta.
     }
     setInfo(`Si ${cleanEmail} tiene cuenta, te llegará un correo para crear una contraseña nueva. Revisa también la carpeta de spam.`);
+  };
+
+  /** Tarjeta "ya tienes cuenta": envía el correo de recuperación al correo existente. */
+  const handleRecoverExisting = async () => {
+    const target = (existingAccount || email).trim().toLowerCase();
+    if (!target) return;
+    try {
+      await sendPasswordResetEmail(auth, target);
+    } catch {
+      // No se revela si el correo existe o no: el aviso es el mismo.
+    }
+    setExistingAccount('');
+    setIsReg(false);
+    setInfo(`Te enviamos un correo a ${target} para crear una contraseña nueva. Revisa tu bandeja y también la carpeta de Spam.`);
+  };
+
+  /** Tarjeta "ya tienes cuenta": pasa a iniciar sesión conservando el correo escrito. */
+  const handleGoToLoginFromCard = () => {
+    setExistingAccount('');
+    setError('');
+    setIsReg(false);
   };
 
   const handleGoogleLogin = async () => {
@@ -425,7 +451,7 @@ export default function LoginPage() {
               {['Iniciar Sesión', 'Registrarme'].map((label, idx) => (
                 <button
                   key={label}
-                  onClick={() => { setIsReg(idx === 1); setError(''); setInfo(''); }}
+                  onClick={() => { setIsReg(idx === 1); setError(''); setInfo(''); setExistingAccount(''); }}
                   className={`flex-1 py-2.5 rounded-xl text-sm font-black transition-all ${
                     isRegistering === (idx === 1)
                       ? 'bg-white text-mi-blue shadow-sm'
@@ -641,6 +667,43 @@ export default function LoginPage() {
                         </span>
                       </label>
                     </>
+                  )}
+
+                  {/* Tarjeta amable: el correo ya tiene cuenta */}
+                  {existingAccount && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="rounded-2xl border border-mi-blue/20 bg-blue-50/60 p-4 shadow-sm"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-mi-blue/10 flex items-center justify-center shrink-0">
+                          <ShieldCheck size={18} className="text-mi-blue" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-black text-gray-800">¡Hola! Ya tienes una cuenta</p>
+                          <p className="text-xs text-gray-600 font-medium mt-0.5">
+                            Detectamos que <span className="font-bold">{existingAccount}</span> ya está registrado en Mi Negocio. No creamos otra cuenta; tus datos siguen aquí.
+                          </p>
+                          <div className="flex flex-col sm:flex-row gap-2 mt-3">
+                            <button
+                              type="button"
+                              onClick={handleRecoverExisting}
+                              className="flex-1 bg-mi-blue hover:bg-mi-blue-mid text-white text-xs font-black py-2.5 rounded-xl transition cursor-pointer"
+                            >
+                              Recuperar contraseña
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleGoToLoginFromCard}
+                              className="flex-1 bg-white border border-mi-blue/30 hover:border-mi-blue text-mi-blue text-xs font-black py-2.5 rounded-xl transition cursor-pointer"
+                            >
+                              Iniciar sesión
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
                   )}
 
                   {/* Error */}
