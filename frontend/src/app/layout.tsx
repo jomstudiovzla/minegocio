@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ZoneSelector from "@/components/ZoneSelector";
 import CatalogInitializer from "@/components/CatalogInitializer";
 import FirebaseSync from "@/components/FirebaseSync";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 import type { Viewport } from "next";
 
@@ -76,6 +77,7 @@ export default function RootLayout({
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
+        <FloatingWhatsApp />
       </body>
     </html>
   );
