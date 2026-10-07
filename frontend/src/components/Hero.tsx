@@ -146,11 +146,7 @@ export default function Hero() {
                 ¡Todo tu{' '}
                 <span
                   className="relative inline-block"
-                  style={{
-                    background: 'linear-gradient(135deg, #F8B808 0%, #fde98a 60%, #F8B808 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
+                  style={{ color: '#F8B808' }}
                 >
                   MERCADO
                 </span>
